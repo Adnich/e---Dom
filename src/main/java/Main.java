@@ -12,6 +12,6 @@ public class Main {
             IO.println("i = " + i);
         }
 
-        String imana;
+        
     }
 }
