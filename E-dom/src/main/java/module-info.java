@@ -9,6 +9,7 @@ module org.example.edom {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires java.sql;
 
     opens org.example.edom to javafx.fxml;
     exports org.example.edom;
