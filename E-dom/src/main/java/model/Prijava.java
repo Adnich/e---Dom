@@ -1,0 +1,116 @@
+package model;
+
+import java.util.Date;
+import java.util.List;
+
+public class Prijava {
+    private int IdPrijava;
+    private Date DatumPrijava;
+    private StatusPrijave StatusPrijave;
+    private int UkupniBodovi;
+    private String Napomena;
+    private int AkademskaGodina;
+    private int IdStudent;
+
+    private List<Dokument> Dokumenti;
+
+    public Prijava() {
+    }
+
+    public Prijava(int idPrijava, Date datumPrijava, StatusPrijave statusPrijave, int ukupniBodovi, String napomena, int akademskaGodina, int StudentId) {
+        IdPrijava = idPrijava;
+        DatumPrijava = datumPrijava;
+        StatusPrijave = statusPrijave;
+        UkupniBodovi = ukupniBodovi;
+        Napomena = napomena;
+        AkademskaGodina = akademskaGodina;
+        IdStudent = StudentId;
+    }
+
+    public int getIdPrijava() {
+        return IdPrijava;
+    }
+
+    public void setIdPrijava(int idPrijava) {
+        IdPrijava = idPrijava;
+    }
+
+    public Date getDatumPrijava() {
+        return DatumPrijava;
+    }
+
+    public void setDatumPrijava(Date datumPrijava) {
+        DatumPrijava = datumPrijava;
+    }
+
+    public StatusPrijave getStatusPrijave() {
+        return StatusPrijave;
+    }
+
+    public void setStatusPrijave(StatusPrijave statusPrijave) {
+        StatusPrijave = statusPrijave;
+    }
+
+    public int getUkupniBodovi() {
+        return UkupniBodovi;
+    }
+
+    public void setUkupniBodovi(int ukupniBodovi) {
+        UkupniBodovi = ukupniBodovi;
+    }
+
+    public String getNapomena() {
+        return Napomena;
+    }
+
+    public void setNapomena(String napomena) {
+        Napomena = napomena;
+    }
+
+    public int getAkademskaGodina() {
+        return AkademskaGodina;
+    }
+
+    public void setAkademskaGodina(int akademskaGodina) {
+        AkademskaGodina = akademskaGodina;
+    }
+
+    public List<Dokument> getDokumenti() {
+        return Dokumenti;
+    }
+
+    public void setDokumenti(List<Dokument> dokumenti) {
+        Dokumenti = dokumenti;
+    }
+
+    public int getIdStudent() {
+        return IdStudent;
+    }
+
+    public void setIdStudent(int idStudent) {
+        IdStudent = idStudent;
+    }
+
+    @Override
+    public String toString() {
+        return "Prijava{" +
+                "IdPrijava=" + IdPrijava +
+                ", DatumPrijava=" + DatumPrijava +
+                ", StatusPrijave=" + StatusPrijave +
+                ", UkupniBodovi=" + UkupniBodovi +
+                ", Napomena='" + Napomena + '\'' +
+                ", AkademskaGodina=" + AkademskaGodina +
+                '}';
+    }
+
+    public int IzracunajUkupneBodove(){
+        int suma = 0;
+        for(Dokument d : Dokumenti){
+            suma += d.getBrojBodova();
+        }
+        return suma;
+    }
+
+
+
+}
