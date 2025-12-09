@@ -1,0 +1,225 @@
+package dao;
+
+import model.Prijava;
+import model.StatusPrijave;
+import util.DBConnection;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class PrijavaDAO {
+
+    // UNOS NOVE PRIJAVE
+    public void unesiPrijavu(Prijava prijava) {
+        String sql = "INSERT INTO prijava " +
+                "(datum_prijave, ukupni_bodovi, napomena, studentid_student2, " +
+                "status_prijaveid_status, akademska_godina) " +
+                "VALUES (?,?,?,?,?,?)";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setDate(1, new java.sql.Date(prijava.getDatumPrijava().getTime()));
+            stmt.setInt(2, prijava.getUkupniBodovi());
+            stmt.setString(3, prijava.getNapomena());
+            stmt.setInt(4, prijava.getIdStudent());
+            stmt.setInt(5, prijava.getStatusPrijave().getIdStatus());
+            stmt.setInt(6, prijava.getAkademskaGodina());
+
+            stmt.executeUpdate();
+
+            // upišemo generisani ID nazad u objekat
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    prijava.setIdPrijava(rs.getInt(1));
+                }
+            }
+
+            System.out.println("Prijava uspješno unesena!");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // DOHVATI SVE PRIJAVE
+    public List<Prijava> dohvatiSvePrijave() {
+        List<Prijava> prijave = new ArrayList<>();
+
+        String sql = "SELECT p.id_prijava, p.datum_prijave, p.ukupni_bodovi, p.napomena, " +
+                "p.studentid_student2, p.status_prijaveid_status, p.akademska_godina, " +
+                "s.id_status, s.naziv AS naziv_statusa " +
+                "FROM prijava p " +
+                "JOIN status_prijave s ON p.status_prijaveid_status = s.id_status";
+
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                prijave.add(mapToPrijava(rs));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return prijave;
+    }
+
+    // DOHVATI PRIJAVE ZA KONKRETNOG STUDENTA
+    public List<Prijava> dohvatiPrijaveZaStudenta(int idStudent) {
+        List<Prijava> prijave = new ArrayList<>();
+
+        String sql = "SELECT p.id_prijava, p.datum_prijave, p.ukupni_bodovi, p.napomena, " +
+                "p.studentid_student2, p.status_prijaveid_status, p.akademska_godina, " +
+                "s.id_status, s.naziv AS naziv_statusa " +
+                "FROM prijava p " +
+                "JOIN status_prijave s ON p.status_prijaveid_status = s.id_status " +
+                "WHERE p.studentid_student2 = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idStudent);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    prijave.add(mapToPrijava(rs));
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return prijave;
+    }
+
+    // DOHVATI PO ID
+    public Prijava dohvatiPrijavuPoId(int idPrijava) {
+        String sql = "SELECT p.id_prijava, p.datum_prijave, p.ukupni_bodovi, p.napomena, " +
+                "p.studentid_student2, p.status_prijaveid_status, p.akademska_godina, " +
+                "s.id_status, s.naziv AS naziv_statusa " +
+                "FROM prijava p " +
+                "JOIN status_prijave s ON p.status_prijaveid_status = s.id_status " +
+                "WHERE p.id_prijava = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idPrijava);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return mapToPrijava(rs);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
+
+    // AŽURIRANJE PRIJAVE
+    public void azurirajPrijavu(Prijava prijava) {
+        String sql = "UPDATE prijava SET " +
+                "datum_prijave = ?, ukupni_bodovi = ?, napomena = ?, " +
+                "studentid_student2 = ?, status_prijaveid_status = ?, akademska_godina = ? " +
+                "WHERE id_prijava = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setDate(1, new java.sql.Date(prijava.getDatumPrijava().getTime()));
+            stmt.setInt(2, prijava.getUkupniBodovi());
+            stmt.setString(3, prijava.getNapomena());
+            stmt.setInt(4, prijava.getIdStudent());
+            stmt.setInt(5, prijava.getStatusPrijave().getIdStatus());
+            stmt.setInt(6, prijava.getAkademskaGodina());
+            stmt.setInt(7, prijava.getIdPrijava());
+
+            int redovi = stmt.executeUpdate();
+            if (redovi > 0)
+                System.out.println("Prijava ažurirana!");
+            else
+                System.out.println("Prijava sa ID " + prijava.getIdPrijava() + " ne postoji!");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // BRISANJE PRIJAVE
+    public void obrisiPrijavu(int idPrijava) {
+        String sql = "DELETE FROM prijava WHERE id_prijava = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idPrijava);
+
+            int redovi = stmt.executeUpdate();
+            if (redovi > 0)
+                System.out.println("Prijava obrisana!");
+            else
+                System.out.println("Prijava sa ID " + idPrijava + " ne postoji!");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // PROMJENA SAMO STATUSA PRIJAVE
+    public void promijeniStatusPrijave(int idPrijava, StatusPrijave noviStatus) {
+        String sql = "UPDATE prijava SET status_prijaveid_status = ? WHERE id_prijava = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, noviStatus.getIdStatus());
+            stmt.setInt(2, idPrijava);
+
+            int redovi = stmt.executeUpdate();
+            if (redovi > 0)
+                System.out.println("Status prijave promijenjen!");
+            else
+                System.out.println("Prijava sa ID " + idPrijava + " ne postoji!");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // HELPER: mapiranje ResultSet -> Prijava
+    private Prijava mapToPrijava(ResultSet rs) throws SQLException {
+        Prijava p = new Prijava();
+
+        p.setIdPrijava(rs.getInt("id_prijava"));
+
+        Date datum = rs.getDate("datum_prijave");
+        if (datum != null) {
+            p.setDatumPrijava(new Date(datum.getTime()));
+        }
+
+        p.setUkupniBodovi(rs.getInt("ukupni_bodovi"));
+        p.setNapomena(rs.getString("napomena"));
+        p.setIdStudent(rs.getInt("studentid_student2"));
+        p.setAkademskaGodina(rs.getInt("akademska_godina"));
+
+        StatusPrijave sp = new StatusPrijave(
+                rs.getInt("id_status"),
+                rs.getString("naziv_statusa")
+        );
+        p.setStatusPrijave(sp);
+
+        // Lista dokumenata (p.setDokumenti) može se naknadno popuniti
+        // preko DokumentDAO.dohvatiDokumenteZaPrijavu(id_prijava) ako budeš radila.
+
+        return p;
+    }
+}
