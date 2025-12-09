@@ -14,10 +14,17 @@ public class SocijalniStatusDAO {
         String sql = "INSERT INTO socijalni_status (naziv) VALUES (?)";
 
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, status.getNaziv());
             stmt.executeUpdate();
+
+            // Dohvati generisani ID i postavi ga u objekat
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    status.setIdStatus(rs.getInt(1)); // sada objekat zna svoj ID
+                }
+            }
 
             System.out.println("Socijalni status uspješno unesen!");
 
@@ -25,6 +32,7 @@ public class SocijalniStatusDAO {
             throw new RuntimeException(e);
         }
     }
+
 
     // DOHVATI SVE
     public List<SocijalniStatus> dohvatiSveStatuse() {

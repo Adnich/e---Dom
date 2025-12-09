@@ -6,7 +6,7 @@ public class Student {
     private String Prezime;
     private String BrojIndeksa;
     private String Fakultet;
-    private String GodinaStudija;
+    private int GodinaStudija;
     private double Prosjek;
     private String Email;
     private String Telefon;
@@ -15,7 +15,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(int idStudent, String ime, String prezime, String brojIndeksa, String fakultet, String godinaStudija, double prosjek, String email, String telefon, SocijalniStatus socijalniStatus) {
+    public Student(int idStudent, String ime, String prezime, String brojIndeksa, String fakultet, int godinaStudija, double prosjek, String email, String telefon, SocijalniStatus socijalniStatus) {
         this.idStudent = idStudent;
         Ime = ime;
         Prezime = prezime;
@@ -68,11 +68,11 @@ public class Student {
         Fakultet = fakultet;
     }
 
-    public String getGodinaStudija() {
+    public int getGodinaStudija() {
         return GodinaStudija;
     }
 
-    public void setGodinaStudija(String godinaStudija) {
+    public void setGodinaStudija(int godinaStudija) {
         GodinaStudija = godinaStudija;
     }
 

@@ -24,7 +24,7 @@ public class StudentDAO {
             stmt.setString(2, s.getPrezime());
             stmt.setString(3, s.getBrojIndeksa());
             stmt.setString(4, s.getFakultet());
-            stmt.setString(5, s.getGodinaStudija());
+            stmt.setInt(5, s.getGodinaStudija());
             stmt.setDouble(6, s.getProsjek());
             stmt.setString(7, s.getEmail());
             stmt.setString(8, s.getTelefon());
@@ -61,7 +61,7 @@ public class StudentDAO {
                 s.setPrezime(rs.getString("prezime"));
                 s.setBrojIndeksa(rs.getString("broj_indeksa"));
                 s.setFakultet(rs.getString("fakultet"));
-                s.setGodinaStudija(rs.getString("godina_studija"));
+                s.setGodinaStudija(rs.getInt("godina_studija"));
                 s.setProsjek(rs.getDouble("prosjek"));
                 s.setEmail(rs.getString("email"));
                 s.setTelefon(rs.getString("telefon"));
@@ -107,7 +107,7 @@ public class StudentDAO {
                     s.setPrezime(rs.getString("prezime"));
                     s.setBrojIndeksa(rs.getString("broj_indeksa"));
                     s.setFakultet(rs.getString("fakultet"));
-                    s.setGodinaStudija(rs.getString("godina_studija"));
+                    s.setGodinaStudija(rs.getInt("godina_studija"));
                     s.setProsjek(rs.getDouble("prosjek"));
                     s.setEmail(rs.getString("email"));
                     s.setTelefon(rs.getString("telefon"));
@@ -143,7 +143,7 @@ public class StudentDAO {
             stmt.setString(2, s.getPrezime());
             stmt.setString(3, s.getBrojIndeksa());
             stmt.setString(4, s.getFakultet());
-            stmt.setString(5, s.getGodinaStudija());
+            stmt.setInt(5, s.getGodinaStudija());
             stmt.setDouble(6, s.getProsjek());
             stmt.setString(7, s.getEmail());
             stmt.setString(8, s.getTelefon());

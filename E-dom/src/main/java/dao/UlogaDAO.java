@@ -14,16 +14,24 @@ public class UlogaDAO {
         String sql = "INSERT INTO uloga (naziv) VALUES (?)";
 
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, uloga.getNaziv());
             stmt.executeUpdate();
+
+            // Dohvati generisani ID i postavi ga u objekat
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    uloga.setIdUloga(rs.getInt(1)); // sada objekat zna svoj ID iz baze
+                }
+            }
 
             System.out.println("Uloga uspješno unesena!");
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     // DOHVATI SVE UL0GE
