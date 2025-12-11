@@ -62,7 +62,7 @@ public class LoginController {
 
         try {
             // Učitavanje admin glavnog ekrana
-            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("admin-main-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("/views/admin-main-view.fxml"));
             Parent root = loader.load();
 
             Scene scene = new Scene(root, 800, 600);
