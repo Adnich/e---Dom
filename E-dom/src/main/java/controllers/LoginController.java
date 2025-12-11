@@ -40,7 +40,6 @@ public class LoginController {
             return;
         }
 
-        // ako u bazi čuvate hash, ovdje trebaš uraditi hash(pass)
         Korisnik k = korisnikDAO.nadjiPoUsernameIPassword(user, pass);
 
         if (k == null) {
@@ -48,7 +47,6 @@ public class LoginController {
             return;
         }
 
-        // Provjera da li je admin (po nazivu uloge u bazi, npr. 'Admin')
         if (k.getUloga() == null
                 || k.getUloga().getNaziv() == null
                 || !k.getUloga().getNaziv().equalsIgnoreCase("Admin")) {
@@ -57,11 +55,9 @@ public class LoginController {
             return;
         }
 
-        // Ako smo došli dovde -> uspješan login admina
         lblError.setText("");
 
         try {
-            // Učitavanje admin glavnog ekrana
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("/views/admin-main-view.fxml"));
             URL fxmlUrl = HelloApplication.class.getResource("/views/admin-main-view.fxml");
             System.out.println("ADMIN FXML URL = " + fxmlUrl);
@@ -69,7 +65,6 @@ public class LoginController {
 
 
             Scene scene = new Scene(root, 800, 600);
-            // dodajemo style.css iz /styles (apsolutna putanja)
             URL cssUrl = HelloApplication.class.getResource("/styles/style.css");
             if (cssUrl != null) {
                 scene.getStylesheets().add(cssUrl.toExternalForm());
@@ -93,13 +88,11 @@ public class LoginController {
     @FXML
     private void onRegisterLinkClicked(ActionEvent event) {
         try {
-            // ispravna apsolutna putanja do view-a u resources/views
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("/views/register-view.fxml"));
             Parent root = loader.load();
 
             Scene scene = new Scene(root, 600, 450);
 
-            // >>> DODAJEMO CSS (ISTO KAO U HelloApplication) <<<
             URL cssUrl = HelloApplication.class.getResource("/styles/style.css");
             if (cssUrl != null) {
                 scene.getStylesheets().add(cssUrl.toExternalForm());

@@ -36,7 +36,6 @@ public class prijaveController {
 
     @FXML
     public void initialize() {
-        // poveži kolone sa poljima modela
         colId.setCellValueFactory(
                 cellData -> new SimpleIntegerProperty(cellData.getValue().getIdPrijava()).asObject()
         );
@@ -73,7 +72,6 @@ public class prijaveController {
                 )
         );
 
-        // učitaj podatke iz baze
         tblPrijave.setItems(
                 FXCollections.observableArrayList(prijavaDAO.dohvatiSvePrijave())
         );
