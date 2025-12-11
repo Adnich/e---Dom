@@ -199,4 +199,44 @@ public class StudentDAO {
         return 0;
     }
 
+    //pretraga strudenta po broju indeksa
+    public Student findByBrojIndeksa(String indeks) {
+        String sql = "SELECT st.id_student, st.ime, st.prezime, st.broj_indeksa, st.fakultet, st.godina_studija, " +
+                "st.prosjek, st.email, st.telefon, ss.id_status, ss.naziv " +
+                "FROM student st JOIN socijalni_status ss ON st.socijalni_status_id_status = ss.id_status " +
+                "WHERE st.broj_indeksa = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, indeks);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Student(
+                            rs.getInt("id_student"),
+                            rs.getString("ime"),
+                            rs.getString("prezime"),
+                            rs.getString("broj_indeksa"),
+                            rs.getString("fakultet"),
+                            rs.getInt("godina_studija"),
+                            rs.getDouble("prosjek"),
+                            rs.getString("email"),
+                            rs.getString("telefon"),
+                            new SocijalniStatus(
+                                    rs.getInt("id_status"),
+                                    rs.getString("naziv")
+                            )
+                    );
+                }
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
+
+
 }
