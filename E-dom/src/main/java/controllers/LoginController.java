@@ -49,9 +49,9 @@ public class LoginController {
         }
 
         // Provjera da li je admin (po nazivu uloge u bazi, npr. 'Admin')
-        if (korisnik.getUloga() == null
-                || korisnik.getUloga().getNaziv() == null
-                || !korisnik.getUloga().getNaziv().equalsIgnoreCase("Admin")) {
+        if (k.getUloga() == null
+                || k.getUloga().getNaziv() == null
+                || !k.getUloga().getNaziv().equalsIgnoreCase("Admin")) {
 
             lblError.setText("Pristup je dozvoljen samo administratoru.");
             return;
@@ -66,10 +66,13 @@ public class LoginController {
             Parent root = loader.load();
 
             Scene scene = new Scene(root, 800, 600);
-            // dodajemo style.css iz /styles
-            scene.getStylesheets().add(
-                    HelloApplication.class.getResource("styles/style.css").toExternalForm()
-            );
+            // dodajemo style.css iz /styles (apsolutna putanja)
+            URL cssUrl = HelloApplication.class.getResource("/styles/style.css");
+            if (cssUrl != null) {
+                scene.getStylesheets().add(cssUrl.toExternalForm());
+            } else {
+                System.out.println("⚠ style.css nije pronađen!");
+            }
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle("E-Dom - Administratorski panel");
@@ -80,18 +83,15 @@ public class LoginController {
             e.printStackTrace();
             lblError.setText("Greška pri otvaranju administratorskog ekrana.");
         }
-        // TODO: ovdje ćeš kasnije otvoriti admin / student prozor,
-        // npr. na osnovu k.getUloga().getNaziv()
-        lblError.setText(""); // očisti poruku
+
         System.out.println("Uspješna prijava: " + k);
     }
 
     @FXML
     private void onRegisterLinkClicked(ActionEvent event) {
         try {
-            // učitavamo register-view.fxml iz istog paketa kao i login-view.fxml
-            FXMLLoader loader = new FXMLLoader(
-                    HelloApplication.class.getResource("register-view.fxml"));
+            // ispravna apsolutna putanja do view-a u resources/views
+            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("/views/register-view.fxml"));
             Parent root = loader.load();
 
             Scene scene = new Scene(root, 600, 450);
