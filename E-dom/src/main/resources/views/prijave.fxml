@@ -14,6 +14,10 @@
               AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
 
             <Label text="Prijave studenata" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+            <Button text="➕ Nova prijava"
+                    onAction="#onNovaPrijava"
+                    style="-fx-background-color: #2563eb; -fx-text-fill: white;"
+                    prefWidth="150"/>
 
             <TableView fx:id="tblPrijave" prefHeight="400">
                 <columns>

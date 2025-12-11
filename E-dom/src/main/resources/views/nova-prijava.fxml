@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controllers.NovaPrijavaController"
+      spacing="15"
+      prefWidth="450">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Dodavanje nove prijave"
+           style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <Label text="Student:"/>
+    <ComboBox fx:id="cmbStudent" prefWidth="300"/>
+
+    <Label text="Akademska godina:"/>
+    <TextField fx:id="txtAkGod" promptText="2024"/>
+
+    <Label text="Ukupni bodovi:"/>
+    <TextField fx:id="txtBodovi" promptText="npr. 85"/>
+
+    <Label text="Status prijave:"/>
+    <ComboBox fx:id="cmbStatus" prefWidth="300"/>
+
+    <Label text="Napomena:"/>
+    <TextArea fx:id="txtNapomena" prefHeight="80"/>
+
+    <Button text="Spremi prijavu"
+            onAction="#onSaveClicked"
+            style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-padding: 10 20;"/>
+
+</VBox>
