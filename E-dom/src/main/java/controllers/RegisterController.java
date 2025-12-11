@@ -112,7 +112,7 @@ public class RegisterController {
             Scene scene = new Scene(loader.load(), 500, 400);
 
             // SIGURNO učitavanje CSS-a
-            var cssUrl = HelloApplication.class.getResource("/styles/style.css");
+            var cssUrl = HelloApplication.class.getResource("/styles/login-style.css");
             if (cssUrl != null) {
                 scene.getStylesheets().add(cssUrl.toExternalForm());
             }

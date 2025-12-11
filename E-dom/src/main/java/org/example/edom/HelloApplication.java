@@ -14,7 +14,7 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 500, 400);
 
         // >>> OVO JE BITNO <<<
-        var cssUrl = HelloApplication.class.getResource("/styles/style.css");
+        var cssUrl = HelloApplication.class.getResource("/styles/login-style.css");
         if (cssUrl != null) {
             scene.getStylesheets().add(cssUrl.toExternalForm());
         }

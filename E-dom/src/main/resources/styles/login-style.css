@@ -1,0 +1,90 @@
+/* Globalno za login screen */
+.login-root {
+    -fx-font-family: "Segoe UI";
+    /* cijeli prozor čist bijel, bez paddinga */
+    -fx-background-color: white;
+    -fx-padding: 0;
+}
+
+
+/* Lijevi panel */
+.side-pane {
+    -fx-background-color: linear-gradient(to bottom, #263238, #111827);
+    -fx-padding: 40;
+    -fx-pref-width: 320;
+}
+
+
+.side-title {
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.side-subtitle {
+    -fx-text-fill: #cfd8dc;
+    -fx-font-size: 12px;
+}
+
+.side-description {
+    -fx-text-fill: #b0bec5;
+    -fx-font-size: 12px;
+}
+
+/* Desna login kartica */
+.login-container {
+    -fx-alignment: center;
+    /* malo unutrašnjeg prostora desno */
+    -fx-padding: 0 80 0 80;
+    -fx-background-color: white;
+}
+
+.login-pane {
+    /* više nije kartica, nego običan layout */
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-background-radius: 0;
+    -fx-effect: none;
+    -fx-spacing: 18;
+}
+
+
+/* Naslov */
+.title-label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+/* Forma */
+.form-grid {
+    -fx-hgap: 10;
+    -fx-vgap: 12;
+}
+
+.error-label {
+    -fx-text-fill: #e53935;
+    -fx-font-size: 12px;
+}
+
+/* Dugmad */
+.button {
+    -fx-background-color: #2b7cff;
+    -fx-text-fill: white;
+    -fx-background-radius: 6;
+    -fx-padding: 8 20 8 20;
+    -fx-font-weight: bold;
+}
+.button:hover {
+    -fx-background-color: #1a5fcc;
+}
+
+/* Registracija */
+.hyperlink {
+    -fx-text-fill: #2196f3;
+    -fx-font-size: 12px;
+}
+
+.small-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: #757575;
+}

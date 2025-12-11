@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.AdminController"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="600.0" prefWidth="900.0">
 
-</AnchorPane>
+    <!-- Lijevi meni -->
+    <left>
+        <VBox spacing="10" prefWidth="200" style="-fx-background-color: #111827; -fx-padding: 20;">
+            <Label text="E-Dom Admin"
+                   style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+
+            <Separator/>
+
+            <Button text="Prijave"
+                    onAction="#showPrijave"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-alignment: CENTER_LEFT;"/>
+            <Button text="Studenti"
+                    onAction="#showStudenti"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-alignment: CENTER_LEFT;"/>
+
+        </VBox>
+    </left>
+
+    <!-- Desni dio gdje učitavamo FXML -->
+    <center>
+        <StackPane fx:id="contentArea" padding="20">
+            <!-- ovdje će se dinamički ubacivati prijave.fxml / studenti.fxml -->
+        </StackPane>
+    </center>
+
+</BorderPane>
