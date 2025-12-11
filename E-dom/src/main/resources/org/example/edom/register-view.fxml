@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.edom.RegisterController">
+
+    <center>
+        <VBox spacing="15" alignment="CENTER">
+            <padding>
+                <Insets top="25" right="25" bottom="25" left="25"/>
+            </padding>
+
+            <!-- Glavni container za formu -->
+            <VBox spacing="12" alignment="CENTER" styleClass="register-pane">
+
+                <Label text="Registracija korisnika" styleClass="title-label"/>
+
+                <GridPane hgap="10" vgap="10">
+                    <Label text="Ime:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtIme" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Prezime:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtPrezime" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Korisničko ime:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtUsername" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                    <Label text="Lozinka:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <PasswordField fx:id="txtPassword" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                    <Label text="Ponovi lozinku:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <PasswordField fx:id="txtPassword2" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                    <Label text="Uloga:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="cmbUloga" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                </GridPane>
+
+                <HBox spacing="10" alignment="CENTER">
+                    <Button text="Registruj" onAction="#onRegisterClicked"/>
+                    <Button text="Nazad na prijavu" onAction="#onBackToLoginClicked"/>
+                </HBox>
+
+                <Label fx:id="lblError" styleClass="error-label"/>
+            </VBox>
+        </VBox>
+    </center>
+
+</BorderPane>
