@@ -24,8 +24,11 @@
         </VBox>
     </left>
 
+
+    //ovdje je peding pravio problem...
     <center>
-        <StackPane fx:id="contentArea" padding="20.0"/>
+        <StackPane fx:id="contentArea"/>
     </center>
+
 
 </BorderPane>
