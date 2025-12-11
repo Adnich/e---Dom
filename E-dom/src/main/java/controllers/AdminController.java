@@ -24,6 +24,11 @@ public class AdminController {
         loadView("/views/studenti.fxml");
     }
 
+    @FXML
+    public void initialize() {
+        loadView("/views/dashboard-view.fxml");
+    }
+
     // Pomoćna metoda za učitavanje FXML-a
     private void loadView(String fxmlPath) {
         if (contentArea == null) return; // zaštita za Scene Builder

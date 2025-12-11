@@ -223,4 +223,23 @@ public class PrijavaDAO {
 
         return p;
     }
+
+    //ovdje dodajemo count samo da racuna za statistiku na admin panelu
+    public int countPrijave() {
+        String sql = "SELECT COUNT(*) FROM prijava";
+
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            if (rs.next())
+                return rs.getInt(1);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return 0;
+    }
+
 }

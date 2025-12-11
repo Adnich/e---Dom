@@ -180,4 +180,23 @@ public class StudentDAO {
             throw new RuntimeException(e);
         }
     }
+
+    //ovdje dodajemo da racuna za statistiku
+    public int countStudents() {
+        String sql = "SELECT COUNT(*) FROM student";
+
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            if (rs.next())
+                return rs.getInt(1);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return 0;
+    }
+
 }

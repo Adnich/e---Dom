@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controllers.DashboardController"
+      spacing="20">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Dashboard statistika"
+           style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+    <HBox spacing="20">
+
+        <VBox style="-fx-background-color: #f2f2f2; -fx-background-radius: 10;">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            <Label text="Ukupno studenata:"/>
+            <Label fx:id="lblStudenti" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+        </VBox>
+
+        <VBox style="-fx-background-color: #f2f2f2; -fx-background-radius: 10;">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            <Label text="Ukupno prijava:"/>
+            <Label fx:id="lblPrijave" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+        </VBox>
+
+    </HBox>
+
+</VBox>
