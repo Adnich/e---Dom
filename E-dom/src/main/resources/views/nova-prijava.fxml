@@ -18,40 +18,11 @@
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>
 
-            <Label text="Dodavanje nove prijave"
+            <Label text="Nova prijava"
                    style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-
-            <!-- STUDENT PODACI -->
-            <Label text="Ime:"/>
-            <TextField fx:id="txtIme"/>
-
-            <Label text="Prezime:"/>
-            <TextField fx:id="txtPrezime"/>
-
-            <Label text="Broj indeksa:"/>
-            <TextField fx:id="txtIndeks"/>
-
-            <Label text="Fakultet:"/>
-            <TextField fx:id="txtFakultet"/>
-
-            <Label text="Godina studija:"/>
-            <TextField fx:id="txtGodina"/>
-
-            <Label text="Prosjek:"/>
-            <TextField fx:id="txtProsjek"/>
-
-            <Label text="Email:"/>
-            <TextField fx:id="txtEmail"/>
-
-            <Label text="Telefon:"/>
-            <TextField fx:id="txtTelefon"/>
-
-            <Label text="Socijalni status:"/>
-            <ComboBox fx:id="cmbSocijalniStatus" prefWidth="300"/>
 
             <Separator/>
 
-            <!-- PRIJAVA PODACI -->
             <Label text="Akademska godina:"/>
             <TextField fx:id="txtAkGod" promptText="2024"/>
 
@@ -61,7 +32,6 @@
             <Button text="Spremi"
                     onAction="#onSaveClicked"
                     style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-padding: 10 20;"/>
-
         </VBox>
     </content>
 

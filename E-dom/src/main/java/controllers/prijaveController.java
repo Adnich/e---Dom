@@ -43,7 +43,7 @@ public class prijaveController {
     @FXML
     private void onNovaPrijava() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/nova-prijava.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/novi-student.fxml"));
             Scene scene = new Scene(loader.load());
 
             Stage stage = new Stage();
