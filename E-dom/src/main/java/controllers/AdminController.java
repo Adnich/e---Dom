@@ -13,30 +13,27 @@ public class AdminController {
     @FXML
     private StackPane contentArea;
 
-    @FXML
-    public void initialize() {
-        // automatski otvori PRIJAVE kad se otvori admin panel
-        showPrijave(null);
-    }
-
+    // Metode za klik na dugmad
     @FXML
     private void showPrijave(ActionEvent event) {
-        loadView("/views/prijave.fxml");   // prilagodi path ako ti je drugačiji
+        loadView("/views/prijave.fxml");
     }
 
     @FXML
     private void showStudenti(ActionEvent event) {
-        loadView("/views/studenti.fxml");  // prilagodi path ako ti je drugačiji
+        loadView("/views/studenti.fxml");
     }
 
+    // Pomoćna metoda za učitavanje FXML-a
     private void loadView(String fxmlPath) {
+        if (contentArea == null) return; // zaštita za Scene Builder
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent view = loader.load();
             contentArea.getChildren().setAll(view);
         } catch (IOException e) {
             e.printStackTrace();
-            // ovdje možeš dodati i neku error poruku ako želiš
         }
     }
 }
