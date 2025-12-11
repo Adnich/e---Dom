@@ -7,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -106,13 +105,16 @@ public class RegisterController {
 
     private void otvoriLoginEkran(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("login-view.fxml"));
-            Parent root = loader.load();
+            FXMLLoader loader =
+                    new FXMLLoader(HelloApplication.class.getResource("login-view.fxml"));
 
-            Scene scene = new Scene(root, 400, 300);
-            scene.getStylesheets().add(
-                    HelloApplication.class.getResource("styles/style.css").toExternalForm()
-            );
+            Scene scene = new Scene(loader.load(), 500, 400);
+
+            // SIGURNO učitavanje CSS-a
+            var cssUrl = HelloApplication.class.getResource("/styles/style.css");
+            if (cssUrl != null) {
+                scene.getStylesheets().add(cssUrl.toExternalForm());
+            }
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle("E-Dom - Prijava");
