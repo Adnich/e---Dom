@@ -1,4 +1,4 @@
-package org.example.edom;
+package controllers;
 
 import dao.KorisnikDAO;
 import javafx.event.ActionEvent;
@@ -12,6 +12,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Korisnik;
+import org.example.edom.HelloApplication;
 
 import java.io.IOException;
 import java.net.URL;
