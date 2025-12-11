@@ -13,4 +13,6 @@ module org.example.edom {
 
     opens org.example.edom to javafx.fxml;
     exports org.example.edom;
+    exports controllers;
+    opens controllers to javafx.fxml;
 }

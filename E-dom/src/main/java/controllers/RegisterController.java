@@ -1,4 +1,4 @@
-package org.example.edom;
+package controllers;
 
 import dao.KorisnikDAO;
 import dao.UlogaDAO;
@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Korisnik;
 import model.Uloga;
+import org.example.edom.HelloApplication;
 
 import java.io.IOException;
 import java.util.List;
