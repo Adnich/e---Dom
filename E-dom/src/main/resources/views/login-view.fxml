@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.LoginController">
+
+    <center>
+        <VBox spacing="15" alignment="CENTER" styleClass="login-pane">
+
+            <padding>
+                <Insets top="30" right="30" bottom="30" left="30"/>
+            </padding>
+
+            <Label text="E-Dom - Prijava" styleClass="title-label"/>
+
+            <GridPane hgap="10" vgap="10">
+                <Label text="Korisničko ime:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtUsername" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Lozinka:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <PasswordField fx:id="txtPassword" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <Button text="Prijava" onAction="#onLoginClicked"/>
+
+            <Label fx:id="lblError" styleClass="error-label"/>
+
+            <Hyperlink text="Registracija" onAction="#onRegisterLinkClicked"/>
+
+        </VBox>
+    </center>
+
+</BorderPane>
