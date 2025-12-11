@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.studentiController"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="400.0" prefWidth="800.0">
+
+    <children>
+        <VBox spacing="10"
+              AnchorPane.topAnchor="10"
+              AnchorPane.leftAnchor="10"
+              AnchorPane.rightAnchor="10"
+              AnchorPane.bottomAnchor="10">
+
+            <Label text="Studenti"
+                   style="-fx-font-size: 20; -fx-font-weight: bold;" />
+
+            <TableView fx:id="tblStudenti" prefHeight="400">
+
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+                    <TableColumn fx:id="colIme" text="Ime" prefWidth="120"/>
+                    <TableColumn fx:id="colPrezime" text="Prezime" prefWidth="120"/>
+                    <TableColumn fx:id="colIndeks" text="Broj indeksa" prefWidth="120"/>
+                    <TableColumn fx:id="colFakultet" text="Fakultet" prefWidth="150"/>
+                    <TableColumn fx:id="colGodina" text="Godina" prefWidth="80"/>
+                    <TableColumn fx:id="colProsjek" text="Prosjek" prefWidth="80"/>
+                    <TableColumn fx:id="colStatus" text="Soc. status" prefWidth="150"/>
+                </columns>
+
+            </TableView>
+
+        </VBox>
+    </children>
 
 </AnchorPane>
