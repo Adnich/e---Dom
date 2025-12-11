@@ -21,7 +21,7 @@ public class PrijavaDAO {
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            stmt.setDate(1, new java.sql.Date(prijava.getDatumPrijava().getTime()));
+            stmt.setDate(1, java.sql.Date.valueOf(prijava.getDatumPrijava()));
             stmt.setInt(2, prijava.getUkupniBodovi());
             stmt.setString(3, prijava.getNapomena());
             stmt.setInt(4, prijava.getIdStudent());
@@ -135,7 +135,7 @@ public class PrijavaDAO {
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setDate(1, new java.sql.Date(prijava.getDatumPrijava().getTime()));
+            stmt.setDate(1, java.sql.Date.valueOf(prijava.getDatumPrijava()));
             stmt.setInt(2, prijava.getUkupniBodovi());
             stmt.setString(3, prijava.getNapomena());
             stmt.setInt(4, prijava.getIdStudent());
@@ -201,10 +201,11 @@ public class PrijavaDAO {
 
         p.setIdPrijava(rs.getInt("id_prijava"));
 
-        Date datum = rs.getDate("datum_prijave");
-        if (datum != null) {
-            p.setDatumPrijava(new Date(datum.getTime()));
+        java.sql.Date sqlDate = rs.getDate("datum_prijave");
+        if (sqlDate != null) {
+            p.setDatumPrijava(sqlDate.toLocalDate());
         }
+
 
         p.setUkupniBodovi(rs.getInt("ukupni_bodovi"));
         p.setNapomena(rs.getString("napomena"));

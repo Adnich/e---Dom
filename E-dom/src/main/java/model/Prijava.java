@@ -1,11 +1,11 @@
 package model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Prijava {
     private int IdPrijava;
-    private Date DatumPrijava;
+    private LocalDate DatumPrijava;
     private StatusPrijave StatusPrijave;
     private int UkupniBodovi;
     private String Napomena;
@@ -17,7 +17,7 @@ public class Prijava {
     public Prijava() {
     }
 
-    public Prijava(int idPrijava, Date datumPrijava, StatusPrijave statusPrijave, int ukupniBodovi, String napomena, int akademskaGodina, int StudentId) {
+    public Prijava(int idPrijava, LocalDate datumPrijava, StatusPrijave statusPrijave, int ukupniBodovi, String napomena, int akademskaGodina, int StudentId) {
         IdPrijava = idPrijava;
         DatumPrijava = datumPrijava;
         StatusPrijave = statusPrijave;
@@ -35,11 +35,11 @@ public class Prijava {
         IdPrijava = idPrijava;
     }
 
-    public Date getDatumPrijava() {
+    public LocalDate getDatumPrijava() {
         return DatumPrijava;
     }
 
-    public void setDatumPrijava(Date datumPrijava) {
+    public void setDatumPrijava(LocalDate datumPrijava) {
         DatumPrijava = datumPrijava;
     }
 

@@ -5,6 +5,7 @@ import model.VrstaDokumenta;
 import util.DBConnection;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +23,7 @@ public class DokumentDAO {
              PreparedStatement stmt = conn.prepareStatement(sqlUpit)) {
 
             stmt.setString(1, dokument.getNaziv());
-            stmt.setDate(2, new java.sql.Date(dokument.getDatumUpload().getTime()));
+            stmt.setDate(2, java.sql.Date.valueOf(dokument.getDatumUpload()));
             stmt.setInt(3, dokument.getBrojBodova());
             stmt.setString(4, dokument.getDokumentB64());
             stmt.setBoolean(5, dokument.isDostavljen());
@@ -57,9 +58,9 @@ public class DokumentDAO {
                 d.setIdDokument(rs.getInt("id_dokument"));
                 d.setNaziv(rs.getString("naziv"));
 
-                Date datum = rs.getDate("datum_upload");
-                if (datum != null)
-                    d.setDatumUpload(new Date(datum.getTime()));
+                LocalDate datum = rs.getDate("datum_upload").toLocalDate();
+                d.setDatumUpload(datum);
+
 
                 d.setBrojBodova(rs.getInt("broj_bodova"));
                 d.setDokumentB64(rs.getString("dokumentb64"));
@@ -93,7 +94,7 @@ public class DokumentDAO {
              PreparedStatement stmt = conn.prepareStatement(sqlUpit)) {
 
             stmt.setString(1, dokument.getNaziv());
-            stmt.setDate(2, new java.sql.Date(dokument.getDatumUpload().getTime()));
+            stmt.setDate(2, java.sql.Date.valueOf(dokument.getDatumUpload()));
             stmt.setInt(3, dokument.getBrojBodova());
             stmt.setString(4, dokument.getDokumentB64());
             stmt.setBoolean(5, dokument.isDostavljen());

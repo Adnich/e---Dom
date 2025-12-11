@@ -1,11 +1,12 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Dokument {
     private int IdDokument;
     private String Naziv;
-    private Date DatumUpload;
+    private LocalDate DatumUpload;
     private int BrojBodova;
     private String DokumentB64;
     private boolean IsDostavljen;
@@ -14,7 +15,7 @@ public class Dokument {
     public Dokument() {
     }
 
-    public Dokument(int idDokument, String naziv, Date datumUpload, int brojBodova, String dokumentB64, boolean isDostavljen, VrstaDokumenta vrstaDokumenta) {
+    public Dokument(int idDokument, String naziv, LocalDate datumUpload, int brojBodova, String dokumentB64, boolean isDostavljen, VrstaDokumenta vrstaDokumenta) {
         IdDokument = idDokument;
         Naziv = naziv;
         DatumUpload = datumUpload;
@@ -40,11 +41,11 @@ public class Dokument {
         Naziv = naziv;
     }
 
-    public Date getDatumUpload() {
+    public LocalDate getDatumUpload() {
         return DatumUpload;
     }
 
-    public void setDatumUpload(Date datumUpload) {
+    public void setDatumUpload(LocalDate datumUpload) {
         DatumUpload = datumUpload;
     }
 
