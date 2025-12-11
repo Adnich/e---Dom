@@ -25,7 +25,6 @@
     </left>
 
 
-    //ovdje je peding pravio problem...
     <center>
         <StackPane fx:id="contentArea"/>
     </center>
