@@ -14,8 +14,8 @@ public class StudentDAO {
     public void unesiStudent(Student s) {
         String sql = "INSERT INTO student " +
                 "(ime, prezime, broj_indeksa, fakultet, godina_studija, prosjek, " +
-                "email, telefon, socijalni_status_id_status) " +
-                "VALUES (?,?,?,?,?,?,?,?,?)";
+                "email, telefon, socijalni_status_id_status, adresa, ime_roditelja, jmbg) " +
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -29,6 +29,11 @@ public class StudentDAO {
             stmt.setString(7, s.getEmail());
             stmt.setString(8, s.getTelefon());
             stmt.setInt(9, s.getSocijalniStatus().getIdStatus());
+            stmt.setString(10, s.getAdresa());
+            stmt.setString(11, s.getImeRoditelja());
+            stmt.setString(12, s.getJMBG());
+
+
 
             stmt.executeUpdate();
             System.out.println("Student uspješno unesen!");
@@ -43,7 +48,7 @@ public class StudentDAO {
         List<Student> studenti = new ArrayList<>();
 
         String sql = "SELECT st.id_student, st.ime, st.prezime, st.broj_indeksa, " +
-                "st.fakultet, st.godina_studija, st.prosjek, st.email, st.telefon, " +
+                "st.fakultet, st.godina_studija, st.prosjek, st.email, st.telefon, st.adresa, st.ime_roditelja, st.jmbg, " +
                 "st.socijalni_status_id_status, " +
                 "ss.id_status, ss.naziv AS naziv_statusa " +
                 "FROM student st " +
@@ -72,6 +77,10 @@ public class StudentDAO {
                         rs.getString("naziv_statusa")
                 );
                 s.setSocijalniStatus(ss);
+                s.setAdresa(rs.getString("adresa"));
+                s.setJMBG(rs.getString("jmbg"));
+                s.setImeRoditelja(rs.getString("ime_roditelja"));
+
 
                 studenti.add(s);
             }
@@ -87,7 +96,7 @@ public class StudentDAO {
     public Student dohvatiStudentaPoId(int id) {
         String sql = "SELECT st.id_student, st.ime, st.prezime, st.broj_indeksa, " +
                 "st.fakultet, st.godina_studija, st.prosjek, st.email, st.telefon, " +
-                "st.socijalni_status_id_status, " +
+                "st.socijalni_status_id_status, st.adresa, st.ime_roditelja, st.jmbg, " +
                 "ss.id_status, ss.naziv AS naziv_statusa " +
                 "FROM student st " +
                 "JOIN socijalni_status ss ON st.socijalni_status_id_status = ss.id_status " +
@@ -117,6 +126,9 @@ public class StudentDAO {
                             rs.getString("naziv_statusa")
                     );
                     s.setSocijalniStatus(ss);
+                    s.setAdresa(rs.getString("adresa"));
+                    s.setJMBG(rs.getString("jmbg"));
+                    s.setImeRoditelja(rs.getString("ime_roditelja"));
 
                     return s;
                 }
@@ -133,8 +145,10 @@ public class StudentDAO {
     public void azurirajStudent(Student s) {
         String sql = "UPDATE student SET " +
                 "ime = ?, prezime = ?, broj_indeksa = ?, fakultet = ?, godina_studija = ?, " +
-                "prosjek = ?, email = ?, telefon = ?, socijalni_status_id_status = ? " +
+                "prosjek = ?, email = ?, telefon = ?, socijalni_status_id_status = ?, " +
+                "adresa = ?, ime_roditelja = ?, jmbg = ? " +
                 "WHERE id_student = ?";
+
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -149,6 +163,9 @@ public class StudentDAO {
             stmt.setString(8, s.getTelefon());
             stmt.setInt(9, s.getSocijalniStatus().getIdStatus());
             stmt.setInt(10, s.getIdStudent());
+            stmt.setString(11, s.getAdresa());
+            stmt.setString(12, s.getJMBG());
+            stmt.setString(13, s.getImeRoditelja());
 
             int redovi = stmt.executeUpdate();
             if (redovi > 0)
@@ -202,7 +219,7 @@ public class StudentDAO {
     //pretraga strudenta po broju indeksa
     public Student findByBrojIndeksa(String indeks) {
         String sql = "SELECT st.id_student, st.ime, st.prezime, st.broj_indeksa, st.fakultet, st.godina_studija, " +
-                "st.prosjek, st.email, st.telefon, ss.id_status, ss.naziv " +
+                "st.prosjek, st.email, st.telefon, ss.id_status, ss.naziv, st.adresa, st.ime_roditelja, st.jmbg " +
                 "FROM student st JOIN socijalni_status ss ON st.socijalni_status_id_status = ss.id_status " +
                 "WHERE st.broj_indeksa = ?";
 
@@ -226,7 +243,11 @@ public class StudentDAO {
                             new SocijalniStatus(
                                     rs.getInt("id_status"),
                                     rs.getString("naziv")
-                            )
+                            ),
+                            rs.getString("adresa"),
+                            rs.getString("ime_roditelja"),
+                            rs.getString("jmbg")
+
                     );
                 }
             }

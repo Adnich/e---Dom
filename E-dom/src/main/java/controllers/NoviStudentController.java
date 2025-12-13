@@ -23,6 +23,9 @@ public class NoviStudentController {
     @FXML private TextField txtEmail;
     @FXML private TextField txtTelefon;
     @FXML private ComboBox<SocijalniStatus> cmbSocijalniStatus;
+    @FXML private TextField txtJMBG;
+    @FXML private TextField txtAdresa;
+    @FXML private TextField txtRoditelj;
 
     private final StudentDAO studentDAO = new StudentDAO();
     private final SocijalniStatusDAO socijalniStatusDAO = new SocijalniStatusDAO();
@@ -32,6 +35,22 @@ public class NoviStudentController {
         cmbSocijalniStatus.setItems(
                 FXCollections.observableArrayList(socijalniStatusDAO.dohvatiSveStatuse())
         );
+
+        cmbSocijalniStatus.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(SocijalniStatus sStatus, boolean empty){
+                super.updateItem(sStatus, empty);
+                setText((empty || sStatus == null) ? "" : sStatus.getNaziv());
+            }
+        });
+
+        cmbSocijalniStatus.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(SocijalniStatus sStatus, boolean empty){
+                super.updateItem(sStatus, empty);
+                setText((empty || sStatus == null) ? "" : sStatus.getNaziv());
+            }
+        });
     }
 
     @FXML
@@ -43,11 +62,15 @@ public class NoviStudentController {
                 txtFakultet.getText().isEmpty() ||
                 txtGodina.getText().isEmpty() ||
                 txtProsjek.getText().isEmpty() ||
-                cmbSocijalniStatus.getValue() == null) {
+                cmbSocijalniStatus.getValue() == null ||
+                txtAdresa.getText().isEmpty() ||
+                txtJMBG.getText().isEmpty() ||
+                txtRoditelj.getText().isEmpty()) {
 
             showAlert("Greška", "Sva obavezna polja moraju biti popunjena.");
             return;
         }
+
 
         int godinaStudija;
         double prosjek;
@@ -76,6 +99,9 @@ public class NoviStudentController {
             s.setEmail(txtEmail.getText());
             s.setTelefon(txtTelefon.getText());
             s.setSocijalniStatus(cmbSocijalniStatus.getValue());
+            s.setJMBG(txtJMBG.getText());
+            s.setAdresa(txtAdresa.getText());
+            s.setImeRoditelja(txtRoditelj.getText());
 
             studentDAO.unesiStudent(s);
 

@@ -26,6 +26,9 @@
             <Label text="Akademska godina:"/>
             <TextField fx:id="txtAkGod" promptText="2024"/>
 
+            <Label text="Broj članova domaćinstva:"/>
+            <TextField fx:id="txtClanovi" promptText="2024"/>
+
             <Label text="Napomena:"/>
             <TextArea fx:id="txtNapomena" prefHeight="80"/>
 

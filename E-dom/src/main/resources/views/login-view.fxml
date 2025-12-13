@@ -3,6 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <BorderPane styleClass="login-root" stylesheets="@../styles/login-style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
 
     <!-- Lijevi panel -->
@@ -10,6 +12,13 @@
         <StackPane prefHeight="291.0" prefWidth="298.0" styleClass="side-pane">
             <VBox spacing="15">
                 <Label styleClass="side-title" text="E-Dom" />
+
+                <ImageView fitWidth="100" fitHeight="100" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/logo.png" />
+                    </image>
+                </ImageView>
+
                 <Label styleClass="side-subtitle" text="Sistem za upravljanje studentskim domom" wrapText="true" />
                 <Label styleClass="side-description" text="Pregled prijava, studenata i soba na jednom mjestu." wrapText="true" />
             </VBox>
@@ -24,24 +33,19 @@
 
                     <Label styleClass="title-label" text="Prijava u E-Dom" />
 
-                    <GridPane styleClass="form-grid">
-                        <columnConstraints>
-                            <ColumnConstraints halignment="RIGHT" />
-                            <ColumnConstraints hgrow="ALWAYS" />
-                        </columnConstraints>
+                    <!-- Korisničko ime -->
+                    <VBox spacing="5" alignment="TOP_LEFT">
+                        <Label text="Korisničko ime:" />
+                        <TextField fx:id="txtUsername" maxWidth="Infinity" />
+                    </VBox>
 
-                        <Label text="Korisničko ime:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                        <TextField fx:id="txtUsername" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <!-- Lozinka -->
+                    <VBox spacing="5" alignment="TOP_LEFT">
+                        <Label text="Lozinka:" />
+                        <PasswordField fx:id="txtPassword" maxWidth="Infinity" />
+                    </VBox>
 
-                        <Label text="Lozinka:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                        <PasswordField fx:id="txtPassword" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <rowConstraints>
-                     <RowConstraints />
-                     <RowConstraints />
-                  </rowConstraints>
-                    </GridPane>
-
-                    <Button onAction="#onLoginClicked" text="Prijava" />
+                    <Button text="Prijava" onAction="#onLoginClicked" maxWidth="120" />
 
                     <Label fx:id="lblError" styleClass="error-label" />
 

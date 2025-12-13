@@ -45,11 +45,27 @@ public class RegisterController {
 
     @FXML
     public void initialize() {
-        // Učitavanje uloga iz baze pri otvaranju forme
         List<Uloga> uloge = ulogaDAO.dohvatiSveUloge();
         cmbUloga.setItems(FXCollections.observableArrayList(uloge));
         cmbUloga.setPromptText("Odaberite ulogu");
+
+        cmbUloga.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(Uloga uloga, boolean empty) {
+                super.updateItem(uloga, empty);
+                setText((empty || uloga == null) ? "" : uloga.getNaziv());
+            }
+        });
+
+        cmbUloga.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(Uloga uloga, boolean empty) {
+                super.updateItem(uloga, empty);
+                setText((empty || uloga == null) ? "" : uloga.getNaziv());
+            }
+        });
     }
+
 
     @FXML
     private void onRegisterClicked(ActionEvent event) {

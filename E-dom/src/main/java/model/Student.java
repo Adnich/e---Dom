@@ -11,11 +11,14 @@ public class Student {
     private String Email;
     private String Telefon;
     private SocijalniStatus SocijalniStatus;
+    private String ImeRoditelja;
+    private String Adresa;
+    private String JMBG;
 
     public Student() {
     }
 
-    public Student(int idStudent, String ime, String prezime, String brojIndeksa, String fakultet, int godinaStudija, double prosjek, String email, String telefon, SocijalniStatus socijalniStatus) {
+    public Student(int idStudent, String ime, String prezime, String brojIndeksa, String fakultet, int godinaStudija, double prosjek, String email, String telefon, SocijalniStatus socijalniStatus, String imeRoditelja, String adresa, String JMBG) {
         this.idStudent = idStudent;
         Ime = ime;
         Prezime = prezime;
@@ -26,6 +29,9 @@ public class Student {
         Email = email;
         Telefon = telefon;
         SocijalniStatus = socijalniStatus;
+        ImeRoditelja = imeRoditelja;
+        Adresa = adresa;
+        this.JMBG = JMBG;
     }
 
     public int getIdStudent() {
@@ -106,6 +112,30 @@ public class Student {
 
     public void setSocijalniStatus(SocijalniStatus socijalniStatus) {
         SocijalniStatus = socijalniStatus;
+    }
+
+    public String getImeRoditelja() {
+        return ImeRoditelja;
+    }
+
+    public void setImeRoditelja(String imeRoditelja) {
+        ImeRoditelja = imeRoditelja;
+    }
+
+    public String getAdresa() {
+        return Adresa;
+    }
+
+    public void setAdresa(String adresa) {
+        Adresa = adresa;
+    }
+
+    public String getJMBG() {
+        return JMBG;
+    }
+
+    public void setJMBG(String JMBG) {
+        this.JMBG = JMBG;
     }
 
     @Override

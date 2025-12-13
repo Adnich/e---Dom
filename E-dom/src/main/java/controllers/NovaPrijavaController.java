@@ -2,6 +2,9 @@ package controllers;
 
 import dao.PrijavaDAO;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Prijava;
@@ -13,6 +16,7 @@ public class NovaPrijavaController {
 
     @FXML private TextField txtAkGod;
     @FXML private TextArea txtNapomena;
+    @FXML private TextField txtClanovi;
 
     private int studentId;
 
@@ -53,8 +57,26 @@ public class NovaPrijavaController {
 
         showAlert("Uspjeh", "Prijava uspješno unešena!");
 
+        Prijava prijava = prijavaDAO.dohvatiSvePrijave().getLast();
+        int prijavaId = prijava.getIdPrijava();
+        int clanovi = Integer.parseInt(txtClanovi.getText());
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/dodaj-dokumente.fxml"));
+            Parent root = loader.load();
+
+            DodajDokumenteController controller = loader.getController();
+            controller.setPrijavaId(prijavaId);
+            controller.setClanovi(clanovi);
+
+            Stage stage = (Stage) txtAkGod.getScene().getWindow();
+            stage.setScene(new Scene(root));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Greška", "Ne mogu učitati formu za dokumente.");
+        }
+
         Stage stage = (Stage) txtAkGod.getScene().getWindow();
-        stage.close();
     }
 
     private void showAlert(String title, String msg) {
