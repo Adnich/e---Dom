@@ -37,6 +37,16 @@ public class prijaveController {
 
     private final PrijavaDAO prijavaDAO = new PrijavaDAO();
 
+    // ===============================
+    //  OVO JE NOVA METODA (BITNO)
+    // ===============================
+    public void refreshTabela() {
+        tblPrijave.setItems(
+                FXCollections.observableArrayList(prijavaDAO.dohvatiSvePrijave())
+        );
+    }
+
+
     // -------------------------------------------------------
     //  DODANO: OTVARANJE NOVE PRIJAVE
     // -------------------------------------------------------

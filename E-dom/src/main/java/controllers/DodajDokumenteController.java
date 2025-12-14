@@ -1,32 +1,38 @@
 package controllers;
 
 import dao.DokumentDAO;
+import dao.PrijavaDAO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Dokument;
+import model.Prijava;
 import model.VrstaDokumenta;
+import service.BodovanjeService;
 
-import java.io.File;
 import java.time.LocalDate;
 import java.util.*;
 
 public class DodajDokumenteController {
 
-    @FXML private VBox vboxClanovi;
+    @FXML
+    private VBox vboxClanovi;
 
     private int prijavaId;
     private int clanovi;
 
-    private Map<Integer, List<Dokument>> dokumentiPoClanu = new HashMap<>();
-    private List<VrstaDokumenta> vrsteDokumenata = List.of(
+    private final Map<Integer, List<Dokument>> dokumentiPoClanu = new HashMap<>();
+    private final Map<Integer, Double> primanjaPoClanu = new HashMap<>();
+
+    private final List<VrstaDokumenta> vrsteDokumenata = List.of(
             new VrstaDokumenta(1, "Potvrda o primanjima"),
             new VrstaDokumenta(2, "Ugovor o radu"),
-            new VrstaDokumenta(3, "Penzijsko rješenje")
+            new VrstaDokumenta(3, "Penzijsko rješenje"),
+            new VrstaDokumenta(4, "Potvrda o školovanju"),
+            new VrstaDokumenta(5, "Potvrda sa biroa")
     );
 
     public void setPrijavaId(int prijavaId) {
@@ -40,88 +46,122 @@ public class DodajDokumenteController {
 
     private void generisiSekcijeZaClanove() {
         vboxClanovi.getChildren().clear();
+        dokumentiPoClanu.clear();
+        primanjaPoClanu.clear();
 
         for (int i = 1; i <= clanovi; i++) {
-            final int clanIndex = i; // ovo je final i može se koristiti u lambdi
+            final int clanIndex = i;
 
-            VBox clanBox = new VBox();
-            clanBox.setSpacing(5);
+            VBox clanBox = new VBox(8);
+            Label lblClan = new Label("Član " + clanIndex);
 
-            Label lblClan = new Label("Član " + clanIndex + ":");
+            TextField txtImeClana = new TextField();
+            txtImeClana.setPromptText("Ime / uloga (npr. majka)");
 
-            CheckBox chkDostavljen = new CheckBox("Dokument dostavljen");
-            TextField txtBodovi = new TextField();
-            txtBodovi.setPromptText("Broj bodova");
+            TextField txtIznos = new TextField();
+            txtIznos.setPromptText("Mjesečna primanja (KM)");
+
+            // ✅ KLJUČNO: spremi primanja kad korisnik izađe iz polja (nije vezano za dokument)
+            txtIznos.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+                if (wasFocused && !isNowFocused) { // izgubio fokus
+                    double iznos = parseIznosOrZero(txtIznos.getText());
+                    primanjaPoClanu.put(clanIndex, iznos);
+                }
+            });
 
             ComboBox<VrstaDokumenta> cmbVrsta = new ComboBox<>();
             cmbVrsta.setItems(FXCollections.observableArrayList(vrsteDokumenata));
+            cmbVrsta.setPromptText("Vrsta dokumenta");
 
+            CheckBox chkDostavljen = new CheckBox("Dokument dostavljen");
             Button btnDodajDokument = new Button("Dodaj dokument");
 
-            // inicijalizacija liste dokumenata za ovog člana
             dokumentiPoClanu.put(clanIndex, new ArrayList<>());
 
-            int finalI = i;
             btnDodajDokument.setOnAction(e -> {
+
                 if (!chkDostavljen.isSelected()) {
-                    showAlert("Greška", "Morate označiti da je dokument dostavljen.");
+                    showAlert("Greška", "Označi da je dokument dostavljen.");
                     return;
                 }
 
-                VrstaDokumenta vrsta = cmbVrsta.getValue();
-                if (vrsta == null) {
-                    showAlert("Greška", "Morate odabrati vrstu dokumenta.");
+                if (cmbVrsta.getValue() == null) {
+                    showAlert("Greška", "Odaberi vrstu dokumenta.");
                     return;
                 }
 
-                int bodovi;
-                try {
-                    bodovi = Integer.parseInt(txtBodovi.getText());
-                } catch (Exception ex) {
-                    showAlert("Greška", "Broj bodova mora biti broj.");
-                    return;
-                }
+                // (primanja se već spremaju kroz listener, ali ovdje još jednom “osiguramo”)
+                primanjaPoClanu.put(clanIndex, parseIznosOrZero(txtIznos.getText()));
 
-                DokumentDAO dokumentDAO = new DokumentDAO();
+                String ime = txtImeClana.getText().isEmpty()
+                        ? "Član " + clanIndex
+                        : txtImeClana.getText();
 
-                // Kreiramo dokument **bez potrebe za file**
-                Dokument dokument = new Dokument();
-                dokument.setNaziv("Potvrda o primanju " + (clanIndex) + ". člana domaćinstva");
-                dokument.setDatumUpload(LocalDate.now());
-                dokument.setBrojBodova(bodovi);
-                dokument.setDostavljen(true);
-                dokument.setVrstaDokumenta(vrsta);
-                dokument.setDokumentB64(null); // file još nije dodan
+                Dokument d = new Dokument();
+                d.setNaziv(cmbVrsta.getValue().getNaziv() + " - " + ime);
+                d.setDatumUpload(LocalDate.now());
+                d.setBrojBodova(0); // dokumenti trenutno ne nose bodove dok ne implementiraš UI za dodatne kriterije
+                d.setDostavljen(true);
+                d.setVrstaDokumenta(cmbVrsta.getValue());
+                d.setDokumentB64(null);
 
-                dokumentDAO.unesiDokument(dokument,prijavaId);
+                new DokumentDAO().unesiDokument(d, prijavaId);
+                dokumentiPoClanu.get(clanIndex).add(d);
 
-                dokumentiPoClanu.get(clanIndex).add(dokument);
-
-                // Reset polja
-                txtBodovi.clear();
                 cmbVrsta.getSelectionModel().clearSelection();
                 chkDostavljen.setSelected(false);
             });
 
-
-            HBox hbox = new HBox(10, chkDostavljen, cmbVrsta, txtBodovi, btnDodajDokument);
-            clanBox.getChildren().addAll(lblClan, hbox);
-
+            HBox hbox = new HBox(10, txtIznos, cmbVrsta, chkDostavljen, btnDodajDokument);
+            clanBox.getChildren().addAll(lblClan, txtImeClana, hbox);
             vboxClanovi.getChildren().add(clanBox);
         }
 
-        // dugme za završetak unosa
         Button btnZavrsi = new Button("Završi unos");
         btnZavrsi.setOnAction(e -> zavrsiUnos());
         vboxClanovi.getChildren().add(btnZavrsi);
     }
 
     private void zavrsiUnos() {
-        int ukupnoDokumenata = dokumentiPoClanu.values().stream().mapToInt(List::size).sum();
-        showAlert("Gotovo", "Dodavanje dokumenata završeno. Ukupno dokumenata: " + ukupnoDokumenata);
+
+        // ✅ uzmi primanja za sve članove; ako neko nije upisan -> tretiraj kao 0
+        for (int i = 1; i <= clanovi; i++) {
+            primanjaPoClanu.putIfAbsent(i, 0.0);
+        }
+
+        double ukupnaPrimanja = primanjaPoClanu.values()
+                .stream()
+                .mapToDouble(Double::doubleValue)
+                .sum();
+
+        // ✅ ključno: dijeli sa ukupnim brojem članova, ne sa map.size
+        double primanjaPoClanuVrijednost = (clanovi == 0) ? 0 : ukupnaPrimanja / clanovi;
+
+        int ukupniBodovi = BodovanjeService.bodoviZaPrimanja(primanjaPoClanuVrijednost);
+
+        PrijavaDAO prijavaDAO = new PrijavaDAO();
+        Prijava prijava = prijavaDAO.dohvatiPrijavuPoId(prijavaId);
+        prijava.setUkupniBodovi(ukupniBodovi);
+        prijavaDAO.azurirajPrijavu(prijava);
+
+        showAlert(
+                "Trenutni broj bodova: ",
+                "Ukupna primanja: " + ukupnaPrimanja +
+                        "\nPrimanja po članu: " + primanjaPoClanuVrijednost +
+                        "\nUKUPNI BODOVI: " + ukupniBodovi
+        );
 
         Stage stage = (Stage) vboxClanovi.getScene().getWindow();
         stage.close();
+    }
+
+    private double parseIznosOrZero(String text) {
+        if (text == null || text.trim().isEmpty()) return 0;
+        try {
+            return Double.parseDouble(text.trim());
+        } catch (NumberFormatException ex) {
+            return 0;
+        }
     }
 
     private void showAlert(String title, String msg) {

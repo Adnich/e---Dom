@@ -132,4 +132,45 @@ public class DokumentDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public List<Dokument> dohvatiDokumenteZaPrijavu(int prijavaId) {
+        List<Dokument> dokumenti = new ArrayList<>();
+
+        String sql = "SELECT d.*, v.id_vrsta, v.naziv AS naziv_vrste " +
+                "FROM dokument d " +
+                "JOIN vrsta_dokumenta v ON d.vrsta_dokumentaid_vrsta = v.id_vrsta " +
+                "WHERE d.prijavaid_prijava = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, prijavaId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Dokument d = new Dokument();
+
+                    d.setIdDokument(rs.getInt("id_dokument"));
+                    d.setNaziv(rs.getString("naziv"));
+                    d.setDatumUpload(rs.getDate("datum_upload").toLocalDate());
+                    d.setBrojBodova(rs.getInt("broj_bodova"));
+                    d.setDokumentB64(rs.getString("dokumentb64"));
+                    d.setDostavljen(rs.getBoolean("isdostavljen"));
+
+                    d.setVrstaDokumenta(new VrstaDokumenta(
+                            rs.getInt("id_vrsta"),
+                            rs.getString("naziv_vrste")
+                    ));
+
+                    dokumenti.add(d);
+                }
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return dokumenti;
+    }
+
 }
