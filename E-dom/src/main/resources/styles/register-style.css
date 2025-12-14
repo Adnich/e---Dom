@@ -1,23 +1,17 @@
-/* ROOT */
 .root {
     -fx-font-family: "Segoe UI";
 }
 
-/* ===== LIJEVI PANEL ===== */
+/* LEFT */
 .left-pane {
-    -fx-background-color: #27b397; /* ista boja kao login */
+    -fx-background-color: #22b39a; /* ista kao login dugme */
     -fx-padding: 60 40 60 40;
-}
-
-.left-logo {
-    -fx-opacity: 0.95;
 }
 
 .left-subtitle {
     -fx-font-size: 16px;
     -fx-font-weight: 600;
-    -fx-text-fill: rgba(255,255,255,0.85);
-    -fx-wrap-text: true;
+    -fx-text-fill: rgba(255,255,255,0.90);
     -fx-max-width: 260px;
     -fx-padding: 10 0 0 0;
 }
@@ -25,46 +19,44 @@
 .left-text {
     -fx-font-size: 13px;
     -fx-font-weight: 400;
-    -fx-text-fill: rgba(255,255,255,0.70);
-    -fx-wrap-text: true;
+    -fx-text-fill: rgba(255,255,255,0.75);
     -fx-max-width: 260px;
     -fx-line-spacing: 3px;
 }
 
-/* ===== DESNI PANEL ===== */
+/* RIGHT */
 .right-pane {
     -fx-background-color: #f7fbff;
 }
 
-/* DEKOR KRUG */
+/* DECOR CIRCLE (malo manji nego login jer je forma duža) */
 .circle-decor {
     -fx-background-radius: 999px;
-    -fx-pref-width: 720px;
-    -fx-pref-height: 720px;
+    -fx-pref-width: 620px;
+    -fx-pref-height: 620px;
     -fx-background-color: rgba(34,179,154,0.10);
-    -fx-translate-x: 220px;
+    -fx-translate-x: 200px;
 }
 
-/* GLAVNI CONTAINER */
-.login-container {
-    -fx-padding: 60 40 40 40;
+/* CONTAINER */
+.register-container {
+    -fx-padding: 55 40 40 40;
 }
 
-/* NASLOV */
-.login-title {
+/* TITLE */
+.register-title {
     -fx-text-fill: #22b39a;
-    -fx-font-size: 28px;
+    -fx-font-size: 30px;
     -fx-font-weight: 800;
 }
 
-/* ===== FORMA ===== */
+/* FORM */
 .field-label {
     -fx-font-size: 12px;
     -fx-text-fill: #334155;
     -fx-font-weight: 600;
 }
 
-/* INPUT + COMBOBOX */
 .text-input {
     -fx-background-color: white;
     -fx-background-radius: 18px;
@@ -79,37 +71,150 @@
     -fx-border-width: 1.5px;
 }
 
-/* COMBOBOX POSEBNO */
-.combo-box {
+/* ComboBox u istom stilu */
+.combo-input {
+    -fx-background-color: white;
     -fx-background-radius: 18px;
     -fx-border-radius: 18px;
-}
-
-.combo-box .list-cell {
-    -fx-padding: 8 12 8 12;
+    -fx-border-color: rgba(34,179,154,0.25);
+    -fx-padding: 6 10 6 10;
     -fx-font-size: 13px;
 }
 
-/* ===== DUGMAD ===== */
+.combo-input:focused {
+    -fx-border-color: #22b39a;
+    -fx-border-width: 1.5px;
+}
+
+/* BUTTONS */
 .primary-btn {
-    -fx-background-color: #22b39a;
+    -fx-background-radius: 40px;
+    -fx-background-color: linear-gradient(
+        to bottom,
+        #2ec9ad,
+        #22b39a
+    );
     -fx-text-fill: white;
-    -fx-font-weight: 700;
-    -fx-font-size: 14px;
-    -fx-background-radius: 24px;
-    -fx-padding: 12 20 12 20;
+    -fx-font-weight: 800;
+    -fx-font-size: 15px;
+
+    -fx-padding: 14 32 14 32;
+
+    /* shadow = jelly osjećaj */
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.45),
+        18,
+        0.25,
+        0,
+        8
+    );
 }
 
+/* hover = blago “nabubri” */
 .primary-btn:hover {
-    -fx-background-color: #1da38d;
+    -fx-scale-x: 1.04;
+    -fx-scale-y: 1.04;
+    -fx-background-color: linear-gradient(
+        to bottom,
+        #3ddbc0,
+        #1da38d
+    );
 }
 
+/* pressed = jelly squash */
 .primary-btn:pressed {
-    -fx-background-color: #188c79;
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.95;
+    -fx-background-color: #1a8f7c;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.25),
+        10,
+        0.2,
+        0,
+        4
+    );
 }
 
-/* ===== ERROR ===== */
+
+
+
+
+.secondary-btn {
+    -fx-background-color: transparent;
+
+    -fx-border-color: rgba(34,179,154,0.85);
+    -fx-border-width: 2px;
+    -fx-border-radius: 40px;
+
+    -fx-text-fill: #22b39a;
+    -fx-font-weight: 800;
+    -fx-font-size: 14px;
+
+    -fx-padding: 13 30 13 30;
+
+    /* jelly glow (light) */
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.35),
+        14,
+        0.25,
+        0,
+        6
+    );
+}
+
+
+.secondary-btn:hover {
+    -fx-scale-x: 1.04;
+    -fx-scale-y: 1.04;
+
+    -fx-background-color: rgba(34,179,154,0.10);
+    -fx-border-color: #22b39a;
+
+
+    -fx-effect: dropshadow(
+
+        gaussian,
+        white,
+        18,
+        0.6,
+        0,
+        8
+    );
+}
+
+.secondary-btn:pressed {
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.95;
+
+    -fx-background-color: rgba(34,179,154,0.18);
+    -fx-border-color: #1a8f7c;
+
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.25),
+        10,
+        0.2,
+        0,
+        4
+    );
+}
+
+
+
+
+.secondary-btn:hover {
+    -fx-background-color: rgba(34,179,154,0.10);
+}
+
+.secondary-btn:pressed {
+    -fx-background-color: rgba(34,179,154,0.18);
+}
+
+/* ERROR */
 .error-label {
     -fx-font-size: 12px;
-    -fx-text-fill: #dc2626;
+    -fx-text-fill: #d11a2a;
 }

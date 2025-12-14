@@ -1,0 +1,128 @@
+.root {
+    -fx-font-family: "Segoe UI";
+}
+
+/* ROOT */
+.dash-root {
+    -fx-background-color: #f7fbff;
+    -fx-padding: 28 30 30 30;
+}
+
+/* HEADER */
+.dash-header {
+    -fx-padding: 4 2 8 2;
+}
+
+.dash-title {
+    -fx-text-fill: #22b39a;
+    -fx-font-size: 30px;
+    -fx-font-weight: 900;
+}
+
+.dash-subtitle {
+    -fx-text-fill: rgba(51, 65, 85, 0.70);
+    -fx-font-size: 13px;
+}
+
+/* CARDS ROW */
+.cards-row {}
+
+.stat-card {
+    -fx-background-color: white;
+    -fx-background-radius: 18;
+    -fx-padding: 18 18 18 18;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 14, 0.25, 0, 6);
+}
+
+.secondary-card {
+    -fx-background-color: rgba(34,179,154,0.06);
+    -fx-border-color: rgba(34,179,154,0.20);
+    -fx-border-width: 1px;
+    -fx-border-radius: 18;
+}
+
+.stat-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #334155;
+    -fx-font-weight: 700;
+}
+
+.stat-number {
+    -fx-font-size: 44px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #22b39a;
+}
+
+.stat-number-small {
+    -fx-font-size: 18px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #22b39a;
+}
+
+.stat-hint {
+    -fx-font-size: 12px;
+    -fx-text-fill: rgba(51,65,85,0.65);
+}
+
+/* PANELS */
+.panel {
+    -fx-background-color: white;
+    -fx-background-radius: 18;
+    -fx-padding: 18;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 12, 0.25, 0, 5);
+}
+
+.panel-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #334155;
+}
+
+.panel-hint {
+    -fx-font-size: 12px;
+    -fx-text-fill: rgba(51,65,85,0.70);
+}
+
+.panel-item {
+    -fx-font-size: 13px;
+    -fx-text-fill: rgba(51,65,85,0.78);
+}
+
+/* BUTTONS (jelly feel ali admin-friendly) */
+.primary-btn {
+    -fx-background-radius: 40px;
+    -fx-background-color: linear-gradient(to bottom, #2ec9ad, #22b39a);
+    -fx-text-fill: white;
+    -fx-font-weight: 800;
+    -fx-font-size: 14px;
+    -fx-padding: 12 20 12 20;
+    -fx-effect: dropshadow(gaussian, rgba(34,179,154,0.35), 16, 0.25, 0, 7);
+}
+
+.primary-btn:hover { -fx-scale-x: 1.03; -fx-scale-y: 1.03; }
+.primary-btn:pressed { -fx-scale-x: 0.98; -fx-scale-y: 0.96; }
+
+.secondary-btn {
+    -fx-background-color: transparent;
+    -fx-border-color: rgba(34,179,154,0.90);
+    -fx-border-width: 2px;
+    -fx-text-fill: #22b39a;
+    -fx-font-weight: 800;
+    -fx-font-size: 14px;
+    -fx-background-radius: 40px;
+    -fx-border-radius: 40px;
+    -fx-padding: 12 20 12 20;
+    -fx-effect: dropshadow(gaussian, rgba(34,179,154,0.14), 12, 0.25, 0, 5);
+}
+
+.secondary-btn:hover {
+    -fx-background-color: rgba(34,179,154,0.08);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.secondary-btn:pressed {
+    -fx-background-color: rgba(34,179,154,0.14);
+    -fx-scale-x: 0.985;
+    -fx-scale-y: 0.96;
+}

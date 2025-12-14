@@ -125,7 +125,7 @@ public class RegisterController {
             FXMLLoader loader =
                     new FXMLLoader(HelloApplication.class.getResource("/views/login-view.fxml"));
 
-            Scene scene = new Scene(loader.load(), 500, 400);
+            Scene scene = new Scene(loader.load(), 1000, 600);
 
             // SIGURNO učitavanje CSS-a
             var cssUrl = HelloApplication.class.getResource("/styles/login-style.css");
@@ -135,8 +135,13 @@ public class RegisterController {
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle("E-Dom - Prijava");
+
             stage.setScene(scene);
+            stage.setResizable(false);
+            stage.sizeToScene();
+            stage.centerOnScreen();
             stage.show();
+
 
         } catch (IOException e) {
             e.printStackTrace();

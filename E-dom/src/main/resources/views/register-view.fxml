@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -14,33 +13,28 @@
 
     <!-- LIJEVA STRANA -->
     <left>
-        <VBox spacing="25"
+        <VBox spacing="22"
               alignment="TOP_LEFT"
               styleClass="left-pane">
-            <children>
 
-                <!-- LOGO (centriran unutar lijevog panela) -->
-                <StackPane alignment="TOP_CENTER" prefWidth="320">
-                    <children>
-                        <ImageView fitWidth="190" preserveRatio="true" styleClass="left-logo">
-                            <image>
-                                <Image url="@../images/e-domLOGO.png"/>
-                            </image>
-                        </ImageView>
-                    </children>
-                    <padding>
-                        <Insets top="10"/>
-                    </padding>
-                </StackPane>
+            <!-- logo centriran horizontalno -->
+            <HBox alignment="CENTER_LEFT">
+                <children>
+                    <ImageView fitWidth="190" preserveRatio="true" styleClass="left-logo">
+                        <image>
+                            <Image url="@../images/e-domLOGO.png"/>
+                        </image>
+                    </ImageView>
+                </children>
+            </HBox>
 
-                <Label text="Sistem za upravljanje studentskim domom"
-                       wrapText="true"
-                       styleClass="left-subtitle"/>
+            <Label text="Sistem za upravljanje studentskim domom"
+                   wrapText="true"
+                   styleClass="left-subtitle"/>
 
-                <Label text="Registrujte novog korisnika i dodijelite ulogu."
-                       wrapText="true"
-                       styleClass="left-text"/>
-            </children>
+            <Label text="Registrujte novog korisnika i dodijelite ulogu."
+                   wrapText="true"
+                   styleClass="left-text"/>
         </VBox>
     </left>
 
@@ -52,16 +46,16 @@
                 <!-- dekor krug -->
                 <Pane styleClass="circle-decor" StackPane.alignment="CENTER_RIGHT"/>
 
-                <!-- glavni container -->
-                <VBox spacing="30"
+                <!-- container -->
+                <VBox spacing="26"
                       alignment="TOP_CENTER"
-                      styleClass="login-container"
+                      styleClass="register-container"
                       maxWidth="520">
 
                     <!-- naslov -->
-                    <VBox spacing="6" alignment="CENTER_LEFT">
+                    <VBox spacing="8" alignment="CENTER_LEFT" maxWidth="420">
                         <children>
-                            <Label text="Registracija korisnika" styleClass="login-title"/>
+                            <Label text="Registracija korisnika" styleClass="register-title"/>
                         </children>
                     </VBox>
 
@@ -69,23 +63,28 @@
                     <VBox spacing="16" alignment="CENTER_LEFT" maxWidth="420">
                         <children>
 
-                            <VBox spacing="6">
+                            <!-- Ime + Prezime u jednom redu -->
+                            <HBox spacing="14">
                                 <children>
-                                    <Label text="Ime" styleClass="field-label"/>
-                                    <TextField fx:id="txtIme"
-                                               promptText="Unesite ime"
-                                               styleClass="text-input"/>
-                                </children>
-                            </VBox>
+                                    <VBox spacing="6" HBox.hgrow="ALWAYS">
+                                        <children>
+                                            <Label text="Ime" styleClass="field-label"/>
+                                            <TextField fx:id="txtIme"
+                                                       promptText="Unesite ime"
+                                                       styleClass="text-input"/>
+                                        </children>
+                                    </VBox>
 
-                            <VBox spacing="6">
-                                <children>
-                                    <Label text="Prezime" styleClass="field-label"/>
-                                    <TextField fx:id="txtPrezime"
-                                               promptText="Unesite prezime"
-                                               styleClass="text-input"/>
+                                    <VBox spacing="6" HBox.hgrow="ALWAYS">
+                                        <children>
+                                            <Label text="Prezime" styleClass="field-label"/>
+                                            <TextField fx:id="txtPrezime"
+                                                       promptText="Unesite prezime"
+                                                       styleClass="text-input"/>
+                                        </children>
+                                    </VBox>
                                 </children>
-                            </VBox>
+                            </HBox>
 
                             <VBox spacing="6">
                                 <children>
@@ -118,29 +117,27 @@
                                 <children>
                                     <Label text="Uloga" styleClass="field-label"/>
                                     <ComboBox fx:id="cmbUloga"
-                                              styleClass="text-input"
-                                              prefHeight="42"/>
+                                              promptText="Odaberite ulogu"
+                                              styleClass="combo-input"/>
                                 </children>
                             </VBox>
 
                             <!-- dugmad -->
-                            <HBox spacing="12" alignment="CENTER">
+                            <HBox spacing="14" alignment="CENTER">
                                 <children>
                                     <Button text="Registruj"
                                             onAction="#onRegisterClicked"
                                             styleClass="primary-btn"
-                                            prefWidth="170"/>
+                                            prefWidth="190"/>
 
                                     <Button text="Nazad na prijavu"
                                             onAction="#onBackToLoginClicked"
-                                            styleClass="primary-btn"
-                                            prefWidth="170"/>
+                                            styleClass="secondary-btn"
+                                            prefWidth="190"/>
                                 </children>
                             </HBox>
 
-                            <Label fx:id="lblError"
-                                   textFill="red"
-                                   styleClass="error-label"/>
+                            <Label fx:id="lblError" styleClass="error-label"/>
 
                         </children>
                     </VBox>

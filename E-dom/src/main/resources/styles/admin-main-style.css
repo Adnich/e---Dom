@@ -1,0 +1,83 @@
+.root {
+    -fx-font-family: "Segoe UI";
+}
+
+/* SIDEBAR */
+.sidebar {
+    -fx-background-color: #27b397;
+    -fx-padding: 20;
+}
+
+.sidebar-title {
+    -fx-text-fill: rgba(255,255,255,0.95);
+    -fx-font-size: 18px;
+    -fx-font-weight: 800;
+}
+
+.sidebar-separator .line {
+    -fx-background-color: rgba(255,255,255,0.18);
+}
+
+/* NAV BUTTONS */
+.nav-btn {
+    -fx-background-radius: 40px;
+        -fx-background-color: linear-gradient(
+            to bottom,
+            #2ec9ad,
+            #22b39a
+        );
+        -fx-text-fill: white;
+        -fx-font-weight: 800;
+        -fx-font-size: 15px;
+
+        -fx-padding: 14 32 14 32;
+
+        /* shadow = jelly osjećaj */
+        -fx-effect: dropshadow(
+            gaussian,
+            rgba(34,179,154,0.45),
+            18,
+            0.25,
+            0,
+            8
+        );
+}
+
+.nav-btn:hover {
+-fx-scale-x: 0.9;
+    -fx-scale-y: 0.9;
+    -fx-background-color: linear-gradient(
+        to bottom,
+        #3ddbc0,
+        #1da38d
+    );
+    }
+
+
+.nav-btn:pressed {
+ -fx-scale-x: 0.97;
+    -fx-scale-y: 0.95;
+    -fx-background-color: #1a8f7c;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.25),
+        10,
+        0.2,
+        0,
+        4
+    );}
+
+/* Ako želiš da aktivno dugme izgleda “selected”, možeš mu dodati styleClass 'active' iz koda */
+.nav-btn.active {
+    -fx-background-color: rgba(34,179,154,0.18);
+    -fx-text-fill: white;
+    -fx-border-color: rgba(34,179,154,0.55);
+    -fx-border-width: 1;
+    -fx-border-radius: 10px;
+}
+
+/* CONTENT AREA */
+.content-area {
+    -fx-background-color: #f7fbff; /* isto kao login right-pane */
+    -fx-padding: 0;
+}

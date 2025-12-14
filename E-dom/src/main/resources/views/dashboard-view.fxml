@@ -1,47 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="controllers.DashboardController"
-      spacing="25"
-      style="-fx-padding: 30;">
+      stylesheets="@../styles/dashboard-style.css"
+      styleClass="dash-root"
+      spacing="18">
 
-    <Label text="Pregled sistema"
-           style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #222;"/>
+    <!-- HEADER -->
+    <HBox alignment="CENTER_LEFT" spacing="12" styleClass="dash-header">
+        <VBox spacing="4">
+            <Label text="Pregled sistema" styleClass="dash-title"/>
+            <Label text="Brzi pregled ključnih informacija" styleClass="dash-subtitle"/>
+        </VBox>
+    </HBox>
 
-    <HBox spacing="30">
+    <!-- CARDS -->
+    <HBox spacing="16" styleClass="cards-row">
 
-        <!-- KARTICA STUDENTI -->
-        <VBox prefWidth="230" spacing="10"
-              style="-fx-background-color: white;
-                     -fx-background-radius: 15;
-                     -fx-padding: 20;
-                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 4);">
-
-            <Label text="Broj studenata:"
-                   style="-fx-font-size: 15px; -fx-text-fill: #666;"/>
-
-            <Label fx:id="lblStudenti"
-                   style="-fx-font-size: 34px; -fx-font-weight: bold; -fx-text-fill: #1a4fff;"/>
+        <VBox spacing="10" styleClass="stat-card" HBox.hgrow="ALWAYS">
+            <Label text="Studenti" styleClass="stat-label"/>
+            <Label fx:id="lblStudenti" text="0" styleClass="stat-number"/>
+            <Label text="Ukupan broj registrovanih studenata" styleClass="stat-hint"/>
         </VBox>
 
-        <!-- KARTICA PRIJAVA -->
-        <VBox prefWidth="230" spacing="10"
-              style="-fx-background-color: white;
-                     -fx-background-radius: 15;
-                     -fx-padding: 20;
-                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 4);">
+        <VBox spacing="10" styleClass="stat-card" HBox.hgrow="ALWAYS">
+            <Label text="Prijave" styleClass="stat-label"/>
+            <Label fx:id="lblPrijave" text="0" styleClass="stat-number"/>
+            <Label text="Ukupan broj prijava u bazi" styleClass="stat-hint"/>
+        </VBox>
 
-            <Label text="Broj prijava:"
-                   style="-fx-font-size: 15px; -fx-text-fill: #666;"/>
-
-            <Label fx:id="lblPrijave"
-                   style="-fx-font-size: 34px; -fx-font-weight: bold; -fx-text-fill: #1a4fff;"/>
+        <!-- Treća kartica - placeholder (korisno i lijepo izgleda) -->
+        <VBox spacing="10" styleClass="stat-card secondary-card" HBox.hgrow="ALWAYS">
+            <Label text="Status" styleClass="stat-label"/>
+            <Label text="Admin panel spreman" styleClass="stat-number-small"/>
+            <Label text="Dalje: prijave, bodovi, rang-lista" styleClass="stat-hint"/>
         </VBox>
 
     </HBox>
 
+    <!-- LOWER SECTION -->
+    <HBox spacing="16" VBox.vgrow="ALWAYS">
+
+        <!-- QUICK ACTIONS -->
+        <VBox spacing="12" styleClass="panel" prefWidth="320">
+            <Label text="Brze akcije" styleClass="panel-title"/>
+
+            <Button text="Otvori prijave" styleClass="primary-btn" maxWidth="Infinity" />
+            <Button text="Otvori studente" styleClass="secondary-btn" maxWidth="Infinity"/>
+
+            <Separator opacity="0.25"/>
+
+            <Label text="Savjet: prvo provjeri prijave, zatim bodovanje." styleClass="panel-hint" wrapText="true"/>
+        </VBox>
+
+        <!-- RECENT / INFO PANEL -->
+        <VBox spacing="12" styleClass="panel" HBox.hgrow="ALWAYS">
+            <Label text="Šta dalje?" styleClass="panel-title"/>
+
+            <VBox spacing="8">
+                <Label text="• Prijave: prikaz liste + promjena statusa (na pregledu/odobreno/odbijeno)" styleClass="panel-item" wrapText="true"/>
+                <Label text="• Bodovi: unos po dokumentima + automatski zbir ukupnih bodova" styleClass="panel-item" wrapText="true"/>
+                <Label text="• Rang lista: sortiranje po ukupnim bodovima (akademska godina)" styleClass="panel-item" wrapText="true"/>
+            </VBox>
+        </VBox>
+
+    </HBox>
+
+    
 </VBox>
