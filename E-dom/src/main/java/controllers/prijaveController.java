@@ -1,5 +1,6 @@
 package controllers;
 
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -27,7 +28,7 @@ public class prijaveController {
     private TableColumn<Prijava, Integer> colAkGod;
 
     @FXML
-    private TableColumn<Prijava, Integer> colUkupniBodovi;
+    private TableColumn<Prijava, Double> colUkupniBodovi;
 
     @FXML
     private TableColumn<Prijava, String> colStatus;
@@ -90,7 +91,7 @@ public class prijaveController {
         );
 
         colUkupniBodovi.setCellValueFactory(
-                cellData -> new SimpleIntegerProperty(cellData.getValue().getUkupniBodovi()).asObject()
+                cellData -> new SimpleDoubleProperty(cellData.getValue().getUkupniBodovi()).asObject()
         );
 
         colStatus.setCellValueFactory(

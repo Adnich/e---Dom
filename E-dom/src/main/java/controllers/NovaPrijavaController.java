@@ -17,14 +17,21 @@ public class NovaPrijavaController {
     @FXML private TextField txtAkGod;
     @FXML private TextArea txtNapomena;
     @FXML private TextField txtClanovi;
+    @FXML private TextField txtUdaljenost;
 
     private int studentId;
+    private double prosjek;
+    private int godinaStudija;
 
     private final PrijavaDAO prijavaDAO = new PrijavaDAO();
 
     public void setStudentId(int id) {
         this.studentId = id;
     }
+
+    public void setGodinaStudija(int godinaStudija) {this.godinaStudija = godinaStudija;}
+
+    public void setProsjek(double prosjek) {this.prosjek = prosjek;}
 
     @FXML
     private void onSaveClicked() {
@@ -55,11 +62,10 @@ public class NovaPrijavaController {
 
         prijavaDAO.unesiPrijavu(p);
 
-        showAlert("Uspjeh", "Prijava uspješno unešena!");
-
         Prijava prijava = prijavaDAO.dohvatiSvePrijave().getLast();
         int prijavaId = prijava.getIdPrijava();
         int clanovi = Integer.parseInt(txtClanovi.getText());
+        double udaljenost = Double.parseDouble(txtUdaljenost.getText());
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/dodaj-dokumente.fxml"));
             Parent root = loader.load();
@@ -67,6 +73,9 @@ public class NovaPrijavaController {
             DodajDokumenteController controller = loader.getController();
             controller.setPrijavaId(prijavaId);
             controller.setClanovi(clanovi);
+            controller.setUdaljenost(udaljenost);
+            controller.setProsjek(prosjek);
+            controller.setGodinaStudija(godinaStudija);
 
             Stage stage = (Stage) txtAkGod.getScene().getWindow();
             stage.setScene(new Scene(root));

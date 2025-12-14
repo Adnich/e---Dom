@@ -7,7 +7,7 @@ public class Prijava {
     private int IdPrijava;
     private LocalDate DatumPrijava;
     private StatusPrijave StatusPrijave;
-    private int UkupniBodovi;
+    private double UkupniBodovi;
     private String Napomena;
     private int AkademskaGodina;
     private int IdStudent;
@@ -17,7 +17,7 @@ public class Prijava {
     public Prijava() {
     }
 
-    public Prijava(int idPrijava, LocalDate datumPrijava, StatusPrijave statusPrijave, int ukupniBodovi, String napomena, int akademskaGodina, int StudentId) {
+    public Prijava(int idPrijava, LocalDate datumPrijava, StatusPrijave statusPrijave, double ukupniBodovi, String napomena, int akademskaGodina, int StudentId) {
         IdPrijava = idPrijava;
         DatumPrijava = datumPrijava;
         StatusPrijave = statusPrijave;
@@ -51,11 +51,11 @@ public class Prijava {
         StatusPrijave = statusPrijave;
     }
 
-    public int getUkupniBodovi() {
+    public double getUkupniBodovi() {
         return UkupniBodovi;
     }
 
-    public void setUkupniBodovi(int ukupniBodovi) {
+    public void setUkupniBodovi(double ukupniBodovi) {
         UkupniBodovi = ukupniBodovi;
     }
 

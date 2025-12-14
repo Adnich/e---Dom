@@ -119,6 +119,8 @@ public class NoviStudentController {
 
             NovaPrijavaController controller = loader.getController();
             controller.setStudentId(studentId);
+            controller.setGodinaStudija(godinaStudija);
+            controller.setProsjek(prosjek);
 
             Stage stage = (Stage) txtIme.getScene().getWindow();
             stage.setScene(new Scene(root));

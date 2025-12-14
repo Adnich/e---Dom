@@ -22,7 +22,7 @@ public class PrijavaDAO {
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setDate(1, java.sql.Date.valueOf(prijava.getDatumPrijava()));
-            stmt.setInt(2, prijava.getUkupniBodovi());
+            stmt.setDouble(2, prijava.getUkupniBodovi());
             stmt.setString(3, prijava.getNapomena());
             stmt.setInt(4, prijava.getIdStudent());
             stmt.setInt(5, prijava.getStatusPrijave().getIdStatus());
@@ -136,7 +136,7 @@ public class PrijavaDAO {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setDate(1, java.sql.Date.valueOf(prijava.getDatumPrijava()));
-            stmt.setInt(2, prijava.getUkupniBodovi());
+            stmt.setDouble(2, prijava.getUkupniBodovi());
             stmt.setString(3, prijava.getNapomena());
             stmt.setInt(4, prijava.getIdStudent());
             stmt.setInt(5, prijava.getStatusPrijave().getIdStatus());
@@ -267,6 +267,28 @@ public class PrijavaDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void dodajBodoveNaPrijavu(int prijavaId, double bodoviZaDodati) {
+        String sql = """
+        UPDATE prijava
+        SET ukupni_bodovi = IFNULL(ukupni_bodovi, 0) + ?
+        WHERE id_prijava = ?
+    """;
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setDouble(1, bodoviZaDodati);
+            stmt.setInt(2, prijavaId);
+            stmt.executeUpdate();
+
+            System.out.println("Dodano " + bodoviZaDodati + " bodova na prijavu ID = " + prijavaId);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
 }
