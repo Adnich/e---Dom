@@ -61,7 +61,7 @@ public class DodajDokumenteController {
     public void setUdaljenost(double udaljenost){
         this.udaljenost=udaljenost;
         generisiSekciju(vdDao.dohvatiVrstuPoId(6));
-        generisiSekciju(vdDAO.dohvatiVrstuPoId(10));
+        generisiSekciju(vdDao.dohvatiVrstuPoId(10));
     }
 
     private void generisiSekcijeZaClanove() {
