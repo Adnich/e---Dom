@@ -2,51 +2,152 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.RegisterController">
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.RegisterController"
+            prefWidth="1000" prefHeight="600"
+            stylesheets="@../styles/register-style.css">
 
-    <center>
-        <VBox spacing="15" alignment="CENTER">
-            <padding>
-                <Insets top="25" right="25" bottom="25" left="25"/>
-            </padding>
+    <!-- LIJEVA STRANA -->
+    <left>
+        <VBox spacing="25"
+              alignment="TOP_LEFT"
+              styleClass="left-pane">
+            <children>
 
-            <!-- Glavni container za formu -->
-            <VBox spacing="12" alignment="CENTER" styleClass="register-pane">
+                <!-- LOGO (centriran unutar lijevog panela) -->
+                <StackPane alignment="TOP_CENTER" prefWidth="320">
+                    <children>
+                        <ImageView fitWidth="190" preserveRatio="true" styleClass="left-logo">
+                            <image>
+                                <Image url="@../images/e-domLOGO.png"/>
+                            </image>
+                        </ImageView>
+                    </children>
+                    <padding>
+                        <Insets top="10"/>
+                    </padding>
+                </StackPane>
 
-                <Label text="Registracija korisnika" styleClass="title-label"/>
+                <Label text="Sistem za upravljanje studentskim domom"
+                       wrapText="true"
+                       styleClass="left-subtitle"/>
 
-                <GridPane hgap="10" vgap="10">
-                    <Label text="Ime:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                    <TextField fx:id="txtIme" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-
-                    <Label text="Prezime:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                    <TextField fx:id="txtPrezime" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-                    <Label text="Korisničko ime:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                    <TextField fx:id="txtUsername" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-                    <Label text="Lozinka:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                    <PasswordField fx:id="txtPassword" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-
-                    <Label text="Ponovi lozinku:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                    <PasswordField fx:id="txtPassword2" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-
-                    <Label text="Uloga:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                    <ComboBox fx:id="cmbUloga" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-                </GridPane>
-
-                <HBox spacing="10" alignment="CENTER">
-                    <Button text="Registruj" onAction="#onRegisterClicked"/>
-                    <Button text="Nazad na prijavu" onAction="#onBackToLoginClicked"/>
-                </HBox>
-
-                <Label fx:id="lblError" styleClass="error-label"/>
-            </VBox>
+                <Label text="Registrujte novog korisnika i dodijelite ulogu."
+                       wrapText="true"
+                       styleClass="left-text"/>
+            </children>
         </VBox>
+    </left>
+
+    <!-- DESNA STRANA -->
+    <center>
+        <StackPane styleClass="right-pane">
+            <children>
+
+                <!-- dekor krug -->
+                <Pane styleClass="circle-decor" StackPane.alignment="CENTER_RIGHT"/>
+
+                <!-- glavni container -->
+                <VBox spacing="30"
+                      alignment="TOP_CENTER"
+                      styleClass="login-container"
+                      maxWidth="520">
+
+                    <!-- naslov -->
+                    <VBox spacing="6" alignment="CENTER_LEFT">
+                        <children>
+                            <Label text="Registracija korisnika" styleClass="login-title"/>
+                        </children>
+                    </VBox>
+
+                    <!-- forma -->
+                    <VBox spacing="16" alignment="CENTER_LEFT" maxWidth="420">
+                        <children>
+
+                            <VBox spacing="6">
+                                <children>
+                                    <Label text="Ime" styleClass="field-label"/>
+                                    <TextField fx:id="txtIme"
+                                               promptText="Unesite ime"
+                                               styleClass="text-input"/>
+                                </children>
+                            </VBox>
+
+                            <VBox spacing="6">
+                                <children>
+                                    <Label text="Prezime" styleClass="field-label"/>
+                                    <TextField fx:id="txtPrezime"
+                                               promptText="Unesite prezime"
+                                               styleClass="text-input"/>
+                                </children>
+                            </VBox>
+
+                            <VBox spacing="6">
+                                <children>
+                                    <Label text="Korisničko ime" styleClass="field-label"/>
+                                    <TextField fx:id="txtUsername"
+                                               promptText="Unesite korisničko ime"
+                                               styleClass="text-input"/>
+                                </children>
+                            </VBox>
+
+                            <VBox spacing="6">
+                                <children>
+                                    <Label text="Lozinka" styleClass="field-label"/>
+                                    <PasswordField fx:id="txtPassword"
+                                                   promptText="Unesite lozinku"
+                                                   styleClass="text-input"/>
+                                </children>
+                            </VBox>
+
+                            <VBox spacing="6">
+                                <children>
+                                    <Label text="Ponovi lozinku" styleClass="field-label"/>
+                                    <PasswordField fx:id="txtPassword2"
+                                                   promptText="Ponovite lozinku"
+                                                   styleClass="text-input"/>
+                                </children>
+                            </VBox>
+
+                            <VBox spacing="6">
+                                <children>
+                                    <Label text="Uloga" styleClass="field-label"/>
+                                    <ComboBox fx:id="cmbUloga"
+                                              styleClass="text-input"
+                                              prefHeight="42"/>
+                                </children>
+                            </VBox>
+
+                            <!-- dugmad -->
+                            <HBox spacing="12" alignment="CENTER">
+                                <children>
+                                    <Button text="Registruj"
+                                            onAction="#onRegisterClicked"
+                                            styleClass="primary-btn"
+                                            prefWidth="170"/>
+
+                                    <Button text="Nazad na prijavu"
+                                            onAction="#onBackToLoginClicked"
+                                            styleClass="primary-btn"
+                                            prefWidth="170"/>
+                                </children>
+                            </HBox>
+
+                            <Label fx:id="lblError"
+                                   textFill="red"
+                                   styleClass="error-label"/>
+
+                        </children>
+                    </VBox>
+
+                </VBox>
+            </children>
+        </StackPane>
     </center>
 
 </BorderPane>

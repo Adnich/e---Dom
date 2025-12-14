@@ -1,92 +1,117 @@
-/* Globalno za login screen */
-.login-root {
+/* ROOT */
+.root {
     -fx-font-family: "Segoe UI";
-    /* cijeli prozor čist bijel, bez paddinga */
-    -fx-background-color: white;
-    -fx-padding: 0;
-    -fx-pref-width: 800;
-    -fx-pref-height: 530;
+}
+
+.left-pane {
+    -fx-background-color: #27b397; /* ista boja kao dugme */
+    -fx-padding: 60 40 60 40;
+}
+
+.app-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: 800;
+    -fx-text-fill: rgba(255,255,255,0.95);
+    -fx-letter-spacing: 1px;
+}
+
+.left-subtitle {
+    -fx-font-size: 16px;
+    -fx-font-weight: 600;
+    -fx-text-fill: rgba(255,255,255,0.85);
+    -fx-wrap-text: true;
+    -fx-max-width: 260px;
+    -fx-padding: 10 0 0 0;
+}
+
+.left-text {
+    -fx-font-size: 13px;
+    -fx-font-weight: 400;
+    -fx-text-fill: rgba(255,255,255,0.70);
+    -fx-wrap-text: true;
+    -fx-max-width: 260px;
+    -fx-line-spacing: 3px;
 }
 
 
-/* Lijevi panel */
-.side-pane {
-    -fx-background-color: linear-gradient(to bottom, #263238, #111827);
-    -fx-padding: 40;
-    -fx-pref-width: 320;
+/* RIGHT */
+.right-pane {
+    -fx-background-color: #f7fbff;
 }
 
-
-.side-title {
-    -fx-text-fill: white;
-    -fx-font-size: 22px;
-    -fx-font-weight: bold;
+/* DECOR CIRCLE */
+.circle-decor {
+    -fx-background-radius: 999px;
+    -fx-pref-width: 720px;
+    -fx-pref-height: 720px;
+    -fx-background-color: rgba(34,179,154,0.10);
+    -fx-translate-x: 220px;
 }
 
-.side-subtitle {
-    -fx-text-fill: #cfd8dc;
-    -fx-font-size: 12px;
-}
-
-.side-description {
-    -fx-text-fill: #b0bec5;
-    -fx-font-size: 12px;
-}
-
-/* Desna login kartica */
+/* LOGIN CONTAINER */
 .login-container {
-    -fx-alignment: center;
-    /* malo unutrašnjeg prostora desno */
-    -fx-padding: 0 80 0 80;
+    -fx-padding: 70 40 40 40;
+}
+
+/* TITLE */
+.login-title {
+    -fx-text-fill:#22b39a;
+    -fx-font-size: 30px;
+    -fx-font-weight: 800;
+
+}
+
+/* FORM */
+.field-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #334155;
+    -fx-font-weight: 600;
+}
+
+.text-input {
     -fx-background-color: white;
+    -fx-background-radius: 18px;
+    -fx-border-radius: 18px;
+    -fx-border-color: rgba(34,179,154,0.25);
+    -fx-padding: 12 16 12 16;
+    -fx-font-size: 13px;
 }
 
-.login-pane {
-    /* više nije kartica, nego običan layout */
-    -fx-background-color: transparent;
-    -fx-padding: 0;
-    -fx-background-radius: 0;
-    -fx-effect: none;
-    -fx-spacing: 18;
+.text-input:focused {
+    -fx-border-color: #22b39a;
+    -fx-border-width: 1.5px;
 }
 
-
-/* Naslov */
-.title-label {
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-}
-
-/* Forma */
-.form-grid {
-    -fx-hgap: 10;
-    -fx-vgap: 12;
-}
-
-.error-label {
-    -fx-text-fill: #e53935;
+/* LINKS */
+.forgot-link {
+    -fx-text-fill: #22b39a;
     -fx-font-size: 12px;
 }
 
-/* Dugmad */
-.button {
-    -fx-background-color: #2b7cff;
+.register-link {
+    -fx-text-fill: #22b39a;
+    -fx-font-weight: 700;
+}
+
+/* BUTTON */
+.primary-btn {
+    -fx-background-color: #22b39a;
     -fx-text-fill: white;
-    -fx-background-radius: 6;
-    -fx-padding: 8 20 8 20;
-    -fx-font-weight: bold;
-}
-.button:hover {
-    -fx-background-color: #1a5fcc;
+    -fx-font-weight: 700;
+    -fx-font-size: 14px;
+    -fx-background-radius: 24px;
+    -fx-padding: 12 20 12 20;
 }
 
-/* Registracija */
-.hyperlink {
-    -fx-text-fill: #2196f3;
-    -fx-font-size: 12px;
+.primary-btn:hover {
+    -fx-background-color: #1da38d;
 }
 
-.small-text {
+.primary-btn:pressed {
+    -fx-background-color: #188c79;
+}
+
+/* ERROR */
+.error-label {
     -fx-font-size: 12px;
-    -fx-text-fill: #757575;
 }
