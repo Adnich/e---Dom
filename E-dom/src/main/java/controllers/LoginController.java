@@ -64,7 +64,7 @@ public class LoginController {
             Parent root = loader.load();
 
 
-            Scene scene = new Scene(root, 800, 600);
+            Scene scene = new Scene(root, 1000, 600);
             URL cssUrl = HelloApplication.class.getResource("/styles/style.css");
             if (cssUrl != null) {
                 scene.getStylesheets().add(cssUrl.toExternalForm());
@@ -91,7 +91,7 @@ public class LoginController {
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("/views/register-view.fxml"));
             Parent root = loader.load();
 
-            Scene scene = new Scene(root, 600, 450);
+            Scene scene = new Scene(root, 1000, 620);
 
             URL cssUrl = HelloApplication.class.getResource("/styles/style.css");
             if (cssUrl != null) {

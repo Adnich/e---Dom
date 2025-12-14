@@ -95,20 +95,53 @@
 
 /* BUTTON */
 .primary-btn {
-    -fx-background-color: #22b39a;
+    -fx-background-radius: 40px;
+    -fx-background-color: linear-gradient(
+        to bottom,
+        #2ec9ad,
+        #22b39a
+    );
     -fx-text-fill: white;
-    -fx-font-weight: 700;
-    -fx-font-size: 14px;
-    -fx-background-radius: 24px;
-    -fx-padding: 12 20 12 20;
+    -fx-font-weight: 800;
+    -fx-font-size: 15px;
+
+    -fx-padding: 14 32 14 32;
+
+    /* shadow = jelly osjećaj */
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.45),
+        18,
+        0.25,
+        0,
+        8
+    );
 }
 
+/* hover = blago “nabubri” */
 .primary-btn:hover {
-    -fx-background-color: #1da38d;
+    -fx-scale-x: 1.04;
+    -fx-scale-y: 1.04;
+    -fx-background-color: linear-gradient(
+        to bottom,
+        #3ddbc0,
+        #1da38d
+    );
 }
 
+/* pressed = jelly squash */
 .primary-btn:pressed {
-    -fx-background-color: #188c79;
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.95;
+    -fx-background-color: #1a8f7c;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.25),
+        10,
+        0.2,
+        0,
+        4
+    );
 }
 
 /* ERROR */
