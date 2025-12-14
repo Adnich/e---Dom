@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.NoviStudentController"
+            fitToWidth="true"
+            prefWidth="500"
+            prefHeight="600">
+
+    <content>
+        <VBox spacing="12">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <Label text="Dodavanje novog studenta"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+            <Label text="Ime:"/>
+            <TextField fx:id="txtIme"/>
+
+            <Label text="Prezime:"/>
+            <TextField fx:id="txtPrezime"/>
+
+            <Label text="Ime jednog roditelja:"/>
+            <TextField fx:id="txtRoditelj"/>
+
+            <Label text="JMBG:"/>
+            <TextField fx:id="txtJMBG"/>
+
+            <Label text="Broj indeksa:"/>
+            <TextField fx:id="txtIndeks"/>
+
+            <Label text="Fakultet:"/>
+            <TextField fx:id="txtFakultet"/>
+
+            <Label text="Godina studija:"/>
+            <TextField fx:id="txtGodina"/>
+
+            <Label text="Prosjek:"/>
+            <TextField fx:id="txtProsjek"/>
+
+            <Label text="Email:"/>
+            <TextField fx:id="txtEmail"/>
+
+            <Label text="Telefon:"/>
+            <TextField fx:id="txtTelefon"/>
+
+            <Label text="Adresa stanovanja:"/>
+            <TextField fx:id="txtAdresa"/>
+
+            <Label text="Socijalni status:"/>
+            <ComboBox fx:id="cmbSocijalniStatus" prefWidth="300"/>
+
+            <Button text="Dalje →"
+                    onAction="#onNextClicked"
+                    style="-fx-background-color: #16a34a; -fx-text-fill: white; -fx-padding: 10 20;"/>
+        </VBox>
+    </content>
+</ScrollPane>
+

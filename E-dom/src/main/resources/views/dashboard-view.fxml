@@ -2,36 +2,44 @@
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.geometry.Insets?>
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="controllers.DashboardController"
-      spacing="20">
+      spacing="25"
+      style="-fx-padding: 30;">
 
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
+    <Label text="Pregled sistema"
+           style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #222;"/>
 
-    <Label text="Dashboard statistika"
-           style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+    <HBox spacing="30">
 
-    <HBox spacing="20">
+        <!-- KARTICA STUDENTI -->
+        <VBox prefWidth="230" spacing="10"
+              style="-fx-background-color: white;
+                     -fx-background-radius: 15;
+                     -fx-padding: 20;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 4);">
 
-        <VBox style="-fx-background-color: #f2f2f2; -fx-background-radius: 10;">
-            <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
-            </padding>
-            <Label text="Ukupno studenata:"/>
-            <Label fx:id="lblStudenti" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+            <Label text="Broj studenata:"
+                   style="-fx-font-size: 15px; -fx-text-fill: #666;"/>
+
+            <Label fx:id="lblStudenti"
+                   style="-fx-font-size: 34px; -fx-font-weight: bold; -fx-text-fill: #1a4fff;"/>
         </VBox>
 
-        <VBox style="-fx-background-color: #f2f2f2; -fx-background-radius: 10;">
-            <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
-            </padding>
-            <Label text="Ukupno prijava:"/>
-            <Label fx:id="lblPrijave" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+        <!-- KARTICA PRIJAVA -->
+        <VBox prefWidth="230" spacing="10"
+              style="-fx-background-color: white;
+                     -fx-background-radius: 15;
+                     -fx-padding: 20;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 4);">
+
+            <Label text="Broj prijava:"
+                   style="-fx-font-size: 15px; -fx-text-fill: #666;"/>
+
+            <Label fx:id="lblPrijave"
+                   style="-fx-font-size: 34px; -fx-font-weight: bold; -fx-text-fill: #1a4fff;"/>
         </VBox>
 
     </HBox>

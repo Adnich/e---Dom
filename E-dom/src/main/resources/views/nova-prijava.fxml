@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ScrollPane?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.NovaPrijavaController"
+            fitToWidth="true"
+            prefWidth="480"
+            prefHeight="600">
+
+    <content>
+        <VBox spacing="12">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <Label text="Nova prijava"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+            <Separator/>
+
+            <Label text="Akademska godina:"/>
+            <TextField fx:id="txtAkGod" promptText="2024"/>
+
+            <Label text="Broj članova domaćinstva:"/>
+            <TextField fx:id="txtClanovi" promptText="2024"/>
+
+            <Label text="Napomena:"/>
+            <TextArea fx:id="txtNapomena" prefHeight="80"/>
+
+            <Button text="Spremi"
+                    onAction="#onSaveClicked"
+                    style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-padding: 10 20;"/>
+        </VBox>
+    </content>
+
+</ScrollPane>

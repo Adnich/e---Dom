@@ -4,6 +4,8 @@
     /* cijeli prozor čist bijel, bez paddinga */
     -fx-background-color: white;
     -fx-padding: 0;
+    -fx-pref-width: 800;
+    -fx-pref-height: 530;
 }
 
 

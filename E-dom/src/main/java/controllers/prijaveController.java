@@ -1,5 +1,8 @@
 package controllers;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import dao.PrijavaDAO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -34,8 +37,32 @@ public class prijaveController {
 
     private final PrijavaDAO prijavaDAO = new PrijavaDAO();
 
+    // -------------------------------------------------------
+    //  DODANO: OTVARANJE NOVE PRIJAVE
+    // -------------------------------------------------------
+    @FXML
+    private void onNovaPrijava() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/novi-student.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            Stage stage = new Stage();
+            stage.setTitle("Nova prijava");
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    // -------------------------------------------------------
+    //  INICIJALIZACIJA TABELE
+    // -------------------------------------------------------
     @FXML
     public void initialize() {
+
         colId.setCellValueFactory(
                 cellData -> new SimpleIntegerProperty(cellData.getValue().getIdPrijava()).asObject()
         );
