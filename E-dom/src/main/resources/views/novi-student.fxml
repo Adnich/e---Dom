@@ -43,6 +43,12 @@
             <Label text="Prosjek:"/>
             <TextField fx:id="txtProsjek"/>
 
+            <Label text="Apsolvent:"/>
+            <CheckBox fx:id="chkJeLiApsolvent" prefWidth="300"/>
+
+            <Label text="Postdiplomac:"/>
+            <CheckBox fx:id="chkJeLiPostdiplomac" prefWidth="300"/>
+
             <Label text="Email:"/>
             <TextField fx:id="txtEmail"/>
 

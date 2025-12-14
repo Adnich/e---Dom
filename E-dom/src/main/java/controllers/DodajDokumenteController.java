@@ -10,13 +10,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Dokument;
-import model.Prijava;
-import model.SocijalniStatus;
 import model.VrstaDokumenta;
-import service.BodovanjeService;
+import service.KriterijPoOsnovuSocijalnogStatusa;
 import service.KriterijPoOsnovuUspjeha;
-
-import javax.swing.*;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -65,6 +61,7 @@ public class DodajDokumenteController {
     public void setUdaljenost(double udaljenost){
         this.udaljenost=udaljenost;
         generisiSekciju(vdDao.dohvatiVrstuPoId(6));
+        generisiSekciju(vdDAO.dohvatiVrstuPoId(10));
     }
 
     private void generisiSekcijeZaClanove() {
@@ -84,7 +81,6 @@ public class DodajDokumenteController {
             TextField txtIznos = new TextField();
             txtIznos.setPromptText("Mjesečna primanja (KM)");
 
-            // ✅ KLJUČNO: spremi primanja kad korisnik izađe iz polja (nije vezano za dokument)
             txtIznos.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
                 if (wasFocused && !isNowFocused) { // izgubio fokus
                     double iznos = parseIznosOrZero(txtIznos.getText());
@@ -285,6 +281,56 @@ public class DodajDokumenteController {
             );
 
             vboxClanovi.getChildren().add(prosjekBox);
+        }else if ("Dokaz o osvojenim nagradama".equals(vrsta.getNaziv())) {
+
+            VBox nagradeBox = new VBox(8);
+            nagradeBox.setStyle("-fx-padding: 10; -fx-border-color: lightgray; -fx-border-radius: 5;");
+
+            Label lblNagrade = new Label("Osvojene nagrade u toku školovanja (3 boda)");
+
+            CheckBox chkNagrada = new CheckBox("Student ima osvojene nagrade");
+            CheckBox chkDostavljen = new CheckBox("Dokument dostavljen");
+
+            Button btnDodajDokument = new Button("Dodaj dokument");
+
+            btnDodajDokument.setOnAction(e -> {
+
+                if (!chkNagrada.isSelected()) {
+                    showAlert("Greška", "Morate označiti da student ima osvojene nagrade.");
+                    return;
+                }
+
+                if (!chkDostavljen.isSelected()) {
+                    showAlert("Greška", "Dokument mora biti dostavljen.");
+                    return;
+                }
+
+                // 1️⃣ upis dokumenta
+                Dokument d = new Dokument();
+                d.setNaziv("Dokaz o osvojenim nagradama");
+                d.setDatumUpload(LocalDate.now());
+                d.setBrojBodova(0); // bodovi se dodaju na prijavu, ne na dokument
+                d.setDostavljen(true);
+                d.setVrstaDokumenta(vrsta);
+                d.setDokumentB64(null);
+
+                new DokumentDAO().unesiDokument(d, prijavaId);
+
+                PrijavaDAO prijavaDAO = new PrijavaDAO();
+                prijavaDAO.dodajBodoveNaPrijavu(prijavaId, 3);
+
+                showAlert("Uspješno",
+                        "Dodano 3 boda za osvojene nagrade.");
+            });
+
+            nagradeBox.getChildren().addAll(
+                    lblNagrade,
+                    chkNagrada,
+                    chkDostavljen,
+                    btnDodajDokument
+            );
+
+            vboxClanovi.getChildren().add(nagradeBox);
         }
     }
 
@@ -297,10 +343,7 @@ public class DodajDokumenteController {
         }
     }
 
-
     private void zavrsiUnos() {
-
-        // ✅ uzmi primanja za sve članove; ako neko nije upisan -> tretiraj kao 0
         for (int i = 1; i <= clanovi; i++) {
             primanjaPoClanu.putIfAbsent(i, 0.0);
         }
@@ -312,12 +355,10 @@ public class DodajDokumenteController {
 
         double primanjaPoClanuVrijednost = (clanovi == 0) ? 0 : ukupnaPrimanja / clanovi;
 
-        int ukupniBodovi = BodovanjeService.bodoviZaPrimanja(primanjaPoClanuVrijednost);
+        int ukupniBodovi = KriterijPoOsnovuSocijalnogStatusa.bodoviZaPrimanja(primanjaPoClanuVrijednost);
 
         PrijavaDAO prijavaDAO = new PrijavaDAO();
-        Prijava prijava = prijavaDAO.dohvatiPrijavuPoId(prijavaId);
-        prijava.setUkupniBodovi(ukupniBodovi);
-        prijavaDAO.azurirajPrijavu(prijava);
+        prijavaDAO.dodajBodoveNaPrijavu(prijavaId, ukupniBodovi);
 
         showAlert(
                 "Trenutni broj bodova: ",

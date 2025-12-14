@@ -10,18 +10,25 @@ public class KriterijPoOsnovuUspjeha {
         switch(godinaStudija){
             case 2:
                 bodovi += 3;
+                break;
             case 3:
                 bodovi += 5;
+                break;
             case 4:
                 bodovi += 7;
+                break;
             case 5:
                 bodovi += 9;
+                break;
             case 6:
                 bodovi += 10;
+                break;
             case 7:
-                bodovi += 12;
+                bodovi += 12; //apsolventi
+                break;
             case 8:
-                bodovi += 10;
+                bodovi += 10; // postdiplomci
+                break;
         }
         PrijavaDAO pDAO = new PrijavaDAO();
         pDAO.dodajBodoveNaPrijavu(prijavaId, bodovi);
@@ -33,4 +40,5 @@ public class KriterijPoOsnovuUspjeha {
         PrijavaDAO pDAO = new PrijavaDAO();
         pDAO.dodajBodoveNaPrijavu(prijavaId, bodovi);
     }
+
 }

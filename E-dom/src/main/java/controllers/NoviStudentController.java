@@ -19,6 +19,8 @@ public class NoviStudentController {
     @FXML private TextField txtIndeks;
     @FXML private TextField txtFakultet;
     @FXML private TextField txtGodina;
+    @FXML private CheckBox chkJeLiApsolvent;
+    @FXML private CheckBox chkJeLiPostdiplomac;
     @FXML private TextField txtProsjek;
     @FXML private TextField txtEmail;
     @FXML private TextField txtTelefon;
@@ -60,7 +62,6 @@ public class NoviStudentController {
                 txtPrezime.getText().isEmpty() ||
                 txtIndeks.getText().isEmpty() ||
                 txtFakultet.getText().isEmpty() ||
-                txtGodina.getText().isEmpty() ||
                 txtProsjek.getText().isEmpty() ||
                 cmbSocijalniStatus.getValue() == null ||
                 txtAdresa.getText().isEmpty() ||
@@ -71,13 +72,26 @@ public class NoviStudentController {
             return;
         }
 
+        //NE MOGU OBA BITI OZNAČENA
+        if (chkJeLiApsolvent.isSelected() && chkJeLiPostdiplomac.isSelected()) {
+            showAlert("Greška", "Student ne može biti i apsolvent i postdiplomac.");
+            return;
+        }
 
         int godinaStudija;
         double prosjek;
 
         try {
-            godinaStudija = Integer.parseInt(txtGodina.getText());
             prosjek = Double.parseDouble(txtProsjek.getText());
+
+            if (chkJeLiApsolvent.isSelected()) {
+                godinaStudija = 7; // APSOLVENT
+            } else if (chkJeLiPostdiplomac.isSelected()) {
+                godinaStudija = 8; // POSTDIPLOMAC
+            } else {
+                godinaStudija = Integer.parseInt(txtGodina.getText());
+            }
+
         } catch (Exception e) {
             showAlert("Greška", "Godina i prosjek moraju biti numerički.");
             return;
