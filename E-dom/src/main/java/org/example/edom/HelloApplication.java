@@ -13,7 +13,6 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/views/login-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
-        // >>> OVO JE BITNO <<<
         var cssUrl = HelloApplication.class.getResource("/styles/login-style.css");
         if (cssUrl != null) {
             scene.getStylesheets().add(cssUrl.toExternalForm());

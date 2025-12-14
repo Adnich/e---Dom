@@ -1,61 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<BorderPane styleClass="login-root" stylesheets="@../styles/login-style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.LoginController"
+            prefWidth="1000" prefHeight="600"
+            stylesheets="@../styles/login-style.css">
 
-    <!-- Lijevi panel -->
+    <!-- LIJEVA STRANA – logo + opis -->
     <left>
-        <StackPane prefHeight="291.0" prefWidth="298.0" styleClass="side-pane">
-            <VBox spacing="15">
-                <Label styleClass="side-title" text="E-Dom" />
+        <VBox spacing="25"
+              alignment="TOP_LEFT"
+              styleClass="left-pane">
+            <children>
 
-                <ImageView fitWidth="100" fitHeight="100" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/logo.png" />
-                    </image>
-                </ImageView>
+                <!-- LOGO (CENTRIRAN) -->
+                <HBox alignment="CENTER">
+                    <children>
+                        <ImageView fitWidth="190"
+                                   preserveRatio="true"
+                                   styleClass="left-logo">
+                            <image>
+                                <!-- logo stavi u: src/main/resources/images/e-domLOGO.png -->
+                                <Image url="@../images/e-domLOGO.png"/>
+                            </image>
+                        </ImageView>
+                    </children>
+                </HBox>
 
-                <Label styleClass="side-subtitle" text="Sistem za upravljanje studentskim domom" wrapText="true" />
-                <Label styleClass="side-description" text="Pregled prijava, studenata i soba na jednom mjestu." wrapText="true" />
-            </VBox>
-        </StackPane>
+                <Label text="Sistem za upravljanje studentskim domom"
+                       wrapText="true"
+                       styleClass="left-subtitle"/>
+
+                <Label text="Pregled prijava, studenata i soba na jednom mjestu."
+                       wrapText="true"
+                       styleClass="left-text"/>
+
+            </children>
+        </VBox>
     </left>
 
-    <!-- Desna login kartica -->
+    <!-- DESNA STRANA – login ekran -->
     <center>
-        <StackPane styleClass="login-container">
-            <VBox alignment="CENTER">
-                <VBox prefHeight="291.0" prefWidth="361.0" styleClass="login-pane">
+        <StackPane styleClass="right-pane">
+            <children>
 
-                    <Label styleClass="title-label" text="Prijava u E-Dom" />
+                <!-- dekorativni krug -->
+                <Pane styleClass="circle-decor"
+                      StackPane.alignment="CENTER_RIGHT"/>
 
-                    <!-- Korisničko ime -->
-                    <VBox spacing="5" alignment="TOP_LEFT">
-                        <Label text="Korisničko ime:" />
-                        <TextField fx:id="txtUsername" maxWidth="Infinity" />
+                <!-- login box -->
+                <VBox spacing="35"
+                      alignment="TOP_CENTER"
+                      styleClass="login-container"
+                      maxWidth="420">
+
+                    <VBox spacing="8" alignment="CENTER_LEFT">
+                        <children>
+                            <Label text="Prijava u E-Dom"
+                                   styleClass="login-title"/>
+                        </children>
                     </VBox>
 
-                    <!-- Lozinka -->
-                    <VBox spacing="5" alignment="TOP_LEFT">
-                        <Label text="Lozinka:" />
-                        <PasswordField fx:id="txtPassword" maxWidth="Infinity" />
+                    <VBox spacing="20"
+                          alignment="CENTER_LEFT"
+                          maxWidth="360">
+                        <children>
+
+                            <VBox spacing="6">
+                                <Label text="Korisničko ime"
+                                       styleClass="field-label"/>
+                                <TextField fx:id="txtUsername"
+                                           promptText="Unesite korisničko ime"
+                                           styleClass="text-input"/>
+                            </VBox>
+
+                            <VBox spacing="6">
+                                <Label text="Lozinka"
+                                       styleClass="field-label"/>
+                                <PasswordField fx:id="txtPassword"
+                                               promptText="Unesite lozinku"
+                                               styleClass="text-input"/>
+                            </VBox>
+
+                            <HBox alignment="CENTER_RIGHT">
+                                <Hyperlink text="Zaboravili ste lozinku?"
+                                           styleClass="forgot-link"/>
+                            </HBox>
+
+                            <Button fx:id="btnLogin"
+                                    text="Prijava"
+                                    onAction="#onLoginClicked"
+                                    maxWidth="Infinity"
+                                    styleClass="primary-btn"/>
+
+                            <Label fx:id="lblError"
+                                   textFill="red"
+                                   styleClass="error-label"/>
+
+                            <HBox alignment="CENTER" spacing="5">
+                                <Label text="Nemate nalog?"/>
+                                <Hyperlink fx:id="linkRegister"
+                                           text="Registracija"
+                                           onAction="#onRegisterLinkClicked"
+                                           styleClass="register-link"/>
+                            </HBox>
+
+                        </children>
                     </VBox>
-
-                    <Button text="Prijava" onAction="#onLoginClicked" maxWidth="120" />
-
-                    <Label fx:id="lblError" styleClass="error-label" />
-
-                    <HBox alignment="CENTER" spacing="5">
-                        <Label styleClass="small-text" text="Nemate nalog?" />
-                        <Hyperlink onAction="#onRegisterLinkClicked" text="Registracija" />
-                    </HBox>
 
                 </VBox>
-            </VBox>
+            </children>
         </StackPane>
     </center>
 
