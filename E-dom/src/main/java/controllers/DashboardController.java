@@ -36,7 +36,7 @@ public class DashboardController {
     @FXML
     private void goPrijave(ActionEvent e) {
         // Ako ovo ne želiš, izbriši dugmad iz FXML-a.
-        loadIntoAdminContent("/views/prijave.fxml");
+        loadIntoAdminContent("/views/prijave-view.fxml");
     }
 
     @FXML

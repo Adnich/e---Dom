@@ -49,8 +49,8 @@
         <VBox spacing="12" styleClass="panel" prefWidth="320">
             <Label text="Brze akcije" styleClass="panel-title"/>
 
-            <Button text="Otvori prijave" styleClass="primary-btn" maxWidth="Infinity" />
-            <Button text="Otvori studente" styleClass="secondary-btn" maxWidth="Infinity"/>
+            <Button text="Otvori prijave" styleClass="primary-btn" maxWidth="Infinity" onAction="#goPrijave"/>
+            <Button text="Otvori studente" styleClass="secondary-btn" maxWidth="Infinity" onAction="#goStudenti"/>
 
             <Separator opacity="0.25"/>
 
@@ -70,5 +70,5 @@
 
     </HBox>
 
-    
+
 </VBox>
