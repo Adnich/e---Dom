@@ -18,6 +18,8 @@ public class NovaPrijavaController {
     @FXML private TextArea txtNapomena;
     @FXML private TextField txtClanovi;
     @FXML private TextField txtUdaljenost;
+    @FXML private CheckBox chkIzbjeglica;
+    @FXML private CheckBox chkBratSestra;
 
     private int studentId;
     private double prosjek;
@@ -29,27 +31,37 @@ public class NovaPrijavaController {
         this.studentId = id;
     }
 
-    public void setGodinaStudija(int godinaStudija) {this.godinaStudija = godinaStudija;}
+    public void setGodinaStudija(int godinaStudija) {
+        this.godinaStudija = godinaStudija;
+    }
 
-    public void setProsjek(double prosjek) {this.prosjek = prosjek;}
+    public void setProsjek(double prosjek) {
+        this.prosjek = prosjek;
+    }
 
     @FXML
     private void onSaveClicked() {
 
-        if (txtAkGod.getText().isEmpty()) {
-            showAlert("Greška", "Akademska godina je obavezna.");
+        if (txtAkGod.getText().isEmpty()
+                || txtClanovi.getText().isEmpty()
+                || txtUdaljenost.getText().isEmpty()) {
+            showAlert("Greška", "Sva polja su obavezna.");
             return;
         }
 
-        int akGod;
+        int akGod, clanovi;
+        double udaljenost;
 
         try {
             akGod = Integer.parseInt(txtAkGod.getText());
+            clanovi = Integer.parseInt(txtClanovi.getText());
+            udaljenost = Double.parseDouble(txtUdaljenost.getText());
         } catch (Exception e) {
-            showAlert("Greška", "Akademska godina mora biti broj.");
+            showAlert("Greška", "Neispravan unos brojeva.");
             return;
         }
 
+        // 1️⃣ KREIRANJE PRIJAVE
         Prijava p = new Prijava();
         p.setIdStudent(studentId);
         p.setDatumPrijava(LocalDate.now());
@@ -64,10 +76,26 @@ public class NovaPrijavaController {
 
         Prijava prijava = prijavaDAO.dohvatiSvePrijave().getLast();
         int prijavaId = prijava.getIdPrijava();
-        int clanovi = Integer.parseInt(txtClanovi.getText());
-        double udaljenost = Double.parseDouble(txtUdaljenost.getText());
+
+        int dodatniBodovi = 0;
+
+        if (chkIzbjeglica.isSelected()) {
+            dodatniBodovi += 3;
+        }
+
+        if (chkBratSestra.isSelected()) {
+            dodatniBodovi += 2;
+        }
+
+        if (dodatniBodovi > 0) {
+            prijavaDAO.dodajBodoveNaPrijavu(prijavaId, dodatniBodovi);
+        }
+
+        // 4️⃣ PRELAZ NA DOKUMENTE
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/dodaj-dokumente.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/views/dodaj-dokumente.fxml")
+            );
             Parent root = loader.load();
 
             DodajDokumenteController controller = loader.getController();
@@ -84,8 +112,6 @@ public class NovaPrijavaController {
             e.printStackTrace();
             showAlert("Greška", "Ne mogu učitati formu za dokumente.");
         }
-
-        Stage stage = (Stage) txtAkGod.getScene().getWindow();
     }
 
     private void showAlert(String title, String msg) {

@@ -3,7 +3,7 @@ package service;
 import java.util.List;
 import model.Dokument;
 
-public class BodovanjeService {
+public class KriterijPoOsnovuSocijalnogStatusa {
 
     // Bodovi za primanja (GLAVNI KRITERIJ)
     public static int bodoviZaPrimanja(double iznosPoClanu) {

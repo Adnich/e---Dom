@@ -32,6 +32,19 @@
             <Label text="Udaljenost adrese stanovanja do doma (u km):"/>
             <TextField fx:id="txtUdaljenost" promptText="43"/>
 
+            <Separator/>
+
+            <Label text="Dodatni kriteriji:"
+                   style="-fx-font-weight: bold;"/>
+
+            <CheckBox fx:id="chkIzbjeglica"
+                      text="Izbjegli i raseljeni student (3 boda)"/>
+
+            <CheckBox fx:id="chkBratSestra"
+                      text="Brat/sestra studiraju (2 boda)"/>
+
+            <Separator/>
+
             <Label text="Napomena:"/>
             <TextArea fx:id="txtNapomena" prefHeight="80"/>
 
