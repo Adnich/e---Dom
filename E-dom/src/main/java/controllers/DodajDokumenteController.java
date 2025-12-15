@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import model.Dokument;
 import model.VrstaDokumenta;
 import service.KriterijPoOsnovuSocijalnogStatusa;
+import service.KriterijPoOsnovuUdaljenosti;
 import service.KriterijPoOsnovuUspjeha;
 import java.time.LocalDate;
 import java.util.*;
@@ -316,8 +317,11 @@ public class DodajDokumenteController {
 
                 new DokumentDAO().unesiDokument(d, prijavaId);
 
+                KriterijPoOsnovuUdaljenosti kUdaljenost = new KriterijPoOsnovuUdaljenosti();
+
                 PrijavaDAO prijavaDAO = new PrijavaDAO();
                 prijavaDAO.dodajBodoveNaPrijavu(prijavaId, 3);
+                prijavaDAO.dodajBodoveNaPrijavu(prijavaId, kUdaljenost.izracunajBodove(udaljenost));
 
                 showAlert("Uspješno",
                         "Dodano 3 boda za osvojene nagrade.");
