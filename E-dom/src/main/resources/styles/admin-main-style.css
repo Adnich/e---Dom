@@ -1,83 +1,95 @@
 .root {
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "Segoe UI", "Inter", sans-serif;
 }
 
-/* SIDEBAR */
+/* ===== SIDEBAR ===== */
 .sidebar {
+    /* Teal/green gradient matching the image */
     -fx-background-color: #27b397;
-    -fx-padding: 20;
+    -fx-padding: 24 0 20 0;
+}
+
+/* Header section */
+.sidebar-header {
+    -fx-padding: 0 20 20 20;
+    -fx-alignment: TOP_LEFT;
 }
 
 .sidebar-title {
-    -fx-text-fill: rgba(255,255,255,0.95);
-    -fx-font-size: 18px;
-    -fx-font-weight: 800;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: 700;
+    -fx-padding: 0 0 4 0;
+}
+
+.sidebar-subtitle {
+    -fx-text-fill: rgba(255,255,255,0.75);
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
 }
 
 .sidebar-separator .line {
-    -fx-background-color: rgba(255,255,255,0.18);
+    -fx-background-color: rgba(255,255,255,0.15);
+    -fx-pref-height: 1;
 }
 
-/* NAV BUTTONS */
+/* ===== NAVIGATION BUTTONS ===== */
 .nav-btn {
-    -fx-background-radius: 40px;
-        -fx-background-color: linear-gradient(
-            to bottom,
-            #2ec9ad,
-            #22b39a
-        );
-        -fx-text-fill: white;
-        -fx-font-weight: 800;
-        -fx-font-size: 15px;
+    -fx-background-color: transparent;
+    -fx-text-fill: rgba(255,255,255,0.85);
+    -fx-font-weight: 600;
+    -fx-font-size: 15px;
 
-        -fx-padding: 14 32 14 32;
+    -fx-padding: 16 20 16 20;
+    -fx-alignment: CENTER_LEFT;
 
-        /* shadow = jelly osjećaj */
-        -fx-effect: dropshadow(
-            gaussian,
-            rgba(34,179,154,0.45),
-            18,
-            0.25,
-            0,
-            8
-        );
+    /* Remove border radius for flat design */
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+
+    -fx-cursor: hand;
+
+    /* Add left border indicator space */
+    -fx-border-width: 0 0 0 4;
+    -fx-border-color: transparent;
 }
 
+/* Hover effect */
 .nav-btn:hover {
--fx-scale-x: 0.9;
-    -fx-scale-y: 0.9;
-    -fx-background-color: linear-gradient(
-        to bottom,
-        #3ddbc0,
-        #1da38d
-    );
-    }
-
-
-.nav-btn:pressed {
- -fx-scale-x: 0.97;
-    -fx-scale-y: 0.95;
-    -fx-background-color: #1a8f7c;
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(34,179,154,0.25),
-        10,
-        0.2,
-        0,
-        4
-    );}
-
-/* Ako želiš da aktivno dugme izgleda “selected”, možeš mu dodati styleClass 'active' iz koda */
-.nav-btn.active {
-    -fx-background-color: rgba(34,179,154,0.18);
+    -fx-background-color: rgba(255,255,255,0.08);
     -fx-text-fill: white;
-    -fx-border-color: rgba(34,179,154,0.55);
-    -fx-border-width: 1;
-    -fx-border-radius: 10px;
 }
 
-/* CONTENT AREA */
+/* Pressed state */
+.nav-btn:pressed {
+    -fx-background-color: rgba(255,255,255,0.12);
+}
+
+/* ===== SELECTED STATE (Active) ===== */
+.nav-btn:selected {
+    -fx-background-color: rgba(255,255,255,0.12);
+    -fx-text-fill: white;
+
+    /* Left border indicator */
+    -fx-border-color: transparent transparent transparent white;
+    -fx-border-width: 0 0 0 4;
+}
+
+.nav-btn:selected:hover {
+    -fx-background-color: rgba(255,255,255,0.15);
+    -fx-text-fill: white;
+}
+
+/* ===== CONTENT AREA ===== */
 .content-area {
-    -fx-background-color: #f7fbff; /* isto kao login right-pane */
+    -fx-background-color: #f8fafc;
     -fx-padding: 0;
+}
+
+/* ===== FOOTER ===== */
+.sidebar-footer {
+    -fx-text-fill: rgba(255,255,255,0.5);
+    -fx-font-size: 12px;
+    -fx-padding: 0 20 0 20;
+    -fx-alignment: CENTER_LEFT;
 }

@@ -9,20 +9,44 @@
             prefHeight="600.0" prefWidth="900.0"
             stylesheets="@../styles/admin-main-style.css">
 
+    <fx:define>
+        <ToggleGroup fx:id="navGroup"/>
+    </fx:define>
+
     <left>
-        <VBox spacing="10" prefWidth="200" styleClass="sidebar">
-            <Label text="E-Dom Admin" styleClass="sidebar-title"/>
+        <VBox spacing="14" prefWidth="230" styleClass="sidebar">
+
+            <VBox spacing="4" styleClass="sidebar-header">
+                <Label text="E-Dom" styleClass="sidebar-title"/>
+                <Label text="Admin panel" styleClass="sidebar-subtitle"/>
+            </VBox>
+
             <Separator styleClass="sidebar-separator"/>
 
-            <Button text="Prijave"
-                    onAction="#showPrijave"
-                    maxWidth="Infinity"
-                    styleClass="nav-btn"/>
 
-            <Button text="Studenti"
-                    onAction="#showStudenti"
-                    maxWidth="Infinity"
-                    styleClass="nav-btn"/>
+            <ToggleButton text="Pregled Sistema"
+                          onAction="#showPregledSistema"
+                          maxWidth="Infinity"
+                          toggleGroup="$navGroup"
+                          styleClass="nav-btn"
+                          selected="true"/>
+
+            <ToggleButton text="Prijave"
+                          onAction="#showPrijave"
+                          maxWidth="Infinity"
+                          toggleGroup="$navGroup"
+                          styleClass="nav-btn"
+                          />
+
+            <ToggleButton text="Studenti"
+                          onAction="#showStudenti"
+                          maxWidth="Infinity"
+                          toggleGroup="$navGroup"
+                          styleClass="nav-btn"/>
+
+            <Pane VBox.vgrow="ALWAYS"/>
+
+            <Label text="© E-Dom" styleClass="sidebar-footer"/>
         </VBox>
     </left>
 

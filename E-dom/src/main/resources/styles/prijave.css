@@ -1,0 +1,196 @@
+/* ROOT */
+.root {
+    -fx-font-family: "Segoe UI";
+}
+
+/* MAIN CONTAINER */
+.anchor-pane {
+    -fx-background-color: #f7fbff;
+}
+
+/* MAIN VBOX */
+.main-vbox {
+    -fx-background-color: white;
+    -fx-background-radius: 20px;
+    -fx-padding: 30 25 25 25;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.15),
+        20,
+        0.3,
+        0,
+        5
+    );
+}
+
+/* HEADER TITLE */
+.header-title {
+    -fx-text-fill: #22b39a;
+    -fx-font-size: 24px;
+    -fx-font-weight: 800;
+    -fx-padding: 0 0 15 0;
+}
+
+/* NOVA PRIJAVA BUTTON */
+.nova-prijava-btn {
+    -fx-background-radius: 25px;
+    -fx-background-color: linear-gradient(
+        to bottom,
+        #2ec9ad,
+        #22b39a
+    );
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-font-size: 13px;
+    -fx-padding: 10 20 10 20;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.35),
+        15,
+        0.25,
+        0,
+        6
+    );
+}
+
+.nova-prijava-btn:hover {
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-background-color: linear-gradient(
+        to bottom,
+        #3ddbc0,
+        #1da38d
+    );
+}
+
+.nova-prijava-btn:pressed {
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.96;
+    -fx-background-color: #1a8f7c;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.20),
+        8,
+        0.2,
+        0,
+        3
+    );
+}
+
+/* TABLE VIEW */
+.table-view {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+    -fx-border-color: rgba(34,179,154,0.20);
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.10),
+        12,
+        0.2,
+        0,
+        3
+    );
+}
+
+/* TABLE HEADER */
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(
+        to bottom,
+        #2ec9ad,
+        #22b39a
+    );
+    -fx-background-radius: 15 15 0 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-font-size: 12px;
+    -fx-border-color: rgba(255,255,255,0.2);
+    -fx-border-width: 0 1 0 0;
+    -fx-padding: 12 8 12 8;
+}
+
+.table-view .column-header:last {
+    -fx-border-width: 0;
+}
+
+/* TABLE ROWS */
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-text-fill: #334155;
+    -fx-font-size: 12px;
+    -fx-border-color: rgba(34,179,154,0.08);
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: rgba(34,179,154,0.03);
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgba(34,179,154,0.15);
+    -fx-text-fill: #1a8f7c;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: rgba(34,179,154,0.08);
+}
+
+/* TABLE CELLS */
+.table-cell {
+    -fx-padding: 12 8 12 8;
+    -fx-border-color: rgba(34,179,154,0.05);
+    -fx-border-width: 0 1 0 0;
+    -fx-font-weight: 500;
+}
+
+.table-cell:last {
+    -fx-border-width: 0;
+}
+
+/* SCROLLBAR STYLING */
+.table-view .scroll-bar:vertical {
+    -fx-background-color: rgba(34,179,154,0.05);
+    -fx-background-radius: 10px;
+    -fx-pref-width: 8px;
+}
+
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color: rgba(34,179,154,0.4);
+    -fx-background-radius: 10px;
+}
+
+.table-view .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: rgba(34,179,154,0.6);
+}
+
+.table-view .scroll-bar:horizontal {
+    -fx-background-color: rgba(34,179,154,0.05);
+    -fx-background-radius: 10px;
+    -fx-pref-height: 8px;
+}
+
+.table-view .scroll-bar:horizontal .thumb {
+    -fx-background-color: rgba(34,179,154,0.4);
+    -fx-background-radius: 10px;
+}
+
+.table-view .scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: rgba(34,179,154,0.6);
+}
+
+/* CORNER - uklanjamo default corner */
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
+/* PLACEHOLDER kada je tabela prazna */
+.table-view .placeholder .label {
+    -fx-text-fill: rgba(34,179,154,0.6);
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+}

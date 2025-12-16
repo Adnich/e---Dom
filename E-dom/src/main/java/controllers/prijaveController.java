@@ -1,16 +1,16 @@
 package controllers;
 
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import dao.PrijavaDAO;
-import javafx.collections.FXCollections;
-import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 import model.Prijava;
 
 public class prijaveController {
@@ -47,15 +47,20 @@ public class prijaveController {
         );
     }
 
-
     // -------------------------------------------------------
-    //  DODANO: OTVARANJE NOVE PRIJAVE
+    //  OTVARANJE NOVE PRIJAVE
     // -------------------------------------------------------
     @FXML
     private void onNovaPrijava() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/novi-student.fxml"));
             Scene scene = new Scene(loader.load());
+
+            // CSS za novi-student prozor (ostaje kako si imao)
+            var css = getClass().getResource("/css/prijave.css");
+            if (css != null) {
+                scene.getStylesheets().add(css.toExternalForm());
+            }
 
             Stage stage = new Stage();
             stage.setTitle("Nova prijava");
@@ -66,7 +71,6 @@ public class prijaveController {
             e.printStackTrace();
         }
     }
-
 
     // -------------------------------------------------------
     //  INICIJALIZACIJA TABELE
