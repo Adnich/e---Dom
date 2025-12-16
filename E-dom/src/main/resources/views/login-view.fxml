@@ -87,10 +87,9 @@
                                                styleClass="text-input"/>
                             </VBox>
 
-                            <HBox alignment="CENTER_RIGHT">
-                                <Hyperlink text="Zaboravili ste lozinku?"
-                                           styleClass="forgot-link"/>
-                            </HBox>
+                            <Hyperlink text="Zaboravili ste lozinku?"
+                                       onAction="#onForgotPasswordClicked"
+                                       styleClass="forgot-link"/>
 
                             <Button fx:id="btnLogin"
                                     text="Prijava"

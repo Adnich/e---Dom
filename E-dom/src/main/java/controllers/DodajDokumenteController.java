@@ -62,6 +62,7 @@ public class DodajDokumenteController {
     public void setUdaljenost(double udaljenost){
         this.udaljenost=udaljenost;
         generisiSekciju(vdDao.dohvatiVrstuPoId(6));
+        dodajSekcijuUplatnica(vdDao.dohvatiVrstuPoId(1));
         generisiSekciju(vdDao.dohvatiVrstuPoId(10));
     }
 
@@ -160,7 +161,7 @@ public class DodajDokumenteController {
             VBox cipsBox = new VBox(8);
             cipsBox.setStyle("-fx-padding: 10; -fx-border-color: lightgray; -fx-border-radius: 5;");
 
-            Label lblCIPS = new Label("Unesi CIPS ");
+            Label lblCIPS = new Label("Potvrda o mjestu stalnog boravka (CIPS) i kopija lične karte (za strane državljane kopija pasoša)");
             TextField txtNaziv = new TextField();
 
 
@@ -336,6 +337,40 @@ public class DodajDokumenteController {
 
             vboxClanovi.getChildren().add(nagradeBox);
         }
+    }
+
+    //posebna metoda za dodavanje uplatnice
+    private void dodajSekcijuUplatnica(VrstaDokumenta vrsta) {
+
+        VBox box = new VBox(8);
+        box.setStyle("-fx-padding: 10; -fx-border-color: lightgray; -fx-border-radius: 5;");
+
+        Label lbl = new Label("Opća uplatnica – troškovi obrade podataka (10,00 KM)");
+
+        CheckBox chkDostavljen = new CheckBox("Uplatnica dostavljena");
+
+        Button btnDodaj = new Button("Dodaj dokument");
+
+        btnDodaj.setOnAction(e -> {
+
+            if (!chkDostavljen.isSelected()) {
+                showAlert("Greška", "Morate označiti da je uplatnica dostavljena.");
+                return;
+            }
+
+            Dokument d = new Dokument();
+            d.setNaziv("Opća uplatnica – 10,00 KM");
+            d.setDatumUpload(LocalDate.now());
+            d.setDostavljen(true);
+            d.setBrojBodova(0); // nema bodova
+            d.setVrstaDokumenta(vrsta);
+            d.setDokumentB64(null);
+
+            new DokumentDAO().unesiDokument(d, prijavaId);
+        });
+
+        box.getChildren().addAll(lbl, chkDostavljen, btnDodaj);
+        vboxClanovi.getChildren().add(box);
     }
 
     private int parseIznosInt(String text) {

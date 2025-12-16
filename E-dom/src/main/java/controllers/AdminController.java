@@ -43,7 +43,7 @@ public class AdminController {
             Parent view = loader.load();
 
             // ✅ global CSS (ako imaš)
-            var globalCss = getClass().getResource("/styles/style.css"); // opcionalno
+            var globalCss = getClass().getResource("/css/app.css"); // opcionalno
             if (globalCss != null && !view.getStylesheets().contains(globalCss.toExternalForm())) {
                 view.getStylesheets().add(globalCss.toExternalForm());
             }
