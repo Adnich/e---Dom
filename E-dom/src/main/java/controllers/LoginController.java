@@ -111,4 +111,20 @@ public class LoginController {
             lblError.setText("Greška pri otvaranju registracije.");
         }
     }
+
+    @FXML
+    private void onForgotPasswordClicked() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    HelloApplication.class.getResource("/views/izmjena-lozinke.fxml")
+            );
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.load()));
+            stage.setTitle("Reset lozinke");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

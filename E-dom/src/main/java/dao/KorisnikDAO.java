@@ -157,4 +157,22 @@ public class KorisnikDAO {
 
         return null; // ako nije pronađen
     }
+
+    //metoda za reset lozinke
+    public boolean promijeniLozinku(String username, String newPasswordHash) {
+        String sql = "UPDATE korisnik SET password_hash = ? WHERE username = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, newPasswordHash);
+            stmt.setString(2, username);
+
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
