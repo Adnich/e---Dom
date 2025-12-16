@@ -32,49 +32,51 @@
 }
 
 /* NOVA PRIJAVA BUTTON */
-.nova-prijava-btn {
-    -fx-background-radius: 25px;
-    -fx-background-color: linear-gradient(
-        to bottom,
-        #2ec9ad,
-        #22b39a
-    );
-    -fx-text-fill: white;
-    -fx-font-weight: 700;
-    -fx-font-size: 13px;
-    -fx-padding: 10 20 10 20;
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(34,179,154,0.35),
-        15,
-        0.25,
-        0,
-        6
-    );
+.button.nova-prijava-btn {
+    -fx-background-radius: 40px;
+        -fx-background-color: linear-gradient(
+            to bottom,
+            #2ec9ad,
+            #22b39a
+        );
+        -fx-text-fill: white;
+        -fx-font-weight: 800;
+        -fx-font-size: 15px;
+
+        -fx-padding: 12 15 12 15;
+
+        /* shadow = jelly osjećaj */
+        -fx-effect: dropshadow(
+            gaussian,
+            rgba(34,179,154,0.45),
+            18,
+            0.25,
+            0,
+            8);
 }
 
-.nova-prijava-btn:hover {
-    -fx-scale-x: 1.03;
-    -fx-scale-y: 1.03;
-    -fx-background-color: linear-gradient(
-        to bottom,
-        #3ddbc0,
-        #1da38d
-    );
+.button.nova-prijava-btn:hover {
+    -fx-scale-x: 1.04;
+        -fx-scale-y: 1.04;
+        -fx-background-color: linear-gradient(
+            to bottom,
+            #3ddbc0,
+            #1da38d
+        );
 }
 
-.nova-prijava-btn:pressed {
-    -fx-scale-x: 0.98;
-    -fx-scale-y: 0.96;
-    -fx-background-color: #1a8f7c;
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(34,179,154,0.20),
-        8,
-        0.2,
-        0,
-        3
-    );
+.button.nova-prijava-btn:pressed {
+    -fx-scale-x: 0.97;
+        -fx-scale-y: 0.95;
+        -fx-background-color: #1a8f7c;
+        -fx-effect: dropshadow(
+            gaussian,
+            rgba(34,179,154,0.25),
+            10,
+            0.2,
+            0,
+            4
+        );
 }
 
 /* TABLE VIEW */

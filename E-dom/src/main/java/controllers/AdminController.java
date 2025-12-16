@@ -42,11 +42,13 @@ public class AdminController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent view = loader.load();
 
+            // ✅ global CSS (ako imaš)
             var globalCss = getClass().getResource("/css/app.css"); // opcionalno
             if (globalCss != null && !view.getStylesheets().contains(globalCss.toExternalForm())) {
                 view.getStylesheets().add(globalCss.toExternalForm());
             }
 
+            // ✅ view-specific CSS: prijave
             if ("/views/prijave.fxml".equals(fxmlPath)) {
                 var prijaveCss = getClass().getResource("/css/prijave.css");
                 System.out.println("prijave.css = " + prijaveCss);

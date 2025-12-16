@@ -57,7 +57,7 @@ public class prijaveController {
             Scene scene = new Scene(loader.load());
 
             // CSS za novi-student prozor (ostaje kako si imao)
-            var css = getClass().getResource("/css/prijave.css");
+            var css = getClass().getResource("/styles/prijave.css");
             if (css != null) {
                 scene.getStylesheets().add(css.toExternalForm());
             }
