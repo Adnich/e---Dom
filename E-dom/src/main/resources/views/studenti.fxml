@@ -7,20 +7,21 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.studentiController"
-            prefHeight="400.0" prefWidth="800.0">
+            prefHeight="400.0" prefWidth="800.0"
+            stylesheets="@../styles/studenti-style.css"
+            styleClass="anchor-pane">
 
     <children>
-        <VBox spacing="10"
-              AnchorPane.topAnchor="10"
-              AnchorPane.leftAnchor="10"
-              AnchorPane.rightAnchor="10"
-              AnchorPane.bottomAnchor="10">
+        <VBox spacing="15.0"
+              AnchorPane.topAnchor="20"
+              AnchorPane.leftAnchor="20"
+              AnchorPane.rightAnchor="20"
+              AnchorPane.bottomAnchor="20"
+              styleClass="main-vbox">
 
-            <Label text="Studenti"
-                   style="-fx-font-size: 20; -fx-font-weight: bold;" />
+            <Label text="Studenti" styleClass="header-title" />
 
-            <TableView fx:id="tblStudenti" prefHeight="400">
-
+            <TableView fx:id="tblStudenti" prefHeight="400" styleClass="table-view">
                 <columns>
                     <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
                     <TableColumn fx:id="colIme" text="Ime" prefWidth="120"/>
@@ -31,7 +32,6 @@
                     <TableColumn fx:id="colProsjek" text="Prosjek" prefWidth="80"/>
                     <TableColumn fx:id="colStatus" text="Soc. status" prefWidth="150"/>
                 </columns>
-
             </TableView>
 
         </VBox>

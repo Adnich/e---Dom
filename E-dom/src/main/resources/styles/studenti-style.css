@@ -1,0 +1,102 @@
+/* ROOT */
+.root {
+    -fx-font-family: "Segoe UI";
+}
+
+/* MAIN CONTAINER */
+.anchor-pane {
+    -fx-background-color: #f7fbff;
+}
+
+/* MAIN VBOX */
+.main-vbox {
+    -fx-background-color: white;
+    -fx-background-radius: 20px;
+    -fx-padding: 30 25 25 25;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.15),
+        20,
+        0.3,
+        0,
+        5
+    );
+}
+
+/* HEADER TITLE */
+.header-title {
+    -fx-text-fill: #22b39a;
+    -fx-font-size: 24px;
+    -fx-font-weight: 800;
+    -fx-padding: 0 0 15 0;
+}
+
+/* TABLE VIEW */
+.table-view {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+    -fx-border-color: rgba(34,179,154,0.20);
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.10),
+        12,
+        0.2,
+        0,
+        3
+    );
+}
+
+/* TABLE HEADER */
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, #2ec9ad, #22b39a);
+    -fx-background-radius: 15 15 0 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-font-size: 12px;
+    -fx-border-color: rgba(255,255,255,0.2);
+    -fx-border-width: 0 1 0 0;
+    -fx-padding: 12 8 12 8;
+}
+
+/* ROWS */
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-text-fill: #334155;
+    -fx-font-size: 12px;
+    -fx-border-color: rgba(34,179,154,0.08);
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: rgba(34,179,154,0.03);
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgba(34,179,154,0.15);
+    -fx-text-fill: #1a8f7c;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: rgba(34,179,154,0.08);
+}
+
+/* CELLS */
+.table-cell {
+    -fx-padding: 12 8 12 8;
+    -fx-border-color: rgba(34,179,154,0.05);
+    -fx-border-width: 0 1 0 0;
+    -fx-font-weight: 500;
+}
+
+/* PLACEHOLDER */
+.table-view .placeholder .label {
+    -fx-text-fill: rgba(34,179,154,0.6);
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+}

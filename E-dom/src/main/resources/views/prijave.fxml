@@ -2,6 +2,8 @@
 
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
 
@@ -10,7 +12,7 @@
             fx:controller="controllers.prijaveController"
             prefHeight="400.0" prefWidth="600.0"
             styleClass="root anchor-pane"
-            stylesheets="@../css/prijave.css">
+            stylesheets="@../styles/prijave.css">
 
     <children>
         <VBox spacing="15.0"
@@ -20,12 +22,16 @@
               AnchorPane.bottomAnchor="20"
               styleClass="main-vbox">
 
-            <Label text="Prijave studenata" styleClass="header-title" />
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <Label text="Prijave studenata" styleClass="header-title" />
 
-            <Button text="➕ Nova prijava"
-                    onAction="#onNovaPrijava"
-                    styleClass="nova-prijava-btn"
-                    prefWidth="150" />
+                <Pane HBox.hgrow="ALWAYS"/>
+
+                <Button text=" Nova prijava"
+                        onAction="#onNovaPrijava"
+                        styleClass="nova-prijava-btn" />
+            </HBox>
+
 
             <TableView fx:id="tblPrijave" prefHeight="400" styleClass="table-view">
                 <columns>
