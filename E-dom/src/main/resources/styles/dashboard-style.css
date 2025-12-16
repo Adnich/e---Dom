@@ -99,8 +99,28 @@
     -fx-effect: dropshadow(gaussian, rgba(34,179,154,0.35), 16, 0.25, 0, 7);
 }
 
-.primary-btn:hover { -fx-scale-x: 1.03; -fx-scale-y: 1.03; }
-.primary-btn:pressed { -fx-scale-x: 0.98; -fx-scale-y: 0.96; }
+.primary-btn:hover {
+  -fx-scale-x: 1.04;
+     -fx-scale-y: 1.04;
+     -fx-background-color: linear-gradient(
+         to bottom,
+         #3ddbc0,
+         #1da38d
+     );
+     }
+.primary-btn:pressed {
+  -fx-scale-x: 0.97;
+     -fx-scale-y: 0.95;
+     -fx-background-color: #1a8f7c;
+     -fx-effect: dropshadow(
+         gaussian,
+         rgba(34,179,154,0.25),
+         10,
+         0.2,
+         0,
+         4
+     );
+ }
 
 .secondary-btn {
     -fx-background-color: transparent;

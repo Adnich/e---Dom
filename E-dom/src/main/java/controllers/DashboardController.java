@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
 public class DashboardController {
-
+    private AdminController adminController;
     @FXML private Label lblStudenti;
     @FXML private Label lblPrijave;
 
@@ -18,6 +18,11 @@ public class DashboardController {
     private final PrijavaDAO prijavaDAO = new PrijavaDAO();
 
     @FXML
+
+    public void setAdminController(AdminController adminController) {
+        this.adminController = adminController;
+    }
+
     public void initialize() {
         try { lblStudenti.setText(String.valueOf(studentDAO.countStudents())); }
         catch (Exception e) { lblStudenti.setText("0"); e.printStackTrace(); }
@@ -35,13 +40,16 @@ public class DashboardController {
 
     @FXML
     private void goPrijave(ActionEvent e) {
-        // Ako ovo ne želiš, izbriši dugmad iz FXML-a.
-        loadIntoAdminContent("/views/prijave-view.fxml");
+        if (adminController != null) {
+            adminController.showPrijave(null);
+        }
     }
 
     @FXML
     private void goStudenti(ActionEvent e) {
-        loadIntoAdminContent("/views/studenti.fxml");
+        if (adminController != null) {
+            adminController.showStudenti(null);
+        }
     }
 
     private void loadIntoAdminContent(String fxmlPath) {

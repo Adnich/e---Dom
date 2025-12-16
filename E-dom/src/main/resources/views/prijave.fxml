@@ -1,34 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.prijaveController"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="400.0" prefWidth="600.0"
+            styleClass="root anchor-pane"
+            stylesheets="@../css/prijave.css">
 
     <children>
-        <VBox spacing="10.0" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10"
-              AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
+        <VBox spacing="15.0"
+              AnchorPane.topAnchor="20"
+              AnchorPane.leftAnchor="20"
+              AnchorPane.rightAnchor="20"
+              AnchorPane.bottomAnchor="20"
+              styleClass="main-vbox">
 
-            <Label text="Prijave studenata" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+            <Label text="Prijave studenata" styleClass="header-title" />
+
             <Button text="➕ Nova prijava"
                     onAction="#onNovaPrijava"
-                    style="-fx-background-color: #2563eb; -fx-text-fill: white;"
-                    prefWidth="150"/>
+                    styleClass="nova-prijava-btn"
+                    prefWidth="150" />
 
-            <TableView fx:id="tblPrijave" prefHeight="400">
+            <TableView fx:id="tblPrijave" prefHeight="400" styleClass="table-view">
                 <columns>
-                    <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
-                    <TableColumn fx:id="colDatum" text="Datum" prefWidth="120"/>
-                    <TableColumn fx:id="colAkGod" text="Akad. godina" prefWidth="120"/>
-                    <TableColumn fx:id="colUkupniBodovi" text="Ukupni bodovi" prefWidth="120"/>
-                    <TableColumn fx:id="colStatus" text="Status" prefWidth="150"/>
-                    <TableColumn fx:id="colNapomena" text="Napomena" prefWidth="250"/>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="60" />
+                    <TableColumn fx:id="colDatum" text="Datum" prefWidth="120" />
+                    <TableColumn fx:id="colAkGod" text="Akad. godina" prefWidth="120" />
+                    <TableColumn fx:id="colUkupniBodovi" text="Ukupni bodovi" prefWidth="120" />
+                    <TableColumn fx:id="colStatus" text="Status" prefWidth="150" />
+                    <TableColumn fx:id="colNapomena" text="Napomena" prefWidth="250" />
                 </columns>
             </TableView>
+
         </VBox>
     </children>
 </AnchorPane>
