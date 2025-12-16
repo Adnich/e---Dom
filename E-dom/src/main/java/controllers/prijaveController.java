@@ -8,10 +8,14 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import model.Prijava;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.Tooltip;
+
 
 public class prijaveController {
 
@@ -47,9 +51,6 @@ public class prijaveController {
         );
     }
 
-    // -------------------------------------------------------
-    //  OTVARANJE NOVE PRIJAVE
-    // -------------------------------------------------------
     @FXML
     private void onNovaPrijava() {
         try {
@@ -72,9 +73,35 @@ public class prijaveController {
         }
     }
 
-    // -------------------------------------------------------
-    //  INICIJALIZACIJA TABELE
-    // -------------------------------------------------------
+    @FXML
+    private void onVidiDetalje() {
+        Prijava selektovana = tblPrijave.getSelectionModel().getSelectedItem();
+
+        if (selektovana != null) {
+            otvoriDetalje(selektovana);
+        }
+    }
+
+    private void otvoriDetalje(Prijava prijava) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/views/detalji-prijave.fxml")
+            );
+            Scene scene = new Scene(loader.load());
+
+            DetaljiPrijaveController controller = loader.getController();
+            controller.setPrijava(prijava);
+
+            Stage stage = new Stage();
+            stage.setTitle("Detalji prijave");
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     public void initialize() {
 
@@ -117,5 +144,24 @@ public class prijaveController {
         tblPrijave.setItems(
                 FXCollections.observableArrayList(prijavaDAO.dohvatiSvePrijave())
         );
+
+        tblPrijave.setRowFactory(tv -> {
+            TableRow<Prijava> row = new TableRow<>();
+
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getClickCount() == 2) {
+                    Prijava prijava = row.getItem();
+                    otvoriDetalje(prijava);
+                }
+            });
+
+            return row;
+        });
+
+        tblPrijave.setTooltip(
+                new Tooltip("Dvoklik na prijavu za pregled detalja")
+        );
+
+
     }
 }
