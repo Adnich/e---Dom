@@ -32,8 +32,12 @@ public class NoviStudentController {
     private final StudentDAO studentDAO = new StudentDAO();
     private final SocijalniStatusDAO socijalniStatusDAO = new SocijalniStatusDAO();
 
+    /**
+     * Inicijalizuje formu i učitava CSS stilove
+     */
     @FXML
     public void initialize() {
+        // Popuni ComboBox sa socijalnim statusima
         cmbSocijalniStatus.setItems(
                 FXCollections.observableArrayList(socijalniStatusDAO.dohvatiSveStatuse())
         );
@@ -53,6 +57,28 @@ public class NoviStudentController {
                 setText((empty || sStatus == null) ? "" : sStatus.getNaziv());
             }
         });
+
+        // Učitaj CSS stilove
+        loadStyles();
+    }
+
+    /**
+     * Učitava CSS stylesheet za ovu scenu
+     */
+    private void loadStyles() {
+        try {
+            // Sačekaj da se scene učita, pa dodaj stylesheet
+            txtIme.sceneProperty().addListener((observable, oldScene, newScene) -> {
+                if (newScene != null) {
+                    String cssPath = getClass().getResource("/styles/novi-student-style.css").toExternalForm();
+                    if (!newScene.getStylesheets().contains(cssPath)) {
+                        newScene.getStylesheets().add(cssPath);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            System.err.println("CSS file not found: " + e.getMessage());
+        }
     }
 
     @FXML
@@ -137,7 +163,17 @@ public class NoviStudentController {
             controller.setProsjek(prosjek);
 
             Stage stage = (Stage) txtIme.getScene().getWindow();
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+
+            // VAŽNO: Dodaj CSS stylesheet na novu scenu
+            try {
+                String cssPath = getClass().getResource("/style/novi-student-style.css").toExternalForm();
+                scene.getStylesheets().add(cssPath);
+            } catch (Exception e) {
+                System.err.println("CSS not loaded for nova-prijava scene: " + e.getMessage());
+            }
+
+            stage.setScene(scene);
 
         } catch (Exception e) {
             e.printStackTrace();

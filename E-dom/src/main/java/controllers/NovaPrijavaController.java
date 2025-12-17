@@ -27,6 +27,34 @@ public class NovaPrijavaController {
 
     private final PrijavaDAO prijavaDAO = new PrijavaDAO();
 
+    // ✅ DODANO: automatsko vezanje CSS-a kad se view prikaže
+    @FXML
+    public void initialize() {
+        // scene još nije uvijek spremna u initialize(), pa čekamo da node dobije Scene
+        txtAkGod.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                applyCssIfMissing(newScene);
+            }
+        });
+
+        // ako je scena već spremna (nekad jeste)
+        if (txtAkGod.getScene() != null) {
+            applyCssIfMissing(txtAkGod.getScene());
+        }
+    }
+
+    private void applyCssIfMissing(Scene scene) {
+        var cssUrl = getClass().getResource("/styles/nova-prijava-style.css"); // prilagodi put ako ti je /css/ umjesto /styles/
+        if (cssUrl != null) {
+            String css = cssUrl.toExternalForm();
+            if (!scene.getStylesheets().contains(css)) {
+                scene.getStylesheets().add(css);
+            }
+        } else {
+            System.out.println("⚠ nova-prijava-style.css nije pronađen! Provjeri put: /styles/nova-prijava-style.css");
+        }
+    }
+
     public void setStudentId(int id) {
         this.studentId = id;
     }

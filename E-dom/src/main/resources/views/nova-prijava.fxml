@@ -8,50 +8,68 @@
 <ScrollPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.NovaPrijavaController"
+            styleClass="prijava-scroll-pane"
+            stylesheets="@../styles/nova-prijava-style.css"
             fitToWidth="true"
             prefWidth="480"
             prefHeight="600">
 
     <content>
-        <VBox spacing="12">
+        <VBox spacing="12" styleClass="nova-prijava-container">
             <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
+                <Insets top="30" right="30" bottom="30" left="30"/>
             </padding>
 
             <Label text="Nova prijava"
-                   style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+                   styleClass="prijava-title"/>
 
-            <Separator/>
+            <Separator styleClass="prijava-separator"/>
 
-            <Label text="Akademska godina:"/>
-            <TextField fx:id="txtAkGod" promptText="2024"/>
+            <Label text="Akademska godina:"
+                   styleClass="prijava-field-label"/>
+            <TextField fx:id="txtAkGod"
+                       promptText="2024"
+                       styleClass="prijava-text-field"/>
 
-            <Label text="Broj članova domaćinstva:"/>
-            <TextField fx:id="txtClanovi" promptText="4"/>
+            <Label text="Broj članova domaćinstva:"
+                   styleClass="prijava-field-label"/>
+            <TextField fx:id="txtClanovi"
+                       promptText="4"
+                       styleClass="prijava-text-field"/>
 
-            <Label text="Udaljenost adrese stanovanja do doma (u km):"/>
-            <TextField fx:id="txtUdaljenost" promptText="43"/>
+            <Label text="Udaljenost adrese stanovanja do doma (u km):"
+                   styleClass="prijava-field-label"/>
+            <TextField fx:id="txtUdaljenost"
+                       promptText="43"
+                       styleClass="prijava-text-field"/>
 
-            <Separator/>
+            <Separator styleClass="prijava-separator"/>
 
             <Label text="Dodatni kriteriji:"
-                   style="-fx-font-weight: bold;"/>
+                   styleClass="prijava-section-title"/>
 
             <CheckBox fx:id="chkIzbjeglica"
-                      text="Izbjegli i raseljeni student (3 boda)"/>
+                      text="Izbjegli i raseljeni student (3 boda)"
+                      styleClass="prijava-checkbox"/>
 
             <CheckBox fx:id="chkBratSestra"
-                      text="Brat/sestra studiraju (2 boda)"/>
+                      text="Brat/sestra studiraju (2 boda)"
+                      styleClass="prijava-checkbox"/>
 
-            <Separator/>
+            <Separator styleClass="prijava-separator"/>
 
-            <Label text="Napomena:"/>
-            <TextArea fx:id="txtNapomena" prefHeight="80"/>
+            <Label text="Napomena:"
+                   styleClass="prijava-field-label"/>
+            <TextArea fx:id="txtNapomena"
+                      prefHeight="80"
+                      styleClass="prijava-text-area"/>
+
+            <!-- Spacing prije buttona -->
+            <Region prefHeight="10"/>
 
             <Button text="Spremi"
                     onAction="#onSaveClicked"
-                    style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-padding: 10 20;"/>
+                    styleClass="save-btn"/>
         </VBox>
     </content>
-
 </ScrollPane>

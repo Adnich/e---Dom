@@ -3,68 +3,79 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
+
 <ScrollPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.NoviStudentController"
+            stylesheets="@../styles/nova-student-style.css"
+            styleClass="scroll-pane"
             fitToWidth="true"
             prefWidth="500"
             prefHeight="600">
 
     <content>
-        <VBox spacing="12">
+        <VBox spacing="6" styleClass="novi-student-container, student-form-vbox">
             <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
+                <Insets top="30" right="30" bottom="30" left="30"/>
             </padding>
 
             <Label text="Dodavanje novog studenta"
-                   style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+                   styleClass="page-title"/>
 
-            <Label text="Ime:"/>
-            <TextField fx:id="txtIme"/>
+            <Label text="Ime:" styleClass="student-field-label"/>
+            <TextField fx:id="txtIme" styleClass="student-text-field"/>
 
-            <Label text="Prezime:"/>
-            <TextField fx:id="txtPrezime"/>
+            <Label text="Prezime:" styleClass="student-field-label"/>
+            <TextField fx:id="txtPrezime" styleClass="student-text-field"/>
 
-            <Label text="Ime jednog roditelja:"/>
-            <TextField fx:id="txtRoditelj"/>
+            <Label text="Ime jednog roditelja:" styleClass="student-field-label"/>
+            <TextField fx:id="txtRoditelj" styleClass="student-text-field"/>
 
-            <Label text="JMBG:"/>
-            <TextField fx:id="txtJMBG"/>
+            <Label text="JMBG:" styleClass="student-field-label"/>
+            <TextField fx:id="txtJMBG" styleClass="student-text-field"/>
 
-            <Label text="Broj indeksa:"/>
-            <TextField fx:id="txtIndeks"/>
+            <Label text="Broj indeksa:" styleClass="student-field-label"/>
+            <TextField fx:id="txtIndeks" styleClass="student-text-field"/>
 
-            <Label text="Fakultet:"/>
-            <TextField fx:id="txtFakultet"/>
+            <Label text="Fakultet:" styleClass="student-field-label"/>
+            <TextField fx:id="txtFakultet" styleClass="student-text-field"/>
 
-            <Label text="Godina studija:"/>
-            <TextField fx:id="txtGodina"/>
+            <Label text="Godina studija:" styleClass="student-field-label"/>
+            <TextField fx:id="txtGodina" styleClass="student-text-field"/>
 
-            <Label text="Prosjek:"/>
-            <TextField fx:id="txtProsjek"/>
+            <Label text="Prosjek:" styleClass="student-field-label"/>
+            <TextField fx:id="txtProsjek" styleClass="student-text-field"/>
 
-            <Label text="Apsolvent:"/>
-            <CheckBox fx:id="chkJeLiApsolvent" prefWidth="300"/>
+            <Label text="Apsolvent:" styleClass="student-field-label"/>
+            <CheckBox fx:id="chkJeLiApsolvent"
+                      styleClass="student-checkbox"
+                      prefWidth="300"/>
 
-            <Label text="Postdiplomac:"/>
-            <CheckBox fx:id="chkJeLiPostdiplomac" prefWidth="300"/>
+            <Label text="Postdiplomac:" styleClass="student-field-label"/>
+            <CheckBox fx:id="chkJeLiPostdiplomac"
+                      styleClass="student-checkbox"
+                      prefWidth="300"/>
 
-            <Label text="Email:"/>
-            <TextField fx:id="txtEmail"/>
+            <Label text="Email:" styleClass="student-field-label"/>
+            <TextField fx:id="txtEmail" styleClass="student-text-field"/>
 
-            <Label text="Telefon:"/>
-            <TextField fx:id="txtTelefon"/>
+            <Label text="Telefon:" styleClass="student-field-label"/>
+            <TextField fx:id="txtTelefon" styleClass="student-text-field"/>
 
-            <Label text="Adresa stanovanja:"/>
-            <TextField fx:id="txtAdresa"/>
+            <Label text="Adresa stanovanja:" styleClass="student-field-label"/>
+            <TextField fx:id="txtAdresa" styleClass="student-text-field"/>
 
-            <Label text="Socijalni status:"/>
-            <ComboBox fx:id="cmbSocijalniStatus" prefWidth="300"/>
+            <Label text="Socijalni status:" styleClass="student-field-label"/>
+            <ComboBox fx:id="cmbSocijalniStatus"
+                      styleClass="student-combo"
+                      prefWidth="300"/>
+
+            <!-- Spacing prije buttona -->
+            <Region prefHeight="10"/>
 
             <Button text="Dalje →"
                     onAction="#onNextClicked"
-                    style="-fx-background-color: #16a34a; -fx-text-fill: white; -fx-padding: 10 20;"/>
+                    styleClass="next-btn"/>
         </VBox>
     </content>
 </ScrollPane>
-

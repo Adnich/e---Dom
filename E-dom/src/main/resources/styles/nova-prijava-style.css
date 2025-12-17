@@ -1,0 +1,213 @@
+/* ========================================
+   NOVA PRIJAVA PAGE
+   ======================================== */
+
+/* ScrollPane root */
+.prijava-scroll-pane {
+    -fx-background-color: #f7fbff;
+}
+
+.prijava-scroll-pane > .viewport {
+    -fx-background-color: #f7fbff;
+}
+
+/* Main container */
+.nova-prijava-container {
+    -fx-background-color: white;
+    -fx-background-radius: 24px;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.12),
+        28,
+        0.15,
+        0,
+        6
+    );
+}
+
+/* Page title */
+.prijava-title {
+    -fx-text-fill: #22b39a;
+    -fx-font-size: 28px;
+    -fx-font-weight: 800;
+    -fx-padding: 0 0 8 0;
+}
+
+/* Section subtitle */
+.prijava-section-title {
+    -fx-text-fill: #334155;
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+    -fx-padding: 4 0 0 0;
+}
+
+/* Field labels */
+.prijava-field-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #334155;
+    -fx-font-weight: 600;
+    -fx-padding: 8 0 4 0;
+}
+
+/* Text fields */
+.prijava-text-field {
+    -fx-background-color: white;
+    -fx-background-radius: 18px;
+    -fx-border-radius: 18px;
+    -fx-border-color: rgba(34,179,154,0.25);
+    -fx-border-width: 1px;
+    -fx-padding: 12 16 12 16;
+    -fx-font-size: 13px;
+    -fx-text-fill: #1e293b;
+    -fx-prompt-text-fill: #94a3b8;
+}
+
+.prijava-text-field:focused {
+    -fx-border-color: #22b39a;
+    -fx-border-width: 1.5px;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.18),
+        12,
+        0.3,
+        0,
+        2
+    );
+}
+
+.prijava-text-field:hover {
+    -fx-border-color: rgba(34,179,154,0.45);
+}
+
+/* TextArea styling */
+.prijava-text-area {
+    -fx-background-color: white;
+    -fx-background-radius: 18px;
+    -fx-border-radius: 18px;
+    -fx-border-color: rgba(34,179,154,0.25);
+    -fx-border-width: 1px;
+    -fx-padding: 12 16 12 16;
+    -fx-font-size: 13px;
+    -fx-text-fill: #1e293b;
+    -fx-prompt-text-fill: #94a3b8;
+}
+
+.prijava-text-area:focused {
+    -fx-border-color: #22b39a;
+    -fx-border-width: 1.5px;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.18),
+        12,
+        0.3,
+        0,
+        2
+    );
+}
+
+.prijava-text-area:hover {
+    -fx-border-color: rgba(34,179,154,0.45);
+}
+
+.prijava-text-area .content {
+    -fx-background-color: transparent;
+}
+
+.prijava-text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.prijava-text-area .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* CheckBox styling */
+.prijava-checkbox {
+    -fx-text-fill: #334155;
+    -fx-font-size: 13px;
+    -fx-padding: 4 0;
+}
+
+.prijava-checkbox > .box {
+    -fx-background-color: white;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-border-color: rgba(34,179,154,0.35);
+    -fx-border-width: 1.5px;
+    -fx-padding: 4px;
+}
+
+.prijava-checkbox:selected > .box {
+    -fx-background-color: #22b39a;
+    -fx-border-color: #22b39a;
+}
+
+.prijava-checkbox:hover > .box {
+    -fx-border-color: #22b39a;
+    -fx-background-color: rgba(34,179,154,0.08);
+}
+
+.prijava-checkbox:selected:hover > .box {
+    -fx-background-color: #2ec9ad;
+}
+
+.prijava-checkbox > .box > .mark {
+    -fx-background-color: white;
+    -fx-padding: 0.4em;
+    -fx-shape: "M 0 4 L 3 7 L 8 0";
+}
+
+/* Separator styling */
+.prijava-separator {
+    -fx-background-color: rgba(34,179,154,0.15);
+    -fx-pref-height: 1px;
+    -fx-padding: 8 0;
+}
+
+/* Save button (Spremi) */
+.save-btn {
+    -fx-background-radius: 40px;
+    -fx-background-color: linear-gradient(
+        to bottom,
+        #2ec9ad,
+        #22b39a
+    );
+    -fx-text-fill: white;
+    -fx-font-weight: 800;
+    -fx-font-size: 15px;
+    -fx-padding: 14 40 14 40;
+    -fx-cursor: hand;
+
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.45),
+        18,
+        0.25,
+        0,
+        8
+    );
+}
+
+.save-btn:hover {
+    -fx-scale-x: 1.04;
+    -fx-scale-y: 1.04;
+    -fx-background-color: linear-gradient(
+        to bottom,
+        #3ddbc0,
+        #1da38d
+    );
+}
+
+.save-btn:pressed {
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.95;
+    -fx-background-color: #1a8f7c;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.25),
+        10,
+        0.2,
+        0,
+        4
+    );
+}
