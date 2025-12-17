@@ -1,10 +1,15 @@
 package controllers;
 
+import controllers.DodajDokumenteControllers.CipsDokumentController;
+import controllers.DodajDokumenteControllers.NagradeDokumentController;
+import controllers.DodajDokumenteControllers.ProsjekDokumentController;
+import controllers.DodajDokumenteControllers.UplatnicaDokumentConroller;
 import dao.DokumentDAO;
 import dao.PrijavaDAO;
 import dao.VrstaDokumentaDAO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -15,6 +20,7 @@ import service.KriterijPoOsnovuSocijalnogStatusa;
 import service.KriterijPoOsnovuUdaljenosti;
 import service.KriterijPoOsnovuUspjeha;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -67,19 +73,14 @@ public class DodajDokumenteController {
 
     public void setGodinaStudija(int godinaStudija){
         this.godinaStudija = godinaStudija;
-        if(godinaStudija == 1) {
-            generisiSekciju(vdDao.dohvatiVrstuPoId(7));
-        }
-        else{
-            generisiSekciju(vdDao.dohvatiVrstuPoId(8));
-        }
+        dodajSekcijuSvjedodzbe();
     }
 
     public void setUdaljenost(double udaljenost){
         this.udaljenost = udaljenost;
-        generisiSekciju(vdDao.dohvatiVrstuPoId(6));
-        dodajSekcijuUplatnica(vdDao.dohvatiVrstuPoId(1));
-        generisiSekciju(vdDao.dohvatiVrstuPoId(10));
+        dodajCipsSekciju();
+        dodajUplatnicuSekciju();
+        dodajNagradeSkeciju();
     }
 
     private void generisiSekcijeZaClanove() {
@@ -172,220 +173,6 @@ public class DodajDokumenteController {
         vboxClanovi.getChildren().add(btnZavrsi);
     }
 
-    private void generisiSekciju(VrstaDokumenta vrsta) {
-        if("CIPS".equals(vrsta.getNaziv())){
-            VBox cipsBox = new VBox(8);
-            cipsBox.setStyle("-fx-padding: 10; -fx-border-color: lightgray; -fx-border-radius: 5;");
-
-            Label lblCIPS = new Label("Potvrda o mjestu stalnog boravka (CIPS) i kopija lične karte (za strane državljane kopija pasoša)");
-            TextField txtNaziv = new TextField();
-
-            CheckBox chkDostavljen = new CheckBox("Dokument dostavljen");
-            Button btnDodajDokument = new Button("Dodaj dokument");
-
-            btnDodajDokument.setOnAction(e -> {
-
-                if (!chkDostavljen.isSelected()) {
-                    showAlert("Greška", "Označi da je dokument dostavljen.");
-                    return;
-                }
-
-                Dokument d = new Dokument();
-                d.setNaziv("CIPS - potvrda o mjestu stanovanja");
-                d.setDatumUpload(LocalDate.now());
-                d.setBrojBodova(0); // dokumenti trenutno ne nose bodove dok ne implementiraš UI za dodatne kriterije
-                d.setDostavljen(true);
-                d.setVrstaDokumenta(vrsta);
-                d.setDokumentB64(null);
-
-                new DokumentDAO().unesiDokument(d, prijavaId);
-            });
-
-            cipsBox.getChildren().addAll(
-                    lblCIPS,
-                    chkDostavljen,
-                    btnDodajDokument
-            );
-
-            vboxClanovi.getChildren().add(cipsBox);
-        }
-        else if("Svjedodzba o zavrsetku srednje skole".equals(vrsta.getNaziv())){
-            VBox svjedozbaBox = new VBox(8);
-            svjedozbaBox.setStyle("-fx-padding: 10; -fx-border-color: lightgray; -fx-border-radius: 5;");
-
-            Label lblSvjedozba = new Label("Unesi svjedozbu o zavrsetku srednje skole:");
-            TextField txtNaziv = new TextField();
-
-            CheckBox chkDostavljen = new CheckBox("Dokument dostavljen");
-            Button btnDodajDokument = new Button("Dodaj dokument");
-
-            btnDodajDokument.setOnAction(e -> {
-                if (!chkDostavljen.isSelected()) {
-                    showAlert("Greška", "Označi da je dokument dostavljen.");
-                    return;
-                }
-
-                Dokument d = new Dokument();
-                d.setNaziv("Svjedozba o zavrsetku srednje skole");
-                d.setDatumUpload(LocalDate.now());
-                d.setBrojBodova(0);
-                d.setDostavljen(true);
-                d.setVrstaDokumenta(vrsta);
-                d.setDokumentB64(null);
-
-                new DokumentDAO().unesiDokument(d, prijavaId);
-
-                kriterij.izracunajBodoveBrucosi(prijavaId, prosjek);
-            });
-
-            // Dodaj sve elemente u VBox
-            svjedozbaBox.getChildren().addAll(
-                    lblSvjedozba,
-                    txtNaziv,
-                    chkDostavljen,
-                    btnDodajDokument
-            );
-
-            // Dodaj VBox u glavni container
-            vboxClanovi.getChildren().add(svjedozbaBox);
-        }
-        else if("Uvjerenje o polozenim ispitima".equals(vrsta.getNaziv())){
-            VBox prosjekBox = new VBox(8);
-            prosjekBox.setStyle("-fx-padding: 10; -fx-border-color: lightgray; -fx-border-radius: 5;");
-
-            Label lblIspiti = new Label("Unesi uvjerenje o polozenim ispitima: ");
-
-            CheckBox chkUvjerenje = new CheckBox("Uvjerenje dostavljeno");
-            CheckBox chkIndeks = new CheckBox("Indeks dostavljen");
-
-            TextField txtBrojPolozenih = new TextField();
-
-            Button btnDodajDokument = new Button("Dodaj dokument");
-
-            btnDodajDokument.setOnAction(e -> {
-                VrstaDokumenta vrstaZaDokument; // nova lokalna varijabla
-
-                String naziv;
-                if(chkUvjerenje.isSelected()) {
-                    naziv = "Uvjerenje o polozenim ispitima";
-                    vrstaZaDokument = vrsta; // originalna vrsta
-                } else {
-                    naziv = "Ovjerena kopija indeksa sa ocjenama";
-                    vrstaZaDokument = vdDao.dohvatiVrstuPoId(9); // nova vrsta
-                }
-
-                Dokument d = new Dokument();
-                d.setNaziv(naziv);
-                d.setDatumUpload(LocalDate.now());
-                d.setBrojBodova(0);
-                d.setDostavljen(true);
-                d.setVrstaDokumenta(vrstaZaDokument);
-                d.setDokumentB64(null);
-
-                new DokumentDAO().unesiDokument(d, prijavaId);
-
-                int brojPolozenih = parseIznosInt(txtBrojPolozenih.getText());
-                kriterij.izracunajBodove(prijavaId, prosjek, brojPolozenih, godinaStudija );
-            });
-
-            prosjekBox.getChildren().addAll(
-                    lblIspiti,
-                    chkUvjerenje,
-                    chkIndeks,
-                    txtBrojPolozenih,
-                    btnDodajDokument
-            );
-
-            vboxClanovi.getChildren().add(prosjekBox);
-        } else if ("Dokaz o osvojenim nagradama".equals(vrsta.getNaziv())) {
-
-            VBox nagradeBox = new VBox(8);
-            nagradeBox.setStyle("-fx-padding: 10; -fx-border-color: lightgray; -fx-border-radius: 5;");
-
-            Label lblNagrade = new Label("Osvojene nagrade u toku školovanja (3 boda)");
-
-            CheckBox chkNagrada = new CheckBox("Student ima osvojene nagrade");
-            CheckBox chkDostavljen = new CheckBox("Dokument dostavljen");
-
-            Button btnDodajDokument = new Button("Dodaj dokument");
-
-            btnDodajDokument.setOnAction(e -> {
-
-                if (!chkNagrada.isSelected()) {
-                    showAlert("Greška", "Morate označiti da student ima osvojene nagrade.");
-                    return;
-                }
-
-                if (!chkDostavljen.isSelected()) {
-                    showAlert("Greška", "Dokument mora biti dostavljen.");
-                    return;
-                }
-
-                // 1️⃣ upis dokumenta
-                Dokument d = new Dokument();
-                d.setNaziv("Dokaz o osvojenim nagradama");
-                d.setDatumUpload(LocalDate.now());
-                d.setBrojBodova(0); // bodovi se dodaju na prijavu, ne na dokument
-                d.setDostavljen(true);
-                d.setVrstaDokumenta(vrsta);
-                d.setDokumentB64(null);
-
-                new DokumentDAO().unesiDokument(d, prijavaId);
-
-                KriterijPoOsnovuUdaljenosti kUdaljenost = new KriterijPoOsnovuUdaljenosti();
-
-                PrijavaDAO prijavaDAO = new PrijavaDAO();
-                prijavaDAO.dodajBodoveNaPrijavu(prijavaId, 3);
-                prijavaDAO.dodajBodoveNaPrijavu(prijavaId, kUdaljenost.izracunajBodove(udaljenost));
-
-                showAlert("Uspješno",
-                        "Dodano 3 boda za osvojene nagrade.");
-            });
-
-            nagradeBox.getChildren().addAll(
-                    lblNagrade,
-                    chkNagrada,
-                    chkDostavljen,
-                    btnDodajDokument
-            );
-
-            vboxClanovi.getChildren().add(nagradeBox);
-        }
-    }
-
-    //posebna metoda za dodavanje uplatnice
-    private void dodajSekcijuUplatnica(VrstaDokumenta vrsta) {
-
-        VBox box = new VBox(8);
-        box.setStyle("-fx-padding: 10; -fx-border-color: lightgray; -fx-border-radius: 5;");
-
-        Label lbl = new Label("Opća uplatnica – troškovi obrade podataka (10,00 KM)");
-
-        CheckBox chkDostavljen = new CheckBox("Uplatnica dostavljena");
-
-        Button btnDodaj = new Button("Dodaj dokument");
-
-        btnDodaj.setOnAction(e -> {
-
-            if (!chkDostavljen.isSelected()) {
-                showAlert("Greška", "Morate označiti da je uplatnica dostavljena.");
-                return;
-            }
-
-            Dokument d = new Dokument();
-            d.setNaziv("Opća uplatnica – 10,00 KM");
-            d.setDatumUpload(LocalDate.now());
-            d.setDostavljen(true);
-            d.setBrojBodova(0); // nema bodova
-            d.setVrstaDokumenta(vrsta);
-            d.setDokumentB64(null);
-
-            new DokumentDAO().unesiDokument(d, prijavaId);
-        });
-
-        box.getChildren().addAll(lbl, chkDostavljen, btnDodaj);
-        vboxClanovi.getChildren().add(box);
-    }
 
     private int parseIznosInt(String text) {
         if (text == null || text.trim().isEmpty()) return 0;
@@ -440,4 +227,91 @@ public class DodajDokumenteController {
         alert.setContentText(msg);
         alert.showAndWait();
     }
+
+    private void dodajCipsSekciju() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/views/DodajDokumenteSections/cips.fxml")
+            );
+
+            VBox cipsBox = loader.load();
+
+            CipsDokumentController controller = loader.getController();
+            controller.init(
+                    prijavaId,
+                    vdDao.dohvatiVrstuPoId(6) // CIPS
+            );
+
+            vboxClanovi.getChildren().add(cipsBox);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void dodajUplatnicuSekciju(){
+        try{
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/views/DodajDokumenteSections/uplatnica.fxml")
+            );
+            VBox uplatnicaBox = loader.load();
+
+            UplatnicaDokumentConroller controller = loader.getController();
+            controller.init(
+                    prijavaId,
+                    vdDao.dohvatiVrstuPoId( 1)
+            );
+
+            vboxClanovi.getChildren().add(uplatnicaBox);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void dodajNagradeSkeciju(){
+        try{
+            FXMLLoader loader = new FXMLLoader(
+              getClass().getResource("/views/DodajDokumenteSections/nagrade.fxml")
+            );
+
+            VBox NagradeBox = loader.load();
+
+            NagradeDokumentController controller = loader.getController();
+            controller.init(
+                    prijavaId,
+                    vdDao.dohvatiVrstuPoId( 10)
+            );
+            vboxClanovi.getChildren().add(NagradeBox);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void dodajSekcijuSvjedodzbe() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                    "/views/DodajDokumenteSections/prosjek.fxml"
+            ));
+            VBox box = loader.load();
+
+            ProsjekDokumentController controller = loader.getController();
+            controller.init(
+                    prijavaId,
+                    godinaStudija,
+                    prosjek,
+                    vdDao.dohvatiVrstuPoId(7),  // svjedodžba srednja
+                    vdDao.dohvatiVrstuPoId(8),  // uvjerenje fakultet
+                    vdDao.dohvatiVrstuPoId(9)   // indeks
+            );
+
+            vboxClanovi.getChildren().add(box);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }

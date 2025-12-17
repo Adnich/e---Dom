@@ -24,6 +24,8 @@ module org.example.edom {
 
     // FXML controllers
     opens controllers to javafx.fxml;
+    opens controllers.DodajDokumenteControllers to javafx.fxml;
+
 
     // modeli (TableView, PropertyValueFactory)
     opens model to javafx.base;
