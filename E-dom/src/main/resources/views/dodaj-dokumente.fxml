@@ -6,8 +6,11 @@
 <ScrollPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.DodajDokumenteController"
-            prefHeight="600" prefWidth="600">
-
-    <VBox fx:id="vboxClanovi"  />
+            prefHeight="600" prefWidth="600"
+            stylesheets="@../styles/dodaj-dokument-style.css">
+    <content>
+        <VBox fx:id="vboxClanovi"/>
+    </content>
 </ScrollPane>
+
 

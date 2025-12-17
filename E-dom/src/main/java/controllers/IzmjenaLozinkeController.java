@@ -16,6 +16,21 @@ public class IzmjenaLozinkeController {
 
     private final KorisnikDAO korisnikDAO = new KorisnikDAO();
 
+    // ✅ DODANO – fiksiranje veličine prozora
+    @FXML
+    public void initialize() {
+        txtUsername.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                Stage stage = (Stage) newScene.getWindow();
+
+                stage.setWidth(400);
+                stage.setHeight(300);
+                stage.setResizable(false);
+                stage.centerOnScreen();
+            }
+        });
+    }
+
     @FXML
     private void onResetClicked() {
 

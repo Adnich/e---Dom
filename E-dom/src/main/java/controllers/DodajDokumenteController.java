@@ -14,6 +14,7 @@ import model.VrstaDokumenta;
 import service.KriterijPoOsnovuSocijalnogStatusa;
 import service.KriterijPoOsnovuUdaljenosti;
 import service.KriterijPoOsnovuUspjeha;
+
 import java.time.LocalDate;
 import java.util.*;
 
@@ -28,16 +29,30 @@ public class DodajDokumenteController {
     private double prosjek;
     private int godinaStudija;
 
-
     private final Map<Integer, List<Dokument>> dokumentiPoClanu = new HashMap<>();
     private final Map<Integer, Double> primanjaPoClanu = new HashMap<>();
 
     private KriterijPoOsnovuUspjeha kriterij = new KriterijPoOsnovuUspjeha();
 
-
     private VrstaDokumentaDAO vdDao = new VrstaDokumentaDAO();
 
     private final List<VrstaDokumenta> vrsteDokumenata = vdDao.dohvatiSveVrste();
+
+    // ✅ DODANO: automatsko podešavanje veličine prozora kad se FXML učita i Stage postane dostupan
+    @FXML
+    public void initialize() {
+        vboxClanovi.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                Stage stage = (Stage) newScene.getWindow();
+
+                // Ovdje promijeni dimenzije kako želiš:
+                stage.setWidth(900);
+                stage.setHeight(700);
+
+                stage.centerOnScreen(); // opcionalno
+            }
+        });
+    }
 
     public void setPrijavaId(int prijavaId) {
         this.prijavaId = prijavaId;
@@ -48,9 +63,10 @@ public class DodajDokumenteController {
         generisiSekcijeZaClanove();
     }
 
-    public void setProsjek(double prosjek) {this.prosjek=prosjek;}
+    public void setProsjek(double prosjek) { this.prosjek = prosjek; }
+
     public void setGodinaStudija(int godinaStudija){
-        this.godinaStudija=godinaStudija;
+        this.godinaStudija = godinaStudija;
         if(godinaStudija == 1) {
             generisiSekciju(vdDao.dohvatiVrstuPoId(7));
         }
@@ -60,7 +76,7 @@ public class DodajDokumenteController {
     }
 
     public void setUdaljenost(double udaljenost){
-        this.udaljenost=udaljenost;
+        this.udaljenost = udaljenost;
         generisiSekciju(vdDao.dohvatiVrstuPoId(6));
         dodajSekcijuUplatnica(vdDao.dohvatiVrstuPoId(1));
         generisiSekciju(vdDao.dohvatiVrstuPoId(10));
@@ -163,7 +179,6 @@ public class DodajDokumenteController {
 
             Label lblCIPS = new Label("Potvrda o mjestu stalnog boravka (CIPS) i kopija lične karte (za strane državljane kopija pasoša)");
             TextField txtNaziv = new TextField();
-
 
             CheckBox chkDostavljen = new CheckBox("Dokument dostavljen");
             Button btnDodajDokument = new Button("Dodaj dokument");
@@ -273,7 +288,6 @@ public class DodajDokumenteController {
                 kriterij.izracunajBodove(prijavaId, prosjek, brojPolozenih, godinaStudija );
             });
 
-
             prosjekBox.getChildren().addAll(
                     lblIspiti,
                     chkUvjerenje,
@@ -283,7 +297,7 @@ public class DodajDokumenteController {
             );
 
             vboxClanovi.getChildren().add(prosjekBox);
-        }else if ("Dokaz o osvojenim nagradama".equals(vrsta.getNaziv())) {
+        } else if ("Dokaz o osvojenim nagradama".equals(vrsta.getNaziv())) {
 
             VBox nagradeBox = new VBox(8);
             nagradeBox.setStyle("-fx-padding: 10; -fx-border-color: lightgray; -fx-border-radius: 5;");

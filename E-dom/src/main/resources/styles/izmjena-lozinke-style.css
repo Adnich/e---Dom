@@ -1,0 +1,99 @@
+/* ROOT */
+.root {
+    -fx-font-family: "Segoe UI";
+    -fx-background-color: #f7fbff;
+}
+
+/* MAIN CONTAINER */
+.v-box {
+    -fx-background-color: white;
+    -fx-background-radius: 20px;
+    -fx-padding: 45 40 45 40;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.15),
+        25,
+        0.2,
+        0,
+        6
+    );
+}
+
+/* NASLOV */
+.label {
+    -fx-text-fill: #22b39a;
+    -fx-font-size: 26px;
+    -fx-font-weight: 800;
+}
+
+/* TEXT FIELDS & PASSWORD FIELDS */
+.text-field,
+.password-field {
+    -fx-background-color: white;
+    -fx-background-radius: 18px;
+    -fx-border-radius: 18px;
+    -fx-border-color: rgba(34,179,154,0.25);
+    -fx-padding: 12 16 12 16;
+    -fx-font-size: 13px;
+    -fx-pref-width: 320px;
+    -fx-max-width: 320px;
+    -fx-min-width: 320px;
+}
+
+.text-field:focused,
+.password-field:focused {
+    -fx-border-color: #22b39a;
+    -fx-border-width: 1.5px;
+}
+
+/* BUTTON */
+.button {
+    -fx-background-radius: 40px;
+    -fx-background-color: linear-gradient(
+        to bottom,
+        #2ec9ad,
+        #22b39a
+    );
+    -fx-text-fill: white;
+    -fx-font-weight: 800;
+    -fx-font-size: 15px;
+    -fx-padding: 14 32 14 32;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.45),
+        18,
+        0.25,
+        0,
+        8
+    );
+}
+
+.button:hover {
+    -fx-scale-x: 1.04;
+    -fx-scale-y: 1.04;
+    -fx-background-color: linear-gradient(
+        to bottom,
+        #3ddbc0,
+        #1da38d
+    );
+}
+
+.button:pressed {
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.95;
+    -fx-background-color: #1a8f7c;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(34,179,154,0.25),
+        10,
+        0.2,
+        0,
+        4
+    );
+}
+
+/* INFO LABEL */
+#lblInfo {
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+}
