@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.DetaljiPrijaveController"
+            prefWidth="800" prefHeight="500">
+
+    <!-- GORNJI DIO -->
+    <top>
+        <VBox spacing="5">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+
+            <Label fx:id="lblNaslov"
+                   text="Detalji prijave"
+                   style="-fx-font-size:18; -fx-font-weight:bold;"/>
+
+            <Label fx:id="lblInfo"/>
+        </VBox>
+    </top>
+
+    <!-- CENTRALNI DIO -->
+    <center>
+        <SplitPane dividerPositions="0.55">
+
+            <!-- DOKUMENTI -->
+            <VBox spacing="10">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+
+                <Label text="Dostavljeni dokumenti"
+                       style="-fx-font-weight:bold;"/>
+
+                <TableView fx:id="tblDokumenti">
+                    <columns>
+                        <TableColumn fx:id="colNaziv" text="Naziv"/>
+                        <TableColumn fx:id="colVrsta" text="Vrsta"/>
+                        <TableColumn fx:id="colDatum" text="Datum"/>
+                        <TableColumn fx:id="colBodovi" text="Bodovi"/>
+                        <TableColumn fx:id="colDostavljen" text="Dostavljen"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- BODOVI -->
+            <VBox spacing="10">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+
+                <Label text="Bodovanje"
+                       style="-fx-font-weight:bold;"/>
+
+                <Label fx:id="lblUkupniBodovi"
+                       style="-fx-font-size:16;"/>
+            </VBox>
+
+        </SplitPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <padding>
+                <Insets top="10" right="15" bottom="10" left="15"/>
+            </padding>
+
+            <Button text="Zatvori"
+                    onAction="#onZatvori"
+                    defaultButton="true"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
