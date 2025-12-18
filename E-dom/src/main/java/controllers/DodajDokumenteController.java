@@ -1,9 +1,6 @@
 package controllers;
 
-import controllers.DodajDokumenteControllers.CipsDokumentController;
-import controllers.DodajDokumenteControllers.NagradeDokumentController;
-import controllers.DodajDokumenteControllers.ProsjekDokumentController;
-import controllers.DodajDokumenteControllers.UplatnicaDokumentConroller;
+import controllers.DodajDokumenteControllers.*;
 import dao.DokumentDAO;
 import dao.PrijavaDAO;
 import dao.VrstaDokumentaDAO;
@@ -66,7 +63,7 @@ public class DodajDokumenteController {
 
     public void setClanovi(int clanovi) {
         this.clanovi = clanovi;
-        generisiSekcijeZaClanove();
+        dodajKucnuListuSekciju();
     }
 
     public void setProsjek(double prosjek) { this.prosjek = prosjek; }
@@ -83,95 +80,6 @@ public class DodajDokumenteController {
         dodajNagradeSkeciju();
     }
 
-    private void generisiSekcijeZaClanove() {
-        vboxClanovi.getChildren().clear();
-        dokumentiPoClanu.clear();
-        primanjaPoClanu.clear();
-
-        for (int i = 1; i <= clanovi; i++) {
-            final int clanIndex = i;
-
-            VBox clanBox = new VBox(8);
-            Label lblClan = new Label("Član " + clanIndex);
-
-            TextField txtImeClana = new TextField();
-            txtImeClana.setPromptText("Ime / uloga (npr. majka)");
-
-            TextField txtIznos = new TextField();
-            txtIznos.setPromptText("Mjesečna primanja (KM)");
-
-            txtIznos.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
-                if (wasFocused && !isNowFocused) { // izgubio fokus
-                    double iznos = parseIznosOrZero(txtIznos.getText());
-                    primanjaPoClanu.put(clanIndex, iznos);
-                }
-            });
-
-            ComboBox<VrstaDokumenta> cmbVrsta = new ComboBox<>();
-            cmbVrsta.setItems(FXCollections.observableArrayList(vrsteDokumenata));
-            cmbVrsta.setPromptText("Vrsta dokumenta");
-
-            cmbVrsta.setCellFactory(param -> new ListCell<>() {
-                @Override
-                protected void updateItem(VrstaDokumenta vrsta, boolean empty){
-                    super.updateItem(vrsta, empty);
-                    setText((empty || vrsta == null) ? "" : vrsta.getNaziv());
-                }
-            });
-
-            cmbVrsta.setButtonCell(new ListCell<>() {
-                @Override
-                protected void updateItem(VrstaDokumenta vrsta, boolean empty){
-                    super.updateItem(vrsta, empty);
-                    setText((empty || vrsta == null) ? "" : vrsta.getNaziv());
-                }
-            });
-
-            CheckBox chkDostavljen = new CheckBox("Dokument dostavljen");
-            Button btnDodajDokument = new Button("Dodaj dokument");
-
-            dokumentiPoClanu.put(clanIndex, new ArrayList<>());
-
-            btnDodajDokument.setOnAction(e -> {
-
-                if (!chkDostavljen.isSelected()) {
-                    showAlert("Greška", "Označi da je dokument dostavljen.");
-                    return;
-                }
-
-                if (cmbVrsta.getValue() == null) {
-                    showAlert("Greška", "Odaberi vrstu dokumenta.");
-                    return;
-                }
-
-                // (primanja se već spremaju kroz listener, ali ovdje još jednom “osiguramo”)
-                primanjaPoClanu.put(clanIndex, parseIznosOrZero(txtIznos.getText()));
-
-                String ime = txtImeClana.getText().isEmpty()
-                        ? "Član " + clanIndex
-                        : txtImeClana.getText();
-
-                Dokument d = new Dokument();
-                d.setNaziv(cmbVrsta.getValue().getNaziv() + " - " + ime);
-                d.setDatumUpload(LocalDate.now());
-                d.setBrojBodova(0); // dokumenti trenutno ne nose bodove dok ne implementiraš UI za dodatne kriterije
-                d.setDostavljen(true);
-                d.setVrstaDokumenta(cmbVrsta.getValue());
-                d.setDokumentB64(null);
-
-                new DokumentDAO().unesiDokument(d, prijavaId);
-                dokumentiPoClanu.get(clanIndex).add(d);
-            });
-
-            HBox hbox = new HBox(10, txtIznos, cmbVrsta, chkDostavljen, btnDodajDokument);
-            clanBox.getChildren().addAll(lblClan, txtImeClana, hbox);
-            vboxClanovi.getChildren().add(clanBox);
-        }
-
-        Button btnZavrsi = new Button("Završi unos");
-        btnZavrsi.setOnAction(e -> zavrsiUnos());
-        vboxClanovi.getChildren().add(btnZavrsi);
-    }
 
 
     private int parseIznosInt(String text) {
@@ -312,6 +220,30 @@ public class DodajDokumenteController {
             throw new RuntimeException(e);
         }
     }
+
+
+    private void dodajKucnuListuSekciju() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/views/DodajDokumenteSections/kucna-lista.fxml")
+            );
+
+            VBox box = loader.load();
+
+            KucnaListaController controller = loader.getController();
+            controller.init(
+                    prijavaId,
+                    clanovi,
+                    vrsteDokumenata
+            );
+
+            vboxClanovi.getChildren().add(box);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
 }

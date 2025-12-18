@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox spacing="10"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.DodajDokumenteControllers.KucnaListaController"
+      style="-fx-padding: 10; -fx-border-color: #cccccc;">
+
+    <Label text="Članovi domaćinstva"
+           style="-fx-font-weight: bold; -fx-font-size: 14"/>
+
+    <!-- OVDJE SE DINAMIČKI DODAJU SEKCIJE -->
+    <VBox fx:id="vboxClanovi" spacing="12"/>
+
+    <Button text="Završi unos članova"
+            onAction="#zavrsiUnos"/>
+</VBox>
