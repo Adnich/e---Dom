@@ -31,6 +31,7 @@ public class DodajDokumenteController {
     private double udaljenost;
     private double prosjek;
     private int godinaStudija;
+    private int bodoviBranioci;
 
     private final Map<Integer, List<Dokument>> dokumentiPoClanu = new HashMap<>();
     private final Map<Integer, Double> primanjaPoClanu = new HashMap<>();
@@ -79,6 +80,17 @@ public class DodajDokumenteController {
         dodajUplatnicuSekciju();
         dodajNagradeSkeciju();
     }
+
+    public void setBodoviBranioci(int bodoviBranioci) {
+        this.bodoviBranioci = bodoviBranioci;
+
+        if (bodoviBranioci > 0) {
+            dodajSekcijuDodatniBodovi();
+        }
+        PrijavaDAO prijavaDAO = new PrijavaDAO();
+        prijavaDAO.dodajBodoveNaPrijavu(prijavaId, bodoviBranioci);
+    }
+
 
 
 
@@ -243,6 +255,31 @@ public class DodajDokumenteController {
             throw new RuntimeException(e);
         }
     }
+
+    private void dodajSekcijuDodatniBodovi() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/views/DodajDokumenteSections/dodatni-bodovi.fxml")
+            );
+
+            VBox box = loader.load();
+
+            DodatniBodoviController controller = loader.getController();
+            controller.init(
+                    prijavaId,
+                    List.of(
+                            vdDao.dohvatiVrstuPoId(11), // npr. dokaz branioca
+                            vdDao.dohvatiVrstuPoId(12)  // drugi dokument
+                    )
+            );
+
+            vboxClanovi.getChildren().add(box);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 

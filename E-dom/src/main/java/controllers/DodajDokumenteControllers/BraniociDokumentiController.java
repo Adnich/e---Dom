@@ -58,10 +58,17 @@ public class BraniociDokumentiController {
     @FXML
     private CheckBox chkKorisniciSocijalnePomoci;
 
+    private int ukupniBodovi;
+
+    public int getUkupniBodovi() {
+        return ukupniBodovi;
+    }
+
+
     private KriterijPoOsnovuDjeceBranilaca kriterij = new KriterijPoOsnovuDjeceBranilaca();
 
 
-    public double izracunajMaxVidive(){
+    public int izracunajBodove() {
         Map<String, Boolean> stanja = new HashMap<>();
         stanja.put("StudentRvi", chkStudentRVI.isSelected());
         stanja.put("Invalidnost", chkInvaliditet.isSelected());
@@ -77,8 +84,17 @@ public class BraniociDokumentiController {
         stanja.put("BezRoditeljskogStaratelja", chkBezRoditeljskogStaranja.isSelected());
         stanja.put("KorisniciSocijalnePomoci", chkKorisniciSocijalnePomoci.isSelected());
 
-        return kriterij.izracunaj(stanja, txtPostotakInvaliditeta, txtPostInvalidnostiRoditelja, txtBrojMjeseci);
+        double bodovi = kriterij.izracunaj(
+                stanja,
+                txtPostotakInvaliditeta,
+                txtPostInvalidnostiRoditelja,
+                txtBrojMjeseci
+        );
+
+        this.ukupniBodovi = (int) Math.round(bodovi);
+        return this.ukupniBodovi;
     }
+
 
 
 

@@ -142,6 +142,15 @@ public class NovaPrijavaController {
             controller.setUdaljenost(udaljenost);
             controller.setProsjek(prosjek);
             controller.setGodinaStudija(godinaStudija);
+            int bodoviBranioci = 0;
+
+            if (braniociController != null) {
+                bodoviBranioci = braniociController.izracunajBodove();
+            }
+
+            controller.setBodoviBranioci(bodoviBranioci);
+
+
 
             Stage stage = (Stage) txtAkGod.getScene().getWindow();
             stage.setScene(new Scene(root));
