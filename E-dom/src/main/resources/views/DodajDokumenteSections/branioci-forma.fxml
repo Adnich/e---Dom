@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.geometry.Insets?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml"
+          fx:controller="controllers.DodajDokumenteControllers.BraniociDokumentiController"
+          hgap="10"
+          vgap="8">
+
+    <!-- Student RVI -->
+    <CheckBox text="Student RVI" GridPane.rowIndex="0" GridPane.columnIndex="0" fx:id="chkStudentRVI"/>
+    <TextField promptText="Postotak invaliditeta" GridPane.rowIndex="0" GridPane.columnIndex="1" fx:id="txtPostotakInvaliditeta"/>
+
+    <!-- Invaliditet roditelja -->
+    <CheckBox text="Invalidnost roditelja" GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="chkInvalidnostRoditelja"/>
+    <TextField promptText="Postotak invalidnosti roditelja" GridPane.rowIndex="1" GridPane.columnIndex="1" fx:id="txtPostInvalidnostiRoditelja"/>
+
+    <!-- Dijete OSRBiH -->
+    <CheckBox text="Dijete OSRBiH" GridPane.rowIndex="2" GridPane.columnIndex="0" fx:id="chkDjecaOSRBiH"/>
+    <TextField promptText="Broj mjeseci" GridPane.rowIndex="2" GridPane.columnIndex="1" fx:id="txtBrojMjeseci"/>
+
+    <!-- Ostali checkboxovi -->
+    <CheckBox text="Djeca šehida" GridPane.rowIndex="3" GridPane.columnIndex="0" fx:id="chkDjecaSehida"/>
+    <CheckBox text="Član porodice šehida" GridPane.rowIndex="4" GridPane.columnIndex="0" fx:id="chkClanPorodiceSehida"/>
+    <CheckBox text="Invalidnost" GridPane.rowIndex="5" GridPane.columnIndex="0" fx:id="chkInvaliditet"/>
+    <CheckBox text="Djeca nosilaca RPriznanja" GridPane.rowIndex="6" GridPane.columnIndex="0" fx:id="chkDjecaNosilacaRPriznanja"/>
+    <CheckBox text="Student logoraš" GridPane.rowIndex="7" GridPane.columnIndex="0" fx:id="chkStudentLogoras"/>
+    <CheckBox text="Roditelj logoraš" GridPane.rowIndex="8" GridPane.columnIndex="0" fx:id="chkRoditeljLogoras"/>
+    <CheckBox text="Djeca bez jednog roditelja" GridPane.rowIndex="9" GridPane.columnIndex="0" fx:id="chkDjecaBez1Roditelja"/>
+    <CheckBox text="Djeca bez oba roditelja" GridPane.rowIndex="10" GridPane.columnIndex="0" fx:id="chkDjecaBezObaRoditelja"/>
+    <CheckBox text="Bez roditeljskog staranja" GridPane.rowIndex="11" GridPane.columnIndex="0" fx:id="chkBezRoditeljskogStaranja"/>
+    <CheckBox text="Korisnici socijalne pomoći" GridPane.rowIndex="12" GridPane.columnIndex="0" fx:id="chkKorisniciSocijalnePomoci"/>
+
+</GridPane>

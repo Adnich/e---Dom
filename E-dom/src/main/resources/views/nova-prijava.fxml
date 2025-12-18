@@ -58,6 +58,10 @@
 
             <Separator styleClass="prijava-separator"/>
 
+            <VBox fx:id="vboxBranioci" spacing="10"/>
+
+            <Separator styleClass="prijava-separator"/>
+
             <Label text="Napomena:"
                    styleClass="prijava-field-label"/>
             <TextArea fx:id="txtNapomena"

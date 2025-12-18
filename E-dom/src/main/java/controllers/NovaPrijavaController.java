@@ -1,11 +1,14 @@
 package controllers;
 
+import controllers.DodajDokumenteControllers.BraniociDokumentiController;
 import dao.PrijavaDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Prijava;
 import model.StatusPrijave;
@@ -21,6 +24,11 @@ public class NovaPrijavaController {
     @FXML private CheckBox chkIzbjeglica;
     @FXML private CheckBox chkBratSestra;
 
+    private BraniociDokumentiController braniociController;
+
+    @FXML private VBox vboxBranioci; // dodaj u FXML NovaPrijava
+
+
     private int studentId;
     private double prosjek;
     private int godinaStudija;
@@ -30,18 +38,20 @@ public class NovaPrijavaController {
     // ✅ DODANO: automatsko vezanje CSS-a kad se view prikaže
     @FXML
     public void initialize() {
-        // scene još nije uvijek spremna u initialize(), pa čekamo da node dobije Scene
+
         txtAkGod.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 applyCssIfMissing(newScene);
+                ucitajBraniociFormu(); // ✅ OVDJE
             }
         });
 
-        // ako je scena već spremna (nekad jeste)
         if (txtAkGod.getScene() != null) {
             applyCssIfMissing(txtAkGod.getScene());
+            ucitajBraniociFormu(); // ✅ I OVDJE
         }
     }
+
 
     private void applyCssIfMissing(Scene scene) {
         var cssUrl = getClass().getResource("/styles/nova-prijava-style.css"); // prilagodi put ako ti je /css/ umjesto /styles/
@@ -149,4 +159,23 @@ public class NovaPrijavaController {
         a.setContentText(msg);
         a.showAndWait();
     }
+
+    private void ucitajBraniociFormu() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/views/DodajDokumenteSections/branioci-forma.fxml")
+            );
+
+            Node node = loader.load();
+            braniociController = loader.getController();
+
+            vboxBranioci.getChildren().clear();
+            vboxBranioci.getChildren().add(node);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Greška", "Ne mogu učitati formu za branioce.");
+        }
+    }
+
 }
