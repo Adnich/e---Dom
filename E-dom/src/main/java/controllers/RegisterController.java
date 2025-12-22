@@ -94,7 +94,28 @@ public class RegisterController {
             lblError.setText("Korisničko ime je zauzeto.");
             return;
         }
-
+        if(pass1.length()<8){
+            lblError.setText("Lozinka mora imati najmanje 8 karaktera.");
+            return;
+        }
+        if(!pass1.matches(".*[A-Z].*")){
+            lblError.setText("Lozinka mora sadržavati barem jedno veliko slovo.");
+            return;
+        }
+        if(!pass1.matches(".*[a-z].*")){
+            lblError.setText("Lozinka mora sadržavati barem jedno malo slovo.");
+            return;
+        }
+        if(!pass1.matches(".*\\d.*")){
+            lblError.setText("Lozinka mora sadržavati barem jednu cifru.");
+            return;
+        }
+        if(!pass1.matches(".*[!@#$%^&*()].*")){
+            lblError.setText("Lozinka mora sadržavati barem jedan specijalni karakter (!@#$%^&*()).");
+            return;
+        }
+        ime = formatirajIme(ime);
+        prezime = formatirajIme(prezime);
         // ovdje za projekat koristimo lozinku direktno kao password_hash
         Korisnik k = new Korisnik();
         k.setIme(ime);
@@ -153,5 +174,13 @@ public class RegisterController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private String formatirajIme(String tekst) {
+        if (tekst == null || tekst.isEmpty()) return tekst;
+
+        tekst = tekst.trim().toLowerCase();
+
+        return tekst.substring(0, 1).toUpperCase() + tekst.substring(1);
     }
 }
