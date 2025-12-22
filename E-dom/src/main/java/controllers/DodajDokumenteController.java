@@ -79,6 +79,7 @@ public class DodajDokumenteController {
         dodajCipsSekciju();
         dodajUplatnicuSekciju();
         dodajNagradeSkeciju();
+        dodajGarancijuSekciju();
     }
 
     public void setBodoviBranioci(int bodoviBranioci) {
@@ -279,6 +280,28 @@ public class DodajDokumenteController {
             e.printStackTrace();
         }
     }
+
+    private void dodajGarancijuSekciju() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/views/DodajDokumenteSections/garancija.fxml")
+            );
+
+            VBox box = loader.load();
+
+            GarancijaDokumentController controller = loader.getController();
+            controller.init(
+                    prijavaId,
+                    vdDao.dohvatiVrstuPoId(13) // npr. ID za garanciju
+            );
+
+            vboxClanovi.getChildren().add(box);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 
