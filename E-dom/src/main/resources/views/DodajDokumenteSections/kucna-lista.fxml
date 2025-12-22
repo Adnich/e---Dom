@@ -13,7 +13,4 @@
            style="-fx-font-weight: bold; -fx-font-size: 14"/>
 
     <VBox fx:id="vboxClanovi" spacing="12"/>
-
-    <Button text="Završi unos članova"
-            onAction="#zavrsiUnos"/>
 </VBox>
