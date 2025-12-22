@@ -191,5 +191,22 @@ public class KorisnikDAO {
         }
     }
 
+    public void azurirajProfil(Korisnik k) {
+        String sql = "UPDATE korisnik SET ime=?, prezime=?, password_hash=? WHERE id_korisnik=?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, k.getIme());
+            stmt.setString(2, k.getPrezime());
+            stmt.setString(3, k.getPasswordHash());
+            stmt.setInt(4, k.getIdKorisnik());
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
