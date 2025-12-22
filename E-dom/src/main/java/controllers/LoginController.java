@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Korisnik;
 import org.example.edom.HelloApplication;
+import service.Session;
 
 import java.io.IOException;
 import java.net.URL;
@@ -54,7 +55,7 @@ public class LoginController {
             lblError.setText("Pristup je dozvoljen samo administratoru.");
             return;
         }
-
+        Session.setKorisnik(k);
         lblError.setText("");
 
         try {

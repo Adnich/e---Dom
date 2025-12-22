@@ -175,4 +175,21 @@ public class KorisnikDAO {
         }
     }
 
+    public boolean promijeniLozinkuPoId(int idKorisnik, String novaLozinka) {
+        String sql = "UPDATE korisnik SET password_hash = ? WHERE id_korisnik = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, novaLozinka);
+            stmt.setInt(2, idKorisnik);
+
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }

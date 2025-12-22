@@ -44,6 +44,11 @@
                           toggleGroup="$navGroup"
                           styleClass="nav-btn"/>
 
+            <Button
+                    text="Moj profil"
+                    onAction="#onMojProfil"
+                    styleClass="nav-button"
+            />
             <Pane VBox.vgrow="ALWAYS"/>
 
             <Label text="© E-Dom" styleClass="sidebar-footer"/>

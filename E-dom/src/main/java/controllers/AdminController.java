@@ -14,11 +14,15 @@ public class AdminController {
     private StackPane contentArea;
 
     @FXML
-    public void showPregledSistema(javafx.event.ActionEvent event) {
+    public void initialize() {
         loadView("/views/dashboard-view.fxml");
     }
 
-    // Metode za klik na dugmad
+    @FXML
+    public void showPregledSistema(ActionEvent event) {
+        loadView("/views/dashboard-view.fxml");
+    }
+
     @FXML
     public void showPrijave(ActionEvent event) {
         loadView("/views/prijave.fxml");
@@ -30,11 +34,10 @@ public class AdminController {
     }
 
     @FXML
-    public void initialize() {
-        loadView("/views/dashboard-view.fxml");
+    public void onMojProfil(ActionEvent event) {
+        loadView("/views/moj-profil.fxml");
     }
 
-    // Pomoćna metoda za učitavanje FXML-a
     private void loadView(String fxmlPath) {
         if (contentArea == null) return;
 
@@ -42,16 +45,13 @@ public class AdminController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent view = loader.load();
 
-            // ✅ global CSS (ako imaš)
-            var globalCss = getClass().getResource("/css/app.css"); // opcionalno
+            var globalCss = getClass().getResource("/css/app.css");
             if (globalCss != null && !view.getStylesheets().contains(globalCss.toExternalForm())) {
                 view.getStylesheets().add(globalCss.toExternalForm());
             }
 
-            // ✅ view-specific CSS: prijave
             if ("/views/prijave.fxml".equals(fxmlPath)) {
                 var prijaveCss = getClass().getResource("/css/prijave.css");
-                System.out.println("prijave.css = " + prijaveCss);
                 if (prijaveCss != null && !view.getStylesheets().contains(prijaveCss.toExternalForm())) {
                     view.getStylesheets().add(prijaveCss.toExternalForm());
                 }
