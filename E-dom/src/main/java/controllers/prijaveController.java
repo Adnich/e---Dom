@@ -40,11 +40,14 @@ public class prijaveController {
     @FXML
     private TableColumn<Prijava, String> colNapomena;
 
+    @FXML
+    private TableColumn<Prijava, String> colIme;
+
+    @FXML
+    private TableColumn<Prijava, String> colPrezime;
+
     private final PrijavaDAO prijavaDAO = new PrijavaDAO();
 
-    // ===============================
-    //  OVO JE NOVA METODA (BITNO)
-    // ===============================
     public void refreshTabela() {
         tblPrijave.setItems(
                 FXCollections.observableArrayList(prijavaDAO.dohvatiSvePrijave())
@@ -108,6 +111,19 @@ public class prijaveController {
         colId.setCellValueFactory(
                 cellData -> new SimpleIntegerProperty(cellData.getValue().getIdPrijava()).asObject()
         );
+
+        colIme.setCellValueFactory(
+                cellData -> new SimpleStringProperty(
+                        cellData.getValue().getImeStudenta()
+                )
+        );
+
+        colPrezime.setCellValueFactory(
+                cellData -> new SimpleStringProperty(
+                        cellData.getValue().getPrezimeStudenta()
+                )
+        );
+
 
         colDatum.setCellValueFactory(
                 cellData -> new SimpleStringProperty(

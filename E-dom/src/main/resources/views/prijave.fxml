@@ -36,6 +36,8 @@
             <TableView fx:id="tblPrijave" prefHeight="400" styleClass="table-view">
                 <columns>
                     <TableColumn fx:id="colId" text="ID" prefWidth="60" />
+                    <TableColumn fx:id="colIme" text="Ime" prefWidth="120"/>
+                    <TableColumn fx:id="colPrezime" text="Prezime" prefWidth="140"/>
                     <TableColumn fx:id="colDatum" text="Datum" prefWidth="120" />
                     <TableColumn fx:id="colAkGod" text="Akad. godina" prefWidth="120" />
                     <TableColumn fx:id="colUkupniBodovi" text="Ukupni bodovi" prefWidth="120" />

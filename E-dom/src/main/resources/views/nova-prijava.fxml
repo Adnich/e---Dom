@@ -68,7 +68,6 @@
                       prefHeight="80"
                       styleClass="prijava-text-area"/>
 
-            <!-- Spacing prije buttona -->
             <Region prefHeight="10"/>
 
             <Button text="Spremi"

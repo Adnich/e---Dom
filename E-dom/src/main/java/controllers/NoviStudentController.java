@@ -17,8 +17,8 @@ public class NoviStudentController {
     @FXML private TextField txtIme;
     @FXML private TextField txtPrezime;
     @FXML private TextField txtIndeks;
-    @FXML private TextField txtFakultet;
-    @FXML private TextField txtGodina;
+    @FXML private ComboBox<String> cmbFakultet;
+    @FXML private ComboBox<Integer> cmbGodina;
     @FXML private CheckBox chkJeLiApsolvent;
     @FXML private CheckBox chkJeLiPostdiplomac;
     @FXML private TextField txtProsjek;
@@ -32,12 +32,8 @@ public class NoviStudentController {
     private final StudentDAO studentDAO = new StudentDAO();
     private final SocijalniStatusDAO socijalniStatusDAO = new SocijalniStatusDAO();
 
-    /**
-     * Inicijalizuje formu i učitava CSS stilove
-     */
     @FXML
     public void initialize() {
-        // Popuni ComboBox sa socijalnim statusima
         cmbSocijalniStatus.setItems(
                 FXCollections.observableArrayList(socijalniStatusDAO.dohvatiSveStatuse())
         );
@@ -58,13 +54,27 @@ public class NoviStudentController {
             }
         });
 
-        // Učitaj CSS stilove
+        cmbFakultet.setItems(FXCollections.observableArrayList(
+                "Politehnički fakultet UNZE",
+                "Pravni fakultet UNZE",
+                "Mašinski fakultet UNZE",
+                "Ekonomski fakultet UNZE",
+                "Medicinski fakultet UNZE",
+                "Islamsko pedagoški fakultet",
+                "Fakultet za metalurgiju i materijale",
+                "Fakultet zdravstvenih studija"
+        ));
+
+        cmbFakultet.setEditable(false);
+
+        cmbGodina.setItems(FXCollections.observableArrayList(
+                1, 2, 3, 4, 5, 6
+        ));
+        cmbGodina.setEditable(false);
+
         loadStyles();
     }
 
-    /**
-     * Učitava CSS stylesheet za ovu scenu
-     */
     private void loadStyles() {
         try {
             // Sačekaj da se scene učita, pa dodaj stylesheet
@@ -83,11 +93,12 @@ public class NoviStudentController {
 
     @FXML
     public void onNextClicked() {
+        String email = txtEmail.getText().trim();
 
         if (txtIme.getText().isEmpty() ||
                 txtPrezime.getText().isEmpty() ||
                 txtIndeks.getText().isEmpty() ||
-                txtFakultet.getText().isEmpty() ||
+                cmbFakultet.getValue() == null ||
                 txtProsjek.getText().isEmpty() ||
                 cmbSocijalniStatus.getValue() == null ||
                 txtAdresa.getText().isEmpty() ||
@@ -95,6 +106,11 @@ public class NoviStudentController {
                 txtRoditelj.getText().isEmpty()) {
 
             showAlert("Greška", "Sva obavezna polja moraju biti popunjena.");
+            return;
+        }
+
+        if (!email.contains("@") || !email.contains(".")) {
+            showAlert("Greška", "Unesite ispravnu email adresu (mora sadržavati @ i .).");
             return;
         }
 
@@ -109,21 +125,24 @@ public class NoviStudentController {
 
         try {
             prosjek = Double.parseDouble(txtProsjek.getText());
-
-            if (chkJeLiApsolvent.isSelected()) {
-                godinaStudija = 7; // APSOLVENT
-            } else if (chkJeLiPostdiplomac.isSelected()) {
-                godinaStudija = 8; // POSTDIPLOMAC
-            } else {
-                godinaStudija = Integer.parseInt(txtGodina.getText());
+            if (prosjek < 6.0 || prosjek > 10.0) {
+                showAlert("Greška", "Prosjek mora biti između 6.0 i 10.0.");
+                return;
             }
 
-        } catch (Exception e) {
-            showAlert("Greška", "Godina i prosjek moraju biti numerički.");
+            if (chkJeLiApsolvent.isSelected()) {
+                godinaStudija = 7;
+            } else if (chkJeLiPostdiplomac.isSelected()) {
+                godinaStudija = 8;
+            } else {
+                godinaStudija = cmbGodina.getValue();
+            }
+
+        } catch (NumberFormatException e) {
+            showAlert("Greška", "Prosjek mora biti broj (npr. 8.45).");
             return;
         }
 
-        // Provjera postoji li student
         Student postojeci = studentDAO.findByBrojIndeksa(txtIndeks.getText());
         Student s;
 
@@ -133,7 +152,7 @@ public class NoviStudentController {
             s.setIme(txtIme.getText());
             s.setPrezime(txtPrezime.getText());
             s.setBrojIndeksa(txtIndeks.getText());
-            s.setFakultet(txtFakultet.getText());
+            s.setFakultet(cmbFakultet.getValue());
             s.setGodinaStudija(godinaStudija);
             s.setProsjek(prosjek);
             s.setEmail(txtEmail.getText());
@@ -144,8 +163,6 @@ public class NoviStudentController {
             s.setImeRoditelja(txtRoditelj.getText());
 
             studentDAO.unesiStudent(s);
-
-            // PREPORUKA: bolje dohvati ID jedino upisanog studenta
             s = studentDAO.findByBrojIndeksa(txtIndeks.getText());
         } else {
             s = postojeci;
@@ -165,7 +182,6 @@ public class NoviStudentController {
             Stage stage = (Stage) txtIme.getScene().getWindow();
             Scene scene = new Scene(root);
 
-            // VAŽNO: Dodaj CSS stylesheet na novu scenu
             try {
                 String cssPath = getClass().getResource("/style/novi-student-style.css").toExternalForm();
                 scene.getStylesheets().add(cssPath);

@@ -14,6 +14,10 @@ public class Prijava {
 
     private List<Dokument> Dokumenti;
 
+    private String imeStudenta;
+    private String prezimeStudenta;
+
+
     public Prijava() {
     }
 
@@ -89,6 +93,22 @@ public class Prijava {
 
     public void setIdStudent(int idStudent) {
         IdStudent = idStudent;
+    }
+
+    public String getImeStudenta() {
+        return imeStudenta;
+    }
+
+    public void setImeStudenta(String imeStudenta) {
+        this.imeStudenta = imeStudenta;
+    }
+
+    public String getPrezimeStudenta() {
+        return prezimeStudenta;
+    }
+
+    public void setPrezimeStudenta(String prezimeStudenta) {
+        this.prezimeStudenta = prezimeStudenta;
     }
 
     @Override
