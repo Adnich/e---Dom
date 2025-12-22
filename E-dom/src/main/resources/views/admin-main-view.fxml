@@ -44,10 +44,11 @@
                           toggleGroup="$navGroup"
                           styleClass="nav-btn"/>
 
-            <Button
-                    text="Moj profil"
-                    onAction="#onMojProfil"
-                    styleClass="nav-button"
+            <ToggleButton text="Moj profil"
+                          onAction="#onMojProfil"
+                          maxWidth="Infinity"
+                          toggleGroup="$navGroup"
+                          styleClass="nav-btn"
             />
             <Pane VBox.vgrow="ALWAYS"/>
 

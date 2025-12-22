@@ -98,6 +98,21 @@ public class NoviStudentController {
             return;
         }
 
+        // ✅ VALIDACIJA JMBG (13 cifara + jedinstven)
+        String jmbg = txtJMBG.getText().trim();
+
+        // 13 karaktera + samo cifre
+        if (jmbg.length() != 13 || !jmbg.matches("\\d{13}")) {
+            showAlert("Greška", "JMBG mora imati tačno 13 cifara.");
+            return;
+        }
+
+        // jedinstven u bazi
+        if (studentDAO.postojiJmbg(jmbg)) {
+            showAlert("Greška", "Student sa ovim JMBG već postoji u bazi.");
+            return;
+        }
+
         //NE MOGU OBA BITI OZNAČENA
         if (chkJeLiApsolvent.isSelected() && chkJeLiPostdiplomac.isSelected()) {
             showAlert("Greška", "Student ne može biti i apsolvent i postdiplomac.");
@@ -139,7 +154,10 @@ public class NoviStudentController {
             s.setEmail(txtEmail.getText());
             s.setTelefon(txtTelefon.getText());
             s.setSocijalniStatus(cmbSocijalniStatus.getValue());
-            s.setJMBG(txtJMBG.getText());
+
+            // ✅ koristi provjereni jmbg
+            s.setJMBG(jmbg);
+
             s.setAdresa(txtAdresa.getText());
             s.setImeRoditelja(txtRoditelj.getText());
 
@@ -165,10 +183,12 @@ public class NoviStudentController {
             Stage stage = (Stage) txtIme.getScene().getWindow();
             Scene scene = new Scene(root);
 
-            // VAŽNO: Dodaj CSS stylesheet na novu scenu
+            // ✅ (nije obavezno jer FXML već ima stylesheets, ali ostavljam)
             try {
-                String cssPath = getClass().getResource("/style/novi-student-style.css").toExternalForm();
-                scene.getStylesheets().add(cssPath);
+                String cssPath = getClass().getResource("/styles/nova-prijava-style.css").toExternalForm();
+                if (!scene.getStylesheets().contains(cssPath)) {
+                    scene.getStylesheets().add(cssPath);
+                }
             } catch (Exception e) {
                 System.err.println("CSS not loaded for nova-prijava scene: " + e.getMessage());
             }
