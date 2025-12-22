@@ -55,12 +55,7 @@ public class MojProfilController {
             return;
         }
 
-        Korisnik provjera = korisnikDAO.nadjiPoUsernameIPassword(
-                korisnik.getUsername(),
-                txtStaraLozinka.getText()
-        );
-
-        if (provjera == null) {
+        if (!korisnik.getPasswordHash().equals(txtStaraLozinka.getText())) {
             lblPoruka.setText("Pogrešna trenutna lozinka.");
             return;
         }
@@ -76,7 +71,7 @@ public class MojProfilController {
         }
 
         korisnik.setPasswordHash(txtNovaLozinka.getText());
-        korisnikDAO.azurirajProfil(korisnik);
+        korisnikDAO.azurirajKorisnika(korisnik);
 
         txtStaraLozinka.clear();
         txtNovaLozinka.clear();
@@ -84,5 +79,4 @@ public class MojProfilController {
 
         lblPoruka.setText("Profil i lozinka uspješno ažurirani.");
     }
-
 }
