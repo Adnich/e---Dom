@@ -13,8 +13,10 @@ import javafx.stage.Stage;
 import model.Korisnik;
 import model.Uloga;
 import org.example.edom.HelloApplication;
+import util.PasswordUtil;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class RegisterController {
@@ -68,7 +70,7 @@ public class RegisterController {
 
 
     @FXML
-    private void onRegisterClicked(ActionEvent event) {
+    private void onRegisterClicked(ActionEvent event) throws SQLException {
         String ime = txtIme.getText().trim();
         String prezime = txtPrezime.getText().trim();
         String username = txtUsername.getText().trim();
@@ -88,12 +90,17 @@ public class RegisterController {
             return;
         }
 
+        if(korisnikDAO.nadjiUsername(username) != null) {
+            lblError.setText("Korisničko ime je zauzeto.");
+            return;
+        }
+
         // ovdje za projekat koristimo lozinku direktno kao password_hash
         Korisnik k = new Korisnik();
         k.setIme(ime);
         k.setPrezime(prezime);
         k.setUsername(username);
-        k.setPasswordHash(pass1);
+        k.setPasswordHash(PasswordUtil.hash(pass1));
         k.setUloga(uloga);
 
         try {

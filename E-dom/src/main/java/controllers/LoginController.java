@@ -16,6 +16,7 @@ import org.example.edom.HelloApplication;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 
 public class LoginController {
 
@@ -31,7 +32,7 @@ public class LoginController {
     private final KorisnikDAO korisnikDAO = new KorisnikDAO();
 
     @FXML
-    private void onLoginClicked(ActionEvent event) {
+    private void onLoginClicked(ActionEvent event) throws SQLException {
         String user = txtUsername.getText().trim();
         String pass = txtPassword.getText().trim();
 
@@ -40,7 +41,11 @@ public class LoginController {
             return;
         }
 
-        Korisnik k = korisnikDAO.nadjiPoUsernameIPassword(user, pass);
+        Korisnik k = korisnikDAO.nadjiUsername(user);
+        if(k == null || !k.ProvjeriPassword(pass)) {
+            lblError.setText("Neispravni podaci za prijavu.");
+            return;
+        }
 
         if (k == null) {
             lblError.setText("Neispravni podaci za prijavu.");

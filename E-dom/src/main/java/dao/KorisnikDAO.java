@@ -158,6 +158,42 @@ public class KorisnikDAO {
         return null; // ako nije pronađen
     }
 
+    public Korisnik nadjiUsername(String username) throws SQLException {
+        String sql = "SELECT k.*, u.id_uloga, u.naziv AS naziv_uloge " +
+                "FROM korisnik k " +
+                "JOIN uloga u ON k.ulogaid_uloga = u.id_uloga " +
+                "WHERE k.username = ?";
+
+        try(Connection conn = DBConnection.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, username);
+
+            try(ResultSet rd = stmt.executeQuery()) {
+                if(rd.next()) {
+                    Korisnik k = new Korisnik();
+                    k.setIdKorisnik(rd.getInt("id_korisnik"));
+                    k.setIme(rd.getString("ime"));
+                    k.setPrezime(rd.getString("prezime"));
+                    k.setUsername(rd.getString("username"));
+                    k.setPasswordHash(rd.getString("password_hash"));
+
+                    Uloga u = new Uloga(
+                            rd.getInt("id_uloga"),
+                            rd.getString("naziv_uloge")
+                    );
+
+                    k.setUloga(u);
+
+                    return k;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
     //metoda za reset lozinke
     public boolean promijeniLozinku(String username, String newPasswordHash) {
         String sql = "UPDATE korisnik SET password_hash = ? WHERE username = ?";
