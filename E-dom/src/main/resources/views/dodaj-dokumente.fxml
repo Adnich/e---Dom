@@ -3,20 +3,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<ScrollPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controllers.DodajDokumenteController"
-            prefHeight="600" prefWidth="600"
-            stylesheets="@../styles/dodaj-dokument-style.css">
-    <content>
-        <VBox fx:id="vboxClanovi"/>
-    </content>
-    <Button
-            text="Podnesi prijavu"
-            onAction="#onPodnesiPrijavu"
-            prefWidth="220"
-            styleClass="submit-btn"
-    />
-</ScrollPane>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.DodajDokumenteController">
+    <center>
+        <ScrollPane fitToWidth="true">
+            <content>
+                <VBox fx:id="vboxClanovi" spacing="10"/>
+            </content>
+        </ScrollPane>
+    </center>
+    <bottom>
+        <Button text="Podnesi prijavu"
+                onAction="#onPodnesiPrijavu"
+                prefWidth="220"
+                styleClass="submit-btn"/>
+    </bottom>
+</BorderPane>
 
 
