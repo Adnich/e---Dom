@@ -7,7 +7,7 @@
     <center>
         <ScrollPane fitToWidth="true">
             <content>
-                <VBox fx:id="vboxClanovi" spacing="10"/>
+                <Accordion fx:id="accordionDokumenti" />
             </content>
         </ScrollPane>
     </center>
