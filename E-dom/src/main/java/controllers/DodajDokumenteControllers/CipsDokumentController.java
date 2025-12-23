@@ -6,7 +6,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import model.Dokument;
 import model.VrstaDokumenta;
-import service.PdfUpload;
+import service.PdfService;
+import service.PdfService;
 
 import java.time.LocalDate;
 
@@ -31,7 +32,7 @@ public class CipsDokumentController {
     // dugme: Dodaj PDF (nije obavezno)
     @FXML
     private void onDodajPdf() {
-        pdfBase64 = PdfUpload.uploadPdf(lblPdf.getScene().getWindow());
+        pdfBase64 = PdfService.uploadPdf(lblPdf.getScene().getWindow());
 
         if (pdfBase64 != null) {
             lblPdf.setText("PDF dodat");

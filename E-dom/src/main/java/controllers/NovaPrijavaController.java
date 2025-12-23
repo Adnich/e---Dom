@@ -98,6 +98,11 @@ public class NovaPrijavaController {
             return;
         }
 
+        if(akGod<LocalDate.now().getYear()){
+            showAlert("Greška", "Akademska godina ne može biti manja od tekuće godine.");
+            return;
+        }
+
 
         Prijava p = new Prijava();
         p.setIdStudent(studentId);

@@ -7,7 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import model.Dokument;
 import model.VrstaDokumenta;
-import service.PdfUpload;
+import service.PdfService;
+import service.PdfService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -71,7 +72,7 @@ public class GarancijaDokumentController {
 
     @FXML
     private void onDodajPdf() {
-        pdfBase64 = PdfUpload.uploadPdf(lblPdf.getScene().getWindow());
+        pdfBase64 = PdfService.uploadPdf(lblPdf.getScene().getWindow());
 
         if (pdfBase64 != null) {
             lblPdf.setText("PDF dodat");
