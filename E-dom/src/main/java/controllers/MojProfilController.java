@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import model.Korisnik;
 import service.Session;
+import util.TextUtil;
 
 public class MojProfilController {
 
@@ -43,8 +44,8 @@ public class MojProfilController {
     @FXML
     private void sacuvajPromjene() {
 
-        korisnik.setIme(txtIme.getText().trim());
-        korisnik.setPrezime(txtPrezime.getText().trim());
+        korisnik.setIme(TextUtil.formatirajIme(txtIme.getText().trim()));
+        korisnik.setPrezime(TextUtil.formatirajIme(txtPrezime.getText().trim()));
 
         if (txtNovaLozinka.getText().isEmpty() &&
                 txtStaraLozinka.getText().isEmpty() &&
@@ -72,6 +73,17 @@ public class MojProfilController {
 
         if (txtNovaLozinka.getText().length() < 4) {
             lblPoruka.setText("Lozinka mora imati barem 4 znaka.");
+            return;
+        }
+
+        if(txtStaraLozinka.getText().equals(txtNovaLozinka.getText())){
+            lblPoruka.setText("Nova lozinka mora biti različita od stare lozinke.");
+            return;
+        }
+
+
+        if (!txtNovaLozinka.getText().matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^A-Za-z0-9]).+$")) {
+            lblPoruka.setText("Lozinka mora sadržavati barem jedno veliko slovo, jedno malo slovo, jedan broj i jedan specijalni znak.");
             return;
         }
 
