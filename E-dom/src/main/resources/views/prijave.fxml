@@ -6,6 +6,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.Region?>
+
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
@@ -25,7 +27,11 @@
             <HBox alignment="CENTER_LEFT" spacing="20">
                 <Label text="Prijave studenata" styleClass="header-title" />
 
-                <Pane HBox.hgrow="ALWAYS"/>
+                <TextField fx:id="txtSearch"
+                           promptText="Pretraga: ime, prezime, status..."
+                           prefWidth="260"/>
+
+                <Region HBox.hgrow="ALWAYS"/>
 
                 <Button text=" Nova prijava"
                         onAction="#onNovaPrijava"
