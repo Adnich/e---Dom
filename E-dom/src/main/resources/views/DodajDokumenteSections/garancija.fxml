@@ -20,5 +20,8 @@
     <ComboBox fx:id="cmbDokumentGarancija" promptText="Izaberite dokument"/>
 
     <Button text="Dodaj dokument" onAction="#dodajDokumentGarancija"/>
+    <Label fx:id="lblPdf" text="PDF nije dodat"/>
 
+    <Button text="Dodaj PDF (opcionalno)"
+            onAction="#onDodajPdf"/>
 </VBox>
