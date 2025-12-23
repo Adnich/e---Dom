@@ -79,12 +79,43 @@
                                            styleClass="text-input"/>
                             </VBox>
 
-                            <VBox spacing="6">
-                                <Label text="Lozinka"
-                                       styleClass="field-label"/>
-                                <PasswordField fx:id="txtPassword"
-                                               promptText="Unesite lozinku"
-                                               styleClass="text-input"/>
+
+                                <VBox spacing="6">
+                                    <Label text="Lozinka" styleClass="field-label"/>
+
+                                    <!-- wrapper da bi "oko" bilo unutar inputa -->
+                                    <StackPane styleClass="password-wrapper">
+
+                                        <!-- maskirano -->
+                                        <PasswordField fx:id="txtPassword"
+                                                       promptText="Unesite lozinku"
+                                                       styleClass="text-input"/>
+
+                                        <!-- prikazano (plain text), na početku sakriveno -->
+                                        <TextField fx:id="txtPasswordVisible"
+                                                   promptText="Unesite lozinku"
+                                                   styleClass="text-input"
+                                                   visible="false"
+                                                   managed="false"/>
+
+                                        <!-- dugme oko (desno u inputu) -->
+                                        <Button fx:id="btnTogglePassword"
+                                                onAction="#onTogglePasswordVisibility"
+                                                styleClass="eye-btn"
+                                                StackPane.alignment="CENTER_RIGHT">
+
+                                            <!-- koristi sliku oka iz resources -->
+                                            <graphic>
+                                                <ImageView fx:id="imgEye"
+                                                           fitWidth="48"
+                                                           fitHeight="48"
+                                                           preserveRatio="true"/>
+                                            </graphic>
+                                        </Button>
+
+                                    </StackPane>
+
+
                             </VBox>
 
                             <Hyperlink text="Zaboravili ste lozinku?"

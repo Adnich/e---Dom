@@ -148,3 +148,16 @@
 .error-label {
     -fx-font-size: 12px;
 }
+.password-wrapper {
+    -fx-max-width: 360px;
+}
+
+.eye-btn {
+    -fx-background-color: transparent;
+    -fx-padding: 0 14 0 0;
+    -fx-cursor: hand;
+}
+
+.password-wrapper .text-input {
+    -fx-padding: 12 44 12 16;
+}
