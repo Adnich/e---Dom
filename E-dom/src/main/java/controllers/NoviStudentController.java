@@ -147,7 +147,7 @@ public class NoviStudentController {
             s = studentDAO.findByBrojIndeksa(txtIndeks.getText());
         }
 
-       
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/nova-prijava.fxml"));
             Parent root = loader.load();
