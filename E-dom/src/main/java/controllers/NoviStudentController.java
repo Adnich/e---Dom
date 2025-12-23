@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.SocijalniStatus;
 import model.Student;
+import util.TextUtil;
 
 public class NoviStudentController {
 
@@ -130,8 +131,8 @@ public class NoviStudentController {
         if (postojeci == null) {
 
             s = new Student();
-            s.setIme(txtIme.getText());
-            s.setPrezime(txtPrezime.getText());
+            s.setIme(TextUtil.formatirajIme(txtIme.getText()));
+            s.setPrezime(TextUtil.formatirajIme(txtPrezime.getText()));
             s.setBrojIndeksa(txtIndeks.getText());
             s.setFakultet(txtFakultet.getText());
             s.setGodinaStudija(godinaStudija);
