@@ -11,6 +11,12 @@
     <content>
         <VBox fx:id="vboxClanovi"/>
     </content>
+    <Button
+            text="Podnesi prijavu"
+            onAction="#onPodnesiPrijavu"
+            prefWidth="220"
+            styleClass="submit-btn"
+    />
 </ScrollPane>
 
 

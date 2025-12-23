@@ -35,26 +35,25 @@ public class NovaPrijavaController {
 
     private final PrijavaDAO prijavaDAO = new PrijavaDAO();
 
-    // ✅ DODANO: automatsko vezanje CSS-a kad se view prikaže
     @FXML
     public void initialize() {
 
         txtAkGod.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 applyCssIfMissing(newScene);
-                ucitajBraniociFormu(); // ✅ OVDJE
+                ucitajBraniociFormu();
             }
         });
 
         if (txtAkGod.getScene() != null) {
             applyCssIfMissing(txtAkGod.getScene());
-            ucitajBraniociFormu(); // ✅ I OVDJE
+            ucitajBraniociFormu();
         }
     }
 
 
     private void applyCssIfMissing(Scene scene) {
-        var cssUrl = getClass().getResource("/styles/nova-prijava-style.css"); // prilagodi put ako ti je /css/ umjesto /styles/
+        var cssUrl = getClass().getResource("/styles/nova-prijava-style.css");
         if (cssUrl != null) {
             String css = cssUrl.toExternalForm();
             if (!scene.getStylesheets().contains(css)) {
@@ -99,7 +98,7 @@ public class NovaPrijavaController {
             return;
         }
 
-        // 1️⃣ KREIRANJE PRIJAVE
+
         Prijava p = new Prijava();
         p.setIdStudent(studentId);
         p.setDatumPrijava(LocalDate.now());
@@ -129,7 +128,7 @@ public class NovaPrijavaController {
             prijavaDAO.dodajBodoveNaPrijavu(prijavaId, dodatniBodovi);
         }
 
-        // 4️⃣ PRELAZ NA DOKUMENTE
+
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/views/dodaj-dokumente.fxml")

@@ -13,7 +13,11 @@
            style="-fx-font-weight: bold; -fx-font-size: 14"/>
 
     <VBox fx:id="vboxClanovi" spacing="12"/>
+    <HBox spacing="10">
+        <Button text="Dodaj PDF (opcionalno)"
+                onAction="#onDodajPdf"/>
+        <Label fx:id="lblPdf"
+               text="PDF nije dodan"/>
+    </HBox>
 
-    <Button text="Završi unos članova"
-            onAction="#zavrsiUnos"/>
 </VBox>
