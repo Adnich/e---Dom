@@ -17,6 +17,7 @@ module org.example.edom {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires jbcrypt;
 
     // JavaFX mora moći instancirati Application
     exports org.example.edom;
