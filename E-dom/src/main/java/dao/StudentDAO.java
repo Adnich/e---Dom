@@ -258,6 +258,21 @@ public class StudentDAO {
 
         return null;
     }
+    public boolean postojiJmbg(String jmbg) {
+        String sql = "SELECT 1 FROM student WHERE jmbg = ? LIMIT 1";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, jmbg);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
 }

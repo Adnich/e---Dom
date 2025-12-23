@@ -2,8 +2,14 @@ package controllers.DodajDokumenteControllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import service.KriterijPoOsnovuDjeceBranilaca;
+import javafx.stage.FileChooser;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Base64;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +66,11 @@ public class BraniociDokumentiController {
 
     private int ukupniBodovi;
 
+    private String pdfBase64;
+
+    @FXML
+    private Label lblPdf;
+
     public int getUkupniBodovi() {
         return ukupniBodovi;
     }
@@ -96,6 +107,28 @@ public class BraniociDokumentiController {
     }
 
 
+    @FXML
+    private void onDodajPdf() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Odaberi PDF dokument");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("PDF fajl", "*.pdf")
+        );
 
+        File file = fileChooser.showOpenDialog(lblPdf.getScene().getWindow());
+        if (file == null) return;
+
+        try {
+            byte[] bytes = Files.readAllBytes(file.toPath());
+            pdfBase64 = Base64.getEncoder().encodeToString(bytes);
+            lblPdf.setText(file.getName());
+        } catch (IOException e) {
+            lblPdf.setText("Greška pri učitavanju PDF-a");
+        }
+    }
+
+    public String getPdfBase64() {
+        return pdfBase64;
+    }
 
 }

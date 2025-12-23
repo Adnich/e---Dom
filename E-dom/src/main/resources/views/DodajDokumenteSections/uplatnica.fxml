@@ -13,5 +13,11 @@
     <Label text="Opća uplatnica - troškovi obrade podataka (10,00 KM)" />
     <CheckBox fx:id="chkDostavljen" text="Dokument dostavljen"/>
     <Button text="Dodaj dokument" onAction="#dodaj"/>
+    <HBox spacing="10">
+        <Button text="Dodaj PDF (opcionalno)"
+                onAction="#onDodajPdf"/>
+        <Label fx:id="lblPdf"
+               text="PDF nije dodan"/>
+    </HBox>
 
 </VBox>

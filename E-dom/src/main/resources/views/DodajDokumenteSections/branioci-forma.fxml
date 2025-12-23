@@ -5,6 +5,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.geometry.Insets?>
 
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <GridPane xmlns:fx="http://javafx.com/fxml"
           fx:controller="controllers.DodajDokumenteControllers.BraniociDokumentiController"
           hgap="10"
@@ -33,5 +36,10 @@
     <CheckBox text="Djeca bez oba roditelja" GridPane.rowIndex="10" GridPane.columnIndex="0" fx:id="chkDjecaBezObaRoditelja"/>
     <CheckBox text="Bez roditeljskog staranja" GridPane.rowIndex="11" GridPane.columnIndex="0" fx:id="chkBezRoditeljskogStaranja"/>
     <CheckBox text="Korisnici socijalne pomoći" GridPane.rowIndex="12" GridPane.columnIndex="0" fx:id="chkKorisniciSocijalnePomoci"/>
-
+    <HBox spacing="10">
+        <Button text="Dodaj PDF (opcionalno)"
+                onAction="#onDodajPdf"/>
+        <Label fx:id="lblPdf"
+               text="PDF nije dodan"/>
+    </HBox>
 </GridPane>
