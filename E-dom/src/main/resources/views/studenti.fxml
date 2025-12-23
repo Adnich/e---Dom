@@ -19,8 +19,15 @@
               AnchorPane.bottomAnchor="20"
               styleClass="main-vbox">
 
+            <HBox spacing="12" alignment="CENTER_LEFT">
             <Label text="Studenti" styleClass="header-title" />
 
+                <TextField fx:id="txtSearch"
+                           promptText="Pretraga: ime, prezime, indeks, fakultet..."
+                           prefWidth="280"/>
+
+                <Region HBox.hgrow="ALWAYS"/>
+            </HBox>
             <TableView fx:id="tblStudenti" prefHeight="400" styleClass="table-view">
                 <columns>
                     <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
