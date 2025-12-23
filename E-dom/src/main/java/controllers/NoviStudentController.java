@@ -22,11 +22,7 @@ public class NoviStudentController {
     @FXML private TextField txtIndeks;
 
     @FXML private ComboBox<String> cmbFakultet;
-    @FXML private ComboBox<Integer> cmbGodina;
-
-    @FXML private CheckBox chkJeLiApsolvent;
-    @FXML private CheckBox chkJeLiPostdiplomac;
-
+    @FXML private ComboBox<String> cmbGodina;
     @FXML private TextField txtProsjek;
     @FXML private TextField txtEmail;
     @FXML private TextField txtTelefon;
@@ -52,7 +48,7 @@ public class NoviStudentController {
         ));
 
 
-        cmbGodina.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5, 6));
+        cmbGodina.setItems(FXCollections.observableArrayList("1", "2", "3", "4", "5", "6", "Apsolvent", "Postdiplomac"));
 
 
         cmbSocijalniStatus.setItems(
@@ -97,32 +93,51 @@ public class NoviStudentController {
         }
 
 
-        if (chkJeLiApsolvent.isSelected() && chkJeLiPostdiplomac.isSelected()) {
-            showAlert("Greška", "Student ne može biti i apsolvent i postdiplomac.");
-            return;
-        }
-
         int godinaStudija;
         double prosjek;
 
         try {
             prosjek = Double.parseDouble(txtProsjek.getText());
 
-            if (prosjek < 6.0 || prosjek > 10.0) {
-                showAlert("Greška", "Prosjek mora biti između 6.0 i 10.0.");
-                return;
-            }
-
-            if (chkJeLiApsolvent.isSelected()) {
+            if (cmbGodina.getValue().equals("Apsolvent")) {
                 godinaStudija = 7;
-            } else if (chkJeLiPostdiplomac.isSelected()) {
+            } else if (cmbGodina.getValue().equals("Postdiplomac")) {
                 godinaStudija = 8;
             } else {
-                godinaStudija = cmbGodina.getValue();
+                godinaStudija = Integer.parseInt(cmbGodina.getValue());
+            }
+
+            if(godinaStudija == 1){
+                if(prosjek <1.0 || prosjek > 5.0){
+                    showAlert("Greška", "Prosjek za prvu godinu mora biti između 1.0 i 5.0.");
+                    return;
+                }
+            }
+            else {
+                if (prosjek < 6.0 || prosjek > 10.0) {
+                    showAlert("Greška", "Prosjek za ostale godine mora biti između 6.0 i 10.0.");
+                    return;
+                }
             }
 
         } catch (Exception e) {
             showAlert("Greška", "Neispravan unos godine ili prosjeka.");
+            return;
+        }
+
+        if(!(txtJMBG.getText().length()==13)){
+            showAlert("Greška", "JMBG mora sadržavati tačno 13 cifara.");
+            return;
+        }
+
+        if(studentDAO.postojiJmbg(txtJMBG.getText())){
+            showAlert("Greška", "Student sa unesenim JMBG-om već postoji u bazi.");
+            return;
+        }
+
+        String email = txtEmail.getText();
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+            showAlert("Greška", "Neispravan format email adrese.");
             return;
         }
 
@@ -142,10 +157,13 @@ public class NoviStudentController {
             s.setSocijalniStatus(cmbSocijalniStatus.getValue());
             s.setJMBG(txtJMBG.getText());
             s.setAdresa(txtAdresa.getText());
-            s.setImeRoditelja(txtRoditelj.getText());
+            s.setImeRoditelja(TextUtil.formatirajIme(txtRoditelj.getText()));
+
+
 
             studentDAO.unesiStudent(s);
             s = studentDAO.findByBrojIndeksa(txtIndeks.getText());
+
         }
 
 
