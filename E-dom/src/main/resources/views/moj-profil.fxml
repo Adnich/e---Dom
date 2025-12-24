@@ -6,58 +6,63 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="controllers.MojProfilController"
-      spacing="20">
+      spacing="14"
+      styleClass="page"
+      stylesheets="@../styles/moj-profil-style.css">
 
-    <Label text="Moj profil"
-           style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+    <Label text="Moj profil"/>
 
-    <GridPane hgap="15" vgap="10">
+    <VBox spacing="14" styleClass="card">
 
-        <Label text="Ime:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtIme"
-                   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <GridPane hgap="12" vgap="10">
 
-        <Label text="Prezime:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtPrezime"
-                   GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-        <Label text="Korisničko ime:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtUsername"
-                   GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-        <Label text="Uloga:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtUloga"
-                   GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-
-    </GridPane>
-
-    <Separator/>
-
-    <Label text="Promjena lozinke"
-           style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-
-    <GridPane hgap="15" vgap="10">
-
-        <Label text="Trenutna lozinka:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <PasswordField fx:id="txtStaraLozinka"
+            <Label text="Ime:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtIme"
                        GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-        <Label text="Nova lozinka:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <PasswordField fx:id="txtNovaLozinka"
+            <Label text="Prezime:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtPrezime"
                        GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-        <Label text="Potvrda lozinke:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <PasswordField fx:id="txtPotvrdaLozinke"
+            <Label text="Korisničko ime:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtUsername"
                        GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-    </GridPane>
+            <Label text="Uloga:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtUloga"
+                       disable="true"
+                       GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-    <Button text="Sačuvaj promjene"
-            onAction="#sacuvajPromjene"
-            maxWidth="200"/>
+        </GridPane>
 
-    <Label fx:id="lblPoruka"
-           textFill="green"
-           style="-fx-font-weight: bold;"/>
+        <Separator/>
+
+        <Label text="Promjena lozinke" styleClass="section-title"/>
+
+        <GridPane hgap="12" vgap="10">
+
+            <Label text="Trenutna lozinka:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <PasswordField fx:id="txtStaraLozinka"
+                           GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Nova lozinka:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <PasswordField fx:id="txtNovaLozinka"
+                           GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Potvrda lozinke:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <PasswordField fx:id="txtPotvrdaLozinke"
+                           GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        </GridPane>
+
+        <Button text="Sačuvaj promjene"
+                onAction="#sacuvajPromjene"/>
+
+        <Label fx:id="lblPoruka"
+               visible="false"
+               managed="false"
+               styleClass="status-message"/>
+
+    </VBox>
 
 </VBox>
