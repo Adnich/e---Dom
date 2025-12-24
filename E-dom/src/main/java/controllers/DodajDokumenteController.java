@@ -72,9 +72,11 @@ public class DodajDokumenteController {
         paneOsnovni.setText("Osnovni dokumenti");
         VBox vboxOsnovni = new VBox(10);
         paneOsnovni.setContent(vboxOsnovni);
+        dodajPrijavniObrazac(vboxOsnovni);
         dodajCipsSekciju(vboxOsnovni);
         dodajUplatnicuSekciju(vboxOsnovni);
         dodajGarancijuSekciju(vboxOsnovni);
+        dodajKucnuListuDokument(vboxOsnovni);
 
 
         TitledPane paneDomacinstvo = new TitledPane();
@@ -343,6 +345,48 @@ public class DodajDokumenteController {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void dodajPrijavniObrazac(VBox parent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/views/DodajDokumenteSections/obrazac-prijava.fxml")
+            );
+
+            VBox prijavaBox = loader.load();
+
+            ObrazacPrijaveController controller = loader.getController();
+            controller.init(
+                    prijavaId,
+                    vdDao.dohvatiVrstuPoId(17) // prijavni obrazac
+            );
+
+            parent.getChildren().add(prijavaBox);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void dodajKucnuListuDokument(VBox parent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/views/DodajDokumenteSections/kucna-dokument.fxml")
+            );
+
+            VBox kucnaBox = loader.load();
+
+            DodajKucnuListuController controller = loader.getController();
+            controller.init(
+                    prijavaId,
+                    vdDao.dohvatiVrstuPoId(18) // kucna lista
+            );
+
+            parent.getChildren().add(kucnaBox);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

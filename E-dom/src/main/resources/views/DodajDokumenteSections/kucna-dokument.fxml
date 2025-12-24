@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="8"  xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.DodajDokumenteControllers.DodajKucnuListuController">
+    <Label text="Uvjerenje o zajedničkom domaćinstvu (kućna lista)" />
+    <CheckBox fx:id="chkDostavljen" text="Dokument dostavljen"/>
+    <Button text="Dodaj dokument" onAction="#dodaj"/>
+    <HBox spacing="10">
+        <Button text="Dodaj PDF (opcionalno)"
+                onAction="#onDodajPdf"/>
+        <Label fx:id="lblPdf"
+               text="PDF nije dodan"/>
+    </HBox>
+
+</VBox>
