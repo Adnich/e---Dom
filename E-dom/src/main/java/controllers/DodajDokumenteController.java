@@ -92,15 +92,16 @@ public class DodajDokumenteController {
         dodajSekcijuSvjedodzbe(vboxFaks);
         dodajNagradeSkeciju(vboxFaks);
 
-        // OSTALO
-        TitledPane paneDodatni = new TitledPane();
-        paneDodatni.setText("Ostalo");
-        VBox vboxDodatni = new VBox(10);
-        paneDodatni.setContent(vboxDodatni);
-        dodajSekcijuDodatniBodovi(vboxDodatni);
-
         // dodaj sve TitledPane u Accordion
-        accordionDokumenti.getPanes().addAll(paneDomacinstvo, paneOsnovni, paneFaks, paneDodatni);
+        accordionDokumenti.getPanes().addAll(paneOsnovni, paneDomacinstvo,  paneFaks);
+        if(bodoviBranioci> 0) {
+            TitledPane paneDodatni = new TitledPane();
+            paneDodatni.setText("Ostalo");
+            VBox vboxDodatni = new VBox(10);
+            paneDodatni.setContent(vboxDodatni);
+            dodajSekcijuDodatniBodovi(vboxDodatni);
+            accordionDokumenti.getPanes().add(paneDodatni);
+        }
     }
 
 
@@ -113,6 +114,12 @@ public class DodajDokumenteController {
 
     public void setPrijavaId(int prijavaId) {
         this.prijavaId = prijavaId;
+    }
+
+    public void setBodoviBranioci(int bodoviBranioci) {
+        this.bodoviBranioci = bodoviBranioci;
+        PrijavaDAO prijavaDAO = new PrijavaDAO();
+        prijavaDAO.dodajBodoveNaPrijavu(prijavaId, bodoviBranioci);
     }
 
     public void setClanovi(int clanovi) {
@@ -128,16 +135,6 @@ public class DodajDokumenteController {
 
     public void setUdaljenost(double udaljenost){
         this.udaljenost = udaljenost;
-    }
-
-    public void setBodoviBranioci(int bodoviBranioci) {
-        this.bodoviBranioci = bodoviBranioci;
-
-        if (bodoviBranioci > 0) {
-            //dodajSekcijuDodatniBodovi();
-        }
-        PrijavaDAO prijavaDAO = new PrijavaDAO();
-        prijavaDAO.dodajBodoveNaPrijavu(prijavaId, bodoviBranioci);
     }
 
 
@@ -314,8 +311,11 @@ public class DodajDokumenteController {
             controller.init(
                     prijavaId,
                     List.of(
-                            vdDao.dohvatiVrstuPoId(11), // npr. dokaz branioca
-                            vdDao.dohvatiVrstuPoId(12)  // drugi dokument
+                            vdDao.dohvatiVrstuPoId(19),
+                            vdDao.dohvatiVrstuPoId(20),
+                            vdDao.dohvatiVrstuPoId(21),
+                            vdDao.dohvatiVrstuPoId(22),
+                            vdDao.dohvatiVrstuPoId(23)
                     )
             );
 
