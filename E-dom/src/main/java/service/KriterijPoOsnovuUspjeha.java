@@ -6,7 +6,9 @@ public class KriterijPoOsnovuUspjeha {
 
     public void izracunajBodove(int prijavaId, double prosjek, int polozeniIspiti, int godinaStudija){
         double bodovi = prosjek*3.5;
+        System.out.println("bodovi za kriterij po osnovu uspjeha prije ispita: " + bodovi);
         bodovi += polozeniIspiti*1.8;
+        System.out.println("bodovi za kriterij po osnovu uspjeha nakon ispita: " + bodovi);
         switch(godinaStudija){
             case 2:
                 bodovi += 3;
@@ -30,7 +32,9 @@ public class KriterijPoOsnovuUspjeha {
                 bodovi += 10; // postdiplomci
                 break;
         }
+        System.out.println("bodovi za kriterij po osnovu uspjeha nakon godine studija: " + bodovi);
         PrijavaDAO pDAO = new PrijavaDAO();
+        System.out.println("bodovi za kriterij po osnovu uspjeha: " + bodovi);
         pDAO.dodajBodoveNaPrijavu(prijavaId, bodovi);
     }
 
@@ -38,6 +42,7 @@ public class KriterijPoOsnovuUspjeha {
         double bodovi = prosjek*9;
         bodovi += 1;
         PrijavaDAO pDAO = new PrijavaDAO();
+        System.out.println("bodovi za kriterij po osnovu uspjeha brucoši: " + bodovi);
         pDAO.dodajBodoveNaPrijavu(prijavaId, bodovi);
     }
 

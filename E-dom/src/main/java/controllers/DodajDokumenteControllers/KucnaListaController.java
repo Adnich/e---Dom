@@ -23,11 +23,14 @@ public class KucnaListaController {
     private int brojClanova;
 
     private final Map<Integer, Double> primanjaPoClanu = new HashMap<>();
+    private final Map<Integer, TextField> primanjaFieldovi = new HashMap<>();
     private final Map<Integer, List<Dokument>> dokumentiPoClanu = new HashMap<>();
 
     private List<VrstaDokumenta> vrsteDokumenata;
 
-    // POZIVA GA GLAVNI CONTROLLER
+    /**
+     * Inicijalizacija kontrolera
+     */
     public void init(
             int prijavaId,
             int brojClanova,
@@ -40,9 +43,13 @@ public class KucnaListaController {
         generisiSekcijeZaClanove();
     }
 
+    /**
+     * Generiše sekcije (UI) za svaki član domaćinstva
+     */
     private void generisiSekcijeZaClanove() {
         vboxClanovi.getChildren().clear();
         primanjaPoClanu.clear();
+        primanjaFieldovi.clear();
         dokumentiPoClanu.clear();
 
         for (int i = 1; i <= brojClanova; i++) {
@@ -58,12 +65,7 @@ public class KucnaListaController {
 
             TextField txtPrimanja = new TextField();
             txtPrimanja.setPromptText("Mjesečna primanja (KM)");
-
-            txtPrimanja.focusedProperty().addListener((o, f, n) -> {
-                if (f && !n) {
-                    primanjaPoClanu.put(index, parse(txtPrimanja.getText()));
-                }
-            });
+            primanjaFieldovi.put(index, txtPrimanja); // zapamti TextField
 
             ComboBox<VrstaDokumenta> cmbVrsta = new ComboBox<>(
                     FXCollections.observableArrayList(vrsteDokumenata)
@@ -91,7 +93,8 @@ public class KucnaListaController {
                     return;
                 }
 
-                primanjaPoClanu.put(index, parse(txtPrimanja.getText()));
+                double iznos = parse(txtPrimanja.getText());
+                primanjaPoClanu.put(index, iznos);
 
                 Dokument d = new Dokument();
                 d.setNaziv(
@@ -105,6 +108,8 @@ public class KucnaListaController {
 
                 new DokumentDAO().unesiDokument(d, prijavaId);
                 dokumentiPoClanu.get(index).add(d);
+
+                alert("Uspjeh", "Dokument dodat za člana " + index);
             });
 
             HBox hbox = new HBox(10, txtPrimanja, cmbVrsta, chk, btn);
@@ -114,11 +119,18 @@ public class KucnaListaController {
         }
     }
 
+    /**
+     * Završava unos i obračunava bodove po primanjima
+     */
     @FXML
-    private void zavrsiUnos() {
+    public void zavrsiUnos() {
+        primanjaPoClanu.clear();
 
+        // Čitanje unesenih iznosa iz TextFieldova
         for (int i = 1; i <= brojClanova; i++) {
-            primanjaPoClanu.putIfAbsent(i, 0.0);
+            TextField tf = primanjaFieldovi.get(i);
+            double iznos = parse(tf.getText());
+            primanjaPoClanu.put(i, iznos);
         }
 
         double ukupno = primanjaPoClanu.values()
@@ -126,7 +138,7 @@ public class KucnaListaController {
                 .mapToDouble(Double::doubleValue)
                 .sum();
 
-        double poClanu = ukupno / brojClanova;
+        double poClanu = brojClanova == 0 ? 0 : ukupno / brojClanova;
 
         int bodovi = KriterijPoOsnovuSocijalnogStatusa
                 .bodoviZaPrimanja(poClanu);
@@ -139,11 +151,20 @@ public class KucnaListaController {
                         "\nBodovi: " + bodovi);
     }
 
+    /**
+     * Pomoćna metoda za parsiranje broja iz Stringa
+     */
     private double parse(String s) {
-        try { return Double.parseDouble(s); }
-        catch (Exception e) { return 0; }
+        try {
+            return Double.parseDouble(s.trim());
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
+    /**
+     * Pomoćna metoda za prikaz alert dijaloga
+     */
     private void alert(String t, String m) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setTitle(t);
@@ -151,4 +172,9 @@ public class KucnaListaController {
         a.setContentText(m);
         a.showAndWait();
     }
+
+    public Map<Integer, Double> getPrimanjaPoClanu() {
+        return new HashMap<>(primanjaPoClanu); // kopija mape
+    }
+
 }
