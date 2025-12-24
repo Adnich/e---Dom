@@ -57,11 +57,16 @@ public class DodajDokumenteController {
                 stage.centerOnScreen();
             }
         });
-
-        initAccordion();
     }
 
     private void initAccordion() {
+
+        accordionDokumenti.getPanes().clear();
+
+        if (clanovi <= 0) {
+            System.out.println("⚠️ clanovi još nisu postavljeni");
+            return;
+        }
 
         TitledPane paneOsnovni = new TitledPane();
         paneOsnovni.setText("Osnovni dokumenti");
@@ -110,6 +115,7 @@ public class DodajDokumenteController {
 
     public void setClanovi(int clanovi) {
         this.clanovi = clanovi;
+        initAccordion();
     }
 
     public void setProsjek(double prosjek) { this.prosjek = prosjek; }
@@ -278,17 +284,20 @@ public class DodajDokumenteController {
     private void dodajKucnuListuSekciju(TitledPane pane) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DodajDokumenteSections/kucna-lista.fxml"));
-            VBox box = loader.load();
+            VBox root = loader.load();  // root VBox iz FXML-a
 
+            // Dohvati kontroler i inicijaliziraj ga s podacima
             KucnaListaController controller = loader.getController();
             controller.init(prijavaId, clanovi, vrsteDokumenata);
 
-            pane.setContent(box); // direktno stavi root iz FXML-a kao sadržaj TitledPane
+            // Stavimo učitani root direktno kao content TitledPane-a
+            pane.setContent(root);
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
+
 
 
     private void dodajSekcijuDodatniBodovi(VBox parent) {
