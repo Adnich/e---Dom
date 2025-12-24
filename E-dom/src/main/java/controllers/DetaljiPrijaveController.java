@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import model.Dokument;
 import model.Prijava;
 import javafx.stage.Stage;
+import service.PdfService;
 
 
 public class DetaljiPrijaveController {
@@ -23,6 +24,8 @@ public class DetaljiPrijaveController {
     @FXML private TableColumn<Dokument, String> colDatum;
     @FXML private TableColumn<Dokument, Integer> colBodovi;
     @FXML private TableColumn<Dokument, String> colDostavljen;
+    @FXML private TableColumn<Dokument, Void> colPregled;
+
 
     @FXML
     private void onZatvori() {
@@ -79,11 +82,42 @@ public class DetaljiPrijaveController {
                 )
         );
 
+        colPregled.setCellFactory(param -> new TableCell<Dokument, Void>() {
+            private final Button btn = new Button("Pregledaj");
+
+            {
+                btn.setOnAction(event -> {
+                    Dokument dokument = getTableView().getItems().get(getIndex());
+                    if (dokument.getDokumentB64() != null && !dokument.getDokumentB64().isEmpty()) {
+                        PdfService.prikaziPdf(dokument.getDokumentB64(), dokument.getNaziv());
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Pregled dokumenta");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Dokument nije dodan.");
+                        alert.showAndWait();
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btn);
+                }
+            }
+        });
+
         tblDokumenti.setItems(
                 FXCollections.observableArrayList(
                         dokumentDAO.dohvatiDokumenteZaPrijavu(prijava.getIdPrijava())
                 )
         );
+
+
 
     }
 }

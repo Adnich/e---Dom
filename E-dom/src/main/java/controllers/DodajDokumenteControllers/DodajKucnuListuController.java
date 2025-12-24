@@ -7,12 +7,10 @@ import javafx.scene.control.Label;
 import model.Dokument;
 import model.VrstaDokumenta;
 import service.PdfService;
-import service.PdfService;
 
 import java.time.LocalDate;
 
-public class CipsDokumentController {
-
+public class DodajKucnuListuController {
     @FXML
     private CheckBox chkDostavljen;
 
@@ -50,7 +48,7 @@ public class CipsDokumentController {
         }
 
         Dokument d = new Dokument();
-        d.setNaziv("CIPS");
+        d.setNaziv("Uvjerenje o zajedničkom domaćinstvu");
         d.setDatumUpload(LocalDate.now());
         d.setDostavljen(true);
         d.setVrstaDokumenta(vrsta);

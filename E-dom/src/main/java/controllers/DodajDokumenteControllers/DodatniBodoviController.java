@@ -6,7 +6,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import model.Dokument;
 import model.VrstaDokumenta;
-import service.PdfUpload;
+import service.PdfService;
+import service.PdfService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -29,7 +30,7 @@ public class DodatniBodoviController {
 
     @FXML
     private void onDodajPdf() {
-        pdfBase64 = PdfUpload.uploadPdf(lblPdf.getScene().getWindow());
+        pdfBase64 = PdfService.uploadPdf(lblPdf.getScene().getWindow());
 
         if (pdfBase64 != null) {
             lblPdf.setText("PDF dodat");

@@ -44,6 +44,8 @@
                         <TableColumn fx:id="colDatum" text="Datum"/>
                         <TableColumn fx:id="colBodovi" text="Bodovi"/>
                         <TableColumn fx:id="colDostavljen" text="Dostavljen"/>
+                        <TableColumn fx:id="colPregled" text="Pregled" prefWidth="100"/>
+
                     </columns>
                 </TableView>
             </VBox>

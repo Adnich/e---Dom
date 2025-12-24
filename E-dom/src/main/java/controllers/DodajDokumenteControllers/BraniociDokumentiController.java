@@ -5,7 +5,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import service.KriterijPoOsnovuDjeceBranilaca;
-import service.PdfUpload;
+import service.PdfService;
+import service.PdfService;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -103,7 +104,7 @@ public class BraniociDokumentiController {
 
     @FXML
     private void onDodajPdf() {
-        pdfBase64 = PdfUpload.uploadPdf(lblPdf.getScene().getWindow());
+        pdfBase64 = PdfService.uploadPdf(lblPdf.getScene().getWindow());
 
         if (pdfBase64 != null) {
             lblPdf.setText("PDF dodat");
