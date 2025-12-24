@@ -1,0 +1,192 @@
+/* ═══════════════════════════════════════════════════════════════
+   DETALJI PRIJAVE - ENTERPRISE CLEAN UI
+   ═══════════════════════════════════════════════════════════════ */
+
+.root {
+    -fx-font-family: "Segoe UI", "Inter", system-ui;
+    -fx-font-smoothing-type: gray;
+
+    /* App background */
+    -fx-background-color: #f6f7fb;
+}
+
+/* ======= LAYOUT: BorderPane ======= */
+.border-pane {
+    -fx-background-color: transparent;
+}
+
+/* ======= TOP HEADER ======= */
+.header {
+    -fx-background-color: white;
+    -fx-padding: 16 18 14 18;
+
+    -fx-border-color: #e6eaf2;
+    -fx-border-width: 0 0 1 0;
+}
+
+.header-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #0f172a;
+}
+
+.header-subtitle {
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #64748b;
+}
+
+/* ======= CENTER / SPLITPANE ======= */
+.main-split {
+    -fx-background-color: transparent;
+    -fx-padding: 14 14 14 14;
+}
+
+/* SplitPane divider */
+.main-split > .split-pane-divider {
+    -fx-padding: 0 1 0 1;
+    -fx-background-color: #e6eaf2;
+}
+
+/* ======= CARD PANELS (left/right) ======= */
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+
+    -fx-border-color: #e6eaf2;
+    -fx-border-width: 1;
+
+    -fx-padding: 14;
+    -fx-spacing: 10;
+
+    -fx-effect: dropshadow(gaussian, rgba(15,23,42,0.06), 16, 0.25, 0, 6);
+}
+
+.card-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #0f172a;
+    -fx-padding: 2 0 6 0;
+}
+
+/* ======= TABLEVIEW: modern look ======= */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #e6eaf2;
+    -fx-border-width: 1;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+}
+
+/* Header background */
+.table-view .column-header-background {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 12px 12px 0 0;
+    -fx-border-color: #e6eaf2;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Header labels */
+.table-view .column-header .label {
+    -fx-text-fill: #334155;
+    -fx-font-size: 12.5px;
+    -fx-font-weight: 900;
+    -fx-padding: 10 8 10 8;
+}
+
+/* Rows */
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+    -fx-cell-size: 34px;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #fbfcfe;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #eaf7f4;
+}
+
+/* Cells */
+.table-cell {
+    -fx-text-fill: #0f172a;
+    -fx-font-size: 12.8px;
+    -fx-padding: 6 8 6 8;
+    -fx-border-color: transparent;
+}
+
+/* Remove harsh focus ring */
+.table-view:focused {
+    -fx-background-insets: 0;
+}
+
+/* Scrollbar subtle */
+.table-view .scroll-bar:vertical,
+.table-view .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.table-view .scroll-bar .thumb {
+    -fx-background-color: rgba(15,23,42,0.18);
+    -fx-background-radius: 10px;
+}
+
+/* ======= SCORE BOX (right side) ======= */
+.score-value {
+    -fx-font-size: 18px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #0f172a;
+    -fx-padding: 4 0 0 0;
+}
+
+/* Optional: hint text inside right card */
+.muted {
+    -fx-font-size: 12.5px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #64748b;
+}
+
+/* ======= BOTTOM FOOTER ======= */
+.footer {
+    -fx-background-color: white;
+    -fx-padding: 10 14 10 14;
+
+    -fx-border-color: #e6eaf2;
+    -fx-border-width: 1 0 0 0;
+}
+
+/* Buttons */
+.button {
+    -fx-background-color: #22b39a; /* tvoj akcent */
+    -fx-background-radius: 10px;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: 900;
+    -fx-padding: 10 16 10 16;
+    -fx-min-height: 38;
+    -fx-cursor: hand;
+    -fx-effect: none;
+}
+
+.button:hover {
+    -fx-background-color: #1da38d;
+}
+
+.button:pressed {
+    -fx-background-color: #188578;
+}
+
+/* If you ever add secondary buttons */
+.button.secondary {
+    -fx-background-color: #f1f5f9;
+    -fx-text-fill: #0f172a;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1.5;
+}
+
+.button.secondary:hover {
+    -fx-background-color: #eaf0f7;
+}
