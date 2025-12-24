@@ -9,7 +9,7 @@
             prefWidth="980" prefHeight="600"
             stylesheets="@../styles/detalji-prijave-style.css">
 
-    <!-- HEADER -->
+
     <top>
         <VBox spacing="10" styleClass="header">
 
@@ -27,7 +27,7 @@
         </VBox>
     </top>
 
-    <!-- CENTER -->
+
     <center>
         <SplitPane dividerPositions="0.62" styleClass="main-split">
 
@@ -87,6 +87,18 @@
                 <VBox styleClass="stat-card">
                     <Label text="Status obrade" styleClass="stat-title"/>
                     <Label fx:id="lblStatusObrade" text="U toku" styleClass="stat-value-small"/>
+                </VBox>
+
+                <VBox spacing="8" styleClass="stat-card">
+                    <Label text="Promijeni status" styleClass="stat-title"/>
+
+                    <ComboBox fx:id="cmbStatusPrijave"
+                              prefWidth="200"/>
+
+                    <Button text="Sačuvaj status"
+                            fx:id="btnSacuvajStatus"
+                            onAction="#onSacuvajStatus"
+                            styleClass="btn-primary"/>
                 </VBox>
 
                 <VBox styleClass="stat-card">
