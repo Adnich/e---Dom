@@ -14,6 +14,7 @@ import model.Korisnik;
 import model.Uloga;
 import org.example.edom.HelloApplication;
 import util.PasswordUtil;
+import util.TextUtil;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -114,8 +115,8 @@ public class RegisterController {
             lblError.setText("Lozinka mora sadržavati barem jedan specijalni karakter (!@#$%^&*()).");
             return;
         }
-        ime = formatirajIme(ime);
-        prezime = formatirajIme(prezime);
+        ime = TextUtil.formatirajIme(ime);
+        prezime = TextUtil.formatirajIme(prezime);
         // ovdje za projekat koristimo lozinku direktno kao password_hash
         Korisnik k = new Korisnik();
         k.setIme(ime);
@@ -174,13 +175,5 @@ public class RegisterController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private String formatirajIme(String tekst) {
-        if (tekst == null || tekst.isEmpty()) return tekst;
-
-        tekst = tekst.trim().toLowerCase();
-
-        return tekst.substring(0, 1).toUpperCase() + tekst.substring(1);
     }
 }

@@ -47,12 +47,16 @@ public class StudentDAO {
     public List<Student> dohvatiSveStudente() {
         List<Student> studenti = new ArrayList<>();
 
-        String sql = "SELECT st.id_student, st.ime, st.prezime, st.broj_indeksa, " +
-                "st.fakultet, st.godina_studija, st.prosjek, st.email, st.telefon, st.adresa, st.ime_roditelja, st.jmbg, " +
-                "st.socijalni_status_id_status, " +
-                "ss.id_status, ss.naziv AS naziv_statusa " +
-                "FROM student st " +
-                "JOIN socijalni_status ss ON st.socijalni_status_id_status = ss.id_status";
+        String sql = """
+        SELECT 
+            st.id_student, st.ime, st.prezime, st.broj_indeksa,
+            st.fakultet, st.godina_studija, st.prosjek,
+            st.email, st.telefon, st.adresa, st.ime_roditelja, st.jmbg,
+            ss.id_status, ss.naziv AS naziv_statusa
+        FROM student st
+        LEFT JOIN socijalni_status ss 
+            ON st.socijalni_status_id_status = ss.id_status
+        """;
 
         try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement();
@@ -70,17 +74,19 @@ public class StudentDAO {
                 s.setProsjek(rs.getDouble("prosjek"));
                 s.setEmail(rs.getString("email"));
                 s.setTelefon(rs.getString("telefon"));
-
-                // SocijalniStatus objekat
-                SocijalniStatus ss = new SocijalniStatus(
-                        rs.getInt("id_status"),
-                        rs.getString("naziv_statusa")
-                );
-                s.setSocijalniStatus(ss);
                 s.setAdresa(rs.getString("adresa"));
-                s.setJMBG(rs.getString("jmbg"));
                 s.setImeRoditelja(rs.getString("ime_roditelja"));
+                s.setJMBG(rs.getString("jmbg"));
 
+                if (rs.getObject("id_status") != null) {
+                    SocijalniStatus ss = new SocijalniStatus(
+                            rs.getInt("id_status"),
+                            rs.getString("naziv_statusa")
+                    );
+                    s.setSocijalniStatus(ss);
+                } else {
+                    s.setSocijalniStatus(null);
+                }
 
                 studenti.add(s);
             }

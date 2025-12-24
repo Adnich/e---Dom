@@ -52,16 +52,6 @@
             <Label text="Prosjek:" styleClass="student-field-label"/>
             <TextField fx:id="txtProsjek" styleClass="student-text-field"/>
 
-            <Label text="Apsolvent:" styleClass="student-field-label"/>
-            <CheckBox fx:id="chkJeLiApsolvent"
-                      styleClass="student-checkbox"
-                      prefWidth="300"/>
-
-            <Label text="Postdiplomac:" styleClass="student-field-label"/>
-            <CheckBox fx:id="chkJeLiPostdiplomac"
-                      styleClass="student-checkbox"
-                      prefWidth="300"/>
-
             <Label text="Email:" styleClass="student-field-label"/>
             <TextField fx:id="txtEmail" styleClass="student-text-field"/>
 

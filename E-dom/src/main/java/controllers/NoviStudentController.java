@@ -11,16 +11,18 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.SocijalniStatus;
 import model.Student;
+import util.TextUtil;
+
+import java.util.List;
 
 public class NoviStudentController {
 
     @FXML private TextField txtIme;
     @FXML private TextField txtPrezime;
     @FXML private TextField txtIndeks;
-    @FXML private TextField txtFakultet;
-    @FXML private TextField txtGodina;
-    @FXML private CheckBox chkJeLiApsolvent;
-    @FXML private CheckBox chkJeLiPostdiplomac;
+
+    @FXML private ComboBox<String> cmbFakultet;
+    @FXML private ComboBox<String> cmbGodina;
     @FXML private TextField txtProsjek;
     @FXML private TextField txtEmail;
     @FXML private TextField txtTelefon;
@@ -32,62 +34,54 @@ public class NoviStudentController {
     private final StudentDAO studentDAO = new StudentDAO();
     private final SocijalniStatusDAO socijalniStatusDAO = new SocijalniStatusDAO();
 
-    /**
-     * Inicijalizuje formu i učitava CSS stilove
-     */
     @FXML
     public void initialize() {
-        // Popuni ComboBox sa socijalnim statusima
+
+
+        cmbFakultet.setItems(FXCollections.observableArrayList(
+                "Politehnički fakultet UNZE",
+                "Pravni fakultet UNZE",
+                "Ekonomski fakultet UNZE",
+                "Filozofski fakultet UNZE",
+                "Medicinski fakultet UNZE",
+                "Mašinski fakultet UNZE"
+        ));
+
+
+        cmbGodina.setItems(FXCollections.observableArrayList("1", "2", "3", "4", "5", "6", "Apsolvent", "Postdiplomac"));
+
+
         cmbSocijalniStatus.setItems(
                 FXCollections.observableArrayList(socijalniStatusDAO.dohvatiSveStatuse())
         );
 
         cmbSocijalniStatus.setCellFactory(param -> new ListCell<>() {
             @Override
-            protected void updateItem(SocijalniStatus sStatus, boolean empty){
-                super.updateItem(sStatus, empty);
-                setText((empty || sStatus == null) ? "" : sStatus.getNaziv());
+            protected void updateItem(SocijalniStatus item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? "" : item.getNaziv());
             }
         });
 
         cmbSocijalniStatus.setButtonCell(new ListCell<>() {
             @Override
-            protected void updateItem(SocijalniStatus sStatus, boolean empty){
-                super.updateItem(sStatus, empty);
-                setText((empty || sStatus == null) ? "" : sStatus.getNaziv());
+            protected void updateItem(SocijalniStatus item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? "" : item.getNaziv());
             }
         });
-
-        // Učitaj CSS stilove
-        loadStyles();
     }
 
-    /**
-     * Učitava CSS stylesheet za ovu scenu
-     */
-    private void loadStyles() {
-        try {
-            // Sačekaj da se scene učita, pa dodaj stylesheet
-            txtIme.sceneProperty().addListener((observable, oldScene, newScene) -> {
-                if (newScene != null) {
-                    String cssPath = getClass().getResource("/styles/novi-student-style.css").toExternalForm();
-                    if (!newScene.getStylesheets().contains(cssPath)) {
-                        newScene.getStylesheets().add(cssPath);
-                    }
-                }
-            });
-        } catch (Exception e) {
-            System.err.println("CSS file not found: " + e.getMessage());
-        }
-    }
 
     @FXML
     public void onNextClicked() {
 
+        // ✅ VALIDACIJA
         if (txtIme.getText().isEmpty() ||
                 txtPrezime.getText().isEmpty() ||
                 txtIndeks.getText().isEmpty() ||
-                txtFakultet.getText().isEmpty() ||
+                cmbFakultet.getValue() == null ||
+                cmbGodina.getValue() == null ||
                 txtProsjek.getText().isEmpty() ||
                 cmbSocijalniStatus.getValue() == null ||
                 txtAdresa.getText().isEmpty() ||
@@ -98,11 +92,6 @@ public class NoviStudentController {
             return;
         }
 
-        //NE MOGU OBA BITI OZNAČENA
-        if (chkJeLiApsolvent.isSelected() && chkJeLiPostdiplomac.isSelected()) {
-            showAlert("Greška", "Student ne može biti i apsolvent i postdiplomac.");
-            return;
-        }
 
         int godinaStudija;
         double prosjek;
@@ -110,30 +99,57 @@ public class NoviStudentController {
         try {
             prosjek = Double.parseDouble(txtProsjek.getText());
 
-            if (chkJeLiApsolvent.isSelected()) {
-                godinaStudija = 7; // APSOLVENT
-            } else if (chkJeLiPostdiplomac.isSelected()) {
-                godinaStudija = 8; // POSTDIPLOMAC
+            if (cmbGodina.getValue().equals("Apsolvent")) {
+                godinaStudija = 7;
+            } else if (cmbGodina.getValue().equals("Postdiplomac")) {
+                godinaStudija = 8;
             } else {
-                godinaStudija = Integer.parseInt(txtGodina.getText());
+                godinaStudija = Integer.parseInt(cmbGodina.getValue());
+            }
+
+            if(godinaStudija == 1){
+                if(prosjek <1.0 || prosjek > 5.0){
+                    showAlert("Greška", "Prosjek za prvu godinu mora biti između 1.0 i 5.0.");
+                    return;
+                }
+            }
+            else {
+                if (prosjek < 6.0 || prosjek > 10.0) {
+                    showAlert("Greška", "Prosjek za ostale godine mora biti između 6.0 i 10.0.");
+                    return;
+                }
             }
 
         } catch (Exception e) {
-            showAlert("Greška", "Godina i prosjek moraju biti numerički.");
+            showAlert("Greška", "Neispravan unos godine ili prosjeka.");
             return;
         }
 
-        // Provjera postoji li student
-        Student postojeci = studentDAO.findByBrojIndeksa(txtIndeks.getText());
-        Student s;
+        if(!(txtJMBG.getText().length()==13)){
+            showAlert("Greška", "JMBG mora sadržavati tačno 13 cifara.");
+            return;
+        }
 
-        if (postojeci == null) {
+        if(studentDAO.postojiJmbg(txtJMBG.getText())){
+            showAlert("Greška", "Student sa unesenim JMBG-om već postoji u bazi.");
+            return;
+        }
 
+        String email = txtEmail.getText();
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+            showAlert("Greška", "Neispravan format email adrese.");
+            return;
+        }
+
+
+        Student s = studentDAO.findByBrojIndeksa(txtIndeks.getText());
+
+        if (s == null) {
             s = new Student();
-            s.setIme(txtIme.getText());
-            s.setPrezime(txtPrezime.getText());
+            s.setIme(TextUtil.formatirajIme(txtIme.getText()));
+            s.setPrezime(TextUtil.formatirajIme(txtPrezime.getText()));
             s.setBrojIndeksa(txtIndeks.getText());
-            s.setFakultet(txtFakultet.getText());
+            s.setFakultet(cmbFakultet.getValue());
             s.setGodinaStudija(godinaStudija);
             s.setProsjek(prosjek);
             s.setEmail(txtEmail.getText());
@@ -141,39 +157,27 @@ public class NoviStudentController {
             s.setSocijalniStatus(cmbSocijalniStatus.getValue());
             s.setJMBG(txtJMBG.getText());
             s.setAdresa(txtAdresa.getText());
-            s.setImeRoditelja(txtRoditelj.getText());
+            s.setImeRoditelja(TextUtil.formatirajIme(txtRoditelj.getText()));
+
+
 
             studentDAO.unesiStudent(s);
-
-            // PREPORUKA: bolje dohvati ID jedino upisanog studenta
             s = studentDAO.findByBrojIndeksa(txtIndeks.getText());
-        } else {
-            s = postojeci;
+
         }
 
-        int studentId = s.getIdStudent();
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/nova-prijava.fxml"));
             Parent root = loader.load();
 
             NovaPrijavaController controller = loader.getController();
-            controller.setStudentId(studentId);
+            controller.setStudentId(s.getIdStudent());
             controller.setGodinaStudija(godinaStudija);
             controller.setProsjek(prosjek);
 
             Stage stage = (Stage) txtIme.getScene().getWindow();
-            Scene scene = new Scene(root);
-
-            // VAŽNO: Dodaj CSS stylesheet na novu scenu
-            try {
-                String cssPath = getClass().getResource("/style/novi-student-style.css").toExternalForm();
-                scene.getStylesheets().add(cssPath);
-            } catch (Exception e) {
-                System.err.println("CSS not loaded for nova-prijava scene: " + e.getMessage());
-            }
-
-            stage.setScene(scene);
+            stage.setScene(new Scene(root));
 
         } catch (Exception e) {
             e.printStackTrace();
