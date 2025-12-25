@@ -13,14 +13,11 @@ import model.SocijalniStatus;
 import model.Student;
 import util.TextUtil;
 
-import java.util.List;
-
 public class NoviStudentController {
 
     @FXML private TextField txtIme;
     @FXML private TextField txtPrezime;
     @FXML private TextField txtIndeks;
-
     @FXML private ComboBox<String> cmbFakultet;
     @FXML private ComboBox<String> cmbGodina;
     @FXML private TextField txtProsjek;
@@ -37,7 +34,6 @@ public class NoviStudentController {
     @FXML
     public void initialize() {
 
-
         cmbFakultet.setItems(FXCollections.observableArrayList(
                 "Politehnički fakultet UNZE",
                 "Pravni fakultet UNZE",
@@ -47,9 +43,9 @@ public class NoviStudentController {
                 "Mašinski fakultet UNZE"
         ));
 
-
-        cmbGodina.setItems(FXCollections.observableArrayList("1", "2", "3", "4", "5", "6", "Apsolvent", "Postdiplomac"));
-
+        cmbGodina.setItems(FXCollections.observableArrayList(
+                "1", "2", "3", "4", "5", "6", "Apsolvent", "Postdiplomac"
+        ));
 
         cmbSocijalniStatus.setItems(
                 FXCollections.observableArrayList(socijalniStatusDAO.dohvatiSveStatuse())
@@ -70,13 +66,19 @@ public class NoviStudentController {
                 setText(empty || item == null ? "" : item.getNaziv());
             }
         });
-    }
 
+        // ✅ TELEFON – dozvoljeni samo validni karakteri
+        txtTelefon.setTextFormatter(new TextFormatter<>(change -> {
+            if (change.getText().matches("[0-9+()\\-\\s]*")) {
+                return change;
+            }
+            return null;
+        }));
+    }
 
     @FXML
     public void onNextClicked() {
 
-        // ✅ VALIDACIJA
         if (txtIme.getText().isEmpty() ||
                 txtPrezime.getText().isEmpty() ||
                 txtIndeks.getText().isEmpty() ||
@@ -92,30 +94,24 @@ public class NoviStudentController {
             return;
         }
 
-
         int godinaStudija;
         double prosjek;
 
         try {
             prosjek = Double.parseDouble(txtProsjek.getText());
 
-            if (cmbGodina.getValue().equals("Apsolvent")) {
-                godinaStudija = 7;
-            } else if (cmbGodina.getValue().equals("Postdiplomac")) {
-                godinaStudija = 8;
-            } else {
-                godinaStudija = Integer.parseInt(cmbGodina.getValue());
-            }
+            if (cmbGodina.getValue().equals("Apsolvent")) godinaStudija = 7;
+            else if (cmbGodina.getValue().equals("Postdiplomac")) godinaStudija = 8;
+            else godinaStudija = Integer.parseInt(cmbGodina.getValue());
 
-            if(godinaStudija == 1){
-                if(prosjek <1.0 || prosjek > 5.0){
+            if (godinaStudija == 1) {
+                if (prosjek < 1.0 || prosjek > 5.0) {
                     showAlert("Greška", "Prosjek za prvu godinu mora biti između 1.0 i 5.0.");
                     return;
                 }
-            }
-            else {
+            } else {
                 if (prosjek < 6.0 || prosjek > 10.0) {
-                    showAlert("Greška", "Prosjek za ostale godine mora biti između 6.0 i 10.0.");
+                    showAlert("Greška", "Prosjek mora biti između 6.0 i 10.0.");
                     return;
                 }
             }
@@ -125,22 +121,27 @@ public class NoviStudentController {
             return;
         }
 
-        if(!(txtJMBG.getText().length()==13)){
-            showAlert("Greška", "JMBG mora sadržavati tačno 13 cifara.");
+        if (txtJMBG.getText().length() != 13) {
+            showAlert("Greška", "JMBG mora imati tačno 13 cifara.");
             return;
         }
 
-        if(studentDAO.postojiJmbg(txtJMBG.getText())){
-            showAlert("Greška", "Student sa unesenim JMBG-om već postoji u bazi.");
+        if (studentDAO.postojiJmbg(txtJMBG.getText())) {
+            showAlert("Greška", "Student sa tim JMBG-om već postoji.");
             return;
         }
 
-        String email = txtEmail.getText();
-        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+        if (!txtEmail.getText().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
             showAlert("Greška", "Neispravan format email adrese.");
             return;
         }
 
+        // ✅ TELEFON – finalna validacija
+        String telefon = txtTelefon.getText().replaceAll("\\D", "");
+        if (telefon.length() < 6 || telefon.length() > 15) {
+            showAlert("Greška", "Neispravan broj telefona.");
+            return;
+        }
 
         Student s = studentDAO.findByBrojIndeksa(txtIndeks.getText());
 
@@ -148,6 +149,7 @@ public class NoviStudentController {
             s = new Student();
             s.setIme(TextUtil.formatirajIme(txtIme.getText()));
             s.setPrezime(TextUtil.formatirajIme(txtPrezime.getText()));
+            s.setImeRoditelja(TextUtil.formatirajIme(txtRoditelj.getText()));
             s.setBrojIndeksa(txtIndeks.getText());
             s.setFakultet(cmbFakultet.getValue());
             s.setGodinaStudija(godinaStudija);
@@ -157,15 +159,10 @@ public class NoviStudentController {
             s.setSocijalniStatus(cmbSocijalniStatus.getValue());
             s.setJMBG(txtJMBG.getText());
             s.setAdresa(txtAdresa.getText());
-            s.setImeRoditelja(TextUtil.formatirajIme(txtRoditelj.getText()));
-
-
 
             studentDAO.unesiStudent(s);
             s = studentDAO.findByBrojIndeksa(txtIndeks.getText());
-
         }
-
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/nova-prijava.fxml"));
