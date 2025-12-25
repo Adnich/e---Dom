@@ -2,13 +2,16 @@ package controllers;
 
 import controllers.DodajDokumenteControllers.BraniociDokumentiController;
 import dao.PrijavaDAO;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.Prijava;
 import model.StatusPrijave;
@@ -26,8 +29,7 @@ public class NovaPrijavaController {
 
     private BraniociDokumentiController braniociController;
 
-    @FXML private VBox vboxBranioci; // dodaj u FXML NovaPrijava
-
+    @FXML private VBox vboxBranioci;
 
     private int studentId;
     private double prosjek;
@@ -51,7 +53,9 @@ public class NovaPrijavaController {
         }
     }
 
-
+    // ===============================
+    // CSS
+    // ===============================
     private void applyCssIfMissing(Scene scene) {
         var cssUrl = getClass().getResource("/styles/nova-prijava-style.css");
         if (cssUrl != null) {
@@ -62,6 +66,23 @@ public class NovaPrijavaController {
         } else {
             System.out.println("⚠ nova-prijava-style.css nije pronađen! Provjeri put: /styles/nova-prijava-style.css");
         }
+    }
+
+    // ===============================
+    // FULLSCREEN / MAXIMIZE FIX
+    // ===============================
+    private void forceMaximize(Stage stage) {
+        Platform.runLater(() -> {
+            stage.setResizable(true);
+            stage.setMaximized(true);
+
+            // ✅ Windows fix (ako maximize ne radi)
+            Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+            stage.setX(bounds.getMinX());
+            stage.setY(bounds.getMinY());
+            stage.setWidth(bounds.getWidth());
+            stage.setHeight(bounds.getHeight());
+        });
     }
 
     public void setStudentId(int id) {
@@ -78,9 +99,13 @@ public class NovaPrijavaController {
         System.out.println("Prosjek u NovaPrijavaController: " + prosjek);
     }
 
+    // ===============================
+    // SAVE
+    // ===============================
     @FXML
     private void onSaveClicked() {
 
+        // ✅ Validacija
         if (txtAkGod.getText().isEmpty()
                 || txtClanovi.getText().isEmpty()
                 || txtUdaljenost.getText().isEmpty()) {
@@ -100,12 +125,12 @@ public class NovaPrijavaController {
             return;
         }
 
-        if(akGod<LocalDate.now().getYear()){
+        if (akGod < LocalDate.now().getYear()) {
             showAlert("Greška", "Akademska godina ne može biti manja od tekuće godine.");
             return;
         }
 
-
+        // ✅ kreiranje prijave
         Prijava p = new Prijava();
         p.setIdStudent(studentId);
         p.setDatumPrijava(LocalDate.now());
@@ -121,26 +146,19 @@ public class NovaPrijavaController {
         Prijava prijava = prijavaDAO.dohvatiSvePrijave().getLast();
         int prijavaId = prijava.getIdPrijava();
 
+        // ✅ dodatni bodovi
         int dodatniBodovi = 0;
-
-        if (chkIzbjeglica.isSelected()) {
-            dodatniBodovi += 3;
-        }
-
-        if (chkBratSestra.isSelected()) {
-            dodatniBodovi += 2;
-        }
+        if (chkIzbjeglica.isSelected()) dodatniBodovi += 3;
+        if (chkBratSestra.isSelected()) dodatniBodovi += 2;
 
         if (dodatniBodovi > 0) {
             prijavaDAO.dodajBodoveNaPrijavu(prijavaId, dodatniBodovi);
             System.out.println("bodovi za brat sestru studenta i izbjeglicu: " + dodatniBodovi);
         }
 
-
+        // ✅ učitaj sljedeći ekran
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/views/dodaj-dokumente.fxml")
-            );
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/dodaj-dokumente.fxml"));
             Parent root = loader.load();
 
             DodajDokumenteController controller = loader.getController();
@@ -148,8 +166,8 @@ public class NovaPrijavaController {
             controller.setUdaljenost(udaljenost);
             controller.setProsjek(prosjek);
             controller.setGodinaStudija(godinaStudija);
-            double bodoviBranioci = 0;
 
+            double bodoviBranioci = 0;
             if (braniociController != null) {
                 bodoviBranioci = braniociController.izracunajBodove();
                 System.out.println("Bodovi branioci: " + bodoviBranioci);
@@ -158,9 +176,16 @@ public class NovaPrijavaController {
             controller.setBodoviBranioci(bodoviBranioci);
             controller.setClanovi(clanovi);
 
-
             Stage stage = (Stage) txtAkGod.getScene().getWindow();
-            stage.setScene(new Scene(root));
+
+            // ✅ Scene + CSS
+            Scene novaScene = new Scene(root);
+            applyCssIfMissing(novaScene); // ako želiš da bude isti css
+
+            stage.setScene(novaScene);
+
+            // ✅ VRATI FULLSCREEN
+            forceMaximize(stage);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -168,6 +193,9 @@ public class NovaPrijavaController {
         }
     }
 
+    // ===============================
+    // ALERT
+    // ===============================
     private void showAlert(String title, String msg) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setTitle(title);
@@ -176,11 +204,12 @@ public class NovaPrijavaController {
         a.showAndWait();
     }
 
+    // ===============================
+    // BRANIOCI FORMA
+    // ===============================
     private void ucitajBraniociFormu() {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/views/DodajDokumenteSections/branioci-forma.fxml")
-            );
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DodajDokumenteSections/branioci-forma.fxml"));
 
             Node node = loader.load();
             braniociController = loader.getController();
@@ -193,5 +222,4 @@ public class NovaPrijavaController {
             showAlert("Greška", "Ne mogu učitati formu za branioce.");
         }
     }
-
 }
