@@ -1,55 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.Region?>
-
+<?import javafx.geometry.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.prijaveController"
-            prefHeight="400.0" prefWidth="600.0"
-            styleClass="root anchor-pane"
-            stylesheets="@../styles/prijave.css">
+            stylesheets="@../styles/prijave.css"
+            styleClass="anchor-pane"
+            maxWidth="Infinity"
+            maxHeight="Infinity">
 
     <children>
-        <VBox spacing="15.0"
+        <VBox spacing="18"
               AnchorPane.topAnchor="20"
               AnchorPane.leftAnchor="20"
               AnchorPane.rightAnchor="20"
               AnchorPane.bottomAnchor="20"
-              styleClass="main-vbox">
+              styleClass="main-vbox"
+              VBox.vgrow="ALWAYS">
 
-            <HBox alignment="CENTER_LEFT" spacing="20">
-                <Label text="Prijave studenata" styleClass="header-title" />
+            <!-- HEADER -->
+            <HBox spacing="16" alignment="CENTER_LEFT">
+                <Label text="Prijave studenata" styleClass="header-title"/>
 
                 <TextField fx:id="txtSearch"
                            promptText="Pretraga: ime, prezime, status..."
-                           prefWidth="260"/>
+                           prefWidth="320"/>
 
                 <Region HBox.hgrow="ALWAYS"/>
 
-                <Button text=" Nova prijava"
+                <Button text="Nova prijava"
                         onAction="#onNovaPrijava"
-                        styleClass="nova-prijava-btn" />
+                        styleClass="nova-prijava-btn"/>
             </HBox>
 
+            <!-- TABLE -->
+            <TableView fx:id="tblPrijave"
+                       VBox.vgrow="ALWAYS"
+                       maxWidth="Infinity"
+                       maxHeight="Infinity"
+                       styleClass="table-view">
 
-            <TableView fx:id="tblPrijave" prefHeight="400" styleClass="table-view">
                 <columns>
-                    <TableColumn fx:id="colId" text="ID" prefWidth="60" />
-                    <TableColumn fx:id="colIme" text="Ime" prefWidth="120"/>
-                    <TableColumn fx:id="colPrezime" text="Prezime" prefWidth="140"/>
-                    <TableColumn fx:id="colDatum" text="Datum" prefWidth="120" />
-                    <TableColumn fx:id="colAkGod" text="Akad. godina" prefWidth="120" />
-                    <TableColumn fx:id="colUkupniBodovi" text="Ukupni bodovi" prefWidth="120" />
-                    <TableColumn fx:id="colStatus" text="Status" prefWidth="150" />
-                    <TableColumn fx:id="colNapomena" text="Napomena" prefWidth="250" />
+                    <TableColumn fx:id="colId" text="ID" prefWidth="70"/>
+                    <TableColumn fx:id="colIme" text="Ime" prefWidth="140"/>
+                    <TableColumn fx:id="colPrezime" text="Prezime" prefWidth="160"/>
+                    <TableColumn fx:id="colDatum" text="Datum" prefWidth="140"/>
+                    <TableColumn fx:id="colAkGod" text="Akad. godina" prefWidth="140"/>
+                    <TableColumn fx:id="colUkupniBodovi" text="Ukupni bodovi" prefWidth="140"/>
+                    <TableColumn fx:id="colStatus" text="Status" prefWidth="180"/>
+                    <TableColumn fx:id="colNapomena" text="Napomena" prefWidth="320"/>
                 </columns>
+
             </TableView>
 
         </VBox>
