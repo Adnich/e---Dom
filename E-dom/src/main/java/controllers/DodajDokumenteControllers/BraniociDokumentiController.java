@@ -75,11 +75,11 @@ public class BraniociDokumentiController {
     private KriterijPoOsnovuDjeceBranilaca kriterij = new KriterijPoOsnovuDjeceBranilaca();
 
 
-    public int izracunajBodove() {
+    public double izracunajBodove() {
         Map<String, Boolean> stanja = new HashMap<>();
         stanja.put("StudentRvi", chkStudentRVI.isSelected());
         stanja.put("Invalidnost", chkInvaliditet.isSelected());
-        stanja.put("DjecaSehida", chkDjecaSehida.isSelected());
+        stanja.put("PoginuoBranilac", chkDjecaSehida.isSelected());
         stanja.put("ClanPorodiceSehida", chkClanPorodiceSehida.isSelected());
         stanja.put("InvalidnostRoditelja", chkInvalidnostRoditelja.isSelected());
         stanja.put("DijeteOSRBiH", chkDjecaOSRBiH.isSelected());

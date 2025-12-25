@@ -32,7 +32,7 @@ public class KriterijPoOsnovuDjeceBranilaca {
         Map<String, Double> fiksniBodovi = Map.of(
                 "Invalidnost", 10.0,
                 "PoginuoBranilac", 50.0,
-                "ClanPorodiceSehida ", 20.0,
+                "ClanPorodiceSehida", 20.0,
                 "DjecaNosilacaRPriznanja", 10.0,
                 "StudentLogoras", 10.0,
                 "RoditeljLogoras", 5.0,
