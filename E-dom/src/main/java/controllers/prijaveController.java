@@ -18,6 +18,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
 import model.Prijava;
+import javafx.application.Platform;
+import javafx.geometry.Rectangle2D;
+import javafx.stage.Screen;
+
 
 
 public class prijaveController {
@@ -46,6 +50,7 @@ public class prijaveController {
         applyFiltering(); // ponovo poveži filter na novu listu
     }
 
+
     @FXML
     private void onNovaPrijava() {
         try {
@@ -58,17 +63,35 @@ public class prijaveController {
             Stage stage = new Stage();
             stage.setTitle("Nova prijava");
             stage.setScene(scene);
+            stage.setResizable(true);
+
             stage.show();
+
+            // ✅ najjače rješenje (Windows fix)
+            Platform.runLater(() -> {
+                stage.setMaximized(true);
+
+                // ✅ ako maximize opet ne radi, forsiraj stvarnu veličinu ekrana
+                Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+                stage.setX(bounds.getMinX());
+                stage.setY(bounds.getMinY());
+                stage.setWidth(bounds.getWidth());
+                stage.setHeight(bounds.getHeight());
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+
     private void otvoriDetalje(Prijava prijava) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/detalji-prijave.fxml"));
             Scene scene = new Scene(loader.load());
+
+            var css = getClass().getResource("/styles/prijave.css");
+            if (css != null) scene.getStylesheets().add(css.toExternalForm());
 
             DetaljiPrijaveController controller = loader.getController();
             controller.setPrijava(prijava);
@@ -76,12 +99,24 @@ public class prijaveController {
             Stage stage = new Stage();
             stage.setTitle("Detalji prijave");
             stage.setScene(scene);
+            stage.setResizable(true);
             stage.show();
+
+            Platform.runLater(() -> {
+                stage.setMaximized(true);
+                Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+                stage.setX(bounds.getMinX());
+                stage.setY(bounds.getMinY());
+                stage.setWidth(bounds.getWidth());
+                stage.setHeight(bounds.getHeight());
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+
 
     @FXML
     public void initialize() {
