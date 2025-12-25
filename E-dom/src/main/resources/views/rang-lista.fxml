@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controllers.RangListaController"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="controllers.RangListaController">
 
-</AnchorPane>
+    <top>
+        <HBox spacing="12" style="-fx-padding: 15;">
+            <Label text="Rang lista studenata"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+            <Region HBox.hgrow="ALWAYS"/>
+        </HBox>
+    </top>
+
+    <center>
+        <TableView fx:id="tblRangLista" prefHeight="600">
+
+            <columns>
+                <TableColumn fx:id="colRedniBroj" text="R.br" prefWidth="50"/>
+                <TableColumn fx:id="colImePrezime" text="Ime i prezime" prefWidth="250"/>
+                <TableColumn fx:id="colUkupniBodovi" text="Ukupni bodovi" prefWidth="120"/>
+                <TableColumn fx:id="colDetalji" text="" prefWidth="100"/>
+            </columns>
+
+        </TableView>
+    </center>
+
+</BorderPane>
