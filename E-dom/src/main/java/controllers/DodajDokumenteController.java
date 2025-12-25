@@ -253,11 +253,22 @@ public class DodajDokumenteController {
             VBox box = loader.load();
             GarancijaDokumentController controller = loader.getController();
             controller.init(prijavaId, vdDao.dohvatiVrstuPoId(13));
+
+            // Lista vrsta dokumenata koji trebaju biti prikazani u garancija sekciji
+            List<VrstaDokumenta> vrsteDokumenata = Arrays.asList(
+                    vdDao.dohvatiVrstuPoId(5),
+                    vdDao.dohvatiVrstuPoId(16),
+                    vdDao.dohvatiVrstuPoId(24)
+            );
+
+            controller.init(prijavaId, vrsteDokumenata);
+
             parent.getChildren().add(box);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     private void dodajPrijavniObrazac(VBox parent) {
         try {

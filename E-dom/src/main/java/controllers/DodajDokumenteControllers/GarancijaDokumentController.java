@@ -1,18 +1,17 @@
 package controllers.DodajDokumenteControllers;
 
 import dao.DokumentDAO;
-import dao.VrstaDokumentaDAO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.StringConverter;
 import model.Dokument;
 import model.VrstaDokumenta;
 import service.PdfService;
-import service.PdfService;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GarancijaDokumentController {
 
@@ -21,53 +20,61 @@ public class GarancijaDokumentController {
     @FXML private CheckBox chkGarancijaPotpisana;
     @FXML private ComboBox<VrstaDokumenta> cmbDokumentGarancija;
     @FXML private Button btnDodaj;
-
-
     @FXML private Label lblPdf;
+
     private String pdfBase64;
 
     private int prijavaId;
-    private VrstaDokumenta vrsta;
-    private final VrstaDokumentaDAO vdDao = new VrstaDokumentaDAO();
+    private List<VrstaDokumenta> vrsteDokumenata = new ArrayList<>();
 
-    public void init(int prijavaId, VrstaDokumenta vrsta) {
+    public void init(int prijavaId, List<VrstaDokumenta> vrsteDokumenata) {
         this.prijavaId = prijavaId;
-        this.vrsta = vrsta;
+        this.vrsteDokumenata = vrsteDokumenata;
 
+        // Tipovi garanta (ako treba)
         cmbTipGaranta.setItems(FXCollections.observableArrayList(
                 "Zaposlenik",
                 "Penzioner",
                 "Vlasnik kompanije"
         ));
 
-        cmbDokumentGarancija.setItems(FXCollections.observableArrayList());
+        // ✅ Puni ComboBox sa dokumentima koje si proslijedio (ta tri)
+        cmbDokumentGarancija.setItems(FXCollections.observableArrayList(this.vrsteDokumenata));
+        cmbDokumentGarancija.setDisable(false);
 
-        cmbTipGaranta.setOnAction(e -> filtrirajDokumenteZaTipGaranta());
-    }
+        // ✅ Prikaz u ComboBox (da se ne desi da je prazno ako toString nije definisan)
+        cmbDokumentGarancija.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(VrstaDokumenta objekt) {
+                return objekt != null ? objekt.getNaziv() : "";
+            }
 
-    private void filtrirajDokumenteZaTipGaranta() {
-        String tip = cmbTipGaranta.getValue();
-        if (tip == null) {
-            cmbDokumentGarancija.getItems().clear();
-            return;
+            @Override
+            public VrstaDokumenta fromString(String string) {
+                return null;
+            }
+        });
+
+        cmbDokumentGarancija.setCellFactory(lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(VrstaDokumenta item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? "" : item.getNaziv());
+            }
+        });
+
+        cmbDokumentGarancija.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(VrstaDokumenta item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? "" : item.getNaziv());
+            }
+        });
+
+        // ✅ Automatski selektuj prvi dokument (opcionalno)
+        if (!this.vrsteDokumenata.isEmpty()) {
+            cmbDokumentGarancija.getSelectionModel().selectFirst();
         }
-
-        List<VrstaDokumenta> svi = vdDao.dohvatiSveVrste();
-
-        List<VrstaDokumenta> filtrirani = switch (tip) {
-            case "Zaposlenik" -> svi.stream()
-                    .filter(v -> v.getIdVrsta() == 1)
-                    .collect(Collectors.toList());
-            case "Penzioner" -> svi.stream()
-                    .filter(v -> v.getIdVrsta() == 2)
-                    .collect(Collectors.toList());
-            case "Vlasnik kompanije" -> svi.stream()
-                    .filter(v -> v.getIdVrsta() == 3 || v.getIdVrsta() == 4)
-                    .collect(Collectors.toList());
-            default -> List.of();
-        };
-
-        cmbDokumentGarancija.setItems(FXCollections.observableArrayList(filtrirani));
     }
 
     @FXML
@@ -84,27 +91,29 @@ public class GarancijaDokumentController {
     @FXML
     private void dodajDokumentGarancija() {
 
-        if (txtImeGaranta.getText().isEmpty()
+        if (txtImeGaranta.getText().trim().isEmpty()
                 || cmbTipGaranta.getValue() == null
                 || !chkGarancijaPotpisana.isSelected()
                 || cmbDokumentGarancija.getValue() == null) {
 
             new Alert(
                     Alert.AlertType.WARNING,
-                    "Popunite ime garanta, tip, ovjeru i odaberite dokument."
+                    "Popunite ime garanta, tip, označite ovjeru i odaberite dokument."
             ).showAndWait();
             return;
         }
 
         Dokument d = new Dokument();
+
         d.setNaziv("Garancija - " + cmbDokumentGarancija.getValue().getNaziv()
-                + " (" + txtImeGaranta.getText() + ")");
+                + " (" + txtImeGaranta.getText().trim() + ")");
+
         d.setDatumUpload(LocalDate.now());
         d.setDostavljen(true);
         d.setVrstaDokumenta(cmbDokumentGarancija.getValue());
 
-        // PDF JE OPCIONALAN
-        if (pdfBase64 != null) {
+        // PDF je opcionalan
+        if (pdfBase64 != null && !pdfBase64.isBlank()) {
             d.setDokumentB64(pdfBase64);
         }
 
@@ -113,5 +122,22 @@ public class GarancijaDokumentController {
         new Alert(Alert.AlertType.INFORMATION,
                 "Garancija uspješno dodana!"
         ).showAndWait();
+
+        resetForma();
+    }
+
+    private void resetForma() {
+        txtImeGaranta.clear();
+        cmbTipGaranta.setValue(null);
+        chkGarancijaPotpisana.setSelected(false);
+
+        // ✅ vrati listu dokumenata (ta tri) opet u combo
+        cmbDokumentGarancija.setItems(FXCollections.observableArrayList(vrsteDokumenata));
+        if (!vrsteDokumenata.isEmpty()) {
+            cmbDokumentGarancija.getSelectionModel().selectFirst();
+        }
+
+        pdfBase64 = null;
+        lblPdf.setText("PDF nije dodat");
     }
 }
