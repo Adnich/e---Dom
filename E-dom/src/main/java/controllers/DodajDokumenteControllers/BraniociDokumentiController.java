@@ -4,78 +4,37 @@ import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import service.BraniociRezultat;
 import service.KriterijPoOsnovuDjeceBranilaca;
 import service.PdfService;
-import service.PdfService;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class BraniociDokumentiController {
 
-    @FXML
-    private CheckBox chkStudentRVI;
-
-    @FXML
-    private TextField txtPostotakInvaliditeta;
-
-    @FXML
-    private CheckBox chkInvaliditet;
-
-    @FXML
-    private CheckBox chkDjecaSehida;
-
-    @FXML
-    private CheckBox chkClanPorodiceSehida;
-
-    @FXML
-    private CheckBox chkInvalidnostRoditelja;
-
-    @FXML
-    private TextField txtPostInvalidnostiRoditelja;
-
-    @FXML
-    private CheckBox chkDjecaOSRBiH;
-
-    @FXML
-    private TextField txtBrojMjeseci;
-
-    @FXML
-    private CheckBox chkDjecaNosilacaRPriznanja;
-
-    @FXML
-    private CheckBox chkStudentLogoras;
-
-    @FXML
-    private CheckBox chkRoditeljLogoras;
-
-    @FXML
-    private CheckBox chkDjecaBez1Roditelja;
-
-    @FXML
-    private CheckBox chkDjecaBezObaRoditelja;
-
-    @FXML
-    private CheckBox chkBezRoditeljskogStaranja;
-
-    @FXML
-    private CheckBox chkKorisniciSocijalnePomoci;
-
-    private int ukupniBodovi;
+    @FXML private CheckBox chkStudentRVI;
+    @FXML private TextField txtPostotakInvaliditeta;
+    @FXML private CheckBox chkInvaliditet;
+    @FXML private CheckBox chkDjecaSehida;
+    @FXML private CheckBox chkClanPorodiceSehida;
+    @FXML private CheckBox chkInvalidnostRoditelja;
+    @FXML private TextField txtPostInvalidnostiRoditelja;
+    @FXML private CheckBox chkDjecaOSRBiH;
+    @FXML private TextField txtBrojMjeseci;
+    @FXML private CheckBox chkDjecaNosilacaRPriznanja;
+    @FXML private CheckBox chkStudentLogoras;
+    @FXML private CheckBox chkRoditeljLogoras;
+    @FXML private CheckBox chkDjecaBez1Roditelja;
+    @FXML private CheckBox chkDjecaBezObaRoditelja;
+    @FXML private CheckBox chkBezRoditeljskogStaranja;
+    @FXML private CheckBox chkKorisniciSocijalnePomoci;
+    @FXML private Label lblPdf;
 
     private String pdfBase64;
-
-    @FXML
-    private Label lblPdf;
-
-    public int getUkupniBodovi() {
-        return ukupniBodovi;
-    }
-
-
     private KriterijPoOsnovuDjeceBranilaca kriterij = new KriterijPoOsnovuDjeceBranilaca();
 
-
-    public double izracunajBodove() {
+    public BraniociRezultat izracunajBodove() {
         Map<String, Boolean> stanja = new HashMap<>();
         stanja.put("StudentRvi", chkStudentRVI.isSelected());
         stanja.put("Invalidnost", chkInvaliditet.isSelected());
@@ -91,15 +50,12 @@ public class BraniociDokumentiController {
         stanja.put("BezRoditeljskogStaratelja", chkBezRoditeljskogStaranja.isSelected());
         stanja.put("KorisniciSocijalnePomoci", chkKorisniciSocijalnePomoci.isSelected());
 
-        double bodovi = kriterij.izracunaj(
+        return kriterij.izracunaj(
                 stanja,
                 txtPostotakInvaliditeta,
                 txtPostInvalidnostiRoditelja,
                 txtBrojMjeseci
         );
-
-        this.ukupniBodovi = (int) Math.round(bodovi);
-        return this.ukupniBodovi;
     }
 
     @FXML

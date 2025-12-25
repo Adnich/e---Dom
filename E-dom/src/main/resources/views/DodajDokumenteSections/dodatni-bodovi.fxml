@@ -8,7 +8,9 @@
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="controllers.DodajDokumenteControllers.DodatniBodoviController">
 
-    <Label text="Dokumenti za dodatne bodove"/>
+    <Label fx:id="lblInfoDokument"
+           text="Dodajte dokument za dodatne bodove"
+           style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #2c5aa0;"/>
 
     <ComboBox fx:id="cmbDokument"
               promptText="Izaberite dokument"/>

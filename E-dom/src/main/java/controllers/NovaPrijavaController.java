@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import service.BraniociRezultat;
 import model.Prijava;
 import model.StatusPrijave;
 
@@ -26,11 +27,9 @@ public class NovaPrijavaController {
     @FXML private TextField txtUdaljenost;
     @FXML private CheckBox chkIzbjeglica;
     @FXML private CheckBox chkBratSestra;
-
-    private BraniociDokumentiController braniociController;
-
     @FXML private VBox vboxBranioci;
 
+    private BraniociDokumentiController braniociController;
     private int studentId;
     private double prosjek;
     private int godinaStudija;
@@ -39,7 +38,6 @@ public class NovaPrijavaController {
 
     @FXML
     public void initialize() {
-
         txtAkGod.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 applyCssIfMissing(newScene);
@@ -53,9 +51,6 @@ public class NovaPrijavaController {
         }
     }
 
-    // ===============================
-    // CSS
-    // ===============================
     private void applyCssIfMissing(Scene scene) {
         var cssUrl = getClass().getResource("/styles/nova-prijava-style.css");
         if (cssUrl != null) {
@@ -63,8 +58,6 @@ public class NovaPrijavaController {
             if (!scene.getStylesheets().contains(css)) {
                 scene.getStylesheets().add(css);
             }
-        } else {
-            System.out.println("⚠ nova-prijava-style.css nije pronađen! Provjeri put: /styles/nova-prijava-style.css");
         }
     }
 
@@ -91,12 +84,10 @@ public class NovaPrijavaController {
 
     public void setGodinaStudija(int godinaStudija) {
         this.godinaStudija = godinaStudija;
-        System.out.println("Godina studija u NovaPrijavaController: " + godinaStudija);
     }
 
     public void setProsjek(double prosjek) {
         this.prosjek = prosjek;
-        System.out.println("Prosjek u NovaPrijavaController: " + prosjek);
     }
 
     // ===============================
@@ -104,8 +95,6 @@ public class NovaPrijavaController {
     // ===============================
     @FXML
     private void onSaveClicked() {
-
-        // ✅ Validacija
         if (txtAkGod.getText().isEmpty()
                 || txtClanovi.getText().isEmpty()
                 || txtUdaljenost.getText().isEmpty()) {
@@ -130,7 +119,6 @@ public class NovaPrijavaController {
             return;
         }
 
-        // ✅ kreiranje prijave
         Prijava p = new Prijava();
         p.setIdStudent(studentId);
         p.setDatumPrijava(LocalDate.now());
@@ -153,10 +141,8 @@ public class NovaPrijavaController {
 
         if (dodatniBodovi > 0) {
             prijavaDAO.dodajBodoveNaPrijavu(prijavaId, dodatniBodovi);
-            System.out.println("bodovi za brat sestru studenta i izbjeglicu: " + dodatniBodovi);
         }
 
-        // ✅ učitaj sljedeći ekran
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/dodaj-dokumente.fxml"));
             Parent root = loader.load();
@@ -168,12 +154,13 @@ public class NovaPrijavaController {
             controller.setGodinaStudija(godinaStudija);
 
             double bodoviBranioci = 0;
+            // Prosljeđivanje rezultata branilaca (bodovi + naziv)
+            BraniociRezultat rezultat = null;
             if (braniociController != null) {
-                bodoviBranioci = braniociController.izracunajBodove();
-                System.out.println("Bodovi branioci: " + bodoviBranioci);
+                rezultat = braniociController.izracunajBodove();
             }
 
-            controller.setBodoviBranioci(bodoviBranioci);
+            controller.setBraniociRezultat(rezultat);
             controller.setClanovi(clanovi);
 
             Stage stage = (Stage) txtAkGod.getScene().getWindow();
