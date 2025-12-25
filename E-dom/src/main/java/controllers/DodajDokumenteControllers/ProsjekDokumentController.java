@@ -102,6 +102,7 @@ public class ProsjekDokumentController {
 
             new DokumentDAO().unesiDokument(d, prijavaId);
             int brojPolozenih = parseIntOrZero(txtBrojPolozenih.getText());
+            System.out.println("prosjek i godina studija u ProsjekDokumentController prije racunanja: " + prosjek + " " + godinaStudija);
             kriterij.izracunajBodove(prijavaId, prosjek, brojPolozenih, godinaStudija);
         }
 

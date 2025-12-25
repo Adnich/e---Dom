@@ -70,10 +70,12 @@ public class NovaPrijavaController {
 
     public void setGodinaStudija(int godinaStudija) {
         this.godinaStudija = godinaStudija;
+        System.out.println("Godina studija u NovaPrijavaController: " + godinaStudija);
     }
 
     public void setProsjek(double prosjek) {
         this.prosjek = prosjek;
+        System.out.println("Prosjek u NovaPrijavaController: " + prosjek);
     }
 
     @FXML
@@ -131,6 +133,7 @@ public class NovaPrijavaController {
 
         if (dodatniBodovi > 0) {
             prijavaDAO.dodajBodoveNaPrijavu(prijavaId, dodatniBodovi);
+            System.out.println("bodovi za brat sestru studenta i izbjeglicu: " + dodatniBodovi);
         }
 
 
@@ -142,18 +145,18 @@ public class NovaPrijavaController {
 
             DodajDokumenteController controller = loader.getController();
             controller.setPrijavaId(prijavaId);
-            controller.setClanovi(clanovi);
             controller.setUdaljenost(udaljenost);
             controller.setProsjek(prosjek);
             controller.setGodinaStudija(godinaStudija);
-            int bodoviBranioci = 0;
+            double bodoviBranioci = 0;
 
             if (braniociController != null) {
                 bodoviBranioci = braniociController.izracunajBodove();
+                System.out.println("Bodovi branioci: " + bodoviBranioci);
             }
 
             controller.setBodoviBranioci(bodoviBranioci);
-
+            controller.setClanovi(clanovi);
 
 
             Stage stage = (Stage) txtAkGod.getScene().getWindow();

@@ -8,7 +8,6 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Dokument;
@@ -18,33 +17,32 @@ import service.KriterijPoOsnovuUdaljenosti;
 import service.KriterijPoOsnovuUspjeha;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DodajDokumenteController {
 
     @FXML
-    private VBox vboxClanovi;
-
     private int prijavaId;
     private int clanovi;
     private double udaljenost;
     private double prosjek;
     private int godinaStudija;
-    private int bodoviBranioci;
+    private double bodoviBranioci;
 
     private final Map<Integer, List<Dokument>> dokumentiPoClanu = new HashMap<>();
     private final Map<Integer, Double> primanjaPoClanu = new HashMap<>();
 
     private KriterijPoOsnovuUspjeha kriterij = new KriterijPoOsnovuUspjeha();
-
     private VrstaDokumentaDAO vdDao = new VrstaDokumentaDAO();
-
     private final List<VrstaDokumenta> vrsteDokumenata = vdDao.dohvatiSveVrste();
-
 
     @FXML
     private Accordion accordionDokumenti;
+
+    // REFERENCA NA KUCNA LISTA CONTROLLER
+    private KucnaListaController kucnaControllerRef;
 
     @FXML
     public void initialize() {
@@ -60,7 +58,6 @@ public class DodajDokumenteController {
     }
 
     private void initAccordion() {
-
         accordionDokumenti.getPanes().clear();
 
         if (clanovi <= 0) {
@@ -78,23 +75,20 @@ public class DodajDokumenteController {
         dodajGarancijuSekciju(vboxOsnovni);
         dodajKucnuListuDokument(vboxOsnovni);
 
-
         TitledPane paneDomacinstvo = new TitledPane();
         paneDomacinstvo.setText("Domaćinstvo");
         dodajKucnuListuSekciju(paneDomacinstvo);
-
-
 
         TitledPane paneFaks = new TitledPane();
         paneFaks.setText("Dokumenti sa fakulteta/škole");
         VBox vboxFaks = new VBox(10);
         paneFaks.setContent(vboxFaks);
         dodajSekcijuSvjedodzbe(vboxFaks);
-        dodajNagradeSkeciju(vboxFaks);
+        dodajNagradeSekciju(vboxFaks);
 
-        // dodaj sve TitledPane u Accordion
-        accordionDokumenti.getPanes().addAll(paneOsnovni, paneDomacinstvo,  paneFaks);
-        if(bodoviBranioci> 0) {
+        accordionDokumenti.getPanes().addAll(paneOsnovni, paneDomacinstvo, paneFaks);
+
+        if (bodoviBranioci > 0) {
             TitledPane paneDodatni = new TitledPane();
             paneDodatni.setText("Ostalo");
             VBox vboxDodatni = new VBox(10);
@@ -104,70 +98,23 @@ public class DodajDokumenteController {
         }
     }
 
-
-
     @FXML
     private void onPodnesiPrijavu(javafx.event.ActionEvent event) {
-        zavrsiUnos();
-    }
-
-
-    public void setPrijavaId(int prijavaId) {
-        this.prijavaId = prijavaId;
-    }
-
-    public void setBodoviBranioci(int bodoviBranioci) {
-        this.bodoviBranioci = bodoviBranioci;
-        PrijavaDAO prijavaDAO = new PrijavaDAO();
-        prijavaDAO.dodajBodoveNaPrijavu(prijavaId, bodoviBranioci);
-    }
-
-    public void setClanovi(int clanovi) {
-        this.clanovi = clanovi;
-        initAccordion();
-    }
-
-    public void setProsjek(double prosjek) { this.prosjek = prosjek; }
-
-    public void setGodinaStudija(int godinaStudija){
-        this.godinaStudija = godinaStudija;
-    }
-
-    public void setUdaljenost(double udaljenost){
-        this.udaljenost = udaljenost;
-    }
-
-
-
-
-    private int parseIznosInt(String text) {
-        if (text == null || text.trim().isEmpty()) return 0;
-        try {
-            return Integer.parseInt(text.trim());
-        } catch (NumberFormatException ex) {
-            return 0;
-        }
-    }
-
-    private void zavrsiUnos() {
-        for (int i = 1; i <= clanovi; i++) {
-            primanjaPoClanu.putIfAbsent(i, 0.0);
+        // Prvo završi unos primanja iz KucnaListaController
+        if (kucnaControllerRef != null) {
+            kucnaControllerRef.zavrsiUnos();
+            primanjaPoClanu.putAll(kucnaControllerRef.getPrimanjaPoClanu());
         }
 
-        double ukupnaPrimanja = primanjaPoClanu.values()
-                .stream()
-                .mapToDouble(Double::doubleValue)
-                .sum();
-
+        // Računanje ukupnih bodova iz primanja
+        double ukupnaPrimanja = primanjaPoClanu.values().stream().mapToDouble(Double::doubleValue).sum();
         double primanjaPoClanuVrijednost = (clanovi == 0) ? 0 : ukupnaPrimanja / clanovi;
-
         int ukupniBodovi = KriterijPoOsnovuSocijalnogStatusa.bodoviZaPrimanja(primanjaPoClanuVrijednost);
 
         PrijavaDAO prijavaDAO = new PrijavaDAO();
         prijavaDAO.dodajBodoveNaPrijavu(prijavaId, ukupniBodovi);
 
-        showAlert(
-                "Trenutni broj bodova: ",
+        showAlert("Trenutni broj bodova: ",
                 "Ukupna primanja: " + ukupnaPrimanja +
                         "\nPrimanja po članu: " + primanjaPoClanuVrijednost +
                         "\nUKUPNI BODOVI: " + ukupniBodovi
@@ -177,13 +124,38 @@ public class DodajDokumenteController {
         stage.close();
     }
 
-    private double parseIznosOrZero(String text) {
-        if (text == null || text.trim().isEmpty()) return 0;
-        try {
-            return Double.parseDouble(text.trim());
-        } catch (NumberFormatException ex) {
-            return 0;
-        }
+    public void setProsjek(double prosjek) {
+        this.prosjek = prosjek;
+        System.out.println("Prosjek u dodaj dokumente controlleru: " + this.prosjek);
+    }
+
+    public void setGodinaStudija(int godinaStudija) {
+        this.godinaStudija = godinaStudija;
+        System.out.println("Godina studija u dodaj dokumente controlleru: " + this.godinaStudija);
+    }
+
+    public void setUdaljenost(double udaljenost) {
+        this.udaljenost = udaljenost;
+        KriterijPoOsnovuUdaljenosti kriterij = new KriterijPoOsnovuUdaljenosti();
+        double bodovi = kriterij.izracunajBodove(udaljenost);
+        PrijavaDAO prijavaDAO = new PrijavaDAO();
+        prijavaDAO.dodajBodoveNaPrijavu(prijavaId, bodovi);
+        System.out.println("bodovi za udaljenost: " + bodovi);
+    }
+
+    public void setPrijavaId(int prijavaId) {
+        this.prijavaId = prijavaId;
+    }
+
+    public void setBodoviBranioci(double bodoviBranioci) {
+        this.bodoviBranioci = bodoviBranioci;
+        PrijavaDAO prijavaDAO = new PrijavaDAO();
+        prijavaDAO.dodajBodoveNaPrijavu(prijavaId, bodoviBranioci);
+    }
+
+    public void setClanovi(int clanovi) {
+        this.clanovi = clanovi;
+        initAccordion();
     }
 
     private void showAlert(String title, String msg) {
@@ -196,60 +168,35 @@ public class DodajDokumenteController {
 
     private void dodajCipsSekciju(VBox parent) {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/views/DodajDokumenteSections/cips.fxml")
-            );
-
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DodajDokumenteSections/cips.fxml"));
             VBox cipsBox = loader.load();
-
             CipsDokumentController controller = loader.getController();
-            controller.init(
-                    prijavaId,
-                    vdDao.dohvatiVrstuPoId(6) // CIPS
-            );
-
+            controller.init(prijavaId, vdDao.dohvatiVrstuPoId(6));
             parent.getChildren().add(cipsBox);
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void dodajUplatnicuSekciju(VBox parent){
-        try{
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/views/DodajDokumenteSections/uplatnica.fxml")
-            );
+    private void dodajUplatnicuSekciju(VBox parent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DodajDokumenteSections/uplatnica.fxml"));
             VBox uplatnicaBox = loader.load();
-
             UplatnicaDokumentConroller controller = loader.getController();
-            controller.init(
-                    prijavaId,
-                    vdDao.dohvatiVrstuPoId( 1)
-            );
-
+            controller.init(prijavaId, vdDao.dohvatiVrstuPoId(1));
             parent.getChildren().add(uplatnicaBox);
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void dodajNagradeSkeciju(VBox parent){
-        try{
-            FXMLLoader loader = new FXMLLoader(
-              getClass().getResource("/views/DodajDokumenteSections/nagrade.fxml")
-            );
-
-            VBox NagradeBox = loader.load();
-
+    private void dodajNagradeSekciju(VBox parent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DodajDokumenteSections/nagrade.fxml"));
+            VBox nagradeBox = loader.load();
             NagradeDokumentController controller = loader.getController();
-            controller.init(
-                    prijavaId,
-                    vdDao.dohvatiVrstuPoId( 10)
-            );
-            parent.getChildren().add(NagradeBox);
-
+            controller.init(prijavaId, vdDao.dohvatiVrstuPoId(10));
+            parent.getChildren().add(nagradeBox);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -257,113 +204,79 @@ public class DodajDokumenteController {
 
     private void dodajSekcijuSvjedodzbe(VBox parent) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                    "/views/DodajDokumenteSections/prosjek.fxml"
-            ));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DodajDokumenteSections/prosjek.fxml"));
             VBox box = loader.load();
-
             ProsjekDokumentController controller = loader.getController();
-            controller.init(
-                    prijavaId,
-                    godinaStudija,
-                    prosjek,
-                    vdDao.dohvatiVrstuPoId(7),  // svjedodžba srednja
-                    vdDao.dohvatiVrstuPoId(8),  // uvjerenje fakultet
-                    vdDao.dohvatiVrstuPoId(9)   // indeks
-            );
-
+            controller.init(prijavaId, godinaStudija, prosjek,
+                    vdDao.dohvatiVrstuPoId(7),
+                    vdDao.dohvatiVrstuPoId(8),
+                    vdDao.dohvatiVrstuPoId(9));
             parent.getChildren().add(box);
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-
     private void dodajKucnuListuSekciju(TitledPane pane) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DodajDokumenteSections/kucna-lista.fxml"));
-            VBox root = loader.load();  // root VBox iz FXML-a
-
-            // Dohvati kontroler i inicijaliziraj ga s podacima
-            KucnaListaController controller = loader.getController();
-            controller.init(prijavaId, clanovi, vrsteDokumenata);
-
-            // Stavimo učitani root direktno kao content TitledPane-a
+            VBox root = loader.load();
+            kucnaControllerRef = loader.getController(); // <--- Čuvamo referencu
+            kucnaControllerRef.init(prijavaId, clanovi, vrsteDokumenata);
             pane.setContent(root);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
-
     private void dodajSekcijuDodatniBodovi(VBox parent) {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/views/DodajDokumenteSections/dodatni-bodovi.fxml")
-            );
-
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DodajDokumenteSections/dodatni-bodovi.fxml"));
             VBox box = loader.load();
-
             DodatniBodoviController controller = loader.getController();
-            controller.init(
-                    prijavaId,
-                    List.of(
-                            vdDao.dohvatiVrstuPoId(19),
-                            vdDao.dohvatiVrstuPoId(20),
-                            vdDao.dohvatiVrstuPoId(21),
-                            vdDao.dohvatiVrstuPoId(22),
-                            vdDao.dohvatiVrstuPoId(23)
-                    )
-            );
-
+            controller.init(prijavaId, List.of(
+                    vdDao.dohvatiVrstuPoId(19),
+                    vdDao.dohvatiVrstuPoId(20),
+                    vdDao.dohvatiVrstuPoId(21),
+                    vdDao.dohvatiVrstuPoId(22),
+                    vdDao.dohvatiVrstuPoId(23)
+            ));
             parent.getChildren().add(box);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     private void dodajGarancijuSekciju(VBox parent) {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/views/DodajDokumenteSections/garancija.fxml")
-            );
-
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DodajDokumenteSections/garancija.fxml"));
             VBox box = loader.load();
-
             GarancijaDokumentController controller = loader.getController();
-            controller.init(
-                    prijavaId,
-                    vdDao.dohvatiVrstuPoId(13) // npr. ID za garanciju
+            controller.init(prijavaId, vdDao.dohvatiVrstuPoId(13));
+
+            // Lista vrsta dokumenata koji trebaju biti prikazani u garancija sekciji
+            List<VrstaDokumenta> vrsteDokumenata = Arrays.asList(
+                    vdDao.dohvatiVrstuPoId(5),
+                    vdDao.dohvatiVrstuPoId(16),
+                    vdDao.dohvatiVrstuPoId(24)
             );
+
+            controller.init(prijavaId, vrsteDokumenata);
 
             parent.getChildren().add(box);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+
     private void dodajPrijavniObrazac(VBox parent) {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/views/DodajDokumenteSections/obrazac-prijava.fxml")
-            );
-
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DodajDokumenteSections/obrazac-prijava.fxml"));
             VBox prijavaBox = loader.load();
-
             ObrazacPrijaveController controller = loader.getController();
-            controller.init(
-                    prijavaId,
-                    vdDao.dohvatiVrstuPoId(17) // prijavni obrazac
-            );
-
+            controller.init(prijavaId, vdDao.dohvatiVrstuPoId(17));
             parent.getChildren().add(prijavaBox);
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -371,23 +284,13 @@ public class DodajDokumenteController {
 
     private void dodajKucnuListuDokument(VBox parent) {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/views/DodajDokumenteSections/kucna-dokument.fxml")
-            );
-
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DodajDokumenteSections/kucna-dokument.fxml"));
             VBox kucnaBox = loader.load();
-
             DodajKucnuListuController controller = loader.getController();
-            controller.init(
-                    prijavaId,
-                    vdDao.dohvatiVrstuPoId(18) // kucna lista
-            );
-
+            controller.init(prijavaId, vdDao.dohvatiVrstuPoId(18));
             parent.getChildren().add(kucnaBox);
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
 }
