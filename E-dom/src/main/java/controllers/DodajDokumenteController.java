@@ -252,10 +252,10 @@ public class DodajDokumenteController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DodajDokumenteSections/garancija.fxml"));
             VBox box = loader.load();
             GarancijaDokumentController controller = loader.getController();
-            controller.init(prijavaId, vdDao.dohvatiVrstuPoId(13));
+            controller.init(prijavaId, (List<VrstaDokumenta>) vdDao.dohvatiVrstuPoId(13));
 
             // Lista vrsta dokumenata koji trebaju biti prikazani u garancija sekciji
-            List<VrstaDokumenta> vrsteDokumenata = Arrays.asList(
+            List<VrstaDokumenta> vrsteDokumenata = List.of(
                     vdDao.dohvatiVrstuPoId(5),
                     vdDao.dohvatiVrstuPoId(16),
                     vdDao.dohvatiVrstuPoId(24)

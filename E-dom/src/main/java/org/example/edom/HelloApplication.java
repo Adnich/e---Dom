@@ -8,9 +8,13 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
+
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/views/login-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(
+                HelloApplication.class.getResource("/views/login-view.fxml")
+        );
+
         Scene scene = new Scene(fxmlLoader.load());
 
         var cssUrl = HelloApplication.class.getResource("/styles/login-style.css");
@@ -20,6 +24,10 @@ public class HelloApplication extends Application {
 
         stage.setTitle("E-Dom - Prijava");
         stage.setScene(scene);
+
+        stage.setResizable(true);     // ✅ bitno
+        stage.setMaximized(true);     // ✅ FULL SCREEN (maximized)
+
         stage.show();
     }
 
