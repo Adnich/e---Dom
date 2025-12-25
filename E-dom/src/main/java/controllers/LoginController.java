@@ -16,6 +16,10 @@ import javafx.stage.Stage;
 import model.Korisnik;
 import org.example.edom.HelloApplication;
 import service.Session;
+import javafx.application.Platform;
+import javafx.geometry.Rectangle2D;
+import javafx.stage.Screen;
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -94,6 +98,42 @@ public class LoginController {
         }
     }
 
+    /**
+     * Helper metoda koja otvara novu scenu preko cijelog ekrana (maximized)
+     */
+    private void openScene(Stage stage, Parent root, String title) {
+        Scene scene = new Scene(root);
+
+        URL cssUrl = HelloApplication.class.getResource("/styles/style.css");
+        if (cssUrl != null) {
+            scene.getStylesheets().add(cssUrl.toExternalForm());
+        } else {
+            System.out.println("⚠ style.css nije pronađen!");
+        }
+
+        stage.setTitle(title);
+        stage.setScene(scene);
+
+        // ✅ obavezno da je resizable
+        stage.setResizable(true);
+
+        // ✅ prvo pokaži prozor
+        stage.show();
+
+        // ✅ zatim tek maximize (najsigurnije)
+        Platform.runLater(() -> {
+            stage.setMaximized(true);
+
+            // BONUS: ako maximize i dalje ne radi na nekim Windows konfiguracijama
+            Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+            stage.setX(bounds.getMinX());
+            stage.setY(bounds.getMinY());
+            stage.setWidth(bounds.getWidth());
+            stage.setHeight(bounds.getHeight());
+        });
+    }
+
+
     @FXML
     private void onLoginClicked(ActionEvent event) throws SQLException {
         String user = txtUsername.getText().trim();
@@ -128,18 +168,10 @@ public class LoginController {
 
             Parent root = loader.load();
 
-            Scene scene = new Scene(root, 1000, 600);
-            URL cssUrl = HelloApplication.class.getResource("/styles/style.css");
-            if (cssUrl != null) {
-                scene.getStylesheets().add(cssUrl.toExternalForm());
-            } else {
-                System.out.println("⚠ style.css nije pronađen!");
-            }
-
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setTitle("E-Dom - Administratorski panel");
-            stage.setScene(scene);
-            stage.show();
+
+            // ✅ otvori preko cijelog ekrana
+            openScene(stage, root, "E-Dom - Administratorski panel");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -155,20 +187,10 @@ public class LoginController {
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("/views/register-view.fxml"));
             Parent root = loader.load();
 
-            Scene scene = new Scene(root, 1000, 620);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            URL cssUrl = HelloApplication.class.getResource("/styles/style.css");
-            if (cssUrl != null) {
-                scene.getStylesheets().add(cssUrl.toExternalForm());
-            } else {
-                System.out.println("⚠ style.css nije pronađen!");
-            }
-
-            Stage stage = (Stage) ((Node) event.getSource())
-                    .getScene().getWindow();
-            stage.setScene(scene);
-            stage.setTitle("E-Dom - Registracija");
-            stage.show();
+            // ✅ otvori preko cijelog ekrana
+            openScene(stage, root, "E-Dom - Registracija");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -182,10 +204,14 @@ public class LoginController {
             FXMLLoader loader = new FXMLLoader(
                     HelloApplication.class.getResource("/views/izmjena-lozinke.fxml")
             );
+
+            Parent root = loader.load();
+
             Stage stage = new Stage();
-            stage.setScene(new Scene(loader.load()));
-            stage.setTitle("Reset lozinke");
-            stage.show();
+
+            // ✅ otvori preko cijelog ekrana i novi prozor
+            openScene(stage, root, "Reset lozinke");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
