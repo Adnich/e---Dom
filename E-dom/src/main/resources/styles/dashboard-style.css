@@ -5,7 +5,7 @@
 /* ROOT */
 .dash-root {
     -fx-background-color: #f7fbff;
-    -fx-padding: 28 30 30 30;
+    -fx-padding: 26 30 30 30;
 }
 
 /* HEADER */
@@ -24,20 +24,18 @@
     -fx-font-size: 13px;
 }
 
-/* CARDS ROW */
-.cards-row {}
-
+/* STAT CARDS */
 .stat-card {
     -fx-background-color: white;
     -fx-background-radius: 18;
-    -fx-padding: 18 18 18 18;
+    -fx-padding: 18;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 14, 0.25, 0, 6);
 }
 
 .secondary-card {
     -fx-background-color: rgba(34,179,154,0.06);
     -fx-border-color: rgba(34,179,154,0.20);
-    -fx-border-width: 1px;
+    -fx-border-width: 1;
     -fx-border-radius: 18;
 }
 
@@ -88,61 +86,24 @@
     -fx-text-fill: rgba(51,65,85,0.78);
 }
 
-/* BUTTONS (jelly feel ali admin-friendly) */
+/* BUTTONS */
 .button.primary-btn {
     -fx-background-radius: 40px;
     -fx-background-color: linear-gradient(to bottom, #2ec9ad, #22b39a);
     -fx-text-fill: white;
     -fx-font-weight: 800;
     -fx-font-size: 14px;
-    -fx-padding: 12 20 12 20;
-    -fx-effect: dropshadow(gaussian, rgba(34,179,154,0.35), 16, 0.25, 0, 7);
+    -fx-padding: 12 20;
 }
-
-.button.primary-btn:hover {
-  -fx-scale-x: 1.04;
-     -fx-scale-y: 1.04;
-     -fx-background-color: linear-gradient(
-         to bottom,
-         #3ddbc0,
-         #1da38d
-     );
-     }
-.button.primary-btn:pressed {
-  -fx-scale-x: 0.97;
-     -fx-scale-y: 0.95;
-     -fx-background-color: #1a8f7c;
-     -fx-effect: dropshadow(
-         gaussian,
-         rgba(34,179,154,0.25),
-         10,
-         0.2,
-         0,
-         4
-     );
- }
 
 .button.secondary-btn {
     -fx-background-color: transparent;
     -fx-border-color: rgba(34,179,154,0.90);
-    -fx-border-width: 2px;
+    -fx-border-width: 2;
     -fx-text-fill: #22b39a;
     -fx-font-weight: 800;
     -fx-font-size: 14px;
     -fx-background-radius: 40px;
     -fx-border-radius: 40px;
-    -fx-padding: 12 20 12 20;
-    -fx-effect: dropshadow(gaussian, rgba(34,179,154,0.14), 12, 0.25, 0, 5);
-}
-
-.button.secondary-btn:hover {
-    -fx-background-color: rgba(34,179,154,0.08);
-    -fx-scale-x: 1.02;
-    -fx-scale-y: 1.02;
-}
-
-.button.secondary-btn:pressed {
-    -fx-background-color: rgba(34,179,154,0.14);
-    -fx-scale-x: 0.985;
-    -fx-scale-y: 0.96;
+    -fx-padding: 12 20;
 }
