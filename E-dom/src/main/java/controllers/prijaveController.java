@@ -1,6 +1,7 @@
 package controllers;
 
 import dao.PrijavaDAO;
+import dao.StudentDAO;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -21,7 +22,14 @@ import model.Prijava;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
+import model.Student;
+import service.FiltriranjeService;
+import service.SortiranjeService;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 public class prijaveController {
@@ -48,7 +56,45 @@ public class prijaveController {
     public void refreshTabela() {
         masterList = FXCollections.observableArrayList(prijavaDAO.dohvatiSvePrijave());
         applyFiltering(); // ponovo poveži filter na novu listu
+
     }
+
+    private final SortiranjeService<Prijava> sortiranjeService = new SortiranjeService<>();
+    private final FiltriranjeService<Prijava> filterService = new FiltriranjeService<>();
+
+    // Mapa studenata za brzi pristup studentu po ID-u
+    private Map<Integer, Student> studentMap;
+    @FXML
+    private void onSortiraj(javafx.event.ActionEvent event) {
+        // za testiranje možeš npr. hardkodirati kriterij:
+        SortiranjeService.SortKriterij kriterij = SortiranjeService.SortKriterij.NAJNOVIJI;
+        List<Prijava> sortirane = sortiranjeService.sortiraj(masterList, studentMap, kriterij);
+        tblPrijave.setItems(FXCollections.observableArrayList(sortirane));
+    }
+
+    @FXML
+    private void onFiltriraj(javafx.event.ActionEvent event) {
+        // test: filtriraj sve fakultete, godine i statuse
+        List<Prijava> filtrirane = filterService.filtriraj(
+                masterList,
+                studentMap,
+                Set.of(),   // fakulteti
+                Set.of(),   // godine
+                Set.of(),   // socijalni statusi
+                Set.of()    // statusi prijava
+        );
+        tblPrijave.setItems(FXCollections.observableArrayList(filtrirane));
+    }
+
+
+    private void initStudentMap() {
+        StudentDAO studentDAO = new StudentDAO();
+        studentMap = studentDAO.dohvatiSveStudente()
+                .stream()
+                .collect(Collectors.toMap(Student::getIdStudent, s -> s));
+    }
+
+
 
 
     @FXML
@@ -120,6 +166,8 @@ public class prijaveController {
 
     @FXML
     public void initialize() {
+
+        initStudentMap();
 
         colId.setCellValueFactory(cd -> new SimpleIntegerProperty(cd.getValue().getIdPrijava()).asObject());
         colIme.setCellValueFactory(cd -> new SimpleStringProperty(nullSafe(cd.getValue().getImeStudenta())));

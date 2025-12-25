@@ -31,6 +31,9 @@
 
                 <Region HBox.hgrow="ALWAYS"/>
 
+                <Button text="Sortiraj" onAction="#onSortiraj"/>
+                <Button text="Filtriraj" onAction="#onFiltriraj"/>
+
                 <Button text="Nova prijava"
                         onAction="#onNovaPrijava"
                         styleClass="nova-prijava-btn"/>
