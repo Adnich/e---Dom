@@ -304,6 +304,75 @@ public class PrijavaDAO {
         }
     }
 
+    public List<Integer> countPrijavePoDanimaUTekucemMjesecu() {
+        List<Integer> dani = new ArrayList<>();
+
+        String sql = """
+        SELECT DAY(datum_prijave) AS dan, COUNT(*) AS broj
+        FROM prijava
+        WHERE MONTH(datum_prijave) = MONTH(CURRENT_DATE)
+          AND YEAR(datum_prijave) = YEAR(CURRENT_DATE)
+        GROUP BY DAY(datum_prijave)
+        ORDER BY dan
+    """;
+
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                dani.add(rs.getInt("dan"));
+                dani.add(rs.getInt("broj"));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return dani;
+    }
+
+    public int countPrijaveByStatusId(int statusId) {
+        String sql = "SELECT COUNT(*) FROM prijava WHERE status_prijaveid_status = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, statusId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next())
+                    return rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return 0;
+    }
+
+
+    public int countPrijaveBezBodova() {
+        String sql = """
+        SELECT COUNT(*)
+        FROM prijava
+        WHERE ukupni_bodovi IS NULL OR ukupni_bodovi = 0
+    """;
+
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            if (rs.next())
+                return rs.getInt(1);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return 0;
+    }
 
 
 }
