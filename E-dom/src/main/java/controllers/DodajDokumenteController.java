@@ -4,49 +4,44 @@ import controllers.DodajDokumenteControllers.*;
 import dao.DokumentDAO;
 import dao.PrijavaDAO;
 import dao.VrstaDokumentaDAO;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import service.BraniociRezultat;
 import model.Dokument;
 import model.VrstaDokumenta;
 import service.KriterijPoOsnovuSocijalnogStatusa;
 import service.KriterijPoOsnovuUdaljenosti;
-import service.KriterijPoOsnovuUspjeha;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class DodajDokumenteController {
 
-    @FXML
-    private int prijavaId;
+    @FXML private int prijavaId;
     private int clanovi;
     private double udaljenost;
     private double prosjek;
     private int godinaStudija;
-    private double bodoviBranioci;
+    private BraniociRezultat braniociRezultat;
 
     private final Map<Integer, List<Dokument>> dokumentiPoClanu = new HashMap<>();
     private final Map<Integer, Double> primanjaPoClanu = new HashMap<>();
 
-    private KriterijPoOsnovuUspjeha kriterij = new KriterijPoOsnovuUspjeha();
     private VrstaDokumentaDAO vdDao = new VrstaDokumentaDAO();
     private final List<VrstaDokumenta> vrsteDokumenata = vdDao.dohvatiSveVrste();
 
-    @FXML
-    private Accordion accordionDokumenti;
+    @FXML private Accordion accordionDokumenti;
 
-    // REFERENCA NA KUCNA LISTA CONTROLLER
     private KucnaListaController kucnaControllerRef;
 
     @FXML
     public void initialize() {
-        // automatsko podešavanje prozora
         accordionDokumenti.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 Stage stage = (Stage) newScene.getWindow();
@@ -88,9 +83,10 @@ public class DodajDokumenteController {
 
         accordionDokumenti.getPanes().addAll(paneOsnovni, paneDomacinstvo, paneFaks);
 
-        if (bodoviBranioci > 0) {
+        // Prikaži sekciju za dodatne bodove samo ako postoje bodovi branilaca
+        if (braniociRezultat != null && braniociRezultat.getBodovi() > 0) {
             TitledPane paneDodatni = new TitledPane();
-            paneDodatni.setText("Ostalo");
+            paneDodatni.setText("Dodatni bodovi");
             VBox vboxDodatni = new VBox(10);
             paneDodatni.setContent(vboxDodatni);
             dodajSekcijuDodatniBodovi(vboxDodatni);
@@ -100,13 +96,11 @@ public class DodajDokumenteController {
 
     @FXML
     private void onPodnesiPrijavu(javafx.event.ActionEvent event) {
-        // Prvo završi unos primanja iz KucnaListaController
         if (kucnaControllerRef != null) {
             kucnaControllerRef.zavrsiUnos();
             primanjaPoClanu.putAll(kucnaControllerRef.getPrimanjaPoClanu());
         }
 
-        // Računanje ukupnih bodova iz primanja
         double ukupnaPrimanja = primanjaPoClanu.values().stream().mapToDouble(Double::doubleValue).sum();
         double primanjaPoClanuVrijednost = (clanovi == 0) ? 0 : ukupnaPrimanja / clanovi;
         int ukupniBodovi = KriterijPoOsnovuSocijalnogStatusa.bodoviZaPrimanja(primanjaPoClanuVrijednost);
@@ -126,12 +120,10 @@ public class DodajDokumenteController {
 
     public void setProsjek(double prosjek) {
         this.prosjek = prosjek;
-        System.out.println("Prosjek u dodaj dokumente controlleru: " + this.prosjek);
     }
 
     public void setGodinaStudija(int godinaStudija) {
         this.godinaStudija = godinaStudija;
-        System.out.println("Godina studija u dodaj dokumente controlleru: " + this.godinaStudija);
     }
 
     public void setUdaljenost(double udaljenost) {
@@ -140,17 +132,18 @@ public class DodajDokumenteController {
         double bodovi = kriterij.izracunajBodove(udaljenost);
         PrijavaDAO prijavaDAO = new PrijavaDAO();
         prijavaDAO.dodajBodoveNaPrijavu(prijavaId, bodovi);
-        System.out.println("bodovi za udaljenost: " + bodovi);
     }
 
     public void setPrijavaId(int prijavaId) {
         this.prijavaId = prijavaId;
     }
 
-    public void setBodoviBranioci(double bodoviBranioci) {
-        this.bodoviBranioci = bodoviBranioci;
-        PrijavaDAO prijavaDAO = new PrijavaDAO();
-        prijavaDAO.dodajBodoveNaPrijavu(prijavaId, bodoviBranioci);
+    public void setBraniociRezultat(BraniociRezultat rezultat) {
+        this.braniociRezultat = rezultat;
+        if (rezultat != null && rezultat.getBodovi() > 0) {
+            PrijavaDAO prijavaDAO = new PrijavaDAO();
+            prijavaDAO.dodajBodoveNaPrijavu(prijavaId, rezultat.getBodovi());
+        }
     }
 
     public void setClanovi(int clanovi) {
@@ -221,7 +214,7 @@ public class DodajDokumenteController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DodajDokumenteSections/kucna-lista.fxml"));
             VBox root = loader.load();
-            kucnaControllerRef = loader.getController(); // <--- Čuvamo referencu
+            kucnaControllerRef = loader.getController();
             kucnaControllerRef.init(prijavaId, clanovi, vrsteDokumenata);
             pane.setContent(root);
         } catch (IOException e) {
@@ -234,7 +227,13 @@ public class DodajDokumenteController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DodajDokumenteSections/dodatni-bodovi.fxml"));
             VBox box = loader.load();
             DodatniBodoviController controller = loader.getController();
-            controller.init(prijavaId, List.of(
+
+            // Prosljeđivanje naziva dokumenta i bodova
+            String nazivDokumenta = (braniociRezultat != null)
+                    ? braniociRezultat.getNaziv()
+                    : "";
+
+            controller.init(prijavaId, nazivDokumenta, List.of(
                     vdDao.dohvatiVrstuPoId(19),
                     vdDao.dohvatiVrstuPoId(20),
                     vdDao.dohvatiVrstuPoId(21),
@@ -252,9 +251,7 @@ public class DodajDokumenteController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DodajDokumenteSections/garancija.fxml"));
             VBox box = loader.load();
             GarancijaDokumentController controller = loader.getController();
-            controller.init(prijavaId, vdDao.dohvatiVrstuPoId(13));
 
-            // Lista vrsta dokumenata koji trebaju biti prikazani u garancija sekciji
             List<VrstaDokumenta> vrsteDokumenata = Arrays.asList(
                     vdDao.dohvatiVrstuPoId(5),
                     vdDao.dohvatiVrstuPoId(16),
@@ -262,13 +259,11 @@ public class DodajDokumenteController {
             );
 
             controller.init(prijavaId, vrsteDokumenata);
-
             parent.getChildren().add(box);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     private void dodajPrijavniObrazac(VBox parent) {
         try {
