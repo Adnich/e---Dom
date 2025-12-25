@@ -2,37 +2,29 @@ package controllers;
 
 import dao.PrijavaDAO;
 import dao.StudentDAO;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.application.Platform;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
+
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.Prijava;
-import javafx.application.Platform;
-import javafx.geometry.Rectangle2D;
-import javafx.stage.Screen;
 import model.Student;
-import service.FiltriranjeService;
-import service.SortiranjeService;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
-
 public class prijaveController {
+
+    /* ===================== TABLE ===================== */
 
     @FXML private TableView<Prijava> tblPrijave;
 
@@ -45,57 +37,228 @@ public class prijaveController {
     @FXML private TableColumn<Prijava, String> colStatus;
     @FXML private TableColumn<Prijava, String> colNapomena;
 
+    /* ===================== UI ===================== */
 
     @FXML private TextField txtSearch;
 
-    private final PrijavaDAO prijavaDAO = new PrijavaDAO();
+    @FXML private MenuButton btnFiltriraj;
+    @FXML private Menu menuFakulteti;
+    @FXML private Menu menuStatusPrijave;
 
+    /* ===================== DATA ===================== */
+
+    private final PrijavaDAO prijavaDAO = new PrijavaDAO();
+    private final StudentDAO studentDAO = new StudentDAO();
 
     private ObservableList<Prijava> masterList;
+    private FilteredList<Prijava> filteredList;
 
-    public void refreshTabela() {
-        masterList = FXCollections.observableArrayList(prijavaDAO.dohvatiSvePrijave());
-        applyFiltering(); // ponovo poveži filter na novu listu
-
-    }
-
-    private final SortiranjeService<Prijava> sortiranjeService = new SortiranjeService<>();
-    private final FiltriranjeService<Prijava> filterService = new FiltriranjeService<>();
-
-    // Mapa studenata za brzi pristup studentu po ID-u
     private Map<Integer, Student> studentMap;
+
+    private final Set<String> selectedFakulteti = new HashSet<>();
+    private final Set<String> selectedStatusiPrijave = new HashSet<>();
+
+    /* ===================== INITIALIZE ===================== */
+
     @FXML
-    private void onSortiraj(javafx.event.ActionEvent event) {
-        // za testiranje možeš npr. hardkodirati kriterij:
-        SortiranjeService.SortKriterij kriterij = SortiranjeService.SortKriterij.NAJNOVIJI;
-        List<Prijava> sortirane = sortiranjeService.sortiraj(masterList, studentMap, kriterij);
-        tblPrijave.setItems(FXCollections.observableArrayList(sortirane));
+    public void initialize() {
+
+        initStudentMap();
+        initTableColumns();
+
+        masterList = FXCollections.observableArrayList(prijavaDAO.dohvatiSvePrijave());
+
+        initFakultetiFilter();
+        initStatusPrijaveFilter();
+
+        setupFilteringAndSorting();
+        setupRowDoubleClick();
+    }
+
+    /* ===================== TABLE SETUP ===================== */
+
+    private void initTableColumns() {
+
+        colId.setCellValueFactory(cd ->
+                new SimpleIntegerProperty(cd.getValue().getIdPrijava()).asObject());
+
+        colIme.setCellValueFactory(cd ->
+                new SimpleStringProperty(nullSafe(cd.getValue().getImeStudenta())));
+
+        colPrezime.setCellValueFactory(cd ->
+                new SimpleStringProperty(nullSafe(cd.getValue().getPrezimeStudenta())));
+
+        colDatum.setCellValueFactory(cd ->
+                new SimpleStringProperty(
+                        cd.getValue().getDatumPrijava() != null
+                                ? cd.getValue().getDatumPrijava().toString()
+                                : ""
+                ));
+
+        colAkGod.setCellValueFactory(cd ->
+                new SimpleIntegerProperty(cd.getValue().getAkademskaGodina()).asObject());
+
+        colUkupniBodovi.setCellValueFactory(cd ->
+                new SimpleDoubleProperty(cd.getValue().getUkupniBodovi()).asObject());
+
+        colStatus.setCellValueFactory(cd ->
+                new SimpleStringProperty(
+                        cd.getValue().getStatusPrijave() != null
+                                ? cd.getValue().getStatusPrijave().getNaziv()
+                                : ""
+                ));
+
+        colNapomena.setCellValueFactory(cd ->
+                new SimpleStringProperty(nullSafe(cd.getValue().getNapomena())));
     }
 
     @FXML
-    private void onFiltriraj(javafx.event.ActionEvent event) {
-        // test: filtriraj sve fakultete, godine i statuse
-        List<Prijava> filtrirane = filterService.filtriraj(
-                masterList,
-                studentMap,
-                Set.of(),   // fakulteti
-                Set.of(),   // godine
-                Set.of(),   // socijalni statusi
-                Set.of()    // statusi prijava
-        );
-        tblPrijave.setItems(FXCollections.observableArrayList(filtrirane));
+    private void sortImeAZ() {
+        colIme.setSortType(TableColumn.SortType.ASCENDING);
+        tblPrijave.getSortOrder().setAll(colIme);
     }
 
+    @FXML
+    private void sortImeZA() {
+        colIme.setSortType(TableColumn.SortType.DESCENDING);
+        tblPrijave.getSortOrder().setAll(colIme);
+    }
+
+    @FXML
+    private void sortIdUzlazno() {
+        colId.setSortType(TableColumn.SortType.ASCENDING);
+        tblPrijave.getSortOrder().setAll(colId);
+    }
+
+    @FXML
+    private void sortIdSilazno() {
+        colId.setSortType(TableColumn.SortType.DESCENDING);
+        tblPrijave.getSortOrder().setAll(colId);
+    }
+
+    @FXML
+    private void sortBodoviUzlazno() {
+        colUkupniBodovi.setSortType(TableColumn.SortType.ASCENDING);
+        tblPrijave.getSortOrder().setAll(colUkupniBodovi);
+    }
+
+    @FXML
+    private void sortBodoviSilazno() {
+        colUkupniBodovi.setSortType(TableColumn.SortType.DESCENDING);
+        tblPrijave.getSortOrder().setAll(colUkupniBodovi);
+    }
+
+
+    /* ===================== FILTER + SORT CORE ===================== */
+
+    private void setupFilteringAndSorting() {
+
+        filteredList = new FilteredList<>(masterList, p -> true);
+
+        txtSearch.textProperty().addListener((obs, o, n) -> applyAllFilters());
+
+        SortedList<Prijava> sorted = new SortedList<>(filteredList);
+        sorted.comparatorProperty().bind(tblPrijave.comparatorProperty());
+
+        tblPrijave.setItems(sorted);
+    }
+
+    private void applyAllFilters() {
+
+        filteredList.setPredicate(p -> {
+
+            /* SEARCH */
+            String q = txtSearch.getText() == null
+                    ? ""
+                    : txtSearch.getText().toLowerCase();
+
+            boolean searchOk = q.isEmpty()
+                    || nullSafe(p.getImeStudenta()).toLowerCase().contains(q)
+                    || nullSafe(p.getPrezimeStudenta()).toLowerCase().contains(q)
+                    || String.valueOf(p.getIdPrijava()).contains(q)
+                    || nullSafe(p.getNapomena()).toLowerCase().contains(q);
+
+            /* FAKULTET */
+            Student s = studentMap.get(p.getIdStudent());
+            boolean fakultetOk = selectedFakulteti.isEmpty()
+                    || (s != null && selectedFakulteti.contains(s.getFakultet()));
+
+            /* STATUS PRIJAVE */
+            boolean statusOk = selectedStatusiPrijave.isEmpty()
+                    || (p.getStatusPrijave() != null
+                    && selectedStatusiPrijave.contains(p.getStatusPrijave().getNaziv()));
+
+            return searchOk && fakultetOk && statusOk;
+        });
+    }
+
+    /* ===================== FILTER MENUS ===================== */
+
+    private void initFakultetiFilter() {
+
+        Set<String> fakulteti = studentMap.values().stream()
+                .map(Student::getFakultet)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+
+        menuFakulteti.getItems().clear();
+
+        for (String f : fakulteti) {
+            CheckMenuItem item = new CheckMenuItem(f);
+            item.setOnAction(e -> {
+                if (item.isSelected()) selectedFakulteti.add(f);
+                else selectedFakulteti.remove(f);
+                applyAllFilters();
+            });
+            menuFakulteti.getItems().add(item);
+        }
+    }
+
+    private void initStatusPrijaveFilter() {
+
+        Set<String> statusi = masterList.stream()
+                .map(p -> p.getStatusPrijave() != null
+                        ? p.getStatusPrijave().getNaziv()
+                        : null)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+
+        menuStatusPrijave.getItems().clear();
+
+        for (String status : statusi) {
+            CheckMenuItem item = new CheckMenuItem(status);
+            item.setOnAction(e -> {
+                if (item.isSelected()) selectedStatusiPrijave.add(status);
+                else selectedStatusiPrijave.remove(status);
+                applyAllFilters();
+            });
+            menuStatusPrijave.getItems().add(item);
+        }
+    }
+
+    /* ===================== STUDENT MAP ===================== */
 
     private void initStudentMap() {
-        StudentDAO studentDAO = new StudentDAO();
         studentMap = studentDAO.dohvatiSveStudente()
                 .stream()
                 .collect(Collectors.toMap(Student::getIdStudent, s -> s));
     }
 
+    /* ===================== ROW DOUBLE CLICK ===================== */
 
+    private void setupRowDoubleClick() {
+        tblPrijave.setRowFactory(tv -> {
+            TableRow<Prijava> row = new TableRow<>();
+            row.setOnMouseClicked(e -> {
+                if (!row.isEmpty() && e.getClickCount() == 2) {
+                    otvoriDetalje(row.getItem());
+                }
+            });
+            return row;
+        });
+    }
 
+    /* ===================== NAVIGATION ===================== */
 
     @FXML
     private void onNovaPrijava() {
@@ -103,44 +266,23 @@ public class prijaveController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/novi-student.fxml"));
             Scene scene = new Scene(loader.load());
 
-            var css = getClass().getResource("/styles/prijave.css");
-            if (css != null) scene.getStylesheets().add(css.toExternalForm());
-
             Stage stage = new Stage();
             stage.setTitle("Nova prijava");
             stage.setScene(scene);
             stage.setResizable(true);
-
             stage.show();
 
-            // ✅ najjače rješenje (Windows fix)
-            Platform.runLater(() -> {
-                stage.setMaximized(true);
-
-                // ✅ ako maximize opet ne radi, forsiraj stvarnu veličinu ekrana
-                Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-                stage.setX(bounds.getMinX());
-                stage.setY(bounds.getMinY());
-                stage.setWidth(bounds.getWidth());
-                stage.setHeight(bounds.getHeight());
-            });
+            Platform.runLater(() -> maximize(stage));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-
     private void otvoriDetalje(Prijava prijava) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/detalji-prijave.fxml"));
             Scene scene = new Scene(loader.load());
-
-            var css = getClass().getResource("/styles/prijave.css");
-            if (css != null) scene.getStylesheets().add(css.toExternalForm());
-
-            DetaljiPrijaveController controller = loader.getController();
-            controller.setPrijava(prijava);
 
             Stage stage = new Stage();
             stage.setTitle("Detalji prijave");
@@ -148,99 +290,22 @@ public class prijaveController {
             stage.setResizable(true);
             stage.show();
 
-            Platform.runLater(() -> {
-                stage.setMaximized(true);
-                Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-                stage.setX(bounds.getMinX());
-                stage.setY(bounds.getMinY());
-                stage.setWidth(bounds.getWidth());
-                stage.setHeight(bounds.getHeight());
-            });
+            Platform.runLater(() -> maximize(stage));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-
-
-    @FXML
-    public void initialize() {
-
-        initStudentMap();
-
-        colId.setCellValueFactory(cd -> new SimpleIntegerProperty(cd.getValue().getIdPrijava()).asObject());
-        colIme.setCellValueFactory(cd -> new SimpleStringProperty(nullSafe(cd.getValue().getImeStudenta())));
-        colPrezime.setCellValueFactory(cd -> new SimpleStringProperty(nullSafe(cd.getValue().getPrezimeStudenta())));
-
-        colDatum.setCellValueFactory(cd -> new SimpleStringProperty(
-                cd.getValue().getDatumPrijava() != null ? cd.getValue().getDatumPrijava().toString() : ""
-        ));
-
-        colAkGod.setCellValueFactory(cd -> new SimpleIntegerProperty(cd.getValue().getAkademskaGodina()).asObject());
-        colUkupniBodovi.setCellValueFactory(cd -> new SimpleDoubleProperty(cd.getValue().getUkupniBodovi()).asObject());
-
-        colStatus.setCellValueFactory(cd -> new SimpleStringProperty(
-                cd.getValue().getStatusPrijave() != null ? cd.getValue().getStatusPrijave().getNaziv() : ""
-        ));
-
-        colNapomena.setCellValueFactory(cd -> new SimpleStringProperty(nullSafe(cd.getValue().getNapomena())));
-
-        masterList = FXCollections.observableArrayList(prijavaDAO.dohvatiSvePrijave());
-
-        applyFiltering();
-
-        tblPrijave.setRowFactory(tv -> {
-            TableRow<Prijava> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (!row.isEmpty() && event.getClickCount() == 2) {
-                    otvoriDetalje(row.getItem());
-                }
-            });
-            return row;
-        });
-
-        tblPrijave.setTooltip(new Tooltip("Dvoklik na prijavu za pregled detalja"));
+    private void maximize(Stage stage) {
+        Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+        stage.setX(bounds.getMinX());
+        stage.setY(bounds.getMinY());
+        stage.setWidth(bounds.getWidth());
+        stage.setHeight(bounds.getHeight());
     }
 
-    private void applyFiltering() {
-        if (masterList == null) return;
-
-        FilteredList<Prijava> filtered = new FilteredList<>(masterList, p -> true);
-
-        if (txtSearch != null) {
-            txtSearch.textProperty().addListener((obs, oldVal, newVal) -> {
-                String q = (newVal == null) ? "" : newVal.trim().toLowerCase();
-
-                filtered.setPredicate(p -> {
-                    if (q.isEmpty()) return true;
-
-                    String ime = nullSafe(p.getImeStudenta()).toLowerCase();
-                    String prezime = nullSafe(p.getPrezimeStudenta()).toLowerCase();
-                    String status = (p.getStatusPrijave() != null && p.getStatusPrijave().getNaziv() != null)
-                            ? p.getStatusPrijave().getNaziv().toLowerCase()
-                            : "";
-                    String napomena = nullSafe(p.getNapomena()).toLowerCase();
-
-                    String akGod = String.valueOf(p.getAkademskaGodina());
-                    String id = String.valueOf(p.getIdPrijava());
-
-                    return ime.contains(q)
-                            || prezime.contains(q)
-                            || (ime + " " + prezime).contains(q)
-                            || status.contains(q)
-                            || napomena.contains(q)
-                            || akGod.contains(q)
-                            || id.contains(q);
-                });
-            });
-        }
-
-        SortedList<Prijava> sorted = new SortedList<>(filtered);
-        sorted.comparatorProperty().bind(tblPrijave.comparatorProperty());
-
-        tblPrijave.setItems(sorted);
-    }
+    /* ===================== UTIL ===================== */
 
     private String nullSafe(String s) {
         return s == null ? "" : s;

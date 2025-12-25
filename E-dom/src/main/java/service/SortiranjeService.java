@@ -9,7 +9,7 @@ import java.util.Map;
 public class SortiranjeService<T> {
 
     public enum SortKriterij {
-        NAJNOVIJI, NAJSTARIJI, ID, GODINA_FAKULTETA, PROSJEK
+        NAJNOVIJI, NAJSTARIJI, ID, GODINA_FAKULTETA, BODOVI_SILAZNO, BODOVI_UZLAZNO, ID_UZLAZNO, ID_SILAZNO, ZA, AZ, PROSJEK
     }
 
     public List<T> sortiraj(List<T> lista, Map<Integer, ?> studentMap, SortKriterij kriterij) {
@@ -21,11 +21,13 @@ public class SortiranjeService<T> {
                         if (s1 == null || s2 == null) return 0;
 
                         return switch (kriterij) {
-                            case NAJNOVIJI -> Integer.compare(p2.getIdPrijava(), p1.getIdPrijava());
-                            case NAJSTARIJI -> Integer.compare(p1.getIdPrijava(), p2.getIdPrijava());
-                            case ID -> Integer.compare(p1.getIdPrijava(), p2.getIdPrijava());
-                            case GODINA_FAKULTETA -> Integer.compare(s1.getGodinaStudija(), s2.getGodinaStudija());
-                            case PROSJEK -> Double.compare(s2.getProsjek(), s1.getProsjek());
+                            case AZ -> p1.getImeStudenta().compareToIgnoreCase(p2.getImeStudenta());
+                            case ZA -> p2.getImeStudenta().compareToIgnoreCase(p1.getImeStudenta());
+                            case ID_UZLAZNO -> Integer.compare(p1.getIdPrijava(), p2.getIdPrijava());
+                            case ID_SILAZNO -> Integer.compare(p2.getIdPrijava(), p1.getIdPrijava());
+                            case BODOVI_UZLAZNO -> Double.compare(p1.getUkupniBodovi(), p2.getUkupniBodovi());
+                            case BODOVI_SILAZNO -> Double.compare(p2.getUkupniBodovi(), p1.getUkupniBodovi());
+                            default -> 0;
                         };
                     } else if (o1 instanceof Student s1 && o2 instanceof Student s2) {
                         return switch (kriterij) {
