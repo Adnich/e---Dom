@@ -227,7 +227,10 @@ public class DetaljiPrijaveController {
         long nedostaje = total - dostavljeno;
 
         lblDostavljeniCount.setText(dostavljeno + " / " + total);
-        lblNedostajuCount.setText(String.valueOf(nedostaje));
+        if (lblNedostajuCount != null) {
+            lblNedostajuCount.setText(String.valueOf(nedostaje));
+        }
+
 
         double progress = total == 0 ? 0 : (double) dostavljeno / total;
         pbKompletiranost.setProgress(progress);

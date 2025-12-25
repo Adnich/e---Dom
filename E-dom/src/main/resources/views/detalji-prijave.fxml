@@ -11,17 +11,23 @@
 
 
     <top>
-        <VBox spacing="10" styleClass="header">
+        <VBox spacing="8" styleClass="header">
 
             <Label fx:id="lblNaslov" text="Detalji prijave" styleClass="header-title"/>
 
-            <!-- META ROW -->
-            <HBox spacing="14" alignment="CENTER_LEFT" styleClass="header-meta">
+            <HBox spacing="12" alignment="CENTER_LEFT" styleClass="header-meta">
+
                 <Label fx:id="lblInfo" text="Akademska godina: 2025" styleClass="header-subtitle"/>
 
                 <Label fx:id="lblPrijavaId" text="Prijava #35" styleClass="header-pill"/>
 
-                <Label fx:id="lblStatus" text="U toku" styleClass="status-pill status-info"/>
+                <Label fx:id="lblStatus" text="na pregledu" styleClass="status-pill status-info"/>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <!-- opcionalno: badge ili quick info -->
+                <Label text="Pregled u toku" styleClass="header-right-info"/>
+
             </HBox>
 
         </VBox>
@@ -29,24 +35,25 @@
 
 
     <center>
-        <SplitPane dividerPositions="0.62" styleClass="main-split">
+        <GridPane styleClass="main-grid" hgap="18" vgap="18">
 
-            <!-- LEFT: DOCUMENTS -->
-            <VBox spacing="12" styleClass="card">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="65" />
+                <ColumnConstraints percentWidth="35" />
+            </columnConstraints>
 
-                <!-- Card header row -->
+            <!-- LEFT: DOCUMENTS CARD -->
+            <VBox spacing="12" styleClass="card" GridPane.columnIndex="0">
+
                 <HBox alignment="CENTER_LEFT" spacing="12">
                     <Label text="Dostavljeni dokumenti" styleClass="card-title"/>
-
                     <Region HBox.hgrow="ALWAYS"/>
-
                     <Label fx:id="lblKompletiranostText" text="Kompletiranost: 0%" styleClass="muted"/>
                 </HBox>
 
-                <ProgressBar fx:id="pbKompletiranost" prefWidth="999" progress="0.0" styleClass="progress"/>
+                <ProgressBar fx:id="pbKompletiranost" progress="0.0" styleClass="progress"/>
 
-                <!-- Table + empty state wrapper -->
-                <TableView fx:id="tblDokumenti">
+                <TableView fx:id="tblDokumenti" styleClass="table-modern">
                     <columns>
                         <TableColumn fx:id="colNaziv" text="Naziv"/>
                         <TableColumn fx:id="colVrsta" text="Vrsta"/>
@@ -57,7 +64,6 @@
                     </columns>
                 </TableView>
 
-                <!-- EMPTY STATE (ispod tabele, kao na mockupu) -->
                 <VBox fx:id="emptyState"
                       visible="false"
                       managed="false"
@@ -71,8 +77,9 @@
 
             </VBox>
 
-            <!-- RIGHT: SUMMARY -->
-            <VBox spacing="12" styleClass="right-panel">
+
+            <!-- RIGHT: SIDE PANEL -->
+            <VBox spacing="14" styleClass="side-panel" GridPane.columnIndex="1">
 
                 <VBox styleClass="stat-card">
                     <Label text="Ukupni bodovi" styleClass="stat-title"/>
@@ -89,11 +96,10 @@
                     <Label fx:id="lblStatusObrade" text="U toku" styleClass="stat-value-small"/>
                 </VBox>
 
-                <VBox spacing="8" styleClass="stat-card">
+                <VBox spacing="10" styleClass="stat-card">
                     <Label text="Promijeni status" styleClass="stat-title"/>
 
-                    <ComboBox fx:id="cmbStatusPrijave"
-                              prefWidth="200"/>
+                    <ComboBox fx:id="cmbStatusPrijave" styleClass="combo-modern"/>
 
                     <Button text="Sačuvaj status"
                             fx:id="btnSacuvajStatus"
@@ -101,15 +107,11 @@
                             styleClass="btn-primary"/>
                 </VBox>
 
-                <VBox styleClass="stat-card">
-                    <Label text="Nedostaju dokumenti" styleClass="stat-title"/>
-                    <Label fx:id="lblNedostajuCount" text="0" styleClass="stat-value-small"/>
-                </VBox>
-
             </VBox>
 
-        </SplitPane>
+        </GridPane>
     </center>
+
 
     <!-- FOOTER -->
     <bottom>
