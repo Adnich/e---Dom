@@ -68,4 +68,8 @@ public class AdminController {
             e.printStackTrace();
         }
     }
+
+    public void showRangLista(ActionEvent actionEvent) {
+        loadView("/views/rang-lista.fxml");
+    }
 }

@@ -31,6 +31,26 @@
 
                 <Region HBox.hgrow="ALWAYS"/>
 
+                <MenuButton text="Sortiraj" fx:id="btnSortiraj">
+                    <items>
+                        <MenuItem text="Ime A-Z" onAction="#sortImeAZ"/>
+                        <MenuItem text="Ime Z-A" onAction="#sortImeZA"/>
+                        <MenuItem text="ID Uzlazno" onAction="#sortIdUzlazno"/>
+                        <MenuItem text="ID Silazno" onAction="#sortIdSilazno"/>
+                        <MenuItem text="Bodovi Uzlazno" onAction="#sortBodoviUzlazno"/>
+                        <MenuItem text="Bodovi Silazno" onAction="#sortBodoviSilazno"/>
+                    </items>
+                </MenuButton>
+
+                <MenuButton text="Filtriraj" fx:id="btnFiltriraj">
+                    <items>
+                        <Menu fx:id="menuFakulteti" text="Fakulteti">
+                            <!-- CheckboxMenuItem će biti dinamički dodani iz kontrolera -->
+                        </Menu>
+                        <Menu fx:id="menuStatusPrijave" text="Status prijave"/>
+                    </items>
+                </MenuButton>
+
                 <Button text="Nova prijava"
                         onAction="#onNovaPrijava"
                         styleClass="nova-prijava-btn"/>

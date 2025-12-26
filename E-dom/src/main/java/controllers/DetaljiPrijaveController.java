@@ -1,6 +1,7 @@
 package controllers;
 
 import dao.PrijavaDAO;
+import dao.StatusPrijaveDAO;
 import dao.StudentDAO;
 import dao.DokumentDAO;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -111,29 +112,29 @@ public class DetaljiPrijaveController {
     // =========================
     private void inicijalizujStatusCombo(StatusPrijave trenutni) {
 
-        cmbStatusPrijave.setItems(FXCollections.observableArrayList(
-                new StatusPrijave(1, "na pregledu"),
-                new StatusPrijave(2, "zaključeno"),
-                new StatusPrijave(3, "odobreno"),
-                new StatusPrijave(4, "odbijeno")
-        ));
+        StatusPrijaveDAO spDao = new StatusPrijaveDAO();
+        List<StatusPrijave> statusi = spDao.dohvatiSveStatuse();
+        cmbStatusPrijave.setItems(FXCollections.observableArrayList(statusi));
 
+        // postavi CellFactory da prikazuje samo naziv statusa
         cmbStatusPrijave.setCellFactory(cb -> new ListCell<>() {
             @Override
             protected void updateItem(StatusPrijave item, boolean empty) {
                 super.updateItem(item, empty);
-                setText(empty || item == null ? "" : item.getNaziv());
+                setText(empty || item == null ? "" : item.getNaziv()); // prikazuje samo naziv
             }
         });
 
+        // postavi ButtonCell isto tako
         cmbStatusPrijave.setButtonCell(new ListCell<>() {
             @Override
             protected void updateItem(StatusPrijave item, boolean empty) {
                 super.updateItem(item, empty);
-                setText(empty || item == null ? "" : item.getNaziv());
+                setText(empty || item == null ? "" : item.getNaziv()); // prikazuje samo naziv
             }
         });
 
+        // postavi trenutni status ako postoji
         if (trenutni != null) {
             cmbStatusPrijave.getItems().stream()
                     .filter(s -> s.getIdStatus() == trenutni.getIdStatus())
@@ -141,6 +142,7 @@ public class DetaljiPrijaveController {
                     .ifPresent(cmbStatusPrijave::setValue);
         }
     }
+
 
     // =========================
     // SAVE STATUS

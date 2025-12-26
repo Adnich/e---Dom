@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import model.Dokument;
 import model.VrstaDokumenta;
 import service.PdfService;
-import service.PdfService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,12 +19,22 @@ public class DodatniBodoviController {
     @FXML
     private Label lblPdf;
 
+    @FXML
+    private Label lblInfoDokument;
+
     private int prijavaId;
     private String pdfBase64;
 
-    public void init(int prijavaId, List<VrstaDokumenta> dokumenti) {
+    public void init(int prijavaId, String nazivDokumenta, List<VrstaDokumenta> dokumenti) {
         this.prijavaId = prijavaId;
         cmbDokument.getItems().addAll(dokumenti);
+
+        // Dinamički postavi tekst labela
+        if (nazivDokumenta != null && !nazivDokumenta.isEmpty()) {
+            lblInfoDokument.setText("Dodajte dokument za: " + nazivDokumenta);
+        } else {
+            lblInfoDokument.setText("Dodajte dokument za dodatne bodove");
+        }
     }
 
     @FXML

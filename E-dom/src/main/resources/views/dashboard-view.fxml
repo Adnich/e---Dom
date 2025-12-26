@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -8,18 +10,20 @@
       fx:controller="controllers.DashboardController"
       stylesheets="@../styles/dashboard-style.css"
       styleClass="dash-root"
-      spacing="22"
+      spacing="20"
       maxWidth="Infinity"
       maxHeight="Infinity">
 
-    <!-- HEADER -->
-    <VBox spacing="4" styleClass="dash-header">
-        <Label text="Pregled sistema" styleClass="dash-title"/>
-        <Label text="Brzi pregled ključnih informacija"
-               styleClass="dash-subtitle"/>
-    </VBox>
+    <!-- ================= MINIMALISTIČKI HEADER ================= -->
+    <HBox alignment="CENTER_LEFT" spacing="12" styleClass="dash-header">
+        <VBox spacing="2" HBox.hgrow="ALWAYS">
+            <Label text="Pregled sistema" styleClass="dash-title"/>
+            <Label text="Brzi pregled ključnih informacija" styleClass="dash-subtitle"/>
+        </VBox>
+        <Label text="DECEMBAR 2025" styleClass="date-badge"/>
+    </HBox>
 
-    <!-- ===== TOP STAT CARDS ===== -->
+    <!-- ================= STAT CARDS - ELEGANTNIJI ================= -->
     <GridPane hgap="16">
         <columnConstraints>
             <ColumnConstraints percentWidth="33.3"/>
@@ -27,92 +31,138 @@
             <ColumnConstraints percentWidth="33.4"/>
         </columnConstraints>
 
-        <VBox GridPane.columnIndex="0"
-              spacing="10"
-              styleClass="stat-card">
-            <Label text="Studenti" styleClass="stat-label"/>
-            <Label fx:id="lblStudenti" text="0" styleClass="stat-number"/>
-            <Label text="Ukupan broj registrovanih studenata"
-                   styleClass="stat-hint"/>
+        <!-- STUDENTI -->
+        <VBox GridPane.columnIndex="0" styleClass="stat-card-modern">
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Region styleClass="stat-icon stat-icon-students"/>
+                <Label text="Studenti" styleClass="stat-label-modern"/>
+            </HBox>
+            <Label fx:id="lblStudenti" text="6" styleClass="stat-number-modern"/>
+            <Label text="Ukupan broj registrovanih" styleClass="stat-hint-modern"/>
         </VBox>
 
-        <VBox GridPane.columnIndex="1"
-              spacing="10"
-              styleClass="stat-card">
-            <Label text="Prijave" styleClass="stat-label"/>
-            <Label fx:id="lblPrijave" text="0" styleClass="stat-number"/>
-            <Label text="Ukupan broj prijava u bazi"
-                   styleClass="stat-hint"/>
+        <!-- PRIJAVE -->
+        <VBox GridPane.columnIndex="1" styleClass="stat-card-modern">
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Region styleClass="stat-icon stat-icon-applications"/>
+                <Label text="Prijave" styleClass="stat-label-modern"/>
+            </HBox>
+            <Label fx:id="lblPrijave" text="4" styleClass="stat-number-modern"/>
+            <Label text="Ukupan broj prijava" styleClass="stat-hint-modern"/>
         </VBox>
 
-        <VBox GridPane.columnIndex="2"
-              spacing="10"
-              styleClass="stat-card secondary-card">
-            <Label text="Status" styleClass="stat-label"/>
-            <Label text="Admin panel spreman"
-                   styleClass="stat-number-small"/>
-            <Label text="Dalje: prijave, bodovi, rang-lista"
-                   styleClass="stat-hint"/>
+        <!-- STATUS -->
+        <VBox GridPane.columnIndex="2" styleClass="stat-card-modern stat-card-accent">
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Region styleClass="stat-icon stat-icon-status"/>
+                <Label text="Status" styleClass="stat-label-modern"/>
+            </HBox>
+            <Label text="Aktivan" styleClass="stat-number-modern"/>
+            <Label text="Sistem operativan" styleClass="stat-hint-modern"/>
         </VBox>
     </GridPane>
 
-    <!-- ===== LOWER SECTION ===== -->
-    <GridPane hgap="16"
-              VBox.vgrow="ALWAYS">
+    <!-- ================= GLAVNI CONTENT ================= -->
+    <HBox spacing="16" VBox.vgrow="ALWAYS">
 
-        <columnConstraints>
-            <ColumnConstraints percentWidth="35"/>
-            <ColumnConstraints percentWidth="65"/>
-        </columnConstraints>
+        <!-- ===== GRAFIKON ===== -->
+        <VBox spacing="12" styleClass="content-panel chart-panel" HBox.hgrow="ALWAYS">
 
-        <!-- BRZE AKCIJE -->
-        <VBox GridPane.columnIndex="0"
-              spacing="14"
-              styleClass="panel"
-              alignment="TOP_LEFT">
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Label text="Prijave u tekućem mjesecu" styleClass="section-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="Statistika" styleClass="mini-badge"/>
+            </HBox>
 
-            <Label text="Brze akcije" styleClass="panel-title"/>
-
-            <Button text="Otvori prijave"
-                    styleClass="primary-btn"
-                    maxWidth="Infinity"
-                    onAction="#goPrijave"/>
-
-            <Button text="Otvori studente"
-                    styleClass="secondary-btn"
-                    maxWidth="Infinity"
-                    onAction="#goStudenti"/>
-
-            <Separator opacity="0.25"/>
-
-            <Label text="Savjet: prvo provjeri prijave, zatim bodovanje."
-                   styleClass="panel-hint"
-                   wrapText="true"/>
+            <BarChart fx:id="chartSeptembar"
+                      animated="true"
+                      legendVisible="false"
+                      categoryGap="20"
+                      barGap="6"
+                      alternativeRowFillVisible="false"
+                      alternativeColumnFillVisible="false"
+                      horizontalGridLinesVisible="true"
+                      verticalGridLinesVisible="false"
+                      VBox.vgrow="ALWAYS">
+                <xAxis>
+                    <CategoryAxis side="BOTTOM"
+                                  tickLabelRotation="0"/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis side="LEFT"
+                                minorTickVisible="false"
+                                tickUnit="1"/>
+                </yAxis>
+            </BarChart>
         </VBox>
 
-        <!-- ŠTA DALJE -->
-        <VBox GridPane.columnIndex="1"
-              spacing="14"
-              styleClass="panel"
-              VBox.vgrow="ALWAYS">
+        <!-- ===== STATUS SIDEBAR ===== -->
+        <VBox spacing="12" styleClass="content-panel status-sidebar" prefWidth="300">
 
-            <Label text="Šta dalje?" styleClass="panel-title"/>
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Label text="Status prijava" styleClass="section-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="lblTotalStatus" text="10" styleClass="count-badge"/>
+            </HBox>
 
-            <VBox spacing="10">
-                <Label text="• Prijave: prikaz liste + promjena statusa (na pregledu / odobreno / odbijeno)"
-                       styleClass="panel-item"
-                       wrapText="true"/>
+            <VBox spacing="8" styleClass="status-list">
 
-                <Label text="• Bodovi: unos po dokumentima + automatski zbir ukupnih bodova"
-                       styleClass="panel-item"
-                       wrapText="true"/>
+                <!-- Na pregledu -->
+                <HBox styleClass="status-row status-pending" alignment="CENTER_LEFT">
+                    <VBox spacing="1" HBox.hgrow="ALWAYS">
+                        <Label text="Na pregledu" styleClass="status-text"/>
+                        <Label text="Čeka obradu" styleClass="status-desc"/>
+                    </VBox>
+                    <Label fx:id="lblNaPregledu" text="1" styleClass="status-value"/>
+                </HBox>
 
-                <Label text="• Rang lista: sortiranje po ukupnim bodovima (akademska godina)"
-                       styleClass="panel-item"
-                       wrapText="true"/>
+                <!-- Odobrene -->
+                <HBox styleClass="status-row status-approved" alignment="CENTER_LEFT">
+                    <VBox spacing="1" HBox.hgrow="ALWAYS">
+                        <Label text="Odobrene" styleClass="status-text"/>
+                        <Label text="Uspješno odobreno" styleClass="status-desc"/>
+                    </VBox>
+                    <Label fx:id="lblOdobrene" text="1" styleClass="status-value"/>
+                </HBox>
+
+                <!-- Odbijene -->
+                <HBox styleClass="status-row status-rejected" alignment="CENTER_LEFT">
+                    <VBox spacing="1" HBox.hgrow="ALWAYS">
+                        <Label text="Odbijene" styleClass="status-text"/>
+                        <Label text="Nisu prihvaćene" styleClass="status-desc"/>
+                    </VBox>
+                    <Label fx:id="lblOdbijene" text="1" styleClass="status-value"/>
+                </HBox>
+
+                <!-- Bez bodova -->
+                <HBox styleClass="status-row status-nopoints" alignment="CENTER_LEFT">
+                    <VBox spacing="1" HBox.hgrow="ALWAYS">
+                        <Label text="Bez bodova" styleClass="status-text"/>
+                        <Label text="Nema bodova" styleClass="status-desc"/>
+                    </VBox>
+                    <Label fx:id="lblBezBodova" text="0" styleClass="status-value"/>
+                </HBox>
+
+                <!-- Zaključene -->
+                <HBox styleClass="status-row status-closed" alignment="CENTER_LEFT">
+                    <VBox spacing="1" HBox.hgrow="ALWAYS">
+                        <Label text="Zaključene" styleClass="status-text"/>
+                        <Label text="Završen proces" styleClass="status-desc"/>
+                    </VBox>
+                    <Label fx:id="lblZakljucene" text="1" styleClass="status-value"/>
+                </HBox>
+
             </VBox>
         </VBox>
+    </HBox>
 
-    </GridPane>
+    <!-- ================= AKCIJE - MINIMALNO ================= -->
+    <HBox spacing="12" styleClass="action-bar">
+        <Button text="Pregled prijava" styleClass="btn-primary" onAction="#goPrijave"/>
+        <Button text="Pregled studenata" styleClass="btn-secondary" onAction="#goStudenti"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="E-Dom Admin" styleClass="footer-text"/>
+    </HBox>
 
 </VBox>
+

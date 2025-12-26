@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.studentiController"
-            prefHeight="400.0" prefWidth="800.0"
             stylesheets="@../styles/studenti-style.css"
-            styleClass="anchor-pane">
+            styleClass="root anchor-pane">
 
     <children>
-        <VBox spacing="15.0"
+        <VBox spacing="15"
               AnchorPane.topAnchor="20"
               AnchorPane.leftAnchor="20"
               AnchorPane.rightAnchor="20"
               AnchorPane.bottomAnchor="20"
               styleClass="main-vbox">
 
-            <HBox spacing="12" alignment="CENTER_LEFT">
-            <Label text="Studenti" styleClass="header-title" />
+            <!-- HEADER -->
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <Label text="Studenti" styleClass="header-title"/>
 
                 <TextField fx:id="txtSearch"
                            promptText="Pretraga: ime, prezime, indeks, fakultet..."
@@ -28,17 +30,23 @@
 
                 <Region HBox.hgrow="ALWAYS"/>
             </HBox>
-            <TableView fx:id="tblStudenti" prefHeight="400" styleClass="table-view">
+
+            <!-- TABLE -->
+            <TableView fx:id="tblStudenti"
+                       styleClass="table-view"
+                       VBox.vgrow="ALWAYS">
+
                 <columns>
                     <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
                     <TableColumn fx:id="colIme" text="Ime" prefWidth="120"/>
-                    <TableColumn fx:id="colPrezime" text="Prezime" prefWidth="120"/>
-                    <TableColumn fx:id="colIndeks" text="Broj indeksa" prefWidth="120"/>
-                    <TableColumn fx:id="colFakultet" text="Fakultet" prefWidth="150"/>
-                    <TableColumn fx:id="colGodina" text="Godina" prefWidth="80"/>
-                    <TableColumn fx:id="colProsjek" text="Prosjek" prefWidth="80"/>
-                    <TableColumn fx:id="colStatus" text="Soc. status" prefWidth="150"/>
+                    <TableColumn fx:id="colPrezime" text="Prezime" prefWidth="140"/>
+                    <TableColumn fx:id="colIndeks" text="Broj indeksa" prefWidth="140"/>
+                    <TableColumn fx:id="colFakultet" text="Fakultet" prefWidth="180"/>
+                    <TableColumn fx:id="colGodina" text="Godina" prefWidth="100"/>
+                    <TableColumn fx:id="colProsjek" text="Prosjek" prefWidth="100"/>
+                    <TableColumn fx:id="colStatus" text="Soc. status" prefWidth="160"/>
                 </columns>
+
             </TableView>
 
         </VBox>

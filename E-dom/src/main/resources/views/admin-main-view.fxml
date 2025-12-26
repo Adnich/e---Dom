@@ -53,11 +53,18 @@
                           maxWidth="Infinity"
                           styleClass="nav-btn"/>
 
+            <ToggleButton text="Rang lista"
+                          toggleGroup="$navGroup"
+                          onAction="#showRangLista"
+                          maxWidth="Infinity"
+                          styleClass="nav-btn"/>
+
             <ToggleButton text="Moj profil"
                           toggleGroup="$navGroup"
                           onAction="#onMojProfil"
                           maxWidth="Infinity"
                           styleClass="nav-btn"/>
+
 
             <!-- Spacer -->
             <Pane VBox.vgrow="ALWAYS"/>
