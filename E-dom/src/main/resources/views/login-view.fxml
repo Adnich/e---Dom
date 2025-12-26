@@ -52,33 +52,30 @@
             <!-- ILUSTRACIJA NA DNU -->
             <HBox alignment="BOTTOM_LEFT" style="-fx-padding: 20 0 0 0;">
                 <children>
-                    <ImageView fitWidth="270"
-                               preserveRatio="true"
-                               styleClass="illustration-image">
-                        <image>
-                            <Image url="@../images/dorm-illustration.png"/>
-                        </image>
-                    </ImageView>
+                    
                 </children>
             </HBox>
 
         </VBox>
     </left>
 
-
     <!-- DESNA STRANA – LOGIN -->
     <center>
         <StackPane styleClass="right-pane">
             <children>
 
-                <!-- dekor blob -->
-                <Pane styleClass="circle-decor"
-                      StackPane.alignment="CENTER_RIGHT"/>
+                <!-- SOFT GLOW BACKGROUND (MINT) -->
+                <Pane styleClass="glow-mint"
+                      StackPane.alignment="CENTER"/>
 
-                <!-- login centriran -->
+                <!-- SOFT GLOW BACKGROUND (YELLOW ACCENT) -->
+                <Pane styleClass="glow-yellow"
+                      StackPane.alignment="CENTER"/>
+
+                <!-- LOGIN CONTAINER -->
                 <StackPane alignment="CENTER" styleClass="login-container">
 
-                    <!-- GLASS CARD -->
+                    <!-- LOGIN CARD -->
                     <VBox spacing="26"
                           alignment="TOP_LEFT"
                           maxWidth="430"
@@ -134,7 +131,8 @@
 
                                 <!-- links + remember -->
                                 <HBox alignment="CENTER_LEFT" spacing="12">
-                                    <CheckBox text="Zapamti me" styleClass="forgot-link"/>
+                                    <!-- FIX: checkbox sad koristi check-box stil -->
+                                    <CheckBox text="Zapamti me" styleClass="check-box"/>
                                     <Region HBox.hgrow="ALWAYS"/>
                                     <Hyperlink text="Zaboravili ste lozinku?"
                                                onAction="#onForgotPasswordClicked"
@@ -153,7 +151,7 @@
                                        styleClass="error-label"/>
 
                                 <!-- REGISTER -->
-                                <HBox alignment="CENTER" spacing="6" style="-fx-padding: 8 0 0 0;">
+                                <HBox alignment="CENTER" spacing="8" style="-fx-padding: 10 0 0 0;">
                                     <Label text="Nemate nalog?"/>
                                     <Hyperlink fx:id="linkRegister"
                                                text="Registracija"
