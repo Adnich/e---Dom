@@ -12,12 +12,11 @@
             maxWidth="Infinity"
             maxHeight="Infinity">
 
-
     <fx:define>
         <ToggleGroup fx:id="navGroup"/>
     </fx:define>
 
-
+    <!-- ===== SIDEBAR ===== -->
     <left>
         <VBox spacing="14"
               prefWidth="230"
@@ -65,8 +64,6 @@
                           maxWidth="Infinity"
                           styleClass="nav-btn"/>
 
-
-            <!-- Spacer -->
             <Pane VBox.vgrow="ALWAYS"/>
 
             <!-- Footer -->
@@ -75,16 +72,14 @@
         </VBox>
     </left>
 
-
+    <!-- ===== CONTENT ===== -->
     <center>
         <StackPane fx:id="contentArea"
                    styleClass="content-area"
                    minWidth="0"
                    minHeight="0"
                    maxWidth="Infinity"
-                   maxHeight="Infinity"
-                   VBox.vgrow="ALWAYS"
-                   HBox.hgrow="ALWAYS"/>
+                   maxHeight="Infinity"/>
     </center>
 
 </BorderPane>
