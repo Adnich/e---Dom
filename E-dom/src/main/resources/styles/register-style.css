@@ -1,218 +1,241 @@
+/* =========================
+   ROOT
+========================= */
 .root {
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+    -fx-background-color: #EAFBF7;
 }
 
-/* LEFT */
+/* =========================
+   LEFT PANEL (SAME AS LOGIN)
+========================= */
 .left-pane {
-    -fx-background-color: #22b39a; /* ista kao login dugme */
-    -fx-padding: 60 40 60 40;
+    -fx-background-color: linear-gradient(to bottom, #004E64 0%, #003847 100%);
+    -fx-padding: 50 45 50 45;
+}
+
+.left-logo {
+    -fx-opacity: 1;
+}
+
+/* Left title */
+.app-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: 800;
+    -fx-text-fill: white;
+    -fx-wrap-text: true;
+    -fx-max-width: 320px;
+    -fx-line-spacing: 2px;
 }
 
 .left-subtitle {
-    -fx-font-size: 16px;
-    -fx-font-weight: 600;
-    -fx-text-fill: rgba(255,255,255,0.90);
-    -fx-max-width: 260px;
-    -fx-padding: 10 0 0 0;
+    -fx-font-size: 14px;
+    -fx-font-weight: 400;
+    -fx-text-fill: rgba(255,255,255,0.85);
+    -fx-wrap-text: true;
+    -fx-max-width: 320px;
+    -fx-line-spacing: 3px;
 }
 
 .left-text {
     -fx-font-size: 13px;
-    -fx-font-weight: 400;
-    -fx-text-fill: rgba(255,255,255,0.75);
-    -fx-max-width: 260px;
-    -fx-line-spacing: 3px;
+    -fx-font-weight: 600;
+    -fx-text-fill: rgba(255,255,255,0.92);
 }
 
-/* RIGHT */
+.illustration-image {
+    -fx-opacity: 0.95;
+}
+
+/* =========================
+   RIGHT PANEL
+========================= */
 .right-pane {
-    -fx-background-color: #f7fbff;
+    -fx-background-color: linear-gradient(to bottom right, #EAFBF7 0%, #FFFFFF 65%);
 }
 
-/* DECOR CIRCLE (malo manji nego login jer je forma duža) */
-.circle-decor {
+/* =========================
+   PREMIUM GLOW (SUBTLE)
+========================= */
+.glow-mint {
     -fx-background-radius: 999px;
-    -fx-pref-width: 620px;
-    -fx-pref-height: 620px;
-    -fx-background-color: rgba(34,179,154,0.10);
-    -fx-translate-x: 200px;
+    -fx-pref-width: 540px;
+    -fx-pref-height: 540px;
+    -fx-background-color: rgba(0, 182, 150, 0.035);
+    -fx-effect: dropshadow(gaussian, rgba(0, 182, 150, 0.22), 280, 0.60, 0, 0);
+    -fx-translate-x: 130px;
+    -fx-translate-y: -100px;
 }
 
-/* CONTAINER */
+.glow-yellow {
+    -fx-background-radius: 999px;
+    -fx-pref-width: 380px;
+    -fx-pref-height: 380px;
+    -fx-background-color: rgba(255, 249, 165, 0.045);
+    -fx-effect: dropshadow(gaussian, rgba(255, 249, 165, 0.25), 260, 0.55, 0, 0);
+    -fx-translate-x: -160px;
+    -fx-translate-y: 170px;
+}
+
+/* =========================
+   REGISTER CONTAINER
+========================= */
 .register-container {
-    -fx-padding: 55 40 40 40;
+    -fx-padding: 70 70 70 70;
 }
 
-/* TITLE */
+/* =========================
+   REGISTER CARD
+========================= */
+.register-card {
+    -fx-background-radius: 26px;
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 42 54 38 54;
+    -fx-border-radius: 26px;
+    -fx-border-color: rgba(0, 182, 150, 0.18);
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.18), 45, 0, 0, 12);
+}
+
+/* =========================
+   TITLE
+========================= */
 .register-title {
-    -fx-text-fill: #22b39a;
+    -fx-text-fill: #004E64;
     -fx-font-size: 30px;
     -fx-font-weight: 800;
 }
 
-/* FORM */
+/* =========================
+   LABELS
+========================= */
 .field-label {
-    -fx-font-size: 12px;
-    -fx-text-fill: #334155;
-    -fx-font-weight: 600;
+    -fx-font-size: 13px;
+    -fx-text-fill: rgba(0,78,100,0.72);
+    -fx-font-weight: 700;
 }
 
+/* =========================
+   INPUTS (SAME AS LOGIN)
+========================= */
 .text-input {
-    -fx-background-color: white;
-    -fx-background-radius: 18px;
-    -fx-border-radius: 18px;
-    -fx-border-color: rgba(34,179,154,0.25);
-    -fx-padding: 12 16 12 16;
-    -fx-font-size: 13px;
+    -fx-background-color: #F9FFFE;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+    -fx-border-color: rgba(0,78,100,0.18);
+    -fx-border-width: 1.6px;
+    -fx-padding: 14 18 14 18;
+    -fx-font-size: 14px;
+    -fx-text-fill: #004E64;
+    -fx-pref-height: 50px;
+    -fx-prompt-text-fill: rgba(0,78,100,0.35);
+
+    -fx-effect: innershadow(gaussian, rgba(0,78,100,0.06), 10, 0, 0, 1);
 }
 
 .text-input:focused {
-    -fx-border-color: #22b39a;
-    -fx-border-width: 1.5px;
+    -fx-border-color: #00B696;
+    -fx-border-width: 2.2px;
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.22), 14, 0, 0, 0);
 }
 
-/* ComboBox u istom stilu */
+/* =========================
+   COMBOBOX (MATCH INPUT)
+========================= */
 .combo-input {
-    -fx-background-color: white;
-    -fx-background-radius: 18px;
-    -fx-border-radius: 18px;
-    -fx-border-color: rgba(34,179,154,0.25);
+    -fx-background-color: #F9FFFE;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+    -fx-border-color: rgba(0,78,100,0.18);
+    -fx-border-width: 1.6px;
     -fx-padding: 6 10 6 10;
-    -fx-font-size: 13px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #004E64;
+    -fx-pref-height: 50px;
 }
 
 .combo-input:focused {
-    -fx-border-color: #22b39a;
-    -fx-border-width: 1.5px;
+    -fx-border-color: #00B696;
+    -fx-border-width: 2.2px;
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.22), 14, 0, 0, 0);
 }
 
-/* BUTTONS */
+/* ComboBox arrow button styling */
+.combo-input .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.combo-input .arrow {
+    -fx-background-color: rgba(0,78,100,0.55);
+}
+
+/* =========================
+   PRIMARY BUTTON (SAME AS LOGIN)
+========================= */
 .primary-btn {
-    -fx-background-radius: 40px;
-    -fx-background-color: linear-gradient(
-        to bottom,
-        #2ec9ad,
-        #22b39a
-    );
+    -fx-background-radius: 16px;
+    -fx-background-color: linear-gradient(to right, #00B696, #00C7A2);
     -fx-text-fill: white;
     -fx-font-weight: 800;
     -fx-font-size: 15px;
-
-    -fx-padding: 14 32 14 32;
-
-    /* shadow = jelly osjećaj */
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(34,179,154,0.45),
-        18,
-        0.25,
-        0,
-        8
-    );
+    -fx-padding: 14 0 14 0;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+    -fx-pref-height: 50px;
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.30), 30, 0.35, 0, 12);
 }
 
-/* hover = blago “nabubri” */
 .primary-btn:hover {
-    -fx-scale-x: 1.04;
-    -fx-scale-y: 1.04;
-    -fx-background-color: linear-gradient(
-        to bottom,
-        #3ddbc0,
-        #1da38d
-    );
+    -fx-background-color: linear-gradient(to right, #00A98B, #00B696);
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.38), 34, 0.40, 0, 14);
 }
 
-/* pressed = jelly squash */
 .primary-btn:pressed {
-    -fx-scale-x: 0.97;
-    -fx-scale-y: 0.95;
-    -fx-background-color: #1a8f7c;
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(34,179,154,0.25),
-        10,
-        0.2,
-        0,
-        4
-    );
+    -fx-background-color: #009E82;
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.22), 18, 0, 0, 6);
 }
 
-
-
-
-
+/* =========================
+   SECONDARY BUTTON (OUTLINE)
+========================= */
 .secondary-btn {
     -fx-background-color: transparent;
-
-    -fx-border-color: rgba(34,179,154,0.85);
+    -fx-border-color: rgba(0, 182, 150, 0.75);
     -fx-border-width: 2px;
-    -fx-border-radius: 40px;
-
-    -fx-text-fill: #22b39a;
+    -fx-border-radius: 16px;
+    -fx-background-radius: 16px;
+    -fx-text-fill: #00B696;
     -fx-font-weight: 800;
     -fx-font-size: 14px;
-
-    -fx-padding: 13 30 13 30;
-
-    /* jelly glow (light) */
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(34,179,154,0.35),
-        14,
-        0.25,
-        0,
-        6
-    );
+    -fx-padding: 13 0 13 0;
+    -fx-cursor: hand;
+    -fx-pref-height: 50px;
 }
 
-
 .secondary-btn:hover {
-    -fx-background-color: rgba(34,179,154,0.08);
-        -fx-scale-x: 1.02;
-        -fx-scale-y: 1.02;
-
-
-    -fx-effect: dropshadow(
-
-        gaussian,
-        white,
-        18,
-        0.6,
-        0,
-        8
-    );
+    -fx-background-color: rgba(0, 182, 150, 0.08);
 }
 
 .secondary-btn:pressed {
-    -fx-scale-x: 0.97;
-    -fx-scale-y: 0.95;
-
-    -fx-background-color: rgba(34,179,154,0.18);
-    -fx-border-color: #1a8f7c;
-
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(34,179,154,0.25),
-        10,
-        0.2,
-        0,
-        4
-    );
+    -fx-background-color: rgba(0, 182, 150, 0.15);
+    -fx-border-color: #009E82;
 }
 
-
-
-
-.secondary-btn:hover {
-    -fx-background-color: rgba(34,179,154,0.10);
-}
-
-.secondary-btn:pressed {
-    -fx-background-color: rgba(34,179,154,0.18);
-}
-
-/* ERROR */
+/* =========================
+   ERROR LABEL
+========================= */
 .error-label {
     -fx-font-size: 12px;
     -fx-text-fill: #d11a2a;
+    -fx-font-weight: 700;
+    -fx-wrap-text: true;
+}
+
+/* =========================
+   GENERAL LABELS
+========================= */
+Label {
+    -fx-text-fill: rgba(0,78,100,0.62);
+    -fx-font-size: 13px;
 }
