@@ -2,21 +2,15 @@ package controllers;
 
 import dao.StudentDAO;
 import dao.PrijavaDAO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.Label;
 import javafx.scene.chart.PieChart;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
-
-import java.time.LocalDate;
-import java.time.format.TextStyle;
-import java.util.Locale;
 
 public class DashboardController {
 
@@ -62,6 +56,7 @@ public class DashboardController {
         initPieChartStatusa();
     }
 
+    // ================= PIE CHART =================
     private void initPieChartStatusa() {
         try {
             ObservableList<PieChart.Data> data = FXCollections.observableArrayList(
@@ -82,29 +77,11 @@ public class DashboardController {
     // ================= STATUSI =================
     private void initStatusStatistiku() {
         try {
-            // na pregledu (ID = 1)
-            lblNaPregledu.setText(
-                    String.valueOf(prijavaDAO.countPrijaveByStatusId(1))
-            );
-
-            // odobrene (ID = 4)
-            lblOdobrene.setText(
-                    String.valueOf(prijavaDAO.countPrijaveByStatusId(4))
-            );
-
-            // odbijene (ID = 5)
-            lblOdbijene.setText(
-                    String.valueOf(prijavaDAO.countPrijaveByStatusId(5))
-            );
-
-            // bez bodova
-            lblBezBodova.setText(
-                    String.valueOf(prijavaDAO.countPrijaveBezBodova())
-            );
-            // zaključene (ID = 3)
-            lblZakljucene.setText(
-                    String.valueOf(prijavaDAO.countPrijaveByStatusId(3))
-            );
+            lblNaPregledu.setText(String.valueOf(prijavaDAO.countPrijaveByStatusId(1)));
+            lblOdobrene.setText(String.valueOf(prijavaDAO.countPrijaveByStatusId(4)));
+            lblOdbijene.setText(String.valueOf(prijavaDAO.countPrijaveByStatusId(5)));
+            lblBezBodova.setText(String.valueOf(prijavaDAO.countPrijaveBezBodova()));
+            lblZakljucene.setText(String.valueOf(prijavaDAO.countPrijaveByStatusId(3)));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,6 +89,7 @@ public class DashboardController {
             lblOdobrene.setText("0");
             lblOdbijene.setText("0");
             lblBezBodova.setText("0");
+            lblZakljucene.setText("0");
         }
     }
 
@@ -134,23 +112,23 @@ public class DashboardController {
         }
     }
 
+    // ================= NOVA PRIJAVA (FULL SCREEN u istom prozoru) =================
     @FXML
     private void onNovaPrijava() {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/views/novi-student.fxml")
-            );
-            Scene scene = new Scene(loader.load());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/novi-student.fxml"));
+            Scene newScene = new Scene(loader.load());
 
-            Stage stage = new Stage();
-            stage.setTitle("Nova prijava");
-            stage.setScene(scene);
-            stage.setResizable(true);
-            stage.show();
+            // trenutni stage (prozor dashboarda)
+            Stage currentStage = (Stage) pieStatusChart.getScene().getWindow();
+            currentStage.setScene(newScene);
+
+            // full screen look (bez pravog fullscreen režima)
+            currentStage.setMaximized(true);
+            currentStage.setResizable(true);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }
