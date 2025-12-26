@@ -7,6 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.chart.PieChart;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 import java.time.format.TextStyle;
@@ -19,10 +22,8 @@ public class DashboardController {
     // ====== TOP STAT ======
     @FXML private Label lblStudenti;
     @FXML private Label lblPrijave;
-
-    // ====== CHART ======
-    @FXML private BarChart<String, Number> chartSeptembar;
-    @FXML private Label lblChartTitle;
+    @FXML private PieChart pieStatusChart;
+    @FXML private Label lblAdminIme;
 
     // ====== STATUSI ======
     @FXML private Label lblNaPregledu;
@@ -54,34 +55,21 @@ public class DashboardController {
             e.printStackTrace();
         }
 
-        initChart();
         initStatusStatistiku();
+        initPieChartStatusa();
     }
 
-    // ================= CHART =================
-    private void initChart() {
+    private void initPieChartStatusa() {
         try {
-            chartSeptembar.getData().clear();
+            ObservableList<PieChart.Data> data = FXCollections.observableArrayList(
+                    new PieChart.Data("Na pregledu", prijavaDAO.countPrijaveByStatusId(1)),
+                    new PieChart.Data("Odobrene", prijavaDAO.countPrijaveByStatusId(4)),
+                    new PieChart.Data("Odbijene", prijavaDAO.countPrijaveByStatusId(5)),
+                    new PieChart.Data("Bez bodova", prijavaDAO.countPrijaveBezBodova()),
+                    new PieChart.Data("Zaključene", prijavaDAO.countPrijaveByStatusId(3))
+            );
 
-            XYChart.Series<String, Number> series = new XYChart.Series<>();
-
-            var podaci = prijavaDAO.countPrijavePoDanimaUTekucemMjesecu();
-
-            for (int i = 0; i < podaci.size(); i += 2) {
-                String dan = String.valueOf(podaci.get(i));
-                int broj = podaci.get(i + 1);
-                series.getData().add(new XYChart.Data<>(dan, broj));
-            }
-
-            chartSeptembar.getData().add(series);
-
-            // NASLOV: TEKUĆI MJESEC
-            LocalDate now = LocalDate.now();
-            String mjesec = now.getMonth()
-                    .getDisplayName(TextStyle.FULL, new Locale("bs"))
-                    .toUpperCase();
-
-            lblChartTitle.setText("Prijave u " + mjesec + " " + now.getYear());
+            pieStatusChart.setData(data);
 
         } catch (Exception e) {
             e.printStackTrace();
