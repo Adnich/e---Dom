@@ -284,6 +284,10 @@ public class prijaveController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/detalji-prijave.fxml"));
             Scene scene = new Scene(loader.load());
 
+            // Dobavi controller i pozovi setPrijava
+            DetaljiPrijaveController controller = loader.getController();
+            controller.setPrijava(prijava);
+
             Stage stage = new Stage();
             stage.setTitle("Detalji prijave");
             stage.setScene(scene);
@@ -296,6 +300,7 @@ public class prijaveController {
             e.printStackTrace();
         }
     }
+
 
     private void maximize(Stage stage) {
         Rectangle2D bounds = Screen.getPrimary().getVisualBounds();

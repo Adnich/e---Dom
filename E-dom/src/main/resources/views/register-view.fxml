@@ -21,9 +21,7 @@
             <!-- LOGO -->
             <HBox alignment="CENTER_LEFT">
                 <children>
-
                     <Pane HBox.hgrow="ALWAYS"/>
-
                     <ImageView fitWidth="190"
                                preserveRatio="true"
                                styleClass="left-logo">
@@ -31,9 +29,7 @@
                             <Image url="@../images/e-domLOGO.png"/>
                         </image>
                     </ImageView>
-
                     <Pane HBox.hgrow="ALWAYS"/>
-
                 </children>
             </HBox>
 
@@ -41,7 +37,6 @@
             <Label text="Digitalni sistem studentskog doma"
                    wrapText="true"
                    styleClass="app-title"/>
-
             <Label text="Ubrzano upravljanje prijavama, bodovanjem i rangiranjem — uz potpunu evidenciju i kontrolu procesa."
                    wrapText="true"
                    styleClass="left-subtitle"/>
@@ -56,16 +51,7 @@
                    style="-fx-padding: 18 0 0 0;"
                    styleClass="left-tagline"/>
 
-
             <Region VBox.vgrow="ALWAYS"/>
-
-            <!-- OPTIONAL ILLUSTRATION -->
-            <HBox alignment="BOTTOM_LEFT" style="-fx-padding: 18 0 0 0;">
-                <children>
-
-                </children>
-            </HBox>
-
         </VBox>
     </left>
 
@@ -73,7 +59,6 @@
     <center>
         <StackPane styleClass="right-pane">
             <children>
-
                 <!-- PREMIUM SOFT GLOW -->
                 <Pane styleClass="glow-mint" StackPane.alignment="CENTER"/>
                 <Pane styleClass="glow-yellow" StackPane.alignment="CENTER"/>
@@ -93,111 +78,61 @@
 
                         <!-- FORM -->
                         <VBox spacing="16" maxWidth="420">
-                            <children>
 
-                                <!-- Ime + Prezime -->
-                                <HBox spacing="14">
-                                    <children>
-                                        <VBox spacing="6" HBox.hgrow="ALWAYS">
-                                            <children>
-                                                <Label text="Ime" styleClass="field-label"/>
-                                                <TextField fx:id="txtIme"
-                                                           promptText="Unesite ime"
-                                                           styleClass="text-input"/>
-                                            </children>
-                                        </VBox>
+                            <!-- Ime + Prezime -->
+                            <HBox spacing="14">
+                                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                                    <Label text="Ime" styleClass="field-label"/>
+                                    <TextField fx:id="txtIme" promptText="Unesite ime" styleClass="text-input"/>
+                                </VBox>
+                                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                                    <Label text="Prezime" styleClass="field-label"/>
+                                    <TextField fx:id="txtPrezime" promptText="Unesite prezime" styleClass="text-input"/>
+                                </VBox>
+                            </HBox>
 
-                                        <VBox spacing="6" HBox.hgrow="ALWAYS">
-                                            <children>
-                                                <Label text="Prezime" styleClass="field-label"/>
-                                                <TextField fx:id="txtPrezime"
-                                                           promptText="Unesite prezime"
-                                                           styleClass="text-input"/>
-                                            </children>
-                                        </VBox>
-                                    </children>
-                                </HBox>
-
+                            <!-- E-mail -->
                             <VBox spacing="6">
-                                <children>
-                                    <Label text="E-mail" styleClass="field-label"/>
-                                    <TextField fx:id="txtEmail"
-                                               promptText="Unesite vašu e-mail adresu"
-                                               styleClass="text-input"/>
-                                </children>
+                                <Label text="E-mail" styleClass="field-label"/>
+                                <TextField fx:id="txtEmail" promptText="Unesite vašu e-mail adresu" styleClass="text-input"/>
                             </VBox>
 
+                            <!-- Korisničko ime -->
                             <VBox spacing="6">
-                                <children>
-                                    <Label text="Lozinka" styleClass="field-label"/>
-                                    <PasswordField fx:id="txtPassword"
-                                                   promptText="Unesite lozinku"
-                                <!-- Username -->
-                                <VBox spacing="6">
-                                    <children>
-                                        <Label text="Korisničko ime" styleClass="field-label"/>
-                                        <TextField fx:id="txtUsername"
-                                                   promptText="Unesite korisničko ime"
-                                                   styleClass="text-input"/>
-                                    </children>
-                                </VBox>
+                                <Label text="Korisničko ime" styleClass="field-label"/>
+                                <TextField fx:id="txtUsername" promptText="Unesite korisničko ime" styleClass="text-input"/>
+                            </VBox>
 
-                                <!-- Password -->
-                                <VBox spacing="6">
-                                    <children>
-                                        <Label text="Lozinka" styleClass="field-label"/>
-                                        <PasswordField fx:id="txtPassword"
-                                                       promptText="Unesite lozinku"
-                                                       styleClass="text-input"/>
-                                    </children>
-                                </VBox>
+                            <!-- Lozinka -->
+                            <VBox spacing="6">
+                                <Label text="Lozinka" styleClass="field-label"/>
+                                <PasswordField fx:id="txtPassword" promptText="Unesite lozinku" styleClass="text-input"/>
+                            </VBox>
 
-                                <!-- Password Repeat -->
-                                <VBox spacing="6">
-                                    <children>
-                                        <Label text="Ponovi lozinku" styleClass="field-label"/>
-                                        <PasswordField fx:id="txtPassword2"
-                                                       promptText="Ponovite lozinku"
-                                                       styleClass="text-input"/>
-                                    </children>
-                                </VBox>
+                            <!-- Ponovi lozinku -->
+                            <VBox spacing="6">
+                                <Label text="Ponovi lozinku" styleClass="field-label"/>
+                                <PasswordField fx:id="txtPassword2" promptText="Ponovite lozinku" styleClass="text-input"/>
+                            </VBox>
 
-                                <!-- Role -->
-                                <VBox spacing="6">
-                                    <children>
-                                        <Label text="Uloga" styleClass="field-label"/>
-                                        <ComboBox fx:id="cmbUloga"
-                                                  promptText="Odaberite ulogu"
-                                                  styleClass="combo-input"
-                                                  maxWidth="Infinity"/>
-                                    </children>
-                                </VBox>
+                            <!-- Uloga -->
+                            <VBox spacing="6">
+                                <Label text="Uloga" styleClass="field-label"/>
+                                <ComboBox fx:id="cmbUloga" promptText="Odaberite ulogu" styleClass="combo-input" maxWidth="Infinity"/>
+                            </VBox>
 
-                                <!-- BUTTONS -->
-                                <HBox spacing="14" alignment="CENTER">
-                                    <children>
-                                        <Button text="Registruj"
-                                                onAction="#onRegisterClicked"
-                                                styleClass="primary-btn"
-                                                prefWidth="190"/>
+                            <!-- BUTTONS -->
+                            <HBox spacing="14" alignment="CENTER">
+                                <Button text="Registruj" onAction="#onRegisterClicked" styleClass="primary-btn" prefWidth="190"/>
+                                <Button text="Nazad na prijavu" onAction="#onBackToLoginClicked" styleClass="secondary-btn" prefWidth="190"/>
+                            </HBox>
 
-                                        <Button text="Nazad na prijavu"
-                                                onAction="#onBackToLoginClicked"
-                                                styleClass="secondary-btn"
-                                                prefWidth="190"/>
-                                    </children>
-                                </HBox>
+                            <!-- ERROR -->
+                            <Label fx:id="lblError" styleClass="error-label"/>
 
-                                <!-- ERROR -->
-                                <Label fx:id="lblError"
-                                       styleClass="error-label"/>
-
-                            </children>
                         </VBox>
-
                     </VBox>
                 </StackPane>
-
             </children>
         </StackPane>
     </center>
