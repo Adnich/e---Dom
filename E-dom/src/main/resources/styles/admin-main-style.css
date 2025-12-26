@@ -1,25 +1,26 @@
+/* ============================================
+   ADMIN MAIN – E-DOM (NEW COLOR PALETTE)
+   ============================================ */
+
 .root {
-    -fx-font-family: "Segoe UI", "Inter", sans-serif;
+    -fx-font-family: "Inter", "Segoe UI", system-ui, sans-serif;
 }
 
 /* ===== SIDEBAR ===== */
 .sidebar {
-    /* Teal/green gradient matching the image */
-    -fx-background-color: #27b397;
+    -fx-background-color: #004E64;
     -fx-padding: 24 0 20 0;
 }
 
-/* Header section */
+/* ===== HEADER ===== */
 .sidebar-header {
     -fx-padding: 0 20 20 20;
-    -fx-alignment: TOP_LEFT;
 }
 
 .sidebar-title {
-    -fx-text-fill: white;
-    -fx-font-size: 20px;
-    -fx-font-weight: 700;
-    -fx-padding: 0 0 4 0;
+    -fx-text-fill: #FFF9A5;
+    -fx-font-size: 22px;
+    -fx-font-weight: 800;
 }
 
 .sidebar-subtitle {
@@ -28,68 +29,54 @@
     -fx-font-weight: 500;
 }
 
+/* Separator */
 .sidebar-separator .line {
     -fx-background-color: rgba(255,255,255,0.15);
     -fx-pref-height: 1;
 }
 
-/* ===== NAVIGATION BUTTONS ===== */
+/* ===== NAV BUTTONS ===== */
 .nav-btn {
     -fx-background-color: transparent;
     -fx-text-fill: rgba(255,255,255,0.85);
-    -fx-font-weight: 600;
     -fx-font-size: 15px;
+    -fx-font-weight: 600;
 
-    -fx-padding: 16 20 16 20;
+    -fx-padding: 16 20;
     -fx-alignment: CENTER_LEFT;
-
-    /* Remove border radius for flat design */
-    -fx-background-radius: 0;
-    -fx-border-radius: 0;
-
     -fx-cursor: hand;
 
-    /* Add left border indicator space */
+    -fx-background-radius: 0;
     -fx-border-width: 0 0 0 4;
     -fx-border-color: transparent;
 }
 
-/* Hover effect */
+/* Hover */
 .nav-btn:hover {
-    -fx-background-color: rgba(255,255,255,0.08);
-    -fx-text-fill: white;
+    -fx-background-color: rgba(0, 182, 150, 0.15);
+    -fx-text-fill: #ffffff;
 }
 
-/* Pressed state */
-.nav-btn:pressed {
-    -fx-background-color: rgba(255,255,255,0.12);
-}
-
-/* ===== SELECTED STATE (Active) ===== */
+/* Selected */
 .nav-btn:selected {
-    -fx-background-color: rgba(255,255,255,0.12);
-    -fx-text-fill: white;
-
-    /* Left border indicator */
-    -fx-border-color: transparent transparent transparent white;
-    -fx-border-width: 0 0 0 4;
+    -fx-background-color: rgba(0, 182, 150, 0.25);
+    -fx-text-fill: #FFF9A5;
+    -fx-border-color: #00B696;
 }
 
+/* Selected hover */
 .nav-btn:selected:hover {
-    -fx-background-color: rgba(255,255,255,0.15);
-    -fx-text-fill: white;
+    -fx-background-color: rgba(0, 182, 150, 0.35);
 }
 
 /* ===== CONTENT AREA ===== */
 .content-area {
-    -fx-background-color: #f8fafc;
-    -fx-padding: 0;
+    -fx-background-color: #f5f7fa;
 }
 
 /* ===== FOOTER ===== */
 .sidebar-footer {
-    -fx-text-fill: rgba(255,255,255,0.5);
+    -fx-text-fill: rgba(255,255,255,0.55);
     -fx-font-size: 12px;
-    -fx-padding: 0 20 0 20;
-    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 20;
 }

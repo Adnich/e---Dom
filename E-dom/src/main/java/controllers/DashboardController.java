@@ -5,37 +5,119 @@ import dao.PrijavaDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.scene.chart.PieChart;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.stage.Stage;
+
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 public class DashboardController {
+
     private AdminController adminController;
+
+    // ====== TOP STAT ======
     @FXML private Label lblStudenti;
     @FXML private Label lblPrijave;
+    @FXML private PieChart pieStatusChart;
+    @FXML private Label lblAdminIme;
+
+    // ====== STATUSI ======
+    @FXML private Label lblNaPregledu;
+    @FXML private Label lblOdobrene;
+    @FXML private Label lblOdbijene;
+    @FXML private Label lblBezBodova;
+    @FXML private Label lblZakljucene;
 
     private final StudentDAO studentDAO = new StudentDAO();
     private final PrijavaDAO prijavaDAO = new PrijavaDAO();
 
+    // ================= INIT =================
     @FXML
+    public void initialize() {
 
+        // STUDENTI
+        try {
+            lblStudenti.setText(String.valueOf(studentDAO.countStudents()));
+        } catch (Exception e) {
+            lblStudenti.setText("0");
+            e.printStackTrace();
+        }
+
+        // PRIJAVE
+        try {
+            lblPrijave.setText(String.valueOf(prijavaDAO.countPrijave()));
+        } catch (Exception e) {
+            lblPrijave.setText("0");
+            e.printStackTrace();
+        }
+
+        initStatusStatistiku();
+        initPieChartStatusa();
+    }
+
+    private void initPieChartStatusa() {
+        try {
+            ObservableList<PieChart.Data> data = FXCollections.observableArrayList(
+                    new PieChart.Data("Na pregledu", prijavaDAO.countPrijaveByStatusId(1)),
+                    new PieChart.Data("Odobrene", prijavaDAO.countPrijaveByStatusId(4)),
+                    new PieChart.Data("Odbijene", prijavaDAO.countPrijaveByStatusId(5)),
+                    new PieChart.Data("Bez bodova", prijavaDAO.countPrijaveBezBodova()),
+                    new PieChart.Data("Zaključene", prijavaDAO.countPrijaveByStatusId(3))
+            );
+
+            pieStatusChart.setData(data);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // ================= STATUSI =================
+    private void initStatusStatistiku() {
+        try {
+            // na pregledu (ID = 1)
+            lblNaPregledu.setText(
+                    String.valueOf(prijavaDAO.countPrijaveByStatusId(1))
+            );
+
+            // odobrene (ID = 4)
+            lblOdobrene.setText(
+                    String.valueOf(prijavaDAO.countPrijaveByStatusId(4))
+            );
+
+            // odbijene (ID = 5)
+            lblOdbijene.setText(
+                    String.valueOf(prijavaDAO.countPrijaveByStatusId(5))
+            );
+
+            // bez bodova
+            lblBezBodova.setText(
+                    String.valueOf(prijavaDAO.countPrijaveBezBodova())
+            );
+            // zaključene (ID = 3)
+            lblZakljucene.setText(
+                    String.valueOf(prijavaDAO.countPrijaveByStatusId(3))
+            );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            lblNaPregledu.setText("0");
+            lblOdobrene.setText("0");
+            lblOdbijene.setText("0");
+            lblBezBodova.setText("0");
+        }
+    }
+
+    // ================= NAVIGACIJA =================
     public void setAdminController(AdminController adminController) {
         this.adminController = adminController;
-    }
-
-    public void initialize() {
-        try { lblStudenti.setText(String.valueOf(studentDAO.countStudents())); }
-        catch (Exception e) { lblStudenti.setText("0"); e.printStackTrace(); }
-
-        try { lblPrijave.setText(String.valueOf(prijavaDAO.countPrijave())); }
-        catch (Exception e) { lblPrijave.setText("0"); e.printStackTrace(); }
-    }
-
-    // Ovo radi samo ako je dashboard-view.fxml učitan unutar AdminController contentArea (StackPane)
-    private StackPane findContentArea() {
-        // dashboard root je StackPane -> parent chain do contentArea
-        // najčešće je Parent -> StackPane(contentArea). Ako ne nađe, samo neće raditi.
-        return null;
     }
 
     @FXML
@@ -52,21 +134,23 @@ public class DashboardController {
         }
     }
 
-    private void loadIntoAdminContent(String fxmlPath) {
+    @FXML
+    private void onNovaPrijava() {
         try {
-            Parent view = new FXMLLoader(getClass().getResource(fxmlPath)).load();
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/views/novi-student.fxml")
+            );
+            Scene scene = new Scene(loader.load());
 
-            // pokušaj: dashboard je u contentArea (StackPane) pa uzmi root i zamijeni
-            // root = StackPane (dash-root). Njegov parent bi trebao biti contentArea.
-            // Najsigurnije: uzmi bilo koji node (npr lblPrijave) i idi na parent.
-            var node = lblPrijave;
-            if (node == null) return;
+            Stage stage = new Stage();
+            stage.setTitle("Nova prijava");
+            stage.setScene(scene);
+            stage.setResizable(true);
+            stage.show();
 
-            var parent = node.getScene() != null ? node.getScene().getRoot() : null;
-            // Ako je admin layout drugačiji, preskoči — dashboard i dalje radi bez ovoga.
-            // Ovdje ne forsiram da ne pukne aplikacija.
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+
 }

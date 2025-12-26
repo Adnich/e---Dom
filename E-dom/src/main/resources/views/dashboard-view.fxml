@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -8,18 +9,20 @@
       fx:controller="controllers.DashboardController"
       stylesheets="@../styles/dashboard-style.css"
       styleClass="dash-root"
-      spacing="22"
+      spacing="20"
       maxWidth="Infinity"
       maxHeight="Infinity">
 
     <!-- HEADER -->
-    <VBox spacing="4" styleClass="dash-header">
-        <Label text="Pregled sistema" styleClass="dash-title"/>
-        <Label text="Brzi pregled ključnih informacija"
-               styleClass="dash-subtitle"/>
-    </VBox>
+    <HBox alignment="CENTER_LEFT" spacing="12" styleClass="dash-header">
+        <VBox spacing="2" HBox.hgrow="ALWAYS">
+            <Label text="Pregled sistema" styleClass="dash-title"/>
+            <Label text="Brzi pregled ključnih informacija" styleClass="dash-subtitle"/>
+        </VBox>
+        <Label text="DECEMBAR 2025" styleClass="date-badge"/>
+    </HBox>
 
-    <!-- ===== TOP STAT CARDS ===== -->
+    <!-- STAT CARDS -->
     <GridPane hgap="16">
         <columnConstraints>
             <ColumnConstraints percentWidth="33.3"/>
@@ -27,92 +30,87 @@
             <ColumnConstraints percentWidth="33.4"/>
         </columnConstraints>
 
-        <VBox GridPane.columnIndex="0"
-              spacing="10"
-              styleClass="stat-card">
-            <Label text="Studenti" styleClass="stat-label"/>
-            <Label fx:id="lblStudenti" text="0" styleClass="stat-number"/>
-            <Label text="Ukupan broj registrovanih studenata"
-                   styleClass="stat-hint"/>
+        <VBox GridPane.columnIndex="0" styleClass="stat-card-modern">
+            <Label text="Studenti" styleClass="stat-label-modern"/>
+            <Label fx:id="lblStudenti" text="0" styleClass="stat-number-modern"/>
+            <Label text="Ukupan broj registrovanih" styleClass="stat-hint-modern"/>
         </VBox>
 
-        <VBox GridPane.columnIndex="1"
-              spacing="10"
-              styleClass="stat-card">
-            <Label text="Prijave" styleClass="stat-label"/>
-            <Label fx:id="lblPrijave" text="0" styleClass="stat-number"/>
-            <Label text="Ukupan broj prijava u bazi"
-                   styleClass="stat-hint"/>
+        <VBox GridPane.columnIndex="1" styleClass="stat-card-modern">
+            <Label text="Prijave" styleClass="stat-label-modern"/>
+            <Label fx:id="lblPrijave" text="0" styleClass="stat-number-modern"/>
+            <Label text="Ukupan broj prijava" styleClass="stat-hint-modern"/>
         </VBox>
 
-        <VBox GridPane.columnIndex="2"
-              spacing="10"
-              styleClass="stat-card secondary-card">
-            <Label text="Status" styleClass="stat-label"/>
-            <Label text="Admin panel spreman"
-                   styleClass="stat-number-small"/>
-            <Label text="Dalje: prijave, bodovi, rang-lista"
-                   styleClass="stat-hint"/>
+        <VBox GridPane.columnIndex="2" styleClass="stat-card-modern stat-card-accent">
+            <Label text="Status sistema" styleClass="stat-label-modern"/>
+            <Label text="Aktivan" styleClass="stat-number-modern"/>
+            <Label text="Sistem operativan" styleClass="stat-hint-modern"/>
         </VBox>
     </GridPane>
 
-    <!-- ===== LOWER SECTION ===== -->
-    <GridPane hgap="16"
-              VBox.vgrow="ALWAYS">
+    <!-- CONTENT -->
+    <HBox spacing="16" VBox.vgrow="ALWAYS">
 
-        <columnConstraints>
-            <ColumnConstraints percentWidth="35"/>
-            <ColumnConstraints percentWidth="65"/>
-        </columnConstraints>
+        <!-- PIE CHART -->
+        <VBox spacing="14" styleClass="content-panel chart-panel" HBox.hgrow="ALWAYS">
+            <HBox>
+                <Label text="Statistika prijava" styleClass="section-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="Po statusima" styleClass="mini-badge"/>
+            </HBox>
 
-        <!-- BRZE AKCIJE -->
-        <VBox GridPane.columnIndex="0"
-              spacing="14"
-              styleClass="panel"
-              alignment="TOP_LEFT">
-
-            <Label text="Brze akcije" styleClass="panel-title"/>
-
-            <Button text="Otvori prijave"
-                    styleClass="primary-btn"
-                    maxWidth="Infinity"
-                    onAction="#goPrijave"/>
-
-            <Button text="Otvori studente"
-                    styleClass="secondary-btn"
-                    maxWidth="Infinity"
-                    onAction="#goStudenti"/>
-
-            <Separator opacity="0.25"/>
-
-            <Label text="Savjet: prvo provjeri prijave, zatim bodovanje."
-                   styleClass="panel-hint"
-                   wrapText="true"/>
+            <PieChart fx:id="pieStatusChart"
+                      startAngle="90"
+                      labelsVisible="true"
+                      legendVisible="true"
+                      prefHeight="340"/>
         </VBox>
 
-        <!-- ŠTA DALJE -->
-        <VBox GridPane.columnIndex="1"
-              spacing="14"
-              styleClass="panel"
-              VBox.vgrow="ALWAYS">
+        <!-- SAŽETI STATUS PANEL -->
+        <VBox spacing="10" styleClass="content-panel status-sidebar-compact">
 
-            <Label text="Šta dalje?" styleClass="panel-title"/>
+            <Label text="Status prijava" styleClass="section-title"/>
 
-            <VBox spacing="10">
-                <Label text="• Prijave: prikaz liste + promjena statusa (na pregledu / odobreno / odbijeno)"
-                       styleClass="panel-item"
-                       wrapText="true"/>
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="70"/>
+                    <ColumnConstraints percentWidth="30"/>
+                </columnConstraints>
 
-                <Label text="• Bodovi: unos po dokumentima + automatski zbir ukupnih bodova"
-                       styleClass="panel-item"
-                       wrapText="true"/>
+                <Label text="Na pregledu" GridPane.rowIndex="0"/>
+                <Label fx:id="lblNaPregledu" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-                <Label text="• Rang lista: sortiranje po ukupnim bodovima (akademska godina)"
-                       styleClass="panel-item"
-                       wrapText="true"/>
-            </VBox>
+                <Label text="Odobrene" GridPane.rowIndex="1"/>
+                <Label fx:id="lblOdobrene" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Odbijene" GridPane.rowIndex="2"/>
+                <Label fx:id="lblOdbijene" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Bez bodova" GridPane.rowIndex="3"/>
+                <Label fx:id="lblBezBodova" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Zaključene" GridPane.rowIndex="4"/>
+                <Label fx:id="lblZakljucene" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            </GridPane>
         </VBox>
+    </HBox>
 
-    </GridPane>
+    <HBox spacing="12" styleClass="action-bar">
+        <Button text="Pregled prijava"
+                styleClass="btn-primary"
+                onAction="#goPrijave"/>
+
+        <Button text="Pregled studenata"
+                styleClass="btn-accent"
+                onAction="#goStudenti"/>
+
+        <Button text="Dodaj novu prijavu"
+                styleClass="btn-primary"
+                onAction="#onNovaPrijava"/>
+
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="E-Dom Admin" styleClass="footer-text"/>
+    </HBox>
 
 </VBox>

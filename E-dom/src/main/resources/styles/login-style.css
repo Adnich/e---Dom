@@ -1,12 +1,16 @@
-/* ROOT */
+/* =========================
+   ROOT
+========================= */
 .root {
     -fx-font-family: "Segoe UI", "Arial", sans-serif;
-    -fx-background-color: #DFF0ED;
+    -fx-background-color: #EAFBF7;
 }
 
-/* ========== LEFT PANEL ========== */
+/* =========================
+   LEFT PANEL
+========================= */
 .left-pane {
-    -fx-background-color: #50BCA8;
+    -fx-background-color: linear-gradient(to bottom, #004E64 0%, #003847 100%);
     -fx-padding: 50 45 50 45;
 }
 
@@ -15,8 +19,8 @@
 }
 
 .app-title {
-    -fx-font-size: 28px;
-    -fx-font-weight: 700;
+    -fx-font-size: 20px;
+    -fx-font-weight: 800;
     -fx-text-fill: white;
     -fx-wrap-text: true;
     -fx-max-width: 350px;
@@ -25,97 +29,115 @@
 
 .left-subtitle {
     -fx-font-size: 15px;
-    -fx-font-weight: 400;
-    -fx-text-fill: white;
+    -fx-font-weight: 100;
+    -fx-text-fill: rgba(255,255,255,0.85);
     -fx-wrap-text: true;
-    -fx-max-width: 360px;
-    -fx-opacity: 1;
+    -fx-max-width: 300px;
     -fx-line-spacing: 3px;
 }
 
 .left-text {
     -fx-font-size: 14px;
-    -fx-font-weight: 400;
-    -fx-text-fill: white;
-    -fx-opacity: 1;
+    -fx-font-weight: 600;
+    -fx-text-fill: rgba(255,255,255,0.92);
 }
 
 .illustration-image {
     -fx-opacity: 0.95;
 }
 
-/* ========== RIGHT PANEL ========== */
+/* =========================
+   RIGHT PANEL (clean premium gradient)
+========================= */
 .right-pane {
-    -fx-background-color: #DFF0ED;
+    -fx-background-color: linear-gradient(to bottom right, #EAFBF7 0%, #FFFFFF 65%);
 }
 
-/* BACKGROUND CIRCLE - BARELY VISIBLE */
-.circle-decor {
-    -fx-background-radius: 600px;
-    -fx-pref-width: 1300px;
-    -fx-pref-height: 1300px;
-    -fx-background-color: rgba(180, 215, 210, 0.2);
-}
-
-/* LOGIN CONTAINER */
+/* =========================
+   LOGIN CONTAINER
+========================= */
 .login-container {
     -fx-padding: 80 80 80 80;
 }
 
-/* LOGIN CARD - ČISTO BELA SA SIVOM SENKOM */
-.login-card {
-    -fx-background-radius: 20px;
-    -fx-background-color: white;
-    -fx-padding: 50 55 50 55;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 30, 0, 0, 8);
+/* =========================
+   GLOW BLOBS (premium, subtle)
+========================= */
+.glow-mint {
+    -fx-background-radius: 999px;
+    -fx-pref-width: 520px;
+    -fx-pref-height: 520px;
+    -fx-background-color: rgba(0, 182, 150, 0.035);
+    -fx-effect: dropshadow(gaussian, rgba(0, 182, 150, 0.22), 280, 0.60, 0, 0);
+    -fx-translate-x: 120px;
+    -fx-translate-y: -80px;
 }
 
-/* ========== TITLE ========== */
+.glow-yellow {
+    -fx-background-radius: 999px;
+    -fx-pref-width: 360px;
+    -fx-pref-height: 360px;
+    -fx-background-color: rgba(255, 249, 165, 0.045);
+    -fx-effect: dropshadow(gaussian, rgba(255, 249, 165, 0.25), 260, 0.55, 0, 0);
+    -fx-translate-x: -140px;
+    -fx-translate-y: 160px;
+}
+
+/* =========================
+   LOGIN CARD (final touch: less bottom empty space)
+========================= */
+.login-card {
+    -fx-background-radius: 26px;
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 45 55 34 55; /* FINAL TOUCH: smaller bottom padding */
+    -fx-border-radius: 26px;
+    -fx-border-color: rgba(0, 182, 150, 0.18);
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.18), 45, 0, 0, 12);
+}
+
+/* =========================
+   TITLE
+========================= */
 .login-title {
-    -fx-text-fill: #50BCA8;
-    -fx-font-size: 30px;
+    -fx-text-fill: #004E64;
+    -fx-font-size: 32px;
+    -fx-font-weight: 800;
+}
+
+/* =========================
+   FORM LABELS
+========================= */
+.field-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: rgba(0,78,100,0.72);
     -fx-font-weight: 700;
 }
 
-/* ========== FORM LABELS ========== */
-.field-label {
-    -fx-font-size: 13px;
-    -fx-text-fill: #4A5568;
-    -fx-font-weight: 600;
-}
-
-/* ========== USERNAME INPUT - TIRKIZNI BORDER ========== */
+/* =========================
+   INPUTS (final touch: inner depth)
+========================= */
 .text-input {
-    -fx-background-color: white;
-    -fx-background-radius: 12px;
-    -fx-border-radius: 12px;
-    -fx-border-color: #50BCA8;
-    -fx-border-width: 2px;
+    -fx-background-color: #F9FFFE;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+    -fx-border-color: rgba(0,78,100,0.18);
+    -fx-border-width: 1.6px;
     -fx-padding: 14 18 14 18;
     -fx-font-size: 14px;
-    -fx-text-fill: #2D3748;
+    -fx-text-fill: #004E64;
     -fx-pref-height: 50px;
-    -fx-prompt-text-fill: #A0AEC0;
+    -fx-prompt-text-fill: rgba(0,78,100,0.35);
+
+    /* FINAL TOUCH: subtle depth inside */
+    -fx-effect: innershadow(gaussian, rgba(0,78,100,0.06), 10, 0, 0, 1);
 }
 
 .text-input:focused {
-    -fx-border-color: #50BCA8;
-    -fx-border-width: 2.5px;
-    -fx-background-color: white;
-}
-
-/* ========== PASSWORD INPUT - SVETLO SIVI BORDER I POZADINA ========== */
-.password-wrapper .text-input {
-    -fx-background-color: #FAFBFB;
-    -fx-border-color: #D0D5DB;
-    -fx-border-width: 1.5px;
-    -fx-padding: 14 50 14 18;
-}
-
-.password-wrapper .text-input:focused {
-    -fx-background-color: white;
-    -fx-border-color: #50BCA8;
-    -fx-border-width: 2.5px;
+    -fx-border-color: #00B696;
+    -fx-border-width: 2.2px;
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.22), 14, 0, 0, 0);
 }
 
 /* PASSWORD WRAPPER */
@@ -126,18 +148,19 @@
 /* EYE BUTTON */
 .eye-btn {
     -fx-background-color: transparent;
-    -fx-padding: 8;
+    -fx-padding: 10;
     -fx-cursor: hand;
     -fx-border-width: 0;
     -fx-background-insets: 0;
+    -fx-opacity: 0.65;
 }
 
 .eye-btn:hover {
-    -fx-opacity: 0.6;
+    -fx-opacity: 1;
 }
 
 .eye-btn:pressed {
-    -fx-opacity: 0.4;
+    -fx-opacity: 0.55;
 }
 
 .eye-btn:focused {
@@ -145,40 +168,47 @@
     -fx-border-width: 0;
 }
 
-/* ========== CHECKBOX ========== */
+/* =========================
+   CHECKBOX (final touch: hover + nicer border)
+========================= */
 .check-box {
-    -fx-text-fill: #718096;
+    -fx-text-fill: rgba(0,78,100,0.65);
     -fx-font-size: 13px;
-    -fx-font-weight: 500;
+    -fx-font-weight: 600;
 }
 
 .check-box .box {
-    -fx-background-radius: 4px;
-    -fx-border-radius: 4px;
-    -fx-border-color: #D0D5DB;
-    -fx-border-width: 1.5px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-border-color: rgba(0,78,100,0.22);
+    -fx-border-width: 1.4px;
     -fx-background-color: white;
     -fx-pref-width: 18px;
     -fx-pref-height: 18px;
 }
 
+/* FINAL TOUCH: hover border */
+.check-box:hover .box {
+    -fx-border-color: rgba(0,182,150,0.55);
+}
+
 .check-box:selected .box {
-    -fx-background-color: #50BCA8;
-    -fx-border-color: #50BCA8;
+    -fx-background-color: #00B696;
+    -fx-border-color: #00B696;
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.22), 10, 0, 0, 0);
 }
 
 .check-box .mark {
     -fx-background-color: white;
-    -fx-shape: "M 0 4 L 3 7 L 8 0";
-    -fx-scale-x: 0.7;
-    -fx-scale-y: 0.7;
 }
 
 .check-box .text {
-    -fx-fill: #718096;
+    -fx-fill: rgba(0,78,100,0.65);
 }
 
-/* ========== HYPERLINKS ========== */
+/* =========================
+   LINKS
+========================= */
 Hyperlink {
     -fx-cursor: hand;
     -fx-border-width: 0;
@@ -191,85 +221,110 @@ Hyperlink:focused {
     -fx-background-color: transparent;
 }
 
-/* FORGOT PASSWORD LINK */
+/* FORGOT PASSWORD */
 .forgot-link {
-    -fx-text-fill: #50BCA8;
+    -fx-text-fill: #00B696;
     -fx-font-size: 13px;
-    -fx-font-weight: 600;
+    -fx-font-weight: 700;
     -fx-underline: false;
-    -fx-border-width: 0;
-    -fx-padding: 0;
-    -fx-background-color: transparent;
 }
 
 .forgot-link:hover {
     -fx-underline: true;
+    -fx-text-fill: #009E82;
 }
 
-.forgot-link:visited {
-    -fx-text-fill: #50BCA8;
-}
-
-/* ========== PRIMARY BUTTON - ZAOBLJENO! ========== */
+/* =========================
+   PRIMARY BUTTON (final touch: softer & deeper shadow)
+========================= */
 .primary-btn {
-    -fx-background-radius: 30px;
-    -fx-background-color: #50BCA8;
+    -fx-background-radius: 16px;
+    -fx-background-color: linear-gradient(to right, #00B696, #00C7A2);
     -fx-text-fill: white;
-    -fx-font-weight: 700;
+    -fx-font-weight: 800;
     -fx-font-size: 16px;
     -fx-padding: 14 0 14 0;
     -fx-cursor: hand;
     -fx-border-width: 0;
     -fx-pref-height: 52px;
+
+    /* FINAL TOUCH shadow */
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.30), 30, 0.35, 0, 12);
 }
 
 .primary-btn:hover {
-    -fx-background-color: #5CC4B0;
+    -fx-background-color: linear-gradient(to right, #00A98B, #00B696);
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.38), 34, 0.40, 0, 14);
 }
 
 .primary-btn:pressed {
-    -fx-background-color: #45A898;
+    -fx-background-color: #009E82;
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.22), 18, 0, 0, 6);
 }
 
-/* ========== ERROR LABEL ========== */
+/* =========================
+   ERROR LABEL
+========================= */
 .error-label {
     -fx-font-size: 12px;
     -fx-text-fill: #E53E3E;
-    -fx-font-weight: 600;
+    -fx-font-weight: 700;
     -fx-padding: 0;
     -fx-wrap-text: true;
 }
 
-/* ========== REGISTER SECTION ========== */
+/* =========================
+   REGISTER LINK (pill style)
+========================= */
 .register-link {
-    -fx-text-fill: #50BCA8;
-    -fx-font-weight: 700;
+    -fx-text-fill: #004E64;
+    -fx-font-weight: 800;
     -fx-font-size: 13px;
     -fx-underline: false;
-    -fx-border-width: 0;
-    -fx-padding: 0;
-    -fx-background-color: transparent;
+    -fx-padding: 6 14 6 14;
+    -fx-background-radius: 999px;
+    -fx-background-color: rgba(255,249,165,0.60);
+    -fx-border-radius: 999px;
+    -fx-border-color: rgba(0,78,100,0.18);
+    -fx-border-width: 1px;
 }
 
 .register-link:hover {
-    -fx-underline: true;
+    -fx-background-color: rgba(255,249,165,0.80);
+    -fx-text-fill: #004E64;
 }
 
 .register-link:visited {
-    -fx-text-fill: #50BCA8;
+    -fx-text-fill: #004E64;
 }
 
-/* ========== GENERAL LABELS ========== */
+/* =========================
+   GENERAL LABELS (final touch: more consistent)
+========================= */
 Label {
-    -fx-text-fill: #718096;
+    -fx-text-fill: rgba(0,78,100,0.62);
     -fx-font-size: 13px;
 }
 
-/* ========== SPACING ========== */
+/* =========================
+   SPACING
+========================= */
 VBox {
     -fx-alignment: top-left;
 }
 
 HBox {
     -fx-alignment: center-left;
+}
+
+.left-tagline {
+    -fx-font-size: 13px;
+    -fx-font-weight: 800;
+    -fx-text-fill: rgba(255,249,165,0.95);
+    -fx-letter-spacing: 0.5px;
+}
+.left-text {
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-text-fill: rgba(255,255,255,0.92);
 }

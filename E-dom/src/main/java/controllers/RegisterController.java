@@ -72,7 +72,6 @@ public class RegisterController {
         });
     }
 
-
     @FXML
     private void onRegisterClicked(ActionEvent event) throws SQLException {
         String ime = txtIme.getText().trim();
@@ -95,33 +94,36 @@ public class RegisterController {
             return;
         }
 
-        if(korisnikDAO.nadjiUsername(username) != null) {
+        if (korisnikDAO.nadjiUsername(username) != null) {
             lblError.setText("Korisničko ime je zauzeto.");
             return;
         }
-        if(pass1.length()<8){
+
+        // provjera lozinke
+        if (pass1.length() < 8) {
             lblError.setText("Lozinka mora imati najmanje 8 karaktera.");
             return;
         }
-        if(!pass1.matches(".*[A-Z].*")){
+        if (!pass1.matches(".*[A-Z].*")) {
             lblError.setText("Lozinka mora sadržavati barem jedno veliko slovo.");
             return;
         }
-        if(!pass1.matches(".*[a-z].*")){
+        if (!pass1.matches(".*[a-z].*")) {
             lblError.setText("Lozinka mora sadržavati barem jedno malo slovo.");
             return;
         }
-        if(!pass1.matches(".*\\d.*")){
+        if (!pass1.matches(".*\\d.*")) {
             lblError.setText("Lozinka mora sadržavati barem jednu cifru.");
             return;
         }
-        if(!pass1.matches(".*[!@#$%^&*()].*")){
+        if (!pass1.matches(".*[!@#$%^&*()].*")) {
             lblError.setText("Lozinka mora sadržavati barem jedan specijalni karakter (!@#$%^&*()).");
             return;
         }
+
         ime = TextUtil.formatirajIme(ime);
         prezime = TextUtil.formatirajIme(prezime);
-        // ovdje za projekat koristimo lozinku direktno kao password_hash
+
         Korisnik k = new Korisnik();
         k.setIme(ime);
         k.setPrezime(prezime);
@@ -133,14 +135,13 @@ public class RegisterController {
         try {
             korisnikDAO.unesiKorisnika(k);
 
-            // mala potvrda korisniku
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Registracija");
             alert.setHeaderText(null);
             alert.setContentText("Korisnik je uspješno registrovan.");
             alert.showAndWait();
 
-            // nakon uspješne registracije, vratimo se na login
+            // nakon uspješne registracije, vrati na login full screen
             otvoriLoginEkran(event);
 
         } catch (Exception e) {
@@ -156,26 +157,31 @@ public class RegisterController {
 
     private void otvoriLoginEkran(ActionEvent event) {
         try {
-            FXMLLoader loader =
-                    new FXMLLoader(HelloApplication.class.getResource("/views/login-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    HelloApplication.class.getResource("/views/login-view.fxml")
+            );
 
-            Scene scene = new Scene(loader.load(), 1000, 600);
+            // ✅ Scene bez hardkodirane širine/visine
+            Scene scene = new Scene(loader.load());
 
-            // SIGURNO učitavanje CSS-a
+            // ✅ učitaj CSS
             var cssUrl = HelloApplication.class.getResource("/styles/login-style.css");
             if (cssUrl != null) {
                 scene.getStylesheets().add(cssUrl.toExternalForm());
             }
 
+            // ✅ uzmi trenutni stage
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setTitle("E-Dom - Prijava");
 
+            stage.setTitle("E-Dom - Prijava");
             stage.setScene(scene);
-            stage.setResizable(false);
-            stage.sizeToScene();
+
+            // ✅ FULL SCREEN (maksimizirano)
+            stage.setResizable(true);
+            stage.setMaximized(true);
+
             stage.centerOnScreen();
             stage.show();
-
 
         } catch (IOException e) {
             e.printStackTrace();
