@@ -4,12 +4,15 @@ import dao.StudentDAO;
 import dao.PrijavaDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.chart.PieChart;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.time.format.TextStyle;
@@ -130,4 +133,24 @@ public class DashboardController {
             adminController.showStudenti(null);
         }
     }
+
+    @FXML
+    private void onNovaPrijava() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/views/novi-student.fxml")
+            );
+            Scene scene = new Scene(loader.load());
+
+            Stage stage = new Stage();
+            stage.setTitle("Nova prijava");
+            stage.setScene(scene);
+            stage.setResizable(true);
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

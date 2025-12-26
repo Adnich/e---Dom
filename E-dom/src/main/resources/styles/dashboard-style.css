@@ -124,19 +124,17 @@
 
 
 .btn-accent {
-    -fx-background-color: transparent;
-    -fx-text-fill: #004E64;
+    -fx-background-color: #004E64;
+    -fx-text-fill: white;
     -fx-font-weight: 700;
     -fx-font-size: 13px;
     -fx-background-radius: 8;
     -fx-padding: 10 22;
-    -fx-border-color: #004E64;
-    -fx-border-width: 1.5;
     -fx-cursor: hand;
 }
 
 .btn-accent:hover {
-    -fx-background-color: rgba(0, 78, 100, 0.08);
+    -fx-background-color: #006b86;
 }
 
 
@@ -145,3 +143,19 @@
     -fx-text-fill: #94a3b8;
     -fx-font-size: 12px;
 }
+
+.btn-action {
+    -fx-background-color: #004E64;
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-font-size: 13px;
+    -fx-background-radius: 8;
+    -fx-padding: 10 22;
+    -fx-cursor: hand;
+}
+
+.btn-action:hover {
+    -fx-background-color: #006b86;
+}
+
+

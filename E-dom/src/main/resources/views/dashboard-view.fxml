@@ -105,6 +105,10 @@
                 styleClass="btn-accent"
                 onAction="#goStudenti"/>
 
+        <Button text="Dodaj novu prijavu"
+                styleClass="btn-primary"
+                onAction="#onNovaPrijava"/>
+
         <Region HBox.hgrow="ALWAYS"/>
         <Label text="E-Dom Admin" styleClass="footer-text"/>
     </HBox>
