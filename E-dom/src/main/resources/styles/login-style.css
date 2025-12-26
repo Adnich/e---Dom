@@ -19,7 +19,7 @@
 }
 
 .app-title {
-    -fx-font-size: 28px;
+    -fx-font-size: 20px;
     -fx-font-weight: 800;
     -fx-text-fill: white;
     -fx-wrap-text: true;
@@ -29,10 +29,10 @@
 
 .left-subtitle {
     -fx-font-size: 15px;
-    -fx-font-weight: 400;
+    -fx-font-weight: 100;
     -fx-text-fill: rgba(255,255,255,0.85);
     -fx-wrap-text: true;
-    -fx-max-width: 360px;
+    -fx-max-width: 300px;
     -fx-line-spacing: 3px;
 }
 
@@ -315,4 +315,16 @@ VBox {
 
 HBox {
     -fx-alignment: center-left;
+}
+
+.left-tagline {
+    -fx-font-size: 13px;
+    -fx-font-weight: 800;
+    -fx-text-fill: rgba(255,249,165,0.95);
+    -fx-letter-spacing: 0.5px;
+}
+.left-text {
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-text-fill: rgba(255,255,255,0.92);
 }
