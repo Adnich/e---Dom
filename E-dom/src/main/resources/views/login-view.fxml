@@ -52,7 +52,7 @@
             <!-- ILUSTRACIJA NA DNU -->
             <HBox alignment="BOTTOM_LEFT" style="-fx-padding: 20 0 0 0;">
                 <children>
-                    
+
                 </children>
             </HBox>
 
