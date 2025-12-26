@@ -32,6 +32,9 @@ public class RegisterController {
     private TextField txtUsername;
 
     @FXML
+    private TextField txtEmail;
+
+    @FXML
     private PasswordField txtPassword;
 
     @FXML
@@ -75,12 +78,13 @@ public class RegisterController {
         String ime = txtIme.getText().trim();
         String prezime = txtPrezime.getText().trim();
         String username = txtUsername.getText().trim();
+        String email = txtEmail.getText().trim();
         String pass1 = txtPassword.getText();
         String pass2 = txtPassword2.getText();
         Uloga uloga = cmbUloga.getValue();
 
         // osnovne provjere
-        if (ime.isEmpty() || prezime.isEmpty() || username.isEmpty()
+        if (ime.isEmpty() || prezime.isEmpty() || username.isEmpty() || email.isEmpty()
                 || pass1.isEmpty() || pass2.isEmpty() || uloga == null) {
             lblError.setText("Popunite sva polja i odaberite ulogu.");
             return;
@@ -122,6 +126,7 @@ public class RegisterController {
         k.setIme(ime);
         k.setPrezime(prezime);
         k.setUsername(username);
+        k.setEmail(email);
         k.setPasswordHash(PasswordUtil.hash(pass1));
         k.setUloga(uloga);
 

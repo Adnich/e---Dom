@@ -12,18 +12,35 @@
     <Label text="Reset lozinke"
            style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
 
+    <!-- Korisničko ime ili email -->
     <TextField fx:id="txtUsername"
-               promptText="Korisničko ime"/>
+               promptText="Korisničko ime ili email"/>
 
+    <!-- Dugme za slanje koda na email -->
+    <Button text="Pošalji kod"
+            onAction="#onSendCodeClicked"/>
+
+    <!-- Polje za unos koda (disable dok se ne pošalje kod) -->
+    <TextField fx:id="txtCode"
+               promptText="Unesite kod"
+               disable="true"/>
+
+    <!-- Polja za novu lozinku -->
     <PasswordField fx:id="txtNewPassword"
-                   promptText="Nova lozinka"/>
+                   promptText="Nova lozinka"
+                   disable="true"/>
 
     <PasswordField fx:id="txtConfirmPassword"
-                   promptText="Potvrdi lozinku"/>
+                   promptText="Potvrdi lozinku"
+                   disable="true"/>
 
-    <Button text="Spremi novu lozinku"
-            onAction="#onResetClicked"/>
+    <!-- Dugme za reset lozinke -->
+    <Button fx:id="btnReset"
+            text="Resetuj lozinku"
+            onAction="#onResetClicked"
+            disable="true"/>
 
+    <!-- Labela za prikaz info/gresaka -->
     <Label fx:id="lblInfo"
            textFill="red"/>
 </VBox>

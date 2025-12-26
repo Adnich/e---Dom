@@ -97,6 +97,15 @@
 
                             <VBox spacing="6">
                                 <children>
+                                    <Label text="E-mail" styleClass="field-label"/>
+                                    <TextField fx:id="txtEmail"
+                                               promptText="Unesite vašu e-mail adresu"
+                                               styleClass="text-input"/>
+                                </children>
+                            </VBox>
+
+                            <VBox spacing="6">
+                                <children>
                                     <Label text="Lozinka" styleClass="field-label"/>
                                     <PasswordField fx:id="txtPassword"
                                                    promptText="Unesite lozinku"
