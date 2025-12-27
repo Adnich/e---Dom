@@ -1,0 +1,147 @@
+.root {
+    -fx-font-family: "Inter", "Segoe UI", system-ui;
+}
+
+/* ===== ROOT BACKGROUND ===== */
+.rang-root {
+    -fx-background-color: #f6fbfb;
+    -fx-padding: 22;
+}
+
+/* ===== HEADER ===== */
+.rang-header {
+    -fx-padding: 10 10 18 10;
+}
+
+.rang-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #004E64;
+}
+
+/* ===== MAIN CARD ===== */
+.rang-card {
+    -fx-background-color: white;
+    -fx-background-radius: 26px;
+    -fx-padding: 18;
+    -fx-border-color: rgba(0,182,150,0.25);
+    -fx-border-radius: 26px;
+    -fx-border-width: 1.4px;
+    -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.13), 30, 0.30, 0, 12);
+}
+
+/* ===== TABLE WRAPPER ===== */
+.rang-table {
+    -fx-background-radius: 18px;
+    -fx-border-radius: 18px;
+    -fx-border-color: rgba(0,182,150,0.30);
+    -fx-border-width: 1.4px;
+    -fx-padding: 0;
+}
+
+/* ===== HEADER BACKGROUND ===== */
+.rang-table .column-header-background {
+    -fx-background-color: #00B696;
+    -fx-background-radius: 18 18 0 0;
+}
+
+/* ===== HEADER CELLS ===== */
+.rang-table .column-header {
+    -fx-background-color: transparent;
+    -fx-padding: 14 10;
+    -fx-border-color: rgba(255,255,255,0.35);
+    -fx-border-width: 0 1 0 0;
+}
+
+.rang-table .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: 900;
+    -fx-font-size: 12px;
+    -fx-alignment: center;
+}
+
+/* ===== ROWS ===== */
+.rang-table .table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: rgba(0,182,150,0.09);
+    -fx-border-width: 0 0 1 0;
+}
+
+.rang-table .table-row-cell:odd {
+    -fx-background-color: rgba(0,182,150,0.04);
+}
+
+.rang-table .table-row-cell:hover {
+    -fx-background-color: rgba(0,182,150,0.10);
+}
+
+.rang-table .table-row-cell:selected {
+    -fx-background-color: rgba(0,182,150,0.20);
+}
+
+/* ===== CELLS ===== */
+.rang-table .table-cell {
+    -fx-padding: 12 12;
+    -fx-font-size: 13px;
+    -fx-text-fill: #0f172a;
+    -fx-alignment: CENTER-LEFT;
+}
+
+/* ===== R.BR - centrirano + bold ===== */
+.rang-table .table-cell.rbr-cell {
+    -fx-font-weight: 900;
+    -fx-alignment: CENTER;
+    -fx-text-fill: #004E64;
+}
+
+/* ===== BODOVI - bold + zelena ===== */
+.rang-table .table-cell.bodovi-cell {
+    -fx-font-weight: 900;
+    -fx-text-fill: #00B696;
+    -fx-alignment: CENTER;
+}
+
+/* ===== DETALJI BUTTON ===== */
+.det-btn {
+    -fx-background-radius: 14px;
+    -fx-background-color: #00B696;
+    -fx-text-fill: white;
+    -fx-font-weight: 900;
+    -fx-font-size: 12px;
+    -fx-padding: 8 18;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.35), 14, 0.30, 0, 6);
+}
+
+.det-btn:hover {
+    -fx-background-color: #00a88a;
+}
+
+.det-btn:pressed {
+    -fx-background-color: #00997d;
+}
+
+/* ===== SCROLLBAR ===== */
+.rang-table .scroll-bar:vertical .thumb {
+    -fx-background-color: rgba(0,182,150,0.45);
+    -fx-background-radius: 10px;
+}
+
+.rang-table .corner {
+    -fx-background-color: #00B696;
+}
+/* ukloni sivi "filler" desno u headeru */
+.table-view .filler,
+.table-view .column-header-background .filler {
+    -fx-background-color: #00B696;
+}
+.table-view .column-header-background {
+    -fx-background-color: #00B696;
+    -fx-background-radius: 16 16 0 0;
+}
+
+.table-view .filler,
+.table-view .column-header-background .filler {
+    -fx-background-color: #00B696;
+    -fx-background-radius: 0 16 0 0;
+}

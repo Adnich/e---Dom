@@ -10,23 +10,26 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.studentiController"
             stylesheets="@../styles/studenti-style.css"
-            styleClass="root anchor-pane">
+            styleClass="anchor-pane"
+            maxWidth="Infinity"
+            maxHeight="Infinity">
 
     <children>
-        <VBox spacing="15"
+        <VBox spacing="18"
               AnchorPane.topAnchor="20"
               AnchorPane.leftAnchor="20"
               AnchorPane.rightAnchor="20"
               AnchorPane.bottomAnchor="20"
-              styleClass="main-vbox">
+              styleClass="main-vbox"
+              VBox.vgrow="ALWAYS">
 
             <!-- HEADER -->
-            <HBox alignment="CENTER_LEFT" spacing="20">
+            <HBox alignment="CENTER_LEFT" spacing="16">
                 <Label text="Studenti" styleClass="header-title"/>
 
                 <TextField fx:id="txtSearch"
                            promptText="Pretraga: ime, prezime, indeks, fakultet..."
-                           prefWidth="280"/>
+                           prefWidth="340"/>
 
                 <Region HBox.hgrow="ALWAYS"/>
             </HBox>
@@ -34,17 +37,21 @@
             <!-- TABLE -->
             <TableView fx:id="tblStudenti"
                        styleClass="table-view"
-                       VBox.vgrow="ALWAYS">
+                       VBox.vgrow="ALWAYS"
+                       maxWidth="Infinity"
+                       maxHeight="Infinity">
 
                 <columns>
-                    <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
-                    <TableColumn fx:id="colIme" text="Ime" prefWidth="120"/>
-                    <TableColumn fx:id="colPrezime" text="Prezime" prefWidth="140"/>
-                    <TableColumn fx:id="colIndeks" text="Broj indeksa" prefWidth="140"/>
-                    <TableColumn fx:id="colFakultet" text="Fakultet" prefWidth="180"/>
-                    <TableColumn fx:id="colGodina" text="Godina" prefWidth="100"/>
-                    <TableColumn fx:id="colProsjek" text="Prosjek" prefWidth="100"/>
-                    <TableColumn fx:id="colStatus" text="Soc. status" prefWidth="160"/>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="70"/>
+                    <TableColumn fx:id="colIme" text="Ime" prefWidth="140"/>
+                    <TableColumn fx:id="colPrezime" text="Prezime" prefWidth="160"/>
+                    <TableColumn fx:id="colIndeks" text="Broj indeksa" prefWidth="170"/>
+                    <TableColumn fx:id="colFakultet" text="Fakultet" prefWidth="220"/>
+                    <TableColumn fx:id="colGodina" text="Godina" prefWidth="110"/>
+
+                    <!-- dodat styleClass za badge -->
+                    <TableColumn fx:id="colProsjek" text="Prosjek" prefWidth="120" styleClass="prosjek-col"/>
+                    <TableColumn fx:id="colStatus" text="Soc. status" prefWidth="220" styleClass="status-col"/>
                 </columns>
 
             </TableView>
