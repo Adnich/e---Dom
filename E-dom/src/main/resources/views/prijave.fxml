@@ -27,11 +27,12 @@
 
                 <TextField fx:id="txtSearch"
                            promptText="Pretraga: ime, prezime, status..."
-                           prefWidth="320"/>
+                           prefWidth="340"
+                           styleClass="search-input"/>
 
                 <Region HBox.hgrow="ALWAYS"/>
 
-                <MenuButton text="Sortiraj" fx:id="btnSortiraj">
+                <MenuButton text="Sortiraj" fx:id="btnSortiraj" styleClass="menu-btn">
                     <items>
                         <MenuItem text="Ime A-Z" onAction="#sortImeAZ"/>
                         <MenuItem text="Ime Z-A" onAction="#sortImeZA"/>
@@ -42,11 +43,9 @@
                     </items>
                 </MenuButton>
 
-                <MenuButton text="Filtriraj" fx:id="btnFiltriraj">
+                <MenuButton text="Filtriraj" fx:id="btnFiltriraj" styleClass="menu-btn">
                     <items>
-                        <Menu fx:id="menuFakulteti" text="Fakulteti">
-                            <!-- CheckboxMenuItem će biti dinamički dodani iz kontrolera -->
-                        </Menu>
+                        <Menu fx:id="menuFakulteti" text="Fakulteti"/>
                         <Menu fx:id="menuStatusPrijave" text="Status prijave"/>
                     </items>
                 </MenuButton>

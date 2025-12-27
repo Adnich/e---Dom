@@ -13,7 +13,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.Prijava;
@@ -40,8 +39,6 @@ public class prijaveController {
     /* ===================== UI ===================== */
 
     @FXML private TextField txtSearch;
-
-    @FXML private MenuButton btnFiltriraj;
     @FXML private Menu menuFakulteti;
     @FXML private Menu menuStatusPrijave;
 
@@ -65,9 +62,12 @@ public class prijaveController {
 
         initStudentMap();
         initTableColumns();
+        initStatusBadges(); // ✅ OVDE DODAJEŠ badge
 
+        // ✅ masterList mora biti kreiran PRIJE filter menija
         masterList = FXCollections.observableArrayList(prijavaDAO.dohvatiSvePrijave());
 
+        // ✅ tek sad filter meni punimo jer masterList postoji
         initFakultetiFilter();
         initStatusPrijaveFilter();
 
@@ -112,6 +112,45 @@ public class prijaveController {
                 new SimpleStringProperty(nullSafe(cd.getValue().getNapomena())));
     }
 
+    /* ===================== STATUS BADGES ===================== */
+
+    private void initStatusBadges() {
+
+        colStatus.setCellFactory(column -> new TableCell<Prijava, String>() {
+            @Override
+            protected void updateItem(String status, boolean empty) {
+                super.updateItem(status, empty);
+
+                if (empty || status == null || status.isBlank()) {
+                    setText(null);
+                    setGraphic(null);
+                    getStyleClass().removeAll("status-approved", "status-rejected", "status-review", "status-closed");
+                    return;
+                }
+
+                setText(status);
+                setGraphic(null);
+
+                // reset
+                getStyleClass().removeAll("status-approved", "status-rejected", "status-review", "status-closed");
+
+                String s = status.toLowerCase();
+
+                if (s.contains("odob")) {
+                    getStyleClass().add("status-approved");
+                } else if (s.contains("odbi")) {
+                    getStyleClass().add("status-rejected");
+                } else if (s.contains("pregl")) {
+                    getStyleClass().add("status-review");
+                } else if (s.contains("zaklj")) {
+                    getStyleClass().add("status-closed");
+                }
+            }
+        });
+    }
+
+    /* ===================== SORT METHODS ===================== */
+
     @FXML
     private void sortImeAZ() {
         colIme.setSortType(TableColumn.SortType.ASCENDING);
@@ -148,7 +187,6 @@ public class prijaveController {
         tblPrijave.getSortOrder().setAll(colUkupniBodovi);
     }
 
-
     /* ===================== FILTER + SORT CORE ===================== */
 
     private void setupFilteringAndSorting() {
@@ -167,26 +205,31 @@ public class prijaveController {
 
         filteredList.setPredicate(p -> {
 
-            /* SEARCH */
-            String q = txtSearch.getText() == null
-                    ? ""
-                    : txtSearch.getText().toLowerCase();
+            String q = txtSearch.getText() == null ? "" : txtSearch.getText().toLowerCase().trim();
 
+            // STUDENT info
+            Student s = studentMap.get(p.getIdStudent());
+            String fakultet = s != null ? nullSafe(s.getFakultet()) : "";
+
+            // status
+            String status = (p.getStatusPrijave() != null) ? nullSafe(p.getStatusPrijave().getNaziv()) : "";
+
+            // SEARCH
             boolean searchOk = q.isEmpty()
                     || nullSafe(p.getImeStudenta()).toLowerCase().contains(q)
                     || nullSafe(p.getPrezimeStudenta()).toLowerCase().contains(q)
+                    || status.toLowerCase().contains(q)
+                    || fakultet.toLowerCase().contains(q)
                     || String.valueOf(p.getIdPrijava()).contains(q)
                     || nullSafe(p.getNapomena()).toLowerCase().contains(q);
 
-            /* FAKULTET */
-            Student s = studentMap.get(p.getIdStudent());
+            // FAKULTET FILTER
             boolean fakultetOk = selectedFakulteti.isEmpty()
-                    || (s != null && selectedFakulteti.contains(s.getFakultet()));
+                    || selectedFakulteti.contains(fakultet);
 
-            /* STATUS PRIJAVE */
+            // STATUS FILTER
             boolean statusOk = selectedStatusiPrijave.isEmpty()
-                    || (p.getStatusPrijave() != null
-                    && selectedStatusiPrijave.contains(p.getStatusPrijave().getNaziv()));
+                    || selectedStatusiPrijave.contains(status);
 
             return searchOk && fakultetOk && statusOk;
         });
@@ -199,7 +242,7 @@ public class prijaveController {
         Set<String> fakulteti = studentMap.values().stream()
                 .map(Student::getFakultet)
                 .filter(Objects::nonNull)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toCollection(TreeSet::new)); // ✅ sortirano
 
         menuFakulteti.getItems().clear();
 
@@ -217,11 +260,9 @@ public class prijaveController {
     private void initStatusPrijaveFilter() {
 
         Set<String> statusi = masterList.stream()
-                .map(p -> p.getStatusPrijave() != null
-                        ? p.getStatusPrijave().getNaziv()
-                        : null)
+                .map(p -> p.getStatusPrijave() != null ? p.getStatusPrijave().getNaziv() : null)
                 .filter(Objects::nonNull)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toCollection(TreeSet::new)); // ✅ sortirano
 
         menuStatusPrijave.getItems().clear();
 

@@ -22,7 +22,7 @@
 }
 
 .date-badge {
-    -fx-background-color: #FFF9A5;
+    -fx-background-color: rgba(222,231,237);
     -fx-text-fill: #004E64;
     -fx-padding: 6 14;
     -fx-background-radius: 8;

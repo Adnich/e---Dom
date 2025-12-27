@@ -18,7 +18,7 @@
 }
 
 .sidebar-title {
-    -fx-text-fill: #FFF9A5;
+    -fx-text-fill: rgba(222,231,237);
     -fx-font-size: 22px;
     -fx-font-weight: 800;
 }
@@ -60,7 +60,7 @@
 /* Selected */
 .nav-btn:selected {
     -fx-background-color: rgba(0, 182, 150, 0.25);
-    -fx-text-fill: #FFF9A5;
+    -fx-text-fill: rgba(222,231,237);
     -fx-border-color: #00B696;
 }
 

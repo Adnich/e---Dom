@@ -1,183 +1,308 @@
+/* ==========================================================
+   PRIJAVE — PREMIUM TABLE UI
+   PALETA: #004E64 / #00B696 / #FFF9A5
+========================================================== */
+
 .root {
-    -fx-font-family: "Segoe UI", "Inter", system-ui;
+    -fx-font-family: "Inter", "Segoe UI", system-ui;
 }
 
 .anchor-pane {
     -fx-background-color: #f6fbfb;
 }
 
-
 /* MAIN CARD */
 .main-vbox {
     -fx-background-color: white;
     -fx-background-radius: 26px;
     -fx-padding: 28 30 30 30;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 24, 0.25, 0, 8);
+    -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.10), 30, 0.28, 0, 14);
+    -fx-border-color: rgba(0,78,100,0.08);
+    -fx-border-width: 1;
+    -fx-border-radius: 26px;
 }
 
-/* HEADER */
+/* HEADER TITLE */
 .header-title {
     -fx-font-size: 28px;
     -fx-font-weight: 900;
     -fx-text-fill: #004E64;
 }
 
-
-/* SEARCH */
-.text-field {
+/* SEARCH INPUT */
+.search-input {
     -fx-background-color: white;
     -fx-background-radius: 14px;
     -fx-border-radius: 14px;
-    -fx-border-color: rgba(15,185,164,0.35);
+    -fx-border-color: rgba(0,182,150,0.35);
     -fx-border-width: 1.5px;
     -fx-padding: 12 16;
     -fx-font-size: 13px;
+    -fx-text-fill: #004E64;
 }
 
-.text-field:focused {
-    -fx-border-color: #0fb9a4;
+.search-input:focused {
+    -fx-border-color: #00B696;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.18), 12, 0.25, 0, 6);
 }
 
-/* ===== NOVA PRIJAVA BUTTON ===== */
+/* MENU BUTTONS */
+.menu-btn {
+    -fx-background-color: white;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+    -fx-border-color: rgba(0,78,100,0.20);
+    -fx-border-width: 1.4px;
+    -fx-padding: 8 16;
+    -fx-font-weight: 800;
+    -fx-text-fill: #004E64;
+    -fx-cursor: hand;
+}
+
+.menu-btn:hover {
+    -fx-background-color: rgba(0,182,150,0.08);
+    -fx-border-color: rgba(0,182,150,0.45);
+}
+
+.menu-btn:showing {
+    -fx-background-color: rgba(0,182,150,0.12);
+    -fx-border-color: rgba(0,182,150,0.60);
+}
+
+.menu-btn .arrow {
+    -fx-background-color: #004E64;
+}
+
+/* MENU POPUP */
+.context-menu {
+    -fx-background-color: white;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+    -fx-border-color: rgba(0,182,150,0.30);
+    -fx-border-width: 1;
+    -fx-padding: 6;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 20, 0.25, 0, 8);
+}
+
+.menu-item {
+    -fx-padding: 10 18;
+    -fx-font-weight: 700;
+    -fx-text-fill: #004E64;
+}
+
+.menu-item:hover {
+    -fx-background-color: rgba(0,182,150,0.10);
+}
+
+/* NOVA PRIJAVA BUTTON */
 .button.nova-prijava-btn {
     -fx-background-radius: 16px;
-    -fx-background-color: #00B696;
+    -fx-background-color: linear-gradient(to right, #00B696, #00C7A2);
     -fx-text-fill: white;
-    -fx-font-weight: 800;
+    -fx-font-weight: 900;
     -fx-font-size: 13px;
     -fx-padding: 12 28;
-    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.45), 18, 0.35, 0, 6);
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.35), 22, 0.35, 0, 10);
 }
 
 .button.nova-prijava-btn:hover {
-    -fx-background-color: #00a88a;
+    -fx-background-color: linear-gradient(to right, #00A98B, #00B696);
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.50), 26, 0.40, 0, 12);
 }
 
 .button.nova-prijava-btn:pressed {
-    -fx-background-color: #00997d;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.97;
 }
 
-/* TABLE */
+/* ==========================================================
+   TABLE VIEW — CARD STYLE
+========================================================== */
+
 .table-view {
-    -fx-background-radius: 16px;
-    -fx-border-radius: 16px;
-    -fx-border-color: rgba(15,185,164,0.35);
-    -fx-border-width: 1.5px;
+    -fx-background-color: white;
+    -fx-background-radius: 18px;
+    -fx-border-radius: 18px;
+    -fx-border-color: rgba(0,182,150,0.25);
+    -fx-border-width: 1.4px;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.08), 22, 0.25, 0, 10);
 }
 
-/* TABLE HEADER */
+.table-view:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.12), 28, 0.28, 0, 12);
+}
+
+/* HEADER BG */
 .table-view .column-header-background {
-    -fx-background-color: #0fb9a4;
-    -fx-background-radius: 16 16 0 0;
+    -fx-background-color: #00B696;
+    -fx-background-radius: 18 18 0 0;
 }
 
 .table-view .column-header {
     -fx-background-color: transparent;
     -fx-padding: 14 10;
-    -fx-border-color: rgba(255,255,255,0.3);
+    -fx-border-color: rgba(255,255,255,0.25);
     -fx-border-width: 0 1 0 0;
 }
 
 .table-view .column-header .label {
     -fx-text-fill: white;
-    -fx-font-weight: 800;
+    -fx-font-weight: 900;
     -fx-font-size: 12px;
     -fx-alignment: center;
-}
-
-.table-view .column-header:last {
-    -fx-border-width: 0;
 }
 
 /* ROWS */
 .table-row-cell {
     -fx-background-color: white;
-    -fx-border-color: rgba(15,185,164,0.08);
+    -fx-border-color: rgba(0,182,150,0.08);
     -fx-border-width: 0 0 1 0;
     -fx-font-size: 13px;
 }
 
 .table-row-cell:odd {
-    -fx-background-color: rgba(15,185,164,0.04);
+    -fx-background-color: rgba(0,182,150,0.03);
 }
 
+/* ROW HOVER */
 .table-row-cell:hover {
-    -fx-background-color: rgba(15,185,164,0.10);
+    -fx-background-color: rgba(0,182,150,0.09);
+    -fx-border-width: 0 0 1 5;
+    -fx-border-color: rgba(0,182,150,0.45);
 }
 
+/* ROW SELECT */
 .table-row-cell:selected {
-    -fx-background-color: rgba(15,185,164,0.22);
-    -fx-text-fill: #065f54;
-    -fx-font-weight: 700;
+    -fx-background-color: rgba(0,182,150,0.16);
+    -fx-border-width: 0 0 1 5;
+    -fx-border-color: rgba(0,182,150,0.85);
 }
 
 /* CELLS */
 .table-cell {
     -fx-padding: 12 10;
-    -fx-border-color: rgba(15,185,164,0.06);
+    -fx-border-color: rgba(0,182,150,0.06);
     -fx-border-width: 0 1 0 0;
     -fx-alignment: center-left;
+    -fx-text-fill: #004E64;
 }
 
 .table-cell:last {
     -fx-border-width: 0;
 }
 
+/* ==========================================================
+   STATUS BADGES (TableCellFactory required!)
+========================================================== */
+
+.table-cell.status-approved {
+    -fx-background-color: rgba(0,182,150,0.14);
+    -fx-text-fill: #007f69;
+    -fx-font-weight: 900;
+    -fx-background-radius: 999px;
+    -fx-padding: 6 12;
+    -fx-alignment: center;
+}
+
+.table-cell.status-rejected {
+    -fx-background-color: rgba(231,76,60,0.12);
+    -fx-text-fill: #c0392b;
+    -fx-font-weight: 900;
+    -fx-background-radius: 999px;
+    -fx-padding: 6 12;
+    -fx-alignment: center;
+}
+
+.table-cell.status-review {
+    -fx-background-color: rgba(255,249,165,0.90);
+    -fx-text-fill: #004E64;
+    -fx-font-weight: 900;
+    -fx-background-radius: 999px;
+    -fx-padding: 6 12;
+    -fx-alignment: center;
+}
+
+.table-cell.status-closed {
+    -fx-background-color: rgba(0,78,100,0.12);
+    -fx-text-fill: #004E64;
+    -fx-font-weight: 900;
+    -fx-background-radius: 999px;
+    -fx-padding: 6 12;
+    -fx-alignment: center;
+}
+
 /* SCROLLBAR */
 .table-view .scroll-bar:vertical .thumb {
-    -fx-background-color: rgba(15,185,164,0.45);
+    -fx-background-color: rgba(0,182,150,0.45);
     -fx-background-radius: 10px;
 }
 
 .table-view .scroll-bar:vertical .thumb:hover {
-    -fx-background-color: rgba(15,185,164,0.65);
+    -fx-background-color: rgba(0,182,150,0.65);
 }
 
-/* CORNER */
 .table-view .corner {
-    -fx-background-color: #0fb9a4;
+    -fx-background-color: #00B696;
 }
+/* ===============================
+   STATUS BADGE (KOMPAKTNO + FIX WIDTH BUG)
+================================ */
 
-/* ===== MENU BUTTONS (SORT / FILTER) ===== */
-.menu-button {
-    -fx-background-color: white;
+.table-cell.status-approved,
+.table-cell.status-rejected,
+.table-cell.status-review,
+.table-cell.status-closed {
+
+    -fx-alignment: CENTER;
+    -fx-font-weight: 800;
+    -fx-font-size: 12px;
+
+    /* manji padding */
+    -fx-padding: 4 10;
+
+    /* pill */
     -fx-background-radius: 14px;
     -fx-border-radius: 14px;
-    -fx-border-color: #00B696;
-    -fx-border-width: 1.5px;
-    -fx-padding: 8 16;
-    -fx-font-weight: 700;
+
+    /* ✅ OVO JE BITNO: cell ne smije forsirati širinu */
+    -fx-background-insets: 2;
+}
+
+/* ODOBRENO */
+.table-cell.status-approved {
+    -fx-background-color: rgba(0,182,150,0.14);
+    -fx-text-fill: #007d67;
+}
+
+/* ODBIJENO */
+.table-cell.status-rejected {
+    -fx-background-color: rgba(230, 57, 70, 0.12);
+    -fx-text-fill: #d62828;
+}
+
+/* NA PREGLEDU */
+.table-cell.status-review {
+    -fx-background-color: rgba(255,249,165,0.65);
+    -fx-text-fill: #8a6a00;
+}
+
+/* ZAKLJUČENO */
+.table-cell.status-closed {
+    -fx-background-color: rgba(0,78,100,0.10);
     -fx-text-fill: #004E64;
-    -fx-cursor: hand;
 }
-
-.menu-button:hover {
-    -fx-background-color: rgba(0,182,150,0.08);
+.table-view .table-column {
+    -fx-alignment: CENTER_LEFT;
 }
-
-.menu-button:showing {
-    -fx-background-color: rgba(0,182,150,0.15);
-}
-
-/* Arrow */
-.menu-button .arrow {
-    -fx-background-color: #004E64;
-}
-
-/* Menu popup */
-.context-menu {
-    -fx-background-radius: 14px;
-    -fx-border-radius: 14px;
-    -fx-border-color: rgba(0,182,150,0.4);
-    -fx-padding: 6;
-}
-
-/* Menu items */
-.menu-item {
-    -fx-padding: 10 18;
-}
-
-.menu-item:hover {
-    -fx-background-color: rgba(0,182,150,0.12);
+/* STATUS BADGE - tekst u sredini */
+.table-cell.status-approved,
+.table-cell.status-rejected,
+.table-cell.status-review,
+.table-cell.status-closed {
+    -fx-alignment: CENTER;
+    -fx-text-alignment: CENTER;
 }
 
