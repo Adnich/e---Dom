@@ -18,6 +18,7 @@ module org.example.edom {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires jbcrypt;
+    requires jakarta.mail;
 
     // JavaFX mora moći instancirati Application
     exports org.example.edom;

@@ -8,14 +8,16 @@ public class Korisnik {
     private String Username;
     private String PasswordHash;
     private Uloga Uloga;
+    private String Email;
 
-    public Korisnik(int idKorisnik, String ime, String prezime, String username, String passwordHash, Uloga uloga) {
+    public Korisnik(int idKorisnik, String ime, String prezime, String username, String passwordHash, Uloga uloga, String email) {
         IdKorisnik = idKorisnik;
         Ime = ime;
         Prezime = prezime;
         Username = username;
         PasswordHash = passwordHash;
         Uloga = uloga;
+        Email = email;
     }
 
     public Korisnik() {
@@ -67,6 +69,14 @@ public class Korisnik {
 
     public void setUloga(Uloga uloga) {
         Uloga = uloga;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
     }
 
     @Override

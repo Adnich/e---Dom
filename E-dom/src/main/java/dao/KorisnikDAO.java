@@ -12,8 +12,8 @@ public class KorisnikDAO {
 
     // UNOS NOVOG KORISNIKA
     public void unesiKorisnika(Korisnik k) {
-        String sql = "INSERT INTO korisnik (ime, prezime, username, password_hash, ulogaid_uloga) " +
-                "VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO korisnik (ime, prezime, username, password_hash, ulogaid_uloga, email) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -22,7 +22,8 @@ public class KorisnikDAO {
             stmt.setString(2, k.getPrezime());
             stmt.setString(3, k.getUsername());
             stmt.setString(4, k.getPasswordHash());
-            stmt.setInt(5, k.getUloga().getIdUloga()); // FK na uloga
+            stmt.setInt(5, k.getUloga().getIdUloga());
+            stmt.setString(6, k.getEmail());
 
             stmt.executeUpdate();
             System.out.println("Korisnik je uspješno dodan!");
@@ -52,8 +53,8 @@ public class KorisnikDAO {
                 k.setPrezime(rs.getString("prezime"));
                 k.setUsername(rs.getString("username"));
                 k.setPasswordHash(rs.getString("password_hash"));
+                k.setEmail(rs.getString("email"));
 
-                // ULOGA objekat
                 Uloga u = new Uloga(
                         rs.getInt("id_uloga"),
                         rs.getString("naziv_uloge")
@@ -72,7 +73,7 @@ public class KorisnikDAO {
 
     // AŽURIRANJE KORISNIKA
     public void azurirajKorisnika(Korisnik k) {
-        String sql = "UPDATE korisnik SET ime=?, prezime=?, username=?, password_hash=?, " +
+        String sql = "UPDATE korisnik SET ime=?, prezime=?, username=?, password_hash=?, email=?, " +
                 "ulogaid_uloga=? WHERE id_korisnik=?";
 
         try (Connection conn = DBConnection.getConnection();
@@ -82,8 +83,9 @@ public class KorisnikDAO {
             stmt.setString(2, k.getPrezime());
             stmt.setString(3, k.getUsername());
             stmt.setString(4, k.getPasswordHash());
-            stmt.setInt(5, k.getUloga().getIdUloga());
-            stmt.setInt(6, k.getIdKorisnik());
+            stmt.setString(5, k.getEmail()); // ispravljeno – prije je bila uloga
+            stmt.setInt(6, k.getUloga().getIdUloga());
+            stmt.setInt(7, k.getIdKorisnik());
 
             int rows = stmt.executeUpdate();
             if (rows > 0)
@@ -96,7 +98,7 @@ public class KorisnikDAO {
         }
     }
 
-    // BRISANJE KORISNIKA ------------------------------------------------------
+    // BRISANJE KORISNIKA
     public void obrisiKorisnika(int id) {
         String sql = "DELETE FROM korisnik WHERE id_korisnik=?";
 
@@ -115,7 +117,6 @@ public class KorisnikDAO {
             throw new RuntimeException(e);
         }
     }
-
 
     // LOGIN METODA
     public Korisnik nadjiPoUsernameIPassword(String username, String passwordHash) {
@@ -139,6 +140,7 @@ public class KorisnikDAO {
                     k.setPrezime(rs.getString("prezime"));
                     k.setUsername(rs.getString("username"));
                     k.setPasswordHash(rs.getString("password_hash"));
+                    k.setEmail(rs.getString("email"));
 
                     Uloga u = new Uloga(
                             rs.getInt("id_uloga"),
@@ -155,7 +157,7 @@ public class KorisnikDAO {
             throw new RuntimeException(e);
         }
 
-        return null; // ako nije pronađen
+        return null;
     }
 
     public Korisnik nadjiUsername(String username) throws SQLException {
@@ -165,7 +167,7 @@ public class KorisnikDAO {
                 "WHERE k.username = ?";
 
         try(Connection conn = DBConnection.getConnection();
-        PreparedStatement stmt = conn.prepareStatement(sql)) {
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, username);
 
@@ -177,6 +179,7 @@ public class KorisnikDAO {
                     k.setPrezime(rd.getString("prezime"));
                     k.setUsername(rd.getString("username"));
                     k.setPasswordHash(rd.getString("password_hash"));
+                    k.setEmail(rd.getString("email"));
 
                     Uloga u = new Uloga(
                             rd.getInt("id_uloga"),
@@ -194,7 +197,7 @@ public class KorisnikDAO {
         return null;
     }
 
-    //metoda za reset lozinke
+    // RESET LOZINKE
     public boolean promijeniLozinku(String username, String newPasswordHash) {
         String sql = "UPDATE korisnik SET password_hash = ? WHERE username = ?";
 
@@ -227,8 +230,9 @@ public class KorisnikDAO {
         }
     }
 
+    // AŽURIRAJ PROFIL – ISPRAVLJENO REDOSLIJED PARAMETARA
     public void azurirajProfil(Korisnik k) {
-        String sql = "UPDATE korisnik SET ime=?, prezime=?, password_hash=? WHERE id_korisnik=?";
+        String sql = "UPDATE korisnik SET ime=?, prezime=?, password_hash=?, email=? WHERE id_korisnik=?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -236,8 +240,72 @@ public class KorisnikDAO {
             stmt.setString(1, k.getIme());
             stmt.setString(2, k.getPrezime());
             stmt.setString(3, k.getPasswordHash());
-            stmt.setInt(4, k.getIdKorisnik());
+            stmt.setString(4, k.getEmail());
+            stmt.setInt(5, k.getIdKorisnik());
 
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // ======================
+    // METODE ZA RESET LOZINKE
+    // ======================
+
+    public boolean emailPostoji(String email) {
+        String sql = "SELECT 1 FROM korisnik WHERE email=?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+            return stmt.executeQuery().next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void spasiResetToken(String email, String token) {
+        String sql = "UPDATE korisnik SET reset_token=? WHERE email=?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, token);
+            stmt.setString(2, email);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean provjeriToken(String email, String token) {
+        String sql = "SELECT 1 FROM korisnik WHERE email=? AND reset_token=?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+            stmt.setString(2, token);
+            return stmt.executeQuery().next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void resetujLozinku(String email, String noviPasswordHash) {
+        String sql = "UPDATE korisnik SET password_hash=?, reset_token=NULL WHERE email=?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, noviPasswordHash);
+            stmt.setString(2, email);
             stmt.executeUpdate();
 
         } catch (SQLException e) {

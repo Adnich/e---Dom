@@ -2,10 +2,18 @@ package controllers;
 
 import dao.KorisnikDAO;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import service.EmailService;
+import util.PasswordUtil;
+import util.ResetTokenManager;
+import model.Korisnik;
+import util.TokenGenerator;
+
+import java.sql.SQLException;
 
 public class IzmjenaLozinkeController {
 
@@ -13,6 +21,8 @@ public class IzmjenaLozinkeController {
     @FXML private PasswordField txtNewPassword;
     @FXML private PasswordField txtConfirmPassword;
     @FXML private Label lblInfo;
+    @FXML private TextField txtCode;
+    @FXML private Button btnReset;
 
     private final KorisnikDAO korisnikDAO = new KorisnikDAO();
 
@@ -31,15 +41,45 @@ public class IzmjenaLozinkeController {
         });
     }
 
-    @FXML
-    private void onResetClicked() {
+    private String generatedToken;
 
+    @FXML
+    private void onSendCodeClicked() throws SQLException {
         String username = txtUsername.getText().trim();
+        if (username.isEmpty()) {
+            lblInfo.setText("Unesite korisničko ime ili email.");
+            return;
+        }
+
+        Korisnik k = korisnikDAO.nadjiUsername(username);
+        if (k == null) {
+            lblInfo.setText("Korisnik ne postoji.");
+            return;
+        }
+
+        // Generiši token
+        generatedToken = TokenGenerator.generate();
+        ResetTokenManager.dodajToken(k.getEmail(), generatedToken);
+
+        // Pošalji email
+        EmailService.sendResetCode(k.getEmail(), generatedToken);
+
+        lblInfo.setText("Kod poslan na email.");
+        txtCode.setDisable(false);
+        txtNewPassword.setDisable(false);
+        txtConfirmPassword.setDisable(false);
+        btnReset.setDisable(false);
+    }
+
+    @FXML
+    private void onResetClicked() throws SQLException {
+        String username = txtUsername.getText().trim();
+        String code = txtCode.getText().trim();
         String pass1 = txtNewPassword.getText();
         String pass2 = txtConfirmPassword.getText();
 
-        if (username.isEmpty() || pass1.isEmpty() || pass2.isEmpty()) {
-            lblInfo.setText("Sva polja su obavezna.");
+        if (!ResetTokenManager.provjeriToken(korisnikDAO.nadjiUsername(username).getEmail(), code)) {
+            lblInfo.setText("Neispravan kod!");
             return;
         }
 
@@ -48,16 +88,11 @@ public class IzmjenaLozinkeController {
             return;
         }
 
-        boolean uspjeh = korisnikDAO.promijeniLozinku(username, pass1);
-
-        if (!uspjeh) {
-            lblInfo.setText("Korisnik ne postoji.");
-            return;
-        }
+        String hash = PasswordUtil.hash(pass1);
+        korisnikDAO.promijeniLozinku(username, hash);
+        ResetTokenManager.ukloniToken(korisnikDAO.nadjiUsername(username).getEmail());
 
         lblInfo.setText("Lozinka uspješno promijenjena.");
-
-        Stage stage = (Stage) txtUsername.getScene().getWindow();
-        stage.close();
     }
+
 }
