@@ -10,68 +10,170 @@
             stylesheets="@../styles/novi-student-style.css"
             styleClass="scroll-pane"
             fitToWidth="true"
-            prefWidth="500"
-            prefHeight="600">
+            hbarPolicy="NEVER"
+            vbarPolicy="AS_NEEDED">
 
     <content>
-        <VBox spacing="6" styleClass="novi-student-container, student-form-vbox">
+
+        <!-- ✅ WRAPPER da sve bude centrirano -->
+        <StackPane styleClass="page-wrapper">
             <padding>
                 <Insets top="30" right="30" bottom="30" left="30"/>
             </padding>
 
-            <Label text="Dodavanje novog studenta"
-                   styleClass="page-title"/>
+            <!-- ✅ CARD -->
+            <VBox styleClass="card" spacing="18">
 
-            <Label text="Ime:" styleClass="student-field-label"/>
-            <TextField fx:id="txtIme" styleClass="student-text-field"/>
+                <!-- ✅ HEADER: title + badge -->
+                <HBox alignment="CENTER_LEFT" spacing="16">
+                    <VBox spacing="6">
+                        <Label text="Dodavanje novog studenta"
+                               styleClass="page-title"/>
 
-            <Label text="Prezime:" styleClass="student-field-label"/>
-            <TextField fx:id="txtPrezime" styleClass="student-text-field"/>
+                        <Label text="Unesite osnovne informacije i kontakt podatke."
+                               styleClass="page-subtitle"/>
+                    </VBox>
 
-            <Label text="Ime jednog roditelja:" styleClass="student-field-label"/>
-            <TextField fx:id="txtRoditelj" styleClass="student-text-field"/>
+                    <Region HBox.hgrow="ALWAYS"/>
 
-            <Label text="JMBG:" styleClass="student-field-label"/>
-            <TextField fx:id="txtJMBG" styleClass="student-text-field"/>
+                   <!-- <Label text="Korak 1/3"
+                           styleClass="step-badge"/>-->
+                </HBox>
 
-            <Label text="Broj indeksa:" styleClass="student-field-label"/>
-            <TextField fx:id="txtIndeks" styleClass="student-text-field"/>
+                <!-- ✅ PROGRESS + STEPPER -->
+                <VBox spacing="10">
+                    <ProgressBar progress="0.33"
+                                 styleClass="progress-top"/>
 
-            <Label text="Fakultet:" styleClass="student-field-label"/>
-            <ComboBox fx:id="cmbFakultet"
-                      styleClass="student-combo"
-                      prefWidth="300"
-                      promptText="Odaberi fakultet"/>
+                    <!-- ✅ STEPPER DOTS -->
+                    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="stepper">
+                        <HBox spacing="8" alignment="CENTER_LEFT">
+                            <Label text="1" styleClass="step-dot step-dot-active"/>
+                            <Label text="Osnovno" styleClass="step-label step-label-active"/>
+                        </HBox>
 
-            <Label text="Godina studija:" styleClass="student-field-label"/>
-            <ComboBox fx:id="cmbGodina"
-                      styleClass="student-combo"
-                      prefWidth="300"
-                      promptText="Odaberi godinu"/>
+                        <Label text="—" styleClass="step-line"/>
 
-            <Label text="Prosjek:" styleClass="student-field-label"/>
-            <TextField fx:id="txtProsjek" styleClass="student-text-field"/>
+                        <HBox spacing="8" alignment="CENTER_LEFT">
+                            <Label text="2" styleClass="step-dot"/>
+                            <Label text="Dokumenti" styleClass="step-label"/>
+                        </HBox>
 
-            <Label text="Email:" styleClass="student-field-label"/>
-            <TextField fx:id="txtEmail" styleClass="student-text-field"/>
+                        <Label text="—" styleClass="step-line"/>
 
-            <Label text="Telefon:" styleClass="student-field-label"/>
-            <TextField fx:id="txtTelefon" styleClass="student-text-field"/>
+                        <HBox spacing="8" alignment="CENTER_LEFT">
+                            <Label text="3" styleClass="step-dot"/>
+                            <Label text="Pregled" styleClass="step-label"/>
+                        </HBox>
+                    </HBox>
+                </VBox>
 
-            <Label text="Adresa stanovanja:" styleClass="student-field-label"/>
-            <TextField fx:id="txtAdresa" styleClass="student-text-field"/>
+                <!-- ✅ SECTION BADGE -->
+                <Label text="Osnovne informacije"
+                       styleClass="section-pill"/>
 
-            <Label text="Socijalni status:" styleClass="student-field-label"/>
-            <ComboBox fx:id="cmbSocijalniStatus"
-                      styleClass="student-combo"
-                      prefWidth="300"/>
+                <Separator styleClass="soft-separator"/>
 
-            <!-- Spacing prije buttona -->
-            <Region prefHeight="10"/>
+                <!-- ✅ FORM GRID: 2 kolone -->
+                <GridPane hgap="22" vgap="16" styleClass="form-grid">
 
-            <Button text="Dalje →"
-                    onAction="#onNextClicked"
-                    styleClass="next-btn"/>
-        </VBox>
+                    <!-- ✅ OVO je ključ: dvije kolone 50/50 i neka se šire -->
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
+                        <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
+                    </columnConstraints>
+
+                    <!-- ✅ Redovi neka rastu koliko treba -->
+                    <rowConstraints>
+                        <RowConstraints vgrow="NEVER"/>
+                        <RowConstraints vgrow="NEVER"/>
+                        <RowConstraints vgrow="NEVER"/>
+                        <RowConstraints vgrow="NEVER"/>
+                        <RowConstraints vgrow="NEVER"/>
+                        <RowConstraints vgrow="NEVER"/>
+                    </rowConstraints>
+
+                    <!-- sve ostaje isto ispod -->
+
+
+                    <!-- Left column -->
+                    <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <Label text="Ime" styleClass="field-label"/>
+                        <TextField fx:id="txtIme" promptText="Unesite ime" styleClass="field"/>
+                    </VBox>
+
+                    <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <Label text="Godina studija" styleClass="field-label"/>
+                        <ComboBox fx:id="cmbGodina" promptText="Odaberi godinu" styleClass="combo"/>
+                    </VBox>
+
+                    <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                        <Label text="Prezime" styleClass="field-label"/>
+                        <TextField fx:id="txtPrezime" promptText="Unesite prezime" styleClass="field"/>
+                    </VBox>
+
+                    <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label text="Prosjek" styleClass="field-label"/>
+                        <TextField fx:id="txtProsjek" promptText="npr. 8.6" styleClass="field"/>
+                    </VBox>
+
+                    <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                        <Label text="Ime jednog roditelja" styleClass="field-label"/>
+                        <TextField fx:id="txtRoditelj" promptText="Ime roditelja" styleClass="field"/>
+                    </VBox>
+
+                    <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label text="Email" styleClass="field-label"/>
+                        <TextField fx:id="txtEmail" promptText="ime.prezime@email.com" styleClass="field"/>
+                    </VBox>
+
+                    <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                        <Label text="JMBG" styleClass="field-label"/>
+                        <TextField fx:id="txtJMBG" promptText="13 cifara" styleClass="field"/>
+                    </VBox>
+
+                    <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Label text="Telefon" styleClass="field-label"/>
+                        <TextField fx:id="txtTelefon" promptText="+387..." styleClass="field"/>
+                    </VBox>
+
+                    <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                        <Label text="Broj indeksa" styleClass="field-label"/>
+                        <TextField fx:id="txtIndeks" promptText="npr. 421" styleClass="field"/>
+                    </VBox>
+
+                    <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <Label text="Adresa stanovanja" styleClass="field-label"/>
+                        <TextField fx:id="txtAdresa" promptText="Grad, ulica" styleClass="field"/>
+                    </VBox>
+
+                    <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="5">
+                        <Label text="Fakultet" styleClass="field-label"/>
+                        <ComboBox fx:id="cmbFakultet" promptText="Odaberi fakultet" styleClass="combo"/>
+                    </VBox>
+
+                    <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <Label text="Socijalni status" styleClass="field-label"/>
+                        <ComboBox fx:id="cmbSocijalniStatus" promptText="Odaberi status" styleClass="combo"/>
+                    </VBox>
+
+                </GridPane>
+
+                <!-- ✅ FOOTER BUTTONS -->
+                <HBox alignment="CENTER" spacing="16" styleClass="footer-box">
+
+                    <Button text="← Nazad"
+                            onAction="#onBackClicked"
+                            styleClass="btn-back"/>
+
+                    <Button text="Dalje →"
+                            onAction="#onNextClicked"
+                            styleClass="btn-next"/>
+
+                </HBox>
+
+            </VBox>
+        </StackPane>
+
     </content>
 </ScrollPane>

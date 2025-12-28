@@ -28,6 +28,13 @@ public class NoviStudentController {
     @FXML private TextField txtAdresa;
     @FXML private TextField txtRoditelj;
 
+    @FXML
+    private void onBackClicked() {
+        // TODO: vrati na prethodni ekran / zatvori prozor
+        Stage stage = (Stage) txtIme.getScene().getWindow();
+        stage.close(); // ili load previous view
+    }
+
     private final StudentDAO studentDAO = new StudentDAO();
     private final SocijalniStatusDAO socijalniStatusDAO = new SocijalniStatusDAO();
 
