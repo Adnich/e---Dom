@@ -112,7 +112,7 @@ public class DodajDokumenteController {
             d.setVrstaDokumenta(vdDao.dohvatiVrstuPoId(18));
 
             new DokumentDAO().unesiDokument(d, prijavaId);
-            
+
             new PrijavaDAO().azurirajUkupneBodove(prijavaId);
         }
 
