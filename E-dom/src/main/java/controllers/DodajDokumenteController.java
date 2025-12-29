@@ -96,27 +96,32 @@ public class DodajDokumenteController {
 
     @FXML
     private void onPodnesiPrijavu(javafx.event.ActionEvent event) {
+
         if (kucnaControllerRef != null) {
             kucnaControllerRef.zavrsiUnos();
-            primanjaPoClanu.putAll(kucnaControllerRef.getPrimanjaPoClanu());
+
+            int bodovi = kucnaControllerRef.getBodoviSocijalniStatus();
+
+            // ⬇️ DOKUMENT: SOCIJALNI STATUS
+            Dokument d = new Dokument();
+            d.setNaziv("Socijalni status – primanja po članu");
+            d.setDatumUpload(java.time.LocalDate.now());
+            d.setBrojBodova(bodovi);
+            d.setDostavljen(true);
+
+            d.setVrstaDokumenta(vdDao.dohvatiVrstuPoId(18));
+
+            new DokumentDAO().unesiDokument(d, prijavaId);
+            
+            new PrijavaDAO().azurirajUkupneBodove(prijavaId);
         }
 
-        double ukupnaPrimanja = primanjaPoClanu.values().stream().mapToDouble(Double::doubleValue).sum();
-        double primanjaPoClanuVrijednost = (clanovi == 0) ? 0 : ukupnaPrimanja / clanovi;
-        int ukupniBodovi = KriterijPoOsnovuSocijalnogStatusa.bodoviZaPrimanja(primanjaPoClanuVrijednost);
-
-        PrijavaDAO prijavaDAO = new PrijavaDAO();
-        prijavaDAO.dodajBodoveNaPrijavu(prijavaId, ukupniBodovi);
-
-        showAlert("Trenutni broj bodova: ",
-                "Ukupna primanja: " + ukupnaPrimanja +
-                        "\nPrimanja po članu: " + primanjaPoClanuVrijednost +
-                        "\nUKUPNI BODOVI: " + ukupniBodovi
-        );
+        showAlert("Prijava završena", "Bodovi su uspješno obračunati.");
 
         Stage stage = (Stage) accordionDokumenti.getScene().getWindow();
         stage.close();
     }
+
 
     public void setProsjek(double prosjek) {
         this.prosjek = prosjek;
