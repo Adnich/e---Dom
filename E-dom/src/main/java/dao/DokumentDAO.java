@@ -24,7 +24,7 @@ public class DokumentDAO {
 
             stmt.setString(1, dokument.getNaziv());
             stmt.setDate(2, java.sql.Date.valueOf(dokument.getDatumUpload()));
-            stmt.setInt(3, dokument.getBrojBodova());
+            stmt.setDouble(3, dokument.getBrojBodova());
             stmt.setString(4, dokument.getDokumentB64());
             stmt.setBoolean(5, dokument.isDostavljen());
             stmt.setInt(6, dokument.getVrstaDokumenta().getIdVrsta());
@@ -62,7 +62,7 @@ public class DokumentDAO {
                 d.setDatumUpload(datum);
 
 
-                d.setBrojBodova(rs.getInt("broj_bodova"));
+                d.setBrojBodova(rs.getDouble("broj_bodova"));
                 d.setDokumentB64(rs.getString("dokumentb64"));
                 d.setDostavljen(rs.getBoolean("isdostavljen"));
 
@@ -95,7 +95,7 @@ public class DokumentDAO {
 
             stmt.setString(1, dokument.getNaziv());
             stmt.setDate(2, java.sql.Date.valueOf(dokument.getDatumUpload()));
-            stmt.setInt(3, dokument.getBrojBodova());
+            stmt.setDouble(3, dokument.getBrojBodova());
             stmt.setString(4, dokument.getDokumentB64());
             stmt.setBoolean(5, dokument.isDostavljen());
             stmt.setInt(6, dokument.getVrstaDokumenta().getIdVrsta());
@@ -133,6 +133,27 @@ public class DokumentDAO {
         }
     }
 
+    // dodaj bodove na dokument
+    public void dodajBodove(int dokumentId, int bodovi){
+        String sqlUpit = "UPDATE dokument SET broj_bodova = broj_bodova + ? WHERE id_dokument = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sqlUpit)) {
+
+            stmt.setDouble(1, bodovi);
+            stmt.setInt(2, dokumentId);
+
+            int redovi = stmt.executeUpdate();
+            if (redovi > 0)
+                System.out.println("Bodovi su dodani na dokument!");
+            else
+                System.out.println("Dokument sa ID " + dokumentId + " ne postoji!");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<Dokument> dohvatiDokumenteZaPrijavu(int prijavaId) {
         List<Dokument> dokumenti = new ArrayList<>();
 
@@ -153,7 +174,7 @@ public class DokumentDAO {
                     d.setIdDokument(rs.getInt("id_dokument"));
                     d.setNaziv(rs.getString("naziv"));
                     d.setDatumUpload(rs.getDate("datum_upload").toLocalDate());
-                    d.setBrojBodova(rs.getInt("broj_bodova"));
+                    d.setBrojBodova(rs.getDouble("broj_bodova"));
                     d.setDokumentB64(rs.getString("dokumentb64"));
                     d.setDostavljen(rs.getBoolean("isdostavljen"));
 

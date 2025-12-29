@@ -131,8 +131,9 @@ public class NovaPrijavaController {
 
         prijavaDAO.unesiPrijavu(p);
 
-        Prijava prijava = prijavaDAO.dohvatiSvePrijave().getLast();
-        int prijavaId = prijava.getIdPrijava();
+        int prijavaId = p.getIdPrijava();
+        System.out.println("Nova prijava unesena sa ID: " + prijavaId);
+
 
         // ✅ dodatni bodovi
         int dodatniBodovi = 0;

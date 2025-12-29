@@ -29,7 +29,6 @@ public class DodajDokumenteController {
     private double prosjek;
     private int godinaStudija;
     private BraniociRezultat braniociRezultat;
-
     private final Map<Integer, List<Dokument>> dokumentiPoClanu = new HashMap<>();
     private final Map<Integer, Double> primanjaPoClanu = new HashMap<>();
 
@@ -69,6 +68,7 @@ public class DodajDokumenteController {
         dodajUplatnicuSekciju(vboxOsnovni);
         dodajGarancijuSekciju(vboxOsnovni);
         dodajKucnuListuDokument(vboxOsnovni);
+        System.out.println("prijava ID u osnovnom: " + prijavaId);
 
         TitledPane paneDomacinstvo = new TitledPane();
         paneDomacinstvo.setText("Domaćinstvo");

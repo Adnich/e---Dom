@@ -81,11 +81,15 @@ public class ProsjekDokumentController {
         d.setDokumentB64(null);
 
         if (godinaStudija == 1) {
+
+            double bodovi = kriterij.izracunajBodoveBrucosi(prijavaId, prosjek);
             // brucosi → svjedodžba iz srednje
             d.setNaziv(vrstaSvjedodzbe.getNaziv());
             d.setVrstaDokumenta(vrstaSvjedodzbe);
-            new DokumentDAO().unesiDokument(d, prijavaId);
-            kriterij.izracunajBodoveBrucosi(prijavaId, prosjek);
+            d.setBrojBodova(bodovi);
+             DokumentDAO dDao = new DokumentDAO();
+             dDao.unesiDokument(d, prijavaId);
+
 
         } else {
             // viša godina
@@ -99,10 +103,13 @@ public class ProsjekDokumentController {
                 showAlert("Greška", "Odaberi dokument: uvjerenje ili indeks.");
                 return;
             }
+            int brojPolozenih = parseIntOrZero(txtBrojPolozenih.getText());
+            double bodovi = kriterij.izracunajBodove(prijavaId, prosjek, brojPolozenih, godinaStudija);
+            d.setBrojBodova(bodovi);
 
             new DokumentDAO().unesiDokument(d, prijavaId);
-            int brojPolozenih = parseIntOrZero(txtBrojPolozenih.getText());
-            kriterij.izracunajBodove(prijavaId, prosjek, brojPolozenih, godinaStudija);
+
+
         }
 
         showAlert("Uspješno", "Dokument dodat i bodovi obračunati.");

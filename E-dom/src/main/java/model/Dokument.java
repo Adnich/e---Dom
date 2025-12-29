@@ -7,7 +7,7 @@ public class Dokument {
     private int IdDokument;
     private String Naziv;
     private LocalDate DatumUpload;
-    private int BrojBodova;
+    private double BrojBodova;
     private String DokumentB64;
     private boolean IsDostavljen;
     private VrstaDokumenta VrstaDokumenta;
@@ -15,7 +15,7 @@ public class Dokument {
     public Dokument() {
     }
 
-    public Dokument(int idDokument, String naziv, LocalDate datumUpload, int brojBodova, String dokumentB64, boolean isDostavljen, VrstaDokumenta vrstaDokumenta) {
+    public Dokument(int idDokument, String naziv, LocalDate datumUpload, double brojBodova, String dokumentB64, boolean isDostavljen, VrstaDokumenta vrstaDokumenta) {
         IdDokument = idDokument;
         Naziv = naziv;
         DatumUpload = datumUpload;
@@ -49,11 +49,11 @@ public class Dokument {
         DatumUpload = datumUpload;
     }
 
-    public int getBrojBodova() {
+    public double getBrojBodova() {
         return BrojBodova;
     }
 
-    public void setBrojBodova(int brojBodova) {
+    public void setBrojBodova(double brojBodova) {
         BrojBodova = brojBodova;
     }
 

@@ -4,7 +4,7 @@ import dao.PrijavaDAO;
 
 public class KriterijPoOsnovuUspjeha {
 
-    public void izracunajBodove(int prijavaId, double prosjek, int polozeniIspiti, int godinaStudija){
+    public double izracunajBodove(int prijavaId, double prosjek, int polozeniIspiti, int godinaStudija){
         double bodovi = prosjek*3.5;
         System.out.println("bodovi za kriterij po osnovu uspjeha prije ispita: " + bodovi);
         bodovi += polozeniIspiti*1.8;
@@ -36,14 +36,16 @@ public class KriterijPoOsnovuUspjeha {
         PrijavaDAO pDAO = new PrijavaDAO();
         System.out.println("bodovi za kriterij po osnovu uspjeha: " + bodovi);
         pDAO.dodajBodoveNaPrijavu(prijavaId, bodovi);
+        return bodovi;
     }
 
-    public void izracunajBodoveBrucosi(int prijavaId, double prosjek){
+    public double izracunajBodoveBrucosi(int prijavaId, double prosjek){
         double bodovi = prosjek*9;
         bodovi += 1;
         PrijavaDAO pDAO = new PrijavaDAO();
         System.out.println("bodovi za kriterij po osnovu uspjeha brucoši: " + bodovi);
         pDAO.dodajBodoveNaPrijavu(prijavaId, bodovi);
+        return bodovi;
     }
 
 }

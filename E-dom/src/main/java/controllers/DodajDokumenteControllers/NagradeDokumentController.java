@@ -47,7 +47,7 @@ public class NagradeDokumentController {
         Dokument d = new Dokument();
         d.setNaziv("Dokaz o osvojenim nagradama");
         d.setDatumUpload(LocalDate.now());
-        d.setBrojBodova(0); // bodovi se dodaju na prijavu, ne na dokument
+        d.setBrojBodova(3); // bodovi se dodaju na prijavu, ne na dokument
         d.setDostavljen(true);
         d.setVrstaDokumenta(vrstaDokumenta);
         d.setDokumentB64(null);
