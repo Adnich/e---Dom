@@ -112,18 +112,21 @@ public class DashboardController {
         }
     }
 
-    // ================= NOVA PRIJAVA (FULL SCREEN u istom prozoru) =================
+
     @FXML
     private void onNovaPrijava() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/novi-student.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/views/novi-student.fxml")
+            );
             Scene newScene = new Scene(loader.load());
 
-            // trenutni stage (prozor dashboarda)
+            NoviStudentController controller = loader.getController();
+            controller.setPreviousView("dashboard");
+
             Stage currentStage = (Stage) pieStatusChart.getScene().getWindow();
             currentStage.setScene(newScene);
 
-            // full screen look (bez pravog fullscreen režima)
             currentStage.setMaximized(true);
             currentStage.setResizable(true);
 

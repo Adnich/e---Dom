@@ -62,12 +62,12 @@ public class prijaveController {
 
         initStudentMap();
         initTableColumns();
-        initStatusBadges(); // ✅ OVDE DODAJEŠ badge
+        initStatusBadges();
 
-        // ✅ masterList mora biti kreiran PRIJE filter menija
+
         masterList = FXCollections.observableArrayList(prijavaDAO.dohvatiSvePrijave());
 
-        // ✅ tek sad filter meni punimo jer masterList postoji
+
         initFakultetiFilter();
         initStatusPrijaveFilter();
 
@@ -304,16 +304,18 @@ public class prijaveController {
     @FXML
     private void onNovaPrijava() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/novi-student.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/views/novi-student.fxml")
+            );
             Scene scene = new Scene(loader.load());
 
-            Stage stage = new Stage();
-            stage.setTitle("Nova prijava");
-            stage.setScene(scene);
-            stage.setResizable(true);
-            stage.show();
+            NoviStudentController controller = loader.getController();
+            controller.setPreviousView("prijave");
 
-            Platform.runLater(() -> maximize(stage));
+
+            Stage stage = (Stage) tblPrijave.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setMaximized(true);
 
         } catch (Exception e) {
             e.printStackTrace();
