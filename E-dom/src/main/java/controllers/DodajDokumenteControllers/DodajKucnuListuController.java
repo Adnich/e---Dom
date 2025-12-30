@@ -19,6 +19,7 @@ public class DodajKucnuListuController {
 
     private int prijavaId;
     private VrstaDokumenta vrsta;
+    private int dokumentId;
 
     private String pdfBase64; // ide u DokumentB64
 
@@ -58,6 +59,12 @@ public class DodajKucnuListuController {
             d.setDokumentB64(pdfBase64);
         }
 
-        new DokumentDAO().unesiDokument(d, prijavaId);
+        DokumentDAO dao = new DokumentDAO();
+
+        dokumentId = dao.unesiDokument(d, prijavaId);
+    }
+
+    public int getKucnaListaDokumentId() {
+        return dokumentId;
     }
 }

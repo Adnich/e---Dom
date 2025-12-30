@@ -31,6 +31,7 @@ public class DodajDokumenteController {
     private BraniociRezultat braniociRezultat;
     private final Map<Integer, List<Dokument>> dokumentiPoClanu = new HashMap<>();
     private final Map<Integer, Double> primanjaPoClanu = new HashMap<>();
+    private int kucnaListaId;
 
     private VrstaDokumentaDAO vdDao = new VrstaDokumentaDAO();
     private final List<VrstaDokumenta> vrsteDokumenata = vdDao.dohvatiSveVrste();
@@ -96,26 +97,12 @@ public class DodajDokumenteController {
 
     @FXML
     private void onPodnesiPrijavu(javafx.event.ActionEvent event) {
+        double bodovi;
         if (kucnaControllerRef != null) {
-            kucnaControllerRef.zavrsiUnos();
+            bodovi = kucnaControllerRef.zavrsiUnos();
+            new DokumentDAO().dodajBodove(kucnaListaId, bodovi);
             primanjaPoClanu.putAll(kucnaControllerRef.getPrimanjaPoClanu());
         }
-
-        double ukupnaPrimanja = primanjaPoClanu.values().stream().mapToDouble(Double::doubleValue).sum();
-        double primanjaPoClanuVrijednost = (clanovi == 0) ? 0 : ukupnaPrimanja / clanovi;
-        int ukupniBodovi = KriterijPoOsnovuSocijalnogStatusa.bodoviZaPrimanja(primanjaPoClanuVrijednost);
-
-        PrijavaDAO prijavaDAO = new PrijavaDAO();
-        prijavaDAO.dodajBodoveNaPrijavu(prijavaId, ukupniBodovi);
-
-        showAlert("Trenutni broj bodova: ",
-                "Ukupna primanja: " + ukupnaPrimanja +
-                        "\nPrimanja po članu: " + primanjaPoClanuVrijednost +
-                        "\nUKUPNI BODOVI: " + ukupniBodovi
-        );
-
-        Stage stage = (Stage) accordionDokumenti.getScene().getWindow();
-        stage.close();
     }
 
     public void setProsjek(double prosjek) {
@@ -239,7 +226,7 @@ public class DodajDokumenteController {
                     vdDao.dohvatiVrstuPoId(21),
                     vdDao.dohvatiVrstuPoId(22),
                     vdDao.dohvatiVrstuPoId(23)
-            ));
+            ), braniociRezultat.getBodovi());
             parent.getChildren().add(box);
         } catch (Exception e) {
             e.printStackTrace();
@@ -283,6 +270,7 @@ public class DodajDokumenteController {
             VBox kucnaBox = loader.load();
             DodajKucnuListuController controller = loader.getController();
             controller.init(prijavaId, vdDao.dohvatiVrstuPoId(18));
+            kucnaListaId = controller.getKucnaListaDokumentId();
             parent.getChildren().add(kucnaBox);
         } catch (IOException e) {
             throw new RuntimeException(e);

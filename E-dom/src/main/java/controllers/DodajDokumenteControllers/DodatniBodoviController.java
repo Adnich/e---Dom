@@ -24,8 +24,10 @@ public class DodatniBodoviController {
 
     private int prijavaId;
     private String pdfBase64;
+    private  double bodovi;
 
-    public void init(int prijavaId, String nazivDokumenta, List<VrstaDokumenta> dokumenti) {
+    public void init(int prijavaId, String nazivDokumenta, List<VrstaDokumenta> dokumenti, double bodovi) {
+        this.bodovi = bodovi;
         this.prijavaId = prijavaId;
         cmbDokument.getItems().addAll(dokumenti);
 
@@ -58,6 +60,7 @@ public class DodatniBodoviController {
         d.setVrstaDokumenta(vrsta);
         d.setDatumUpload(LocalDate.now());
         d.setDostavljen(true);
+        d.setBrojBodova(bodovi);
 
         if (pdfBase64 != null) {
             d.setDokumentB64(pdfBase64);

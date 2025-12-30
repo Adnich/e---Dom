@@ -4,6 +4,7 @@ import dao.PrijavaDAO;
 import dao.StatusPrijaveDAO;
 import dao.StudentDAO;
 import dao.DokumentDAO;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -42,7 +43,7 @@ public class DetaljiPrijaveController {
     @FXML private TableColumn<Dokument, String> colNaziv;
     @FXML private TableColumn<Dokument, String> colVrsta;
     @FXML private TableColumn<Dokument, String> colDatum;
-    @FXML private TableColumn<Dokument, Integer> colBodovi;
+    @FXML private TableColumn<Dokument, Double> colBodovi;
     @FXML private TableColumn<Dokument, String> colDostavljen;
     @FXML private TableColumn<Dokument, Void> colPregled;
 
@@ -179,7 +180,7 @@ public class DetaljiPrijaveController {
         colDatum.setCellValueFactory(d -> new SimpleStringProperty(
                 d.getValue().getDatumUpload() != null ? d.getValue().getDatumUpload().toString() : ""
         ));
-        colBodovi.setCellValueFactory(d -> new SimpleIntegerProperty(d.getValue().getBrojBodova()).asObject());
+        colBodovi.setCellValueFactory(d -> new SimpleDoubleProperty(d.getValue().getBrojBodova()).asObject());
         colDostavljen.setCellValueFactory(d -> new SimpleStringProperty(d.getValue().isDostavljen() ? "DA" : "NE"));
 
         colDostavljen.setCellFactory(col -> new TableCell<>() {

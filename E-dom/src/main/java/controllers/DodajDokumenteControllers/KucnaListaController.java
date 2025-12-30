@@ -123,7 +123,7 @@ public class KucnaListaController {
      * Završava unos i obračunava bodove po primanjima
      */
     @FXML
-    public void zavrsiUnos() {
+    public double zavrsiUnos() {
         primanjaPoClanu.clear();
 
         // Čitanje unesenih iznosa iz TextFieldova
@@ -140,7 +140,7 @@ public class KucnaListaController {
 
         double poClanu = brojClanova == 0 ? 0 : ukupno / brojClanova;
 
-        int bodovi = KriterijPoOsnovuSocijalnogStatusa
+        double bodovi = KriterijPoOsnovuSocijalnogStatusa
                 .bodoviZaPrimanja(poClanu);
 
         new PrijavaDAO().dodajBodoveNaPrijavu(prijavaId, bodovi);
@@ -149,6 +149,8 @@ public class KucnaListaController {
                 "Ukupna primanja: " + ukupno +
                         "\nPo članu: " + poClanu +
                         "\nBodovi: " + bodovi);
+
+        return bodovi;
     }
 
     /**

@@ -6,7 +6,7 @@ import model.Dokument;
 public class KriterijPoOsnovuSocijalnogStatusa {
 
     // Bodovi za primanja (GLAVNI KRITERIJ)
-    public static int bodoviZaPrimanja(double iznosPoClanu) {
+    public static double bodoviZaPrimanja(double iznosPoClanu) {
         if (iznosPoClanu < 110) return 20;
         if (iznosPoClanu <= 150) return 15;
         if (iznosPoClanu <= 200) return 8;
@@ -16,8 +16,8 @@ public class KriterijPoOsnovuSocijalnogStatusa {
     }
 
     // Bodovi po dokumentima (koristit ćeš tek kad dodaš UI za to)
-    public static int bodoviZaDokumente(List<Dokument> dokumenti) {
-        int suma = 0;
+    public static double bodoviZaDokumente(List<Dokument> dokumenti) {
+        double suma = 0;
 
         for (Dokument d : dokumenti) {
             if (!d.isDostavljen()) continue;
@@ -39,7 +39,7 @@ public class KriterijPoOsnovuSocijalnogStatusa {
     }
 
     // UKUPNO BODOVANJE PRIJAVE
-    public static int izracunajUkupno(double primanjaPoClanu, List<Dokument> dokumenti) {
+    public static double izracunajUkupno(double primanjaPoClanu, List<Dokument> dokumenti) {
         return bodoviZaPrimanja(primanjaPoClanu) + bodoviZaDokumente(dokumenti);
     }
 }

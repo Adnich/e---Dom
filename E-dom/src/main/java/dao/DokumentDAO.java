@@ -13,14 +13,14 @@ import java.util.List;
 public class DokumentDAO {
 
     // UNOS NOVOG DOKUMENTA ----------------------------------------
-    public void unesiDokument(Dokument dokument, int prijavaId) {
+    public int unesiDokument(Dokument dokument, int prijavaId) {
         String sqlUpit = "INSERT INTO dokument " +
                 "(naziv, datum_upload, broj_bodova, dokumentb64, isdostavljen, " +
                 "vrsta_dokumentaid_vrsta, prijavaid_prijava) " +
                 "VALUES (?,?,?,?,?,?,?)";
 
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sqlUpit)) {
+             PreparedStatement stmt = conn.prepareStatement(sqlUpit, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, dokument.getNaziv());
             stmt.setDate(2, java.sql.Date.valueOf(dokument.getDatumUpload()));
@@ -31,7 +31,16 @@ public class DokumentDAO {
             stmt.setInt(7, prijavaId);
 
             stmt.executeUpdate();
-            System.out.println("Dokument je uspješno unesen!");
+
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    int id = rs.getInt(1);
+                    dokument.setIdDokument(id); // 🔥 VAŽNO
+                    return id;
+                }
+            }
+
+            throw new RuntimeException("ID dokumenta nije generisan!");
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -134,7 +143,7 @@ public class DokumentDAO {
     }
 
     // dodaj bodove na dokument
-    public void dodajBodove(int dokumentId, int bodovi){
+    public void dodajBodove(int dokumentId, double bodovi){
         String sqlUpit = "UPDATE dokument SET broj_bodova = broj_bodova + ? WHERE id_dokument = ?";
 
         try (Connection conn = DBConnection.getConnection();
