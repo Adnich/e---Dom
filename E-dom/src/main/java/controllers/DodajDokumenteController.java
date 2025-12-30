@@ -32,6 +32,8 @@ public class DodajDokumenteController {
     private final Map<Integer, List<Dokument>> dokumentiPoClanu = new HashMap<>();
     private final Map<Integer, Double> primanjaPoClanu = new HashMap<>();
     private int kucnaListaId;
+    private DodajKucnuListuController kucnaDokumentControllerRef;
+
 
     private VrstaDokumentaDAO vdDao = new VrstaDokumentaDAO();
     private final List<VrstaDokumenta> vrsteDokumenata = vdDao.dohvatiSveVrste();
@@ -97,13 +99,27 @@ public class DodajDokumenteController {
 
     @FXML
     private void onPodnesiPrijavu(javafx.event.ActionEvent event) {
-        double bodovi;
-        if (kucnaControllerRef != null) {
-            bodovi = kucnaControllerRef.zavrsiUnos();
-            new DokumentDAO().dodajBodove(kucnaListaId, bodovi);
-            primanjaPoClanu.putAll(kucnaControllerRef.getPrimanjaPoClanu());
+
+        if (kucnaControllerRef == null || kucnaDokumentControllerRef == null) {
+            showAlert("Greška", "Kućna lista nije kompletirana.");
+            return;
         }
+
+        double bodovi = kucnaControllerRef.zavrsiUnos();
+        System.out.println("Ukupno bodova za domaćinstvo: " + bodovi);
+
+        int dokumentId = kucnaDokumentControllerRef.getKucnaListaDokumentId();
+
+        System.out.println("ID dokumenta kućna lista: " + dokumentId);
+
+        if (dokumentId <= 0) {
+            showAlert("Greška", "Dokument kućne liste nije sačuvan.");
+            return;
+        }
+
+        new DokumentDAO().dodajBodove(dokumentId, bodovi);
     }
+
 
     public void setProsjek(double prosjek) {
         this.prosjek = prosjek;
@@ -266,14 +282,18 @@ public class DodajDokumenteController {
 
     private void dodajKucnuListuDokument(VBox parent) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DodajDokumenteSections/kucna-dokument.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/views/DodajDokumenteSections/kucna-dokument.fxml")
+            );
             VBox kucnaBox = loader.load();
-            DodajKucnuListuController controller = loader.getController();
-            controller.init(prijavaId, vdDao.dohvatiVrstuPoId(18));
-            kucnaListaId = controller.getKucnaListaDokumentId();
+
+            kucnaDokumentControllerRef = loader.getController();
+            kucnaDokumentControllerRef.init(prijavaId, vdDao.dohvatiVrstuPoId(18));
+
             parent.getChildren().add(kucnaBox);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
 }

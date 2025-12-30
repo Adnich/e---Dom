@@ -62,6 +62,7 @@ public class DodajKucnuListuController {
         DokumentDAO dao = new DokumentDAO();
 
         dokumentId = dao.unesiDokument(d, prijavaId);
+        System.out.println("dokumentId (kucna lista): " + dokumentId);
     }
 
     public int getKucnaListaDokumentId() {
