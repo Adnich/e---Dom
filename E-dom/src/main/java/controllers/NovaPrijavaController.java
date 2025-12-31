@@ -135,7 +135,7 @@ public class NovaPrijavaController {
         System.out.println("Nova prijava unesena sa ID: " + prijavaId);
 
 
-        // ✅ dodatni bodovi
+        // dodatni bodovi
         int dodatniBodovi = 0;
         if (chkIzbjeglica.isSelected()) dodatniBodovi += 3;
         if (chkBratSestra.isSelected()) dodatniBodovi += 2;
