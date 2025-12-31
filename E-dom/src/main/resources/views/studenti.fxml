@@ -32,6 +32,25 @@
                            prefWidth="340"/>
 
                 <Region HBox.hgrow="ALWAYS"/>
+
+                <MenuButton text="Sortiraj" fx:id="btnSortiraj" styleClass="menu-btn">
+                    <items>
+                        <MenuItem text="Ime A-Z" onAction="#sortImeAZ"/>
+                        <MenuItem text="Ime Z-A" onAction="#sortImeZA"/>
+                        <MenuItem text="ID Uzlazno" onAction="#sortIdUzlazno"/>
+                        <MenuItem text="ID Silazno" onAction="#sortIdSilazno"/>
+                        <MenuItem text="Prosjek Uzlazno" onAction="#sortProsjekAsc"/>
+                        <MenuItem text="Prosjek Silazno" onAction="#sortProsjekDesc"/>
+                    </items>
+                </MenuButton>
+
+                <MenuButton text="Filtriraj" fx:id="btnFiltriraj" styleClass="menu-btn">
+                    <items>
+                        <Menu fx:id="menuFakulteti" text="Fakulteti"/>
+                        <Menu fx:id="menuStatus" text="Status prijave"/>
+                        <Menu fx:id="menuGodina" text="Godina studija"/>
+                    </items>
+                </MenuButton>
             </HBox>
 
             <!-- TABLE -->
