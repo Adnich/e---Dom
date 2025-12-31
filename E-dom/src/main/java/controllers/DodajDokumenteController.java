@@ -33,6 +33,7 @@ public class DodajDokumenteController {
     private final Map<Integer, Double> primanjaPoClanu = new HashMap<>();
     private int kucnaListaId;
     private DodajKucnuListuController kucnaDokumentControllerRef;
+    private double bodoviUdaljenost;
 
 
     private VrstaDokumentaDAO vdDao = new VrstaDokumentaDAO();
@@ -132,9 +133,9 @@ public class DodajDokumenteController {
     public void setUdaljenost(double udaljenost) {
         this.udaljenost = udaljenost;
         KriterijPoOsnovuUdaljenosti kriterij = new KriterijPoOsnovuUdaljenosti();
-        double bodovi = kriterij.izracunajBodove(udaljenost);
+        bodoviUdaljenost = kriterij.izracunajBodove(udaljenost);
         PrijavaDAO prijavaDAO = new PrijavaDAO();
-        prijavaDAO.dodajBodoveNaPrijavu(prijavaId, bodovi);
+        prijavaDAO.dodajBodoveNaPrijavu(prijavaId, bodoviUdaljenost);
     }
 
     public void setPrijavaId(int prijavaId) {
@@ -167,7 +168,7 @@ public class DodajDokumenteController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DodajDokumenteSections/cips.fxml"));
             VBox cipsBox = loader.load();
             CipsDokumentController controller = loader.getController();
-            controller.init(prijavaId, vdDao.dohvatiVrstuPoId(6));
+            controller.init(prijavaId, vdDao.dohvatiVrstuPoId(6), bodoviUdaljenost);
             parent.getChildren().add(cipsBox);
         } catch (IOException e) {
             throw new RuntimeException(e);

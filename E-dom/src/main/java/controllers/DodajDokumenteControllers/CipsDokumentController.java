@@ -21,12 +21,14 @@ public class CipsDokumentController {
 
     private int prijavaId;
     private VrstaDokumenta vrsta;
+    private double bodoviUdaljenost;
 
     private String pdfBase64; // ide u DokumentB64
 
-    public void init(int prijavaId, VrstaDokumenta vrsta) {
+    public void init(int prijavaId, VrstaDokumenta vrsta, double bodoviUdaljenost) {
         this.prijavaId = prijavaId;
         this.vrsta = vrsta;
+        this.bodoviUdaljenost = bodoviUdaljenost;
     }
 
     // dugme: Dodaj PDF (nije obavezno)
@@ -53,6 +55,7 @@ public class CipsDokumentController {
         d.setNaziv("CIPS");
         d.setDatumUpload(LocalDate.now());
         d.setDostavljen(true);
+        d.setBrojBodova(bodoviUdaljenost);
         d.setVrstaDokumenta(vrsta);
 
         // PDF je OPCIONALAN
