@@ -1,6 +1,7 @@
 package controllers.DodajDokumenteControllers;
 
 import dao.DokumentDAO;
+import dao.PrijavaDAO;
 import model.Dokument;
 import model.VrstaDokumenta;
 import service.KriterijPoOsnovuUspjeha;
@@ -82,13 +83,15 @@ public class ProsjekDokumentController {
 
         if (godinaStudija == 1) {
 
-            double bodovi = kriterij.izracunajBodoveBrucosi(prijavaId, prosjek);
+            double bodovi = kriterij.izracunajBodoveBrucosi(prosjek);
             // brucosi → svjedodžba iz srednje
             d.setNaziv(vrstaSvjedodzbe.getNaziv());
             d.setVrstaDokumenta(vrstaSvjedodzbe);
             d.setBrojBodova(bodovi);
-             DokumentDAO dDao = new DokumentDAO();
-             dDao.unesiDokument(d, prijavaId);
+            DokumentDAO dDao = new DokumentDAO();
+
+            dDao.unesiDokument(d, prijavaId);
+            new PrijavaDAO().dodajBodoveNaPrijavu(prijavaId, bodovi);
 
 
         } else {
@@ -104,10 +107,11 @@ public class ProsjekDokumentController {
                 return;
             }
             int brojPolozenih = parseIntOrZero(txtBrojPolozenih.getText());
-            double bodovi = kriterij.izracunajBodove(prijavaId, prosjek, brojPolozenih, godinaStudija);
+            double bodovi = kriterij.izracunajBodove(godinaStudija, prosjek, brojPolozenih);
             d.setBrojBodova(bodovi);
 
             new DokumentDAO().unesiDokument(d, prijavaId);
+            new PrijavaDAO().dodajBodoveNaPrijavu(prijavaId, bodovi);
 
 
         }

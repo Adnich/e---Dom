@@ -19,7 +19,7 @@ module org.example.edom {
     requires eu.hansolo.tilesfx;
     requires jbcrypt;
     requires jakarta.mail;
-    requires org.example.edom;
+
 
     // JavaFX mora moći instancirati Application
     exports org.example.edom;

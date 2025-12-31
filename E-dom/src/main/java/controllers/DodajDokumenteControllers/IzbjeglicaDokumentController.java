@@ -43,7 +43,7 @@ public class IzbjeglicaDokumentController {
     @FXML
     private void dodajDokument() {
         VrstaDokumentaDAO vrstaDao = new VrstaDokumentaDAO();
-        VrstaDokumenta vrsta = vrstaDao.dohvatiVrstuPoId(20); // ID za izbjeglica dokument
+        VrstaDokumenta vrsta = vrstaDao.dohvatiVrstuPoId(23); // ID za izbjeglica dokument
         if (vrsta == null) return;
 
 
