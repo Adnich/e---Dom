@@ -1,21 +1,28 @@
 package controllers;
 
 import dao.PrijavaDAO;
+import dto.RangListaDTO;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.Prijava;
+import service.export.RangListaHtmlExportService;
 import util.BodoviUtil;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class RangListaController {
@@ -181,4 +188,71 @@ public class RangListaController {
         stage.setWidth(bounds.getWidth());
         stage.setHeight(bounds.getHeight());
     }
+
+    @FXML
+    public void onExportHtmlPdf(ActionEvent actionEvent) {
+        try {
+            List<RangListaDTO> exportLista = pripremiZaExport();
+
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Sačuvaj rang listu kao PDF");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF fajl", "*.pdf"));
+            File file = fileChooser.showSaveDialog(tblRangLista.getScene().getWindow());
+
+            if (file != null) {
+                RangListaHtmlExportService service = new RangListaHtmlExportService();
+                service.exportData(exportLista, file);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "PDF uspješno kreiran!", ButtonType.OK);
+                alert.showAndWait();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Greška pri kreiranju PDF-a: " + e.getMessage(), ButtonType.OK);
+            alert.showAndWait();
+        }
+    }
+
+
+    private List<RangListaDTO> pripremiZaExport() {
+        List<RangListaDTO> exportLista = new ArrayList<>();
+
+        for (Prijava p : tblRangLista.getItems()) {
+            RangListaDTO dto = new RangListaDTO();
+
+            if (colRedniBroj.isVisible())
+                dto.addKolona("R.br", String.valueOf(tblRangLista.getItems().indexOf(p) + 1));
+
+            if (colIdPrijave.isVisible())
+                dto.addKolona("ID prijave", String.valueOf(p.getIdPrijava()));
+
+            if (colImePrezime.isVisible())
+                dto.addKolona("Ime i prezime", p.getImeStudenta() + " " + p.getPrezimeStudenta());
+
+            if (colUkupniBodovi.isVisible())
+                dto.addKolona("Ukupni bodovi", String.valueOf(p.getBodoviMap().getOrDefault("ukupno", 0.0)));
+
+            if (colGodinaStudija.isVisible())
+                dto.addKolona("Godina studija", String.valueOf(p.getBodoviMap().getOrDefault("godina", 0.0)));
+
+            if (colProsjek.isVisible())
+                dto.addKolona("Prosjek", String.valueOf(p.getBodoviMap().getOrDefault("uspjeh", 0.0)));
+
+            if (colOsvojeneNagrade.isVisible())
+                dto.addKolona("Nagrade", String.valueOf(p.getBodoviMap().getOrDefault("nagrade", 0.0)));
+
+            if (colSocijalniStatus.isVisible())
+                dto.addKolona("Socijalni", String.valueOf(p.getBodoviMap().getOrDefault("socijalni", 0.0)));
+
+            if (colUdaljenost.isVisible())
+                dto.addKolona("Udaljenost", String.valueOf(p.getBodoviMap().getOrDefault("udaljenost", 0.0)));
+
+            if (colDodatniBodovi.isVisible())
+                dto.addKolona("Dodatni bodovi", String.valueOf(p.getBodoviMap().getOrDefault("dodatni", 0.0)));
+
+            exportLista.add(dto);
+        }
+
+        return exportLista;
+    }
+
 }
