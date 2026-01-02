@@ -14,6 +14,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import model.Student;
+import service.export.StudentExportService;
+import service.export.StudentHtmlExportService;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -204,6 +206,37 @@ public class studentiController {
 
         tblStudenti.setItems(sorted);
     }
+
+    @FXML
+    private void onExportPdf() {
+        javafx.stage.FileChooser fileChooser = new javafx.stage.FileChooser();
+        fileChooser.setTitle("Spremi PDF (iText)");
+        fileChooser.getExtensionFilters().add(
+                new javafx.stage.FileChooser.ExtensionFilter("PDF Files", "*.pdf")
+        );
+        java.io.File file = fileChooser.showSaveDialog(tblStudenti.getScene().getWindow());
+        if (file != null) {
+            // Koristi tvoj postojeći StudentPdfExportService
+            StudentExportService service = new StudentExportService();
+            service.exportData(filteredList.stream().toList(), file); // koristi samo filtrirane studente
+        }
+    }
+
+    @FXML
+    private void onExportHtmlPdf() {
+        javafx.stage.FileChooser fileChooser = new javafx.stage.FileChooser();
+        fileChooser.setTitle("Spremi PDF (HTML)");
+        fileChooser.getExtensionFilters().add(
+                new javafx.stage.FileChooser.ExtensionFilter("PDF Files", "*.pdf")
+        );
+        java.io.File file = fileChooser.showSaveDialog(tblStudenti.getScene().getWindow());
+        if (file != null) {
+            // Koristi HTML+CSS servis
+            StudentHtmlExportService service = new StudentHtmlExportService();
+            service.exportData(filteredList.stream().toList(), file); // filtrirani studenti
+        }
+    }
+
 
     private String nullSafe(String s) {
         return s == null ? "" : s;

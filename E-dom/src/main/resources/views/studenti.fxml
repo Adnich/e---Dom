@@ -75,6 +75,11 @@
 
             </TableView>
 
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button fx:id="btnExportPdf" text="Export PDF (iText)" onAction="#onExportPdf"/>
+                <Button fx:id="btnExportHtmlPdf" text="Export PDF (HTML)" onAction="#onExportHtmlPdf"/>
+            </HBox>
+
         </VBox>
     </children>
 
