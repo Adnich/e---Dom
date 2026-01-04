@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -411,5 +412,12 @@ public class prijaveController {
 
     private String nullSafe(String s) {
         return s == null ? "" : s;
+    }
+
+    public void onRefresh() {
+        // Dohvati nove prijave iz baze i zamijeni trenutni masterList
+        masterList.setAll(prijavaDAO.dohvatiSvePrijave());
+        // Ponovno primijeni filtere da se lista odmah ažurira
+        applyAllFilters();
     }
 }

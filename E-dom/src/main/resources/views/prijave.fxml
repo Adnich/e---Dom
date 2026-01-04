@@ -50,6 +50,9 @@
                     </items>
                 </MenuButton>
 
+                <Button text="Refresh" onAction="#onRefresh"/>
+
+
                 <Button text="Nova prijava"
                         onAction="#onNovaPrijava"
                         styleClass="nova-prijava-btn"/>

@@ -51,6 +51,9 @@
                         <Menu fx:id="menuGodina" text="Godina studija"/>
                     </items>
                 </MenuButton>
+
+                <Button text="Refresh" onAction="#onRefresh"/>
+
             </HBox>
 
             <!-- TABLE -->

@@ -237,6 +237,15 @@ public class studentiController {
         }
     }
 
+    @FXML
+    private void onRefresh() {
+        // Dohvati nove studente iz baze i zamijeni trenutni masterList
+        masterList.setAll(studentDAO.dohvatiSveStudente());
+        // Ponovno primijeni filtere da se lista odmah ažurira
+        applyAllFilters();
+    }
+
+
 
     private String nullSafe(String s) {
         return s == null ? "" : s;
