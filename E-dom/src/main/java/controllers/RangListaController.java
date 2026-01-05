@@ -16,6 +16,9 @@ import javafx.scene.control.TableView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.Prijava;
+import util.BodoviUtil;
+
+import java.util.Map;
 
 public class RangListaController {
 
@@ -23,6 +26,12 @@ public class RangListaController {
     @FXML private TableColumn<Prijava, Number> colRedniBroj;
     @FXML private TableColumn<Prijava, String> colImePrezime;
     @FXML private TableColumn<Prijava, Double> colUkupniBodovi;
+    @FXML private TableColumn<Prijava, Double> colGodinaStudija;
+    @FXML private TableColumn<Prijava, Double> colProsjek;
+    @FXML private TableColumn<Prijava, Double> colOsvojeneNagrade;
+    @FXML private TableColumn<Prijava, Double> colSocijalniStatus;
+    @FXML private TableColumn<Prijava, Double> colUdaljenost;
+    @FXML private TableColumn<Prijava, Double> colDodatniBodovi;
     @FXML private TableColumn<Prijava, Void> colDetalji;
 
     private final PrijavaDAO prijavaDAO = new PrijavaDAO();
@@ -31,11 +40,7 @@ public class RangListaController {
     @FXML
     public void initialize() {
 
-        /* =========================
-           CELL VALUE FACTORIES
-        ========================= */
-
-        // Redni broj - stabilno i brzo
+        // Redni broj
         colRedniBroj.setCellValueFactory(cd ->
                 new ReadOnlyObjectWrapper<>(tblRangLista.getItems().indexOf(cd.getValue()) + 1)
         );
@@ -45,57 +50,45 @@ public class RangListaController {
                 new ReadOnlyObjectWrapper<>(cd.getValue().getImeStudenta() + " " + cd.getValue().getPrezimeStudenta())
         );
 
-        // Ukupni bodovi
-        colUkupniBodovi.setCellValueFactory(cd ->
-                new ReadOnlyObjectWrapper<>(cd.getValue().getUkupniBodovi())
+        // Godina studija
+        colGodinaStudija.setCellValueFactory(cd ->
+                new ReadOnlyObjectWrapper<>(cd.getValue().getBodoviMap().get("godina"))
         );
 
-        /* =========================
-           BEAUTIFY CELLS
-        ========================= */
+        colProsjek.setCellValueFactory(cd ->
+                new ReadOnlyObjectWrapper<>(cd.getValue().getBodoviMap().get("uspjeh"))
+        );
 
-        // Redni broj: centar + bold
-        colRedniBroj.setCellFactory(tc -> new TableCell<>() {
-            @Override
-            protected void updateItem(Number item, boolean empty) {
-                super.updateItem(item, empty);
+        // Osvojene nagrade
+        colOsvojeneNagrade.setCellValueFactory(cd ->
+                new ReadOnlyObjectWrapper<>(cd.getValue().getBodoviMap().get("nagrade"))
+        );
 
-                if (empty || item == null) {
-                    setText(null);
-                    getStyleClass().remove("rbr-cell");
-                } else {
-                    setText(String.valueOf(item.intValue()));
-                    if (!getStyleClass().contains("rbr-cell"))
-                        getStyleClass().add("rbr-cell");
-                }
-            }
-        });
+        // Socijalni status
+        colSocijalniStatus.setCellValueFactory(cd ->
+                new ReadOnlyObjectWrapper<>(cd.getValue().getBodoviMap().get("socijalni"))
+        );
 
-        // Bodovi: format + centar + highlight
-        colUkupniBodovi.setCellFactory(tc -> new TableCell<>() {
-            @Override
-            protected void updateItem(Double item, boolean empty) {
-                super.updateItem(item, empty);
+        // Udaljenost
+        colUdaljenost.setCellValueFactory(cd ->
+                new ReadOnlyObjectWrapper<>(cd.getValue().getBodoviMap().get("udaljenost"))
+        );
 
-                if (empty || item == null) {
-                    setText(null);
-                    getStyleClass().remove("bodovi-cell");
-                } else {
-                    setText(String.format("%.1f", item));
-                    if (!getStyleClass().contains("bodovi-cell"))
-                        getStyleClass().add("bodovi-cell");
-                }
-            }
-        });
+        // Dodatni bodovi
+        colDodatniBodovi.setCellValueFactory(cd ->
+                new ReadOnlyObjectWrapper<>(cd.getValue().getBodoviMap().get("dodatni"))
+        );
 
-        // Detalji dugme - koristi CSS klasu
+        // Ukupni bodovi
+        colUkupniBodovi.setCellValueFactory(cd ->
+                new ReadOnlyObjectWrapper<>(cd.getValue().getBodoviMap().get("ukupno"))
+        );
+
+        // Detalji dugme
         colDetalji.setCellFactory(tc -> new TableCell<>() {
-
             private final Button btn = new Button("Detalji");
-
             {
                 btn.getStyleClass().add("det-btn");
-
                 btn.setOnAction(e -> {
                     Prijava prijava = getTableView().getItems().get(getIndex());
                     otvoriDetalje(prijava);
@@ -109,44 +102,33 @@ public class RangListaController {
             }
         });
 
-        /* =========================
-           LOAD RANK LIST
-        ========================= */
-
-        rangLista = FXCollections.observableArrayList(
-                prijavaDAO.dohvatiSvePrijave().stream()
-                        .filter(p -> p.getStatusPrijave() != null
-                                && "odobreno".equalsIgnoreCase(p.getStatusPrijave().getNaziv()))
-                        .sorted((p1, p2) -> Double.compare(p2.getUkupniBodovi(), p1.getUkupniBodovi()))
-                        .toList()
-        );
-
+        // Učitavanje rang liste
+        rangLista = FXCollections.observableArrayList();
+        for (Prijava p : prijavaDAO.dohvatiSvePrijave()) {
+            if (p.getStatusPrijave() != null && "odobreno".equalsIgnoreCase(p.getStatusPrijave().getNaziv())) {
+                Map<String, Double> bodovi = BodoviUtil.izracunajBodoveZaPrijavu(p);
+                p.setBodoviMap(bodovi); // <-- ovo polje moraš imati u modelu Prijava
+                rangLista.add(p);
+            }
+        }
         tblRangLista.setItems(rangLista);
 
-        // BONUS: spriječi "selektovanje plavom" (ako želiš čist UI)
+        // Spriječi plavu selekciju
         tblRangLista.getSelectionModel().setCellSelectionEnabled(false);
     }
-
-    /* =========================
-       OPEN DETAILS (FULLSCREEN)
-    ========================= */
 
     private void otvoriDetalje(Prijava prijava) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/detalji-prijave.fxml"));
             Scene scene = new Scene(loader.load());
-
-            DetaljiPrijaveController controller = loader.getController();
+            controllers.DetaljiPrijaveController controller = loader.getController();
             controller.setPrijava(prijava);
-
             Stage stage = new Stage();
             stage.setTitle("Detalji prijave");
             stage.setScene(scene);
             stage.setResizable(true);
             stage.show();
-
             Platform.runLater(() -> maximize(stage));
-
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -153,6 +153,8 @@ public class NovaPrijavaController {
             controller.setUdaljenost(udaljenost);
             controller.setProsjek(prosjek);
             controller.setGodinaStudija(godinaStudija);
+            controller.setIzbjeglica(chkIzbjeglica.isSelected());
+            controller.setBratSestra(chkBratSestra.isSelected());
 
             double bodoviBranioci = 0;
             // Prosljeđivanje rezultata branilaca (bodovi + naziv)

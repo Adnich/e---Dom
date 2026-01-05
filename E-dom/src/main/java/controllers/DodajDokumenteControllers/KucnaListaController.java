@@ -52,7 +52,7 @@ public class KucnaListaController {
         primanjaFieldovi.clear();
         dokumentiPoClanu.clear();
 
-        for (int i = 1; i <= brojClanova; i++) {
+        for (int i = 1; i <= brojClanova-1; i++) {
             final int index = i;
 
             VBox clanBox = new VBox(6);
@@ -127,7 +127,7 @@ public class KucnaListaController {
         primanjaPoClanu.clear();
 
         // Čitanje unesenih iznosa iz TextFieldova
-        for (int i = 1; i <= brojClanova; i++) {
+        for (int i = 1; i <= brojClanova-1; i++) {
             TextField tf = primanjaFieldovi.get(i);
             double iznos = parse(tf.getText());
             primanjaPoClanu.put(i, iznos);

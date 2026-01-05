@@ -28,6 +28,13 @@
                 <columns>
                     <TableColumn fx:id="colRedniBroj" text="R.br" prefWidth="70"/>
                     <TableColumn fx:id="colImePrezime" text="Ime i prezime" prefWidth="280"/>
+                    <TableColumn fx:id="colGodinaStudija" text="Godina studija" prefWidth="100"/>
+                    <TableColumn fx:id="colProsjek" text="Prosjek" prefWidth="100"/>
+                    <TableColumn fx:id="colOsvojeneNagrade" text="Nagrade" prefWidth="100"/>
+                    <TableColumn fx:id="colSocijalniStatus" text="Socijalni" prefWidth="100"/>
+                    <TableColumn fx:id="colUdaljenost" text="Udaljenost" prefWidth="100"/>
+                    <TableColumn fx:id="colDodatniBodovi" text="Dodatni bodovi" prefWidth="100"/>
+
                     <TableColumn fx:id="colUkupniBodovi" text="Ukupni bodovi" prefWidth="160"/>
                     <TableColumn fx:id="colDetalji" text="" prefWidth="140"/>
                 </columns>

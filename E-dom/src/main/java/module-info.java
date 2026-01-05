@@ -20,6 +20,7 @@ module org.example.edom {
     requires jbcrypt;
     requires jakarta.mail;
 
+
     // JavaFX mora moći instancirati Application
     exports org.example.edom;
     opens org.example.edom to javafx.graphics;

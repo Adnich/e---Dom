@@ -33,6 +33,9 @@ public class DodajDokumenteController {
     private final Map<Integer, Double> primanjaPoClanu = new HashMap<>();
     private int kucnaListaId;
     private DodajKucnuListuController kucnaDokumentControllerRef;
+    private double bodoviUdaljenost;
+    private boolean isIzbjeglica;
+    private boolean isBratSestra;
 
 
     private VrstaDokumentaDAO vdDao = new VrstaDokumentaDAO();
@@ -87,12 +90,18 @@ public class DodajDokumenteController {
         accordionDokumenti.getPanes().addAll(paneOsnovni, paneDomacinstvo, paneFaks);
 
         // Prikaži sekciju za dodatne bodove samo ako postoje bodovi branilaca
-        if (braniociRezultat != null && braniociRezultat.getBodovi() > 0) {
+        if ((braniociRezultat != null && braniociRezultat.getBodovi() > 0) || isIzbjeglica) {
             TitledPane paneDodatni = new TitledPane();
             paneDodatni.setText("Dodatni bodovi");
             VBox vboxDodatni = new VBox(10);
             paneDodatni.setContent(vboxDodatni);
-            dodajSekcijuDodatniBodovi(vboxDodatni);
+            if(isIzbjeglica){
+                dodajIzbjegliceDokument(vboxDodatni);
+            }
+            if(braniociRezultat != null && braniociRezultat.getBodovi() > 0) {
+                dodajSekcijuDodatniBodovi(vboxDodatni);
+            }
+
             accordionDokumenti.getPanes().add(paneDodatni);
         }
     }
@@ -109,6 +118,10 @@ public class DodajDokumenteController {
         System.out.println("Ukupno bodova za domaćinstvo: " + bodovi);
 
         int dokumentId = kucnaDokumentControllerRef.getKucnaListaDokumentId();
+
+        if(isBratSestra) {
+            bodovi += 2;
+        }
 
         System.out.println("ID dokumenta kućna lista: " + dokumentId);
 
@@ -132,9 +145,9 @@ public class DodajDokumenteController {
     public void setUdaljenost(double udaljenost) {
         this.udaljenost = udaljenost;
         KriterijPoOsnovuUdaljenosti kriterij = new KriterijPoOsnovuUdaljenosti();
-        double bodovi = kriterij.izracunajBodove(udaljenost);
+        bodoviUdaljenost = kriterij.izracunajBodove(udaljenost);
         PrijavaDAO prijavaDAO = new PrijavaDAO();
-        prijavaDAO.dodajBodoveNaPrijavu(prijavaId, bodovi);
+        prijavaDAO.dodajBodoveNaPrijavu(prijavaId, bodoviUdaljenost);
     }
 
     public void setPrijavaId(int prijavaId) {
@@ -154,6 +167,14 @@ public class DodajDokumenteController {
         initAccordion();
     }
 
+    public void setIzbjeglica(boolean izbjeglica){
+        isIzbjeglica = izbjeglica;
+    }
+
+    public void setBratSestra(boolean bratSestra){
+        isBratSestra = bratSestra;
+    }
+
     private void showAlert(String title, String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -167,7 +188,7 @@ public class DodajDokumenteController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DodajDokumenteSections/cips.fxml"));
             VBox cipsBox = loader.load();
             CipsDokumentController controller = loader.getController();
-            controller.init(prijavaId, vdDao.dohvatiVrstuPoId(6));
+            controller.init(prijavaId, vdDao.dohvatiVrstuPoId(6), bodoviUdaljenost);
             parent.getChildren().add(cipsBox);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -291,6 +312,18 @@ public class DodajDokumenteController {
             kucnaDokumentControllerRef.init(prijavaId, vdDao.dohvatiVrstuPoId(18));
 
             parent.getChildren().add(kucnaBox);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void dodajIzbjegliceDokument(VBox parent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DodajDokumenteSections/izbjeglica-dokument.fxml"));
+            VBox izbBox = loader.load();
+            IzbjeglicaDokumentController controller = loader.getController();
+            controller.init(prijavaId);
+            parent.getChildren().add(izbBox);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

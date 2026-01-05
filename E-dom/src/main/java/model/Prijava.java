@@ -2,6 +2,7 @@ package model;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public class Prijava {
     private int IdPrijava;
@@ -11,6 +12,7 @@ public class Prijava {
     private String Napomena;
     private int AkademskaGodina;
     private int IdStudent;
+    private Map<String, Double> bodoviMap;
 
     private List<Dokument> Dokumenti;
 
@@ -110,6 +112,9 @@ public class Prijava {
     public void setPrezimeStudenta(String prezimeStudenta) {
         this.prezimeStudenta = prezimeStudenta;
     }
+
+    public Map<String, Double> getBodoviMap() { return bodoviMap; }
+    public void setBodoviMap(Map<String, Double> bodoviMap) { this.bodoviMap = bodoviMap; }
 
     @Override
     public String toString() {
