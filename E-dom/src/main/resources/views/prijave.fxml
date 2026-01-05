@@ -50,6 +50,9 @@
                     </items>
                 </MenuButton>
 
+                <Button text="Refresh" onAction="#onRefresh"/>
+
+
                 <Button text="Nova prijava"
                         onAction="#onNovaPrijava"
                         styleClass="nova-prijava-btn"/>
@@ -74,6 +77,10 @@
                 </columns>
 
             </TableView>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button fx:id="btnExportHtmlPdf" text="Export PDF (HTML)" onAction="#onExportHtmlPdf"/>
+            </HBox>
 
         </VBox>
     </children>

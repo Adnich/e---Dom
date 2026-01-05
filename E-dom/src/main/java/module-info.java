@@ -19,7 +19,9 @@ module org.example.edom {
     requires eu.hansolo.tilesfx;
     requires jbcrypt;
     requires jakarta.mail;
-
+    requires com.github.librepdf.openpdf;
+    requires openhtmltopdf.core;
+    requires openhtmltopdf.pdfbox;
 
     // JavaFX mora moći instancirati Application
     exports org.example.edom;
@@ -29,11 +31,13 @@ module org.example.edom {
     opens controllers to javafx.fxml;
     opens controllers.DodajDokumenteControllers to javafx.fxml;
 
-
-    // modeli (TableView, PropertyValueFactory)
+    // modeli
     opens model to javafx.base;
 
-    // ako se ikad koriste u FXML
+    // Ostalo
     opens dao to javafx.fxml;
     opens service to javafx.fxml;
+
+    // 🔥 KLJUČNO: OTVORI FOLDER SA FONTOVIMA 🔥
+    opens fonts;
 }

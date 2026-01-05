@@ -21,12 +21,18 @@
     <center>
         <VBox styleClass="rang-card" spacing="14">
 
+            <MenuBar >
+
+                <Menu fx:id="menuKolone" text="Prikaži kolone"/>
+            </MenuBar>
+
             <TableView fx:id="tblRangLista"
                        VBox.vgrow="ALWAYS"
                        styleClass="rang-table">
 
                 <columns>
                     <TableColumn fx:id="colRedniBroj" text="R.br" prefWidth="70"/>
+                    <TableColumn fx:id="colIdPrijave" text="ID prijave" prefWidth="280"/>
                     <TableColumn fx:id="colImePrezime" text="Ime i prezime" prefWidth="280"/>
                     <TableColumn fx:id="colGodinaStudija" text="Godina studija" prefWidth="100"/>
                     <TableColumn fx:id="colProsjek" text="Prosjek" prefWidth="100"/>
@@ -40,6 +46,10 @@
                 </columns>
 
             </TableView>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button fx:id="btnExportHtmlPdf" text="Export PDF (HTML)" onAction="#onExportHtmlPdf"/>
+            </HBox>
 
         </VBox>
     </center>
