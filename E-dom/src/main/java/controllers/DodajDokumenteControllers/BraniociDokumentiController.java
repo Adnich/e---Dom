@@ -15,13 +15,18 @@ public class BraniociDokumentiController {
 
     @FXML private CheckBox chkStudentRVI;
     @FXML private TextField txtPostotakInvaliditeta;
+
     @FXML private CheckBox chkInvaliditet;
+
     @FXML private CheckBox chkDjecaSehida;
     @FXML private CheckBox chkClanPorodiceSehida;
+
     @FXML private CheckBox chkInvalidnostRoditelja;
     @FXML private TextField txtPostInvalidnostiRoditelja;
+
     @FXML private CheckBox chkDjecaOSRBiH;
     @FXML private TextField txtBrojMjeseci;
+
     @FXML private CheckBox chkDjecaNosilacaRPriznanja;
     @FXML private CheckBox chkStudentLogoras;
     @FXML private CheckBox chkRoditeljLogoras;
@@ -29,13 +34,47 @@ public class BraniociDokumentiController {
     @FXML private CheckBox chkDjecaBezObaRoditelja;
     @FXML private CheckBox chkBezRoditeljskogStaranja;
     @FXML private CheckBox chkKorisniciSocijalnePomoci;
+
     @FXML private Label lblPdf;
 
     private String pdfBase64;
-    private KriterijPoOsnovuDjeceBranilaca kriterij = new KriterijPoOsnovuDjeceBranilaca();
+    private final KriterijPoOsnovuDjeceBranilaca kriterij = new KriterijPoOsnovuDjeceBranilaca();
 
+    // ===============================
+    // INIT: prikaz polja samo kad je čekirano
+    // ===============================
+    @FXML
+    public void initialize() {
+
+        // ✅ Student RVI -> postotak invaliditeta
+        txtPostotakInvaliditeta.visibleProperty().bind(chkStudentRVI.selectedProperty());
+        txtPostotakInvaliditeta.managedProperty().bind(chkStudentRVI.selectedProperty());
+        chkStudentRVI.selectedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal) txtPostotakInvaliditeta.clear();
+        });
+
+        // ✅ Invalidnost roditelja -> postotak invalidnosti roditelja
+        txtPostInvalidnostiRoditelja.visibleProperty().bind(chkInvalidnostRoditelja.selectedProperty());
+        txtPostInvalidnostiRoditelja.managedProperty().bind(chkInvalidnostRoditelja.selectedProperty());
+        chkInvalidnostRoditelja.selectedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal) txtPostInvalidnostiRoditelja.clear();
+        });
+
+        // ✅ Dijete OSRBiH -> broj mjeseci
+        txtBrojMjeseci.visibleProperty().bind(chkDjecaOSRBiH.selectedProperty());
+        txtBrojMjeseci.managedProperty().bind(chkDjecaOSRBiH.selectedProperty());
+        chkDjecaOSRBiH.selectedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal) txtBrojMjeseci.clear();
+        });
+    }
+
+    // ===============================
+    // IZRAČUN BODOVA
+    // ===============================
     public BraniociRezultat izracunajBodove() {
+
         Map<String, Boolean> stanja = new HashMap<>();
+
         stanja.put("StudentRvi", chkStudentRVI.isSelected());
         stanja.put("Invalidnost", chkInvaliditet.isSelected());
         stanja.put("PoginuoBranilac", chkDjecaSehida.isSelected());
@@ -58,8 +97,12 @@ public class BraniociDokumentiController {
         );
     }
 
+    // ===============================
+    // PDF UPLOAD
+    // ===============================
     @FXML
     private void onDodajPdf() {
+
         pdfBase64 = PdfService.uploadPdf(lblPdf.getScene().getWindow());
 
         if (pdfBase64 != null) {

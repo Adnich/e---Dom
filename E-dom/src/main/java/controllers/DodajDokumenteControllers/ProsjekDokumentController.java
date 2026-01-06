@@ -2,42 +2,44 @@ package controllers.DodajDokumenteControllers;
 
 import dao.DokumentDAO;
 import dao.PrijavaDAO;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import model.Dokument;
 import model.VrstaDokumenta;
 import service.KriterijPoOsnovuUspjeha;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
+
 import java.time.LocalDate;
 
 public class ProsjekDokumentController {
-    @FXML
-    private Label lblIspiti;
-    @FXML
-    private VBox rootBox;
 
-    @FXML
-    private Label lblOpis;
+    @FXML private Label lblIspiti;
+    @FXML private Label lblOpis;
+    @FXML private TextField txtBrojPolozenih;
+    @FXML private CheckBox chkDostavljen;
+    @FXML private RadioButton rbUvjerenje;
+    @FXML private RadioButton rbIndeks;
 
-    @FXML
-    private TextField txtBrojPolozenih; // za uvjerenje/indeks
-
-    @FXML
-    private CheckBox chkDostavljen;
-
-    @FXML
-    private RadioButton rbUvjerenje; // opcionalno, samo za višu godinu
-    @FXML
-    private RadioButton rbIndeks;
+    private final ToggleGroup toggleDokument = new ToggleGroup();
 
     private int prijavaId;
     private double prosjek;
     private int godinaStudija;
+
     private VrstaDokumenta vrstaSvjedodzbe;
     private VrstaDokumenta vrstaUvjerenje;
     private VrstaDokumenta vrstaIndeks;
 
     private final KriterijPoOsnovuUspjeha kriterij = new KriterijPoOsnovuUspjeha();
+
+    @FXML
+    public void initialize() {
+        // ✅ ToggleGroup popravlja izgled i ponašanje RadioButton-a
+        rbUvjerenje.setToggleGroup(toggleDokument);
+        rbIndeks.setToggleGroup(toggleDokument);
+
+        // default stanje
+        rbUvjerenje.setSelected(true);
+    }
 
     public void init(int prijavaId, int godinaStudija, double prosjek,
                      VrstaDokumenta vrstaSvjedodzbe,
@@ -52,19 +54,25 @@ public class ProsjekDokumentController {
         this.vrstaIndeks = vrstaIndeks;
 
         if (godinaStudija == 1) {
-            // prikazuje samo svjedodžbu iz srednje škole
+            // ✅ prikazuje samo svjedodžbu
             lblOpis.setText("Svjedodžba o završetku srednje škole:");
-            lblIspiti.setVisible(false);
-            txtBrojPolozenih.setVisible(false);
-            rbUvjerenje.setVisible(false);
-            rbIndeks.setVisible(false);
+
+            setNodeVisible(lblIspiti, false);
+            setNodeVisible(txtBrojPolozenih, false);
+            setNodeVisible(rbUvjerenje, false);
+            setNodeVisible(rbIndeks, false);
+
         } else {
-            // viša godina → prikazuje opciju uvjerenje / indeks
+            // ✅ viša godina → uvjerenje / indeks
             lblOpis.setText("Odaberi i unesi dokument sa fakulteta:");
-            lblIspiti.setVisible(true);
-            txtBrojPolozenih.setVisible(true);
-            rbUvjerenje.setVisible(true);
-            rbIndeks.setVisible(true);
+
+            setNodeVisible(lblIspiti, true);
+            setNodeVisible(txtBrojPolozenih, true);
+            setNodeVisible(rbUvjerenje, true);
+            setNodeVisible(rbIndeks, true);
+
+            // default
+            rbUvjerenje.setSelected(true);
         }
     }
 
@@ -78,7 +86,6 @@ public class ProsjekDokumentController {
         Dokument d = new Dokument();
         d.setDatumUpload(LocalDate.now());
         d.setDostavljen(true);
-        d.setBrojBodova(0);
         d.setDokumentB64(null);
 
         if (godinaStudija == 1) {
@@ -113,10 +120,35 @@ public class ProsjekDokumentController {
             new DokumentDAO().unesiDokument(d, prijavaId);
             new PrijavaDAO().dodajBodoveNaPrijavu(prijavaId, bodovi);
 
+        } else {
+            // ✅ viša godina → uvjerenje / indeks
+            if (rbUvjerenje.isSelected()) {
+                d.setNaziv(vrstaUvjerenje.getNaziv());
+                d.setVrstaDokumenta(vrstaUvjerenje);
 
+            } else if (rbIndeks.isSelected()) {
+                d.setNaziv(vrstaIndeks.getNaziv());
+                d.setVrstaDokumenta(vrstaIndeks);
+
+            } else {
+                showAlert("Greška", "Odaberi dokument: uvjerenje ili indeks.");
+                return;
+            }
+
+            int brojPolozenih = parseIntOrZero(txtBrojPolozenih.getText());
+            double bodovi = kriterij.izracunajBodove(prijavaId, prosjek, brojPolozenih, godinaStudija);
+
+            d.setBrojBodova(bodovi);
+            new DokumentDAO().unesiDokument(d, prijavaId);
         }
 
         showAlert("Uspješno", "Dokument dodat i bodovi obračunati.");
+    }
+
+    // ✅ ključna metoda za UI: visible + managed
+    private void setNodeVisible(Control node, boolean visible) {
+        node.setVisible(visible);
+        node.setManaged(visible);
     }
 
     private int parseIntOrZero(String text) {

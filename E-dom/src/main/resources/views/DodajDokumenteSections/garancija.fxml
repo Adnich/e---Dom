@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="10" xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controllers.DodajDokumenteControllers.GarancijaDokumentController">
-    <Label text="Garancija o preuzimanju obaveza" style="-fx-font-weight: bold"/>
+<VBox spacing="12"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controllers.DodajDokumenteControllers.GarancijaDokumentController"
+      styleClass="doc-card">
 
-    <TextField fx:id="txtImeGaranta" promptText="Ime i prezime garanta"/>
+    <Label text="Garancija o preuzimanju obaveza" styleClass="doc-title"/>
 
-    <ComboBox fx:id="cmbTipGaranta" promptText="Ime i prezime garanta"/>
+    <TextField fx:id="txtImeGaranta" promptText="Ime i prezime garanta" styleClass="field"/>
 
-    <CheckBox fx:id="chkGarancijaPotpisana" text="Ovjerena garancija (općina ili notar)"/>
+    <ComboBox fx:id="cmbTipGaranta" promptText="Tip garanta" styleClass="combo"/>
 
-    <ComboBox fx:id="cmbDokumentGarancija" promptText="Izaberite dokument"/>
+    <CheckBox fx:id="chkGarancijaPotpisana"
+              text="Ovjerena garancija (općina ili notar)"
+              styleClass="checkbox"/>
 
-    <Button text="Dodaj dokument" onAction="#dodajDokumentGarancija"/>
-    <Label fx:id="lblPdf" text="PDF nije dodat"/>
+    <ComboBox fx:id="cmbDokumentGarancija" promptText="Izaberite dokument" styleClass="combo"/>
 
-    <Button text="Dodaj PDF (opcionalno)"
-            onAction="#onDodajPdf"/>
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button text="Dodaj dokument" onAction="#dodajDokumentGarancija" styleClass="btn-primary"/>
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <Button text="Dodaj PDF (opcionalno)" onAction="#onDodajPdf" styleClass="btn-secondary"/>
+        <Label fx:id="lblPdf" text="PDF nije dodat" styleClass="doc-status"/>
+    </HBox>
+
 </VBox>
