@@ -1,14 +1,8 @@
-/* =========================
-   ROOT
-========================= */
 .root {
     -fx-font-family: "Segoe UI", "Arial", sans-serif;
     -fx-background-color: #EAFBF7;
 }
 
-/* =========================
-   LEFT PANEL (SAME AS LOGIN)
-========================= */
 .left-pane {
     -fx-background-color: linear-gradient(to bottom, #004E64 0%, #003847 100%);
     -fx-padding: 50 45 50 45;

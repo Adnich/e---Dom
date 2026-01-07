@@ -8,132 +8,63 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.RegisterController"
-            prefWidth="1100" prefHeight="650"
             stylesheets="@../styles/register-style.css"
             styleClass="root">
 
-    <!-- LIJEVA STRANA -->
     <left>
-        <VBox spacing="26"
-              alignment="TOP_LEFT"
-              styleClass="left-pane">
-
-            <!-- LOGO -->
-            <HBox alignment="CENTER_LEFT">
-                <children>
-                    <Pane HBox.hgrow="ALWAYS"/>
-                    <ImageView fitWidth="190"
-                               preserveRatio="true"
-                               styleClass="left-logo">
-                        <image>
-                            <Image url="@../images/e-domLOGO.png"/>
-                        </image>
-                    </ImageView>
-                    <Pane HBox.hgrow="ALWAYS"/>
-                </children>
+        <VBox spacing="26" alignment="TOP_LEFT" styleClass="left-pane">
+            <HBox>
+                <Pane HBox.hgrow="ALWAYS"/>
+                <ImageView fitWidth="190" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/e-domLOGO.png"/>
+                    </image>
+                </ImageView>
+                <Pane HBox.hgrow="ALWAYS"/>
             </HBox>
 
-            <!-- HERO TEXT -->
-            <Label text="Digitalni sistem studentskog doma"
-                   wrapText="true"
-                   styleClass="app-title"/>
-            <Label text="Ubrzano upravljanje prijavama, bodovanjem i rangiranjem — uz potpunu evidenciju i kontrolu procesa."
-                   wrapText="true"
-                   styleClass="left-subtitle"/>
+            <Label text="Digitalni sistem studentskog doma" styleClass="app-title"/>
+            <Label text="Ubrzano upravljanje prijavama i bodovanjem." styleClass="left-subtitle"/>
 
-            <VBox spacing="12" style="-fx-padding: 16 0 0 0;">
-                <Label text="✓ Evidencija prijava i smještaja u realnom vremenu" styleClass="left-text"/>
-                <Label text="✓ Automatsko bodovanje i provjera podataka" styleClass="left-text"/>
-                <Label text="✓ Rangiranje i izvoz izvještaja jednim klikom" styleClass="left-text"/>
+            <VBox spacing="10">
+                <Label text="✓ Evidencija prijava" styleClass="left-text"/>
+                <Label text="✓ Automatsko bodovanje" styleClass="left-text"/>
+                <Label text="✓ Rang liste" styleClass="left-text"/>
             </VBox>
-
-            <Label text="Pouzdano. Brzo. Precizno."
-                   style="-fx-padding: 18 0 0 0;"
-                   styleClass="left-tagline"/>
 
             <Region VBox.vgrow="ALWAYS"/>
         </VBox>
     </left>
 
-    <!-- DESNA STRANA -->
     <center>
         <StackPane styleClass="right-pane">
-            <children>
-                <!-- PREMIUM SOFT GLOW -->
-                <Pane styleClass="glow-mint" StackPane.alignment="CENTER"/>
-                <Pane styleClass="glow-yellow" StackPane.alignment="CENTER"/>
+            <StackPane styleClass="register-container">
 
-                <!-- REGISTER CONTAINER -->
-                <StackPane alignment="CENTER" styleClass="register-container">
+                <VBox spacing="18" maxWidth="420" styleClass="register-card">
 
-                    <!-- CARD -->
-                    <VBox spacing="24"
-                          alignment="TOP_LEFT"
-                          maxWidth="520"
-                          styleClass="register-card">
+                    <Label text="Registracija administratora" styleClass="register-title"/>
 
-                        <!-- TITLE -->
-                        <Label text="Registracija korisnika"
-                               styleClass="register-title"/>
+                    <HBox spacing="12">
+                        <TextField fx:id="txtIme" promptText="Ime" styleClass="text-input"/>
+                        <TextField fx:id="txtPrezime" promptText="Prezime" styleClass="text-input"/>
+                    </HBox>
 
-                        <!-- FORM -->
-                        <VBox spacing="16" maxWidth="420">
+                    <TextField fx:id="txtEmail" promptText="E-mail" styleClass="text-input"/>
+                    <TextField fx:id="txtUsername" promptText="Korisničko ime" styleClass="text-input"/>
+                    <PasswordField fx:id="txtPassword" promptText="Lozinka" styleClass="text-input"/>
+                    <PasswordField fx:id="txtPassword2" promptText="Ponovi lozinku" styleClass="text-input"/>
 
-                            <!-- Ime + Prezime -->
-                            <HBox spacing="14">
-                                <VBox spacing="6" HBox.hgrow="ALWAYS">
-                                    <Label text="Ime" styleClass="field-label"/>
-                                    <TextField fx:id="txtIme" promptText="Unesite ime" styleClass="text-input"/>
-                                </VBox>
-                                <VBox spacing="6" HBox.hgrow="ALWAYS">
-                                    <Label text="Prezime" styleClass="field-label"/>
-                                    <TextField fx:id="txtPrezime" promptText="Unesite prezime" styleClass="text-input"/>
-                                </VBox>
-                            </HBox>
+                    <HBox spacing="14" alignment="CENTER">
+                        <Button text="Registruj" onAction="#onRegisterClicked"
+                                styleClass="primary-btn" prefWidth="180"/>
+                        <Button text="Nazad na prijavu" onAction="#onBackToLoginClicked"
+                                styleClass="secondary-btn" prefWidth="180"/>
+                    </HBox>
 
-                            <!-- E-mail -->
-                            <VBox spacing="6">
-                                <Label text="E-mail" styleClass="field-label"/>
-                                <TextField fx:id="txtEmail" promptText="Unesite vašu e-mail adresu" styleClass="text-input"/>
-                            </VBox>
+                    <Label fx:id="lblError" styleClass="error-label"/>
 
-                            <!-- Korisničko ime -->
-                            <VBox spacing="6">
-                                <Label text="Korisničko ime" styleClass="field-label"/>
-                                <TextField fx:id="txtUsername" promptText="Unesite korisničko ime" styleClass="text-input"/>
-                            </VBox>
-
-                            <!-- Lozinka -->
-                            <VBox spacing="6">
-                                <Label text="Lozinka" styleClass="field-label"/>
-                                <PasswordField fx:id="txtPassword" promptText="Unesite lozinku" styleClass="text-input"/>
-                            </VBox>
-
-                            <!-- Ponovi lozinku -->
-                            <VBox spacing="6">
-                                <Label text="Ponovi lozinku" styleClass="field-label"/>
-                                <PasswordField fx:id="txtPassword2" promptText="Ponovite lozinku" styleClass="text-input"/>
-                            </VBox>
-
-                            <!-- Uloga -->
-                            <VBox spacing="6">
-                                <Label text="Uloga" styleClass="field-label"/>
-                                <ComboBox fx:id="cmbUloga" promptText="Odaberite ulogu" styleClass="combo-input" maxWidth="Infinity"/>
-                            </VBox>
-
-                            <!-- BUTTONS -->
-                            <HBox spacing="14" alignment="CENTER">
-                                <Button text="Registruj" onAction="#onRegisterClicked" styleClass="primary-btn" prefWidth="190"/>
-                                <Button text="Nazad na prijavu" onAction="#onBackToLoginClicked" styleClass="secondary-btn" prefWidth="190"/>
-                            </HBox>
-
-                            <!-- ERROR -->
-                            <Label fx:id="lblError" styleClass="error-label"/>
-
-                        </VBox>
-                    </VBox>
-                </StackPane>
-            </children>
+                </VBox>
+            </StackPane>
         </StackPane>
     </center>
 
