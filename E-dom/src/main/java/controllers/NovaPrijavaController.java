@@ -51,6 +51,7 @@ public class NovaPrijavaController {
         }
     }
 
+
     private void applyCssIfMissing(Scene scene) {
         var cssUrl = getClass().getResource("/styles/nova-prijava-style.css");
         if (cssUrl != null) {
@@ -212,4 +213,34 @@ public class NovaPrijavaController {
             showAlert("Greška", "Ne mogu učitati formu za branioce.");
         }
     }
+
+// ===============================
+// BACK (Nazad)
+// ===============================
+@FXML
+private void onBackClicked() {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/novi-student.fxml"));
+        Parent root = loader.load();
+
+        NoviStudentController controller = loader.getController();
+
+        // ✅ ako želiš vratiti unesene vrijednosti (opcionalno)
+        // controller.setStudentId(studentId);
+        // controller.setProsjek(prosjek);
+        // controller.setGodinaStudija(godinaStudija);
+
+        Stage stage = (Stage) txtAkGod.getScene().getWindow();
+
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+
+        // ✅ vrati fullscreen
+        forceMaximize(stage);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        showAlert("Greška", "Ne mogu učitati formu za studenta.");
+    }
+}
 }

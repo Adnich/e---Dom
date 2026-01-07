@@ -1,387 +1,399 @@
-/* ROOT */
+/* =====================================================
+   DODAJ DOKUMENTE - MODERNI UI
+   PALETA: #004E64 (tamno), #00B696 (zeleno)
+   ===================================================== */
+
 .root {
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "Segoe UI", "Inter", system-ui;
 }
 
-/* SCROLL PANE */
+/* BACKGROUND */
 .scroll-pane {
-    -fx-background-color: #f7fbff;
-    -fx-border-color: transparent;
+    -fx-background-color: linear-gradient(to bottom right, #D9F0FF, #f7fbff);
 }
 
 .scroll-pane > .viewport {
-    -fx-background-color: #f7fbff;
-}
-
-.scroll-pane .scroll-bar:vertical {
     -fx-background-color: transparent;
-    -fx-pref-width: 10px;
 }
 
-.scroll-pane .scroll-bar:vertical .track {
-    -fx-background-color: rgba(34,179,154,0.08);
-    -fx-background-radius: 5px;
+/* wrapper centriranje */
+.page-wrapper {
+    -fx-alignment: center;
 }
 
-.scroll-pane .scroll-bar:vertical .thumb {
-    -fx-background-color: rgba(34,179,154,0.35);
-    -fx-background-radius: 5px;
-}
-
-.scroll-pane .scroll-bar:vertical .thumb:hover {
-    -fx-background-color: rgba(34,179,154,0.55);
-}
-
-/* MAIN CONTAINER */
-#vboxClanovi {
-    -fx-background-color: #f7fbff;
-    -fx-padding: 30 40 30 40;
-    -fx-spacing: 20;
-}
-
-/* CLAN BOX - za svaki član domaćinstva */
-.v-box {
+/* CARD */
+.card {
     -fx-background-color: white;
-    -fx-background-radius: 16px;
-    -fx-padding: 24 28 24 28;
-    -fx-spacing: 14;
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(34,179,154,0.12),
-        20,
-        0.15,
-        0,
-        4
-    );
-}
-
-.v-box:hover {
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(34,179,154,0.20),
-        24,
-        0.20,
-        0,
-        6
-    );
-}
-
-/* SPECIJALNE SEKCIJE (CIPS, Svjedozba, itd) */
-.v-box[style*="border-color: lightgray"] {
-    -fx-background-color: rgba(34,179,154,0.04);
-    -fx-border-color: rgba(34,179,154,0.25);
+    -fx-background-radius: 28px;
+    -fx-border-radius: 28px;
+    -fx-border-color: rgba(0, 78, 100, 0.12);
     -fx-border-width: 1.5px;
-    -fx-border-radius: 16px;
-    -fx-background-radius: 16px;
-    -fx-padding: 24 28 24 28;
+
+    -fx-effect: dropshadow(gaussian, rgba(0, 78, 100, 0.14), 38, 0.26, 0, 12);
+
+    -fx-pref-width: 920px;
+    -fx-max-width: 920px;
+
+    -fx-padding: 26 34 26 34;
 }
 
-/* LABELS */
-.label {
-    -fx-font-size: 14px;
-    -fx-text-fill: #334155;
-    -fx-font-weight: 600;
+/* TITLE */
+.page-title {
+    -fx-font-size: 34px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #004E64;
 }
 
-/* Glavni naslov za člana */
-.v-box > .label:first-child {
-    -fx-font-size: 18px;
-    -fx-font-weight: 700;
-    -fx-text-fill: #22b39a;
-    -fx-padding: 0 0 8 0;
-}
-
-/* SEKCIJSKI NASLOVI (CIPS, Svjedozba, itd) */
-.v-box[style*="border-color"] > .label:first-child {
-    -fx-font-size: 15px;
-    -fx-font-weight: 700;
-    -fx-text-fill: #22b39a;
-    -fx-wrap-text: true;
-    -fx-max-width: 500px;
-    -fx-line-spacing: 2px;
-}
-
-/* TEXT FIELDS */
-.text-field {
-    -fx-background-color: white;
-    -fx-background-radius: 14px;
-    -fx-border-radius: 14px;
-    -fx-border-color: rgba(34,179,154,0.25);
-    -fx-border-width: 1.5px;
-    -fx-padding: 11 16 11 16;
+.page-subtitle {
     -fx-font-size: 13px;
-    -fx-text-fill: #334155;
-    -fx-pref-width: 220px;
+    -fx-text-fill: rgba(0, 78, 100, 0.55);
 }
 
-.text-field:focused {
-    -fx-border-color: #22b39a;
-    -fx-border-width: 2px;
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(34,179,154,0.15),
-        8,
-        0.3,
-        0,
-        2
-    );
+/* PROGRESS */
+.progress-top {
+    -fx-accent: #00B696;
+    -fx-background-color: rgba(0, 78, 100, 0.12);
+    -fx-background-radius: 999px;
+    -fx-border-radius: 999px;
+    -fx-pref-height: 10px;
+    -fx-max-width: 420px;
 }
 
-.text-field:hover {
-    -fx-border-color: rgba(34,179,154,0.45);
+/* STEPPER */
+.stepper {
+    -fx-padding: 0 0 2 0;
 }
 
-/* COMBO BOX */
-.combo-box {
-    -fx-background-color: white;
-    -fx-background-radius: 14px;
-    -fx-border-radius: 14px;
-    -fx-border-color: rgba(34,179,154,0.25);
-    -fx-border-width: 1.5px;
-    -fx-pref-width: 240px;
+.step-dot {
+    -fx-min-width: 28px;
+    -fx-min-height: 28px;
+    -fx-alignment: center;
+    -fx-background-radius: 999px;
+    -fx-background-color: rgba(0, 78, 100, 0.10);
+    -fx-text-fill: #004E64;
+    -fx-font-weight: 800;
 }
 
-.combo-box:focused {
-    -fx-border-color: #22b39a;
-    -fx-border-width: 2px;
-}
-
-.combo-box:hover {
-    -fx-border-color: rgba(34,179,154,0.45);
-}
-
-.combo-box .list-cell {
-    -fx-background-color: white;
-    -fx-text-fill: #334155;
-    -fx-font-size: 13px;
-    -fx-padding: 8 12 8 12;
-}
-
-.combo-box-popup .list-view {
-    -fx-background-color: white;
-    -fx-background-radius: 12px;
-    -fx-border-radius: 12px;
-    -fx-border-color: rgba(34,179,154,0.25);
-    -fx-border-width: 1.5px;
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(34,179,154,0.18),
-        16,
-        0.25,
-        0,
-        6
-    );
-}
-
-.combo-box-popup .list-view .list-cell:hover {
-    -fx-background-color: rgba(34,179,154,0.12);
-}
-
-.combo-box-popup .list-view .list-cell:selected {
-    -fx-background-color: #22b39a;
+.step-dot-active {
+    -fx-background-color: #00B696;
     -fx-text-fill: white;
 }
 
-/* CHECKBOX */
-.check-box {
-    -fx-font-size: 13px;
-    -fx-text-fill: #334155;
-    -fx-font-weight: 500;
-}
-
-.check-box .box {
-    -fx-background-color: white;
-    -fx-background-radius: 6px;
-    -fx-border-radius: 6px;
-    -fx-border-color: rgba(34,179,154,0.35);
-    -fx-border-width: 2px;
-    -fx-pref-width: 20px;
-    -fx-pref-height: 20px;
-}
-
-.check-box:hover .box {
-    -fx-border-color: #22b39a;
-    -fx-background-color: rgba(34,179,154,0.05);
-}
-
-.check-box:selected .box {
-    -fx-background-color: #22b39a;
-    -fx-border-color: #22b39a;
-}
-
-.check-box:selected .mark {
-    -fx-background-color: white;
-    -fx-shape: "M 0 5 L 4 9 L 10 0";
-    -fx-scale-x: 1.2;
-    -fx-scale-y: 1.2;
-}
-
-/* BUTTONS */
-.button {
-    -fx-background-radius: 30px;
+.step-label {
+    -fx-text-fill: rgba(0, 78, 100, 0.65);
     -fx-font-weight: 700;
-    -fx-font-size: 13px;
-    -fx-padding: 10 24 10 24;
+    -fx-font-size: 12px;
+}
+
+.step-label-active {
+    -fx-text-fill: #004E64;
+}
+
+.step-line {
+    -fx-text-fill: rgba(0, 78, 100, 0.30);
+    -fx-font-weight: 900;
+}
+
+/* SECTION PILL */
+.section-pill {
+    -fx-background-color: rgba(0, 182, 150, 0.10);
+    -fx-text-fill: #00B696;
+    -fx-font-weight: 800;
+    -fx-padding: 10 18;
+    -fx-background-radius: 999px;
+    -fx-border-radius: 999px;
+    -fx-border-color: rgba(0, 182, 150, 0.30);
+    -fx-border-width: 1;
+    -fx-max-width: 240px;
+}
+
+/* separator */
+.soft-separator {
+    -fx-background-color: rgba(0, 78, 100, 0.10);
+}
+
+/* FOOTER */
+.footer-box {
+    -fx-padding: 18 0 0 0;
+    -fx-alignment: center;
+}
+
+/* PRIMARY BUTTON */
+.btn-next {
+    -fx-background-color: #00B696;
+    -fx-text-fill: white;
+    -fx-font-weight: 900;
+    -fx-font-size: 14px;
+    -fx-background-radius: 999px;
+    -fx-padding: 12 32;
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.45), 20, 0.30, 0, 8);
     -fx-cursor: hand;
 }
 
-/* Dodaj dokument button */
-.h-box .button {
-    -fx-background-radius: 40px;
-        -fx-background-color: linear-gradient(
-            to bottom,
-            #2ec9ad,
-            #22b39a
-        );
-        -fx-text-fill: white;
-        -fx-font-weight: 800;
-        -fx-font-size: 15px;
-
-        -fx-padding: 14 32 14 32;
-
-        /* shadow = jelly osjećaj */
-        -fx-effect: dropshadow(
-            gaussian,
-            rgba(34,179,154,0.45),
-            18,
-            0.25,
-            0,
-            8
-        );
+.btn-next:hover {
+    -fx-background-color: #00a88a;
 }
 
-.h-box .button:hover {
-     -fx-scale-x: 1.04;
-        -fx-scale-y: 1.04;
-        -fx-background-color: linear-gradient(
-            to bottom,
-            #3ddbc0,
-            #1da38d
-        );
+.btn-next:pressed {
+    -fx-background-color: #009a7d;
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.25), 12, 0.25, 0, 4);
 }
 
-.h-box .button:pressed {
-     -fx-scale-x: 0.97;
-        -fx-scale-y: 0.95;
-        -fx-background-color: #1a8f7c;
-        -fx-effect: dropshadow(
-            gaussian,
-            rgba(34,179,154,0.25),
-            10,
-            0.2,
-            0,
-            4
-        );
+/* ===================================
+   MODERN ACCORDION
+   =================================== */
+
+.modern-accordion {
+    -fx-background-color: transparent;
 }
 
-/* Završi unos button - glavni akcijski button */
-#vboxClanovi > .button:last-child {
-    -fx-background-radius: 40px;
-    -fx-background-color: linear-gradient(
-        to bottom,
-        #2ec9ad,
-        #22b39a
-    );
+.modern-accordion .titled-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: rgba(0, 78, 100, 0.12);
+    -fx-border-width: 1.3px;
+    -fx-background-radius: 18px;
+    -fx-border-radius: 18px;
+    -fx-padding: 0;
+}
+
+.modern-accordion .titled-pane > .title {
+    -fx-background-color: rgba(0, 182, 150, 0.10);
+    -fx-background-radius: 18px;
+    -fx-border-radius: 18px;
+    -fx-padding: 12 16;
+}
+
+.modern-accordion .titled-pane > .title:hover {
+    -fx-background-color: rgba(0, 182, 150, 0.16);
+}
+
+.modern-accordion .titled-pane > .title > .text {
+    -fx-fill: #004E64;
+    -fx-font-weight: 900;
+    -fx-font-size: 13px;
+}
+
+.modern-accordion .titled-pane:expanded > .title {
+    -fx-background-color: rgba(0, 182, 150, 0.18);
+}
+
+.modern-accordion .titled-pane > .content {
+    -fx-background-color: transparent;
+    -fx-padding: 14 14 14 14;
+}
+
+/* ===================================
+   DOC CARD DESIGN
+   =================================== */
+
+.doc-card {
+    -fx-background-color: white;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-border-color: rgba(0, 78, 100, 0.10);
+    -fx-border-width: 1.2px;
+    -fx-padding: 18 18 18 18;
+    -fx-effect: dropshadow(gaussian, rgba(0, 78, 100, 0.10), 20, 0.25, 0, 8);
+}
+
+.doc-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #004E64;
+}
+
+.doc-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: rgba(0, 78, 100, 0.65);
+    -fx-font-weight: 700;
+}
+
+/* checkbox */
+.checkbox {
+    -fx-text-fill: #004E64;
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-padding: 4 0;
+}
+
+.checkbox > .box {
+    -fx-background-color: white;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-border-color: rgba(0,182,150,0.35);
+    -fx-border-width: 1.8px;
+}
+
+.checkbox:selected > .box {
+    -fx-background-color: #00B696;
+    -fx-border-color: #00B696;
+}
+
+.checkbox:selected > .box > .mark {
+    -fx-background-color: white;
+}
+
+/* input */
+.field {
+    -fx-background-color: white;
+    -fx-background-radius: 18px;
+    -fx-border-radius: 18px;
+    -fx-border-color: rgba(0,182,150,0.30);
+    -fx-border-width: 1.4px;
+    -fx-padding: 10 14;
+    -fx-font-size: 13px;
+    -fx-prompt-text-fill: rgba(0,78,100,0.35);
+}
+
+.field:focused {
+    -fx-border-color: #00B696;
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.25), 14, 0.28, 0, 3);
+}
+
+/* ComboBox */
+.combo {
+    -fx-background-color: white;
+    -fx-background-radius: 18px;
+    -fx-border-radius: 18px;
+    -fx-border-color: rgba(0,182,150,0.30);
+    -fx-border-width: 1.4px;
+    -fx-pref-height: 42px;
+    -fx-padding: 0;
+}
+
+.combo > .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #004E64;
+    -fx-font-weight: 700;
+    -fx-font-size: 13px;
+    -fx-padding: 0 14 0 14;
+}
+
+.combo > .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 14 0 14;
+}
+
+.combo > .arrow-button > .arrow {
+    -fx-background-color: #00B696;
+}
+
+/* buttons */
+.btn-primary {
+    -fx-background-color: #00B696;
     -fx-text-fill: white;
+    -fx-font-weight: 900;
+    -fx-font-size: 13px;
+    -fx-background-radius: 999px;
+    -fx-padding: 10 18;
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.35), 18, 0.30, 0, 6);
+    -fx-cursor: hand;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #00a88a;
+}
+
+.btn-secondary {
+    -fx-background-color: rgba(0, 78, 100, 0.06);
+    -fx-border-color: rgba(0,78,100,0.25);
+    -fx-border-width: 1.4px;
+    -fx-background-radius: 999px;
+    -fx-border-radius: 999px;
+
     -fx-font-weight: 800;
-    -fx-font-size: 16px;
-    -fx-padding: 16 40 16 40;
-    -fx-pref-width: 100%;
-    -fx-max-width: 300px;
-    -fx-alignment: center;
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(34,179,154,0.45),
-        20,
-        0.3,
-        0,
-        8
-    );
+    -fx-text-fill: #004E64;
+    -fx-font-size: 13px;
+
+    -fx-padding: 10 18;
+    -fx-pref-height: 40px; /* ✅ da bude isti kao primary */
+    -fx-min-height: 40px;
+
+    -fx-cursor: hand;
 }
 
-#vboxClanovi > .button:last-child:hover {
-    -fx-scale-x: 1.04;
-    -fx-scale-y: 1.04;
-    -fx-background-color: linear-gradient(
-        to bottom,
-        #3ddbc0,
-        #1da38d
-    );
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(34,179,154,0.55),
-        24,
-        0.35,
-        0,
-        10
-    );
+.btn-secondary:hover {
+    -fx-background-color: rgba(0, 78, 100, 0.10);
 }
 
-#vboxClanovi > .button:last-child:pressed {
-    -fx-scale-x: 0.97;
-    -fx-scale-y: 0.95;
-    -fx-background-color: #1a8f7c;
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(34,179,154,0.25),
-        12,
-        0.2,
-        0,
-        4
-    );
+.btn-secondary:pressed {
+    -fx-background-color: rgba(0, 78, 100, 0.15);
 }
 
-/* HBOX layout */
-.h-box {
-    -fx-spacing: 12;
-    -fx-alignment: center-left;
+
+
+.btn-secondary:hover {
+    -fx-background-color: rgba(0, 78, 100, 0.06);
 }
 
-/* SPACING ADJUSTMENTS */
-.v-box > .h-box {
-    -fx-padding: 8 0 0 0;
+/* ===================================
+   KUĆNA LISTA - član kartice
+   =================================== */
+
+.household-member-card {
+    -fx-background-color: rgba(0, 182, 150, 0.04);
+    -fx-background-radius: 18px;
+    -fx-border-radius: 18px;
+    -fx-border-color: rgba(0, 182, 150, 0.18);
+    -fx-border-width: 1.2px;
+    -fx-padding: 14 14 14 14;
 }
 
-/* RESPONSIVE WIDTH CONSTRAINTS */
-.text-field[prompt-text*="Ime"] {
-    -fx-pref-width: 280px;
+.member-title {
+    -fx-font-size: 13px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #004E64;
 }
 
-.text-field[prompt-text*="primanja"] {
-    -fx-pref-width: 180px;
+.btn-upload {
+    -fx-background-color: #00B696;
+    -fx-text-fill: white;
+    -fx-font-weight: 900;
+    -fx-background-radius: 999px;
+    -fx-padding: 8 16;
+    -fx-cursor: hand;
 }
 
-.text-field[prompt-text*="polozenih"] {
-    -fx-pref-width: 140px;
+.btn-upload:hover {
+    -fx-background-color: #00a88a;
 }
 
-/* TRANSITIONS - smooth animations */
-.button,
-.check-box .box,
-.text-field,
-.combo-box {
-    -fx-transition: all 0.2s ease;
+/* ===================================
+   MODERN RADIO BUTTON
+   =================================== */
+
+.radio-button.modern-radio {
+    -fx-text-fill: #004E64;
+    -fx-font-size: 13px;
+    -fx-font-weight: 800;
+    -fx-padding: 4 0;
 }
 
-/* FOCUS RING REMOVAL */
-.button:focused,
-.check-box:focused,
-.text-field:focused,
-.combo-box:focused {
-    -fx-background-insets: 0;
+.radio-button.modern-radio > .radio {
+    -fx-background-color: white;
+    -fx-border-color: rgba(0,182,150,0.35);
+    -fx-border-width: 1.8px;
+    -fx-background-radius: 999px;
+    -fx-border-radius: 999px;
+    -fx-padding: 5px;
 }
 
-/* ACCESSIBILITY - visually impaired support */
-.button:focused,
-.text-field:focused,
-.combo-box:focused,
-.check-box:focused {
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(34,179,154,0.5),
-        10,
-        0.4,
-        0,
-        0
-    );
+.radio-button.modern-radio:selected > .radio {
+    -fx-border-color: #00B696;
+}
+
+.radio-button.modern-radio:selected > .radio > .dot {
+    -fx-background-color: #00B696;
+    -fx-background-radius: 999px;
+    -fx-padding: 5px;
+}
+
+.radio-button.modern-radio:hover > .radio {
+    -fx-border-color: #00B696;
+}
+.doc-status {
+    -fx-text-fill: rgba(0, 78, 100, 0.55);
+    -fx-font-weight: 700;
+    -fx-font-size: 12px;
+    -fx-padding: 2 0 0 8;
 }
