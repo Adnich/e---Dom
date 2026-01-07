@@ -8,6 +8,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -17,6 +19,9 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.Prijava;
 import model.Student;
+import service.export.PrijavaHtmlExportService;
+import service.export.StudentHtmlExportService;
+import dto.PrijavaExportDTo;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -186,6 +191,56 @@ public class prijaveController {
         colUkupniBodovi.setSortType(TableColumn.SortType.DESCENDING);
         tblPrijave.getSortOrder().setAll(colUkupniBodovi);
     }
+
+    @FXML
+    private void onExportHtmlPdf() {
+        // 1️⃣ File chooser
+        javafx.stage.FileChooser fileChooser = new javafx.stage.FileChooser();
+        fileChooser.setTitle("Spremi PDF (HTML)");
+        fileChooser.getExtensionFilters().add(
+                new javafx.stage.FileChooser.ExtensionFilter("PDF Files", "*.pdf")
+        );
+
+        java.io.File file = fileChooser.showSaveDialog(tblPrijave.getScene().getWindow());
+        if (file == null) return;
+
+        // 2️⃣ Mapiramo trenutno vidljive podatke u DTO (koristi studentMap, bez DAO)
+        List<PrijavaExportDTo> dataZaExport = pripremiPrijaveZaExport();
+
+        // 3️⃣ Pokrenemo export u background thread-u (ne blokira UI)
+        Task<Void> exportTask = new Task<>() {
+            @Override
+            protected Void call() {
+                PrijavaHtmlExportService service = new PrijavaHtmlExportService();
+                service.exportData(dataZaExport, file);
+                return null;
+            }
+        };
+        new Thread(exportTask).start();
+    }
+
+
+    private List<PrijavaExportDTo> pripremiPrijaveZaExport() {
+
+        return tblPrijave.getItems().stream().map(p -> {
+
+            Student s = studentMap.get(p.getIdStudent());
+
+            return new PrijavaExportDTo(
+                    p.getIdPrijava(),
+                    s != null ? nullSafe(s.getIme()) : "",
+                    s != null ? nullSafe(s.getPrezime()) : "",
+                    s != null ? nullSafe(s.getFakultet()) : "",
+                    p.getDatumPrijava() != null ? p.getDatumPrijava().toString() : "",
+                    p.getUkupniBodovi(),
+                    p.getStatusPrijave() != null
+                            ? p.getStatusPrijave().getNaziv()
+                            : ""
+            );
+        }).toList();
+    }
+
+
 
     /* ===================== FILTER + SORT CORE ===================== */
 
@@ -357,5 +412,12 @@ public class prijaveController {
 
     private String nullSafe(String s) {
         return s == null ? "" : s;
+    }
+
+    public void onRefresh() {
+        // Dohvati nove prijave iz baze i zamijeni trenutni masterList
+        masterList.setAll(prijavaDAO.dohvatiSvePrijave());
+        // Ponovno primijeni filtere da se lista odmah ažurira
+        applyAllFilters();
     }
 }

@@ -1,0 +1,24 @@
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="8"
+      xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.DodajDokumenteControllers.IzbjeglicaDokumentController">
+
+    <Label fx:id="lblInfoDokument"
+           text="Izbjegli i raseljeni studenti"
+           style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #2c5aa0;"/>
+
+    <CheckBox text="Dokument dostavljen"
+              fx:id="chkDokument"/>
+
+    <Button text="Dodaj dokument"
+            onAction="#dodajDokument"/>
+    <HBox spacing="10">
+        <Button text="Dodaj PDF (opcionalno)"
+                onAction="#onDodajPdf"/>
+        <Label fx:id="lblPdf"
+               text="PDF nije dodan"/>
+    </HBox>
+</VBox>
