@@ -89,20 +89,19 @@ public class ProsjekDokumentController {
         d.setDokumentB64(null);
 
         if (godinaStudija == 1) {
-
+            // --- LOGIKA ZA BRUCOŠE ---
             double bodovi = kriterij.izracunajBodoveBrucosi(prosjek);
-            // brucosi → svjedodžba iz srednje
+
             d.setNaziv(vrstaSvjedodzbe.getNaziv());
             d.setVrstaDokumenta(vrstaSvjedodzbe);
             d.setBrojBodova(bodovi);
-            DokumentDAO dDao = new DokumentDAO();
 
+            DokumentDAO dDao = new DokumentDAO();
             dDao.unesiDokument(d, prijavaId);
             new PrijavaDAO().dodajBodoveNaPrijavu(prijavaId, bodovi);
 
-
         } else {
-            // viša godina
+            // --- LOGIKA ZA VIŠE GODINE ---
             if (rbUvjerenje.isSelected()) {
                 d.setNaziv(vrstaUvjerenje.getNaziv());
                 d.setVrstaDokumenta(vrstaUvjerenje);
@@ -113,38 +112,19 @@ public class ProsjekDokumentController {
                 showAlert("Greška", "Odaberi dokument: uvjerenje ili indeks.");
                 return;
             }
+
             int brojPolozenih = parseIntOrZero(txtBrojPolozenih.getText());
+
+            // Provjeri koja metoda za bodove ti treba (ostavio sam onu iz prvog bloka)
             double bodovi = kriterij.izracunajBodove(godinaStudija, prosjek, brojPolozenih);
             d.setBrojBodova(bodovi);
 
             new DokumentDAO().unesiDokument(d, prijavaId);
             new PrijavaDAO().dodajBodoveNaPrijavu(prijavaId, bodovi);
-
-        } else {
-            // ✅ viša godina → uvjerenje / indeks
-            if (rbUvjerenje.isSelected()) {
-                d.setNaziv(vrstaUvjerenje.getNaziv());
-                d.setVrstaDokumenta(vrstaUvjerenje);
-
-            } else if (rbIndeks.isSelected()) {
-                d.setNaziv(vrstaIndeks.getNaziv());
-                d.setVrstaDokumenta(vrstaIndeks);
-
-            } else {
-                showAlert("Greška", "Odaberi dokument: uvjerenje ili indeks.");
-                return;
-            }
-
-            int brojPolozenih = parseIntOrZero(txtBrojPolozenih.getText());
-            double bodovi = kriterij.izracunajBodove(prijavaId, prosjek, brojPolozenih, godinaStudija);
-
-            d.setBrojBodova(bodovi);
-            new DokumentDAO().unesiDokument(d, prijavaId);
         }
 
         showAlert("Uspješno", "Dokument dodat i bodovi obračunati.");
     }
-
     // ✅ ključna metoda za UI: visible + managed
     private void setNodeVisible(Control node, boolean visible) {
         node.setVisible(visible);
