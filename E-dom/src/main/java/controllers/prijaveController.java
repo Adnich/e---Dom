@@ -46,6 +46,7 @@ public class prijaveController {
     @FXML private TextField txtSearch;
     @FXML private Menu menuFakulteti;
     @FXML private Menu menuStatusPrijave;
+    @FXML private Menu menuGodineStudija;
 
     /* ===================== DATA ===================== */
 
@@ -59,6 +60,8 @@ public class prijaveController {
 
     private final Set<String> selectedFakulteti = new HashSet<>();
     private final Set<String> selectedStatusiPrijave = new HashSet<>();
+    private final Set<Integer> selectedGodineStudija = new HashSet<>();
+
 
     /* ===================== INITIALIZE ===================== */
 
@@ -75,6 +78,7 @@ public class prijaveController {
 
         initFakultetiFilter();
         initStatusPrijaveFilter();
+        initGodinaStudijaFilter();
 
         setupFilteringAndSorting();
         setupRowDoubleClick();
@@ -265,6 +269,7 @@ public class prijaveController {
             // STUDENT info
             Student s = studentMap.get(p.getIdStudent());
             String fakultet = s != null ? nullSafe(s.getFakultet()) : "";
+            Integer godinaStudija = s != null ? s.getGodinaStudija() : null;
 
             // status
             String status = (p.getStatusPrijave() != null) ? nullSafe(p.getStatusPrijave().getNaziv()) : "";
@@ -286,7 +291,11 @@ public class prijaveController {
             boolean statusOk = selectedStatusiPrijave.isEmpty()
                     || selectedStatusiPrijave.contains(status);
 
-            return searchOk && fakultetOk && statusOk;
+            boolean godinaOk = selectedGodineStudija.isEmpty()
+                    || (godinaStudija != null && selectedGodineStudija.contains(godinaStudija));
+
+
+            return searchOk && fakultetOk && statusOk && godinaOk;
         });
     }
 
@@ -311,6 +320,31 @@ public class prijaveController {
             menuFakulteti.getItems().add(item);
         }
     }
+
+    private void initGodinaStudijaFilter() {
+
+        Set<Integer> godine = studentMap.values().stream()
+                .map(Student::getGodinaStudija)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toCollection(TreeSet::new)); // sortirano
+
+        menuGodineStudija.getItems().clear();
+
+        for (Integer g : godine) {
+            CheckMenuItem item = new CheckMenuItem(String.valueOf(g));
+            item.setOnAction(e -> {
+                if (item.isSelected()) {
+                    selectedGodineStudija.add(g);
+                } else {
+                    selectedGodineStudija.remove(g);
+                }
+                applyAllFilters();
+            });
+            menuGodineStudija.getItems().add(item);
+        }
+    }
+
+
 
     private void initStatusPrijaveFilter() {
 

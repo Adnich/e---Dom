@@ -36,8 +36,8 @@
                     <items>
                         <MenuItem text="Ime A-Z" onAction="#sortImeAZ"/>
                         <MenuItem text="Ime Z-A" onAction="#sortImeZA"/>
-                        <MenuItem text="ID Uzlazno" onAction="#sortIdUzlazno"/>
-                        <MenuItem text="ID Silazno" onAction="#sortIdSilazno"/>
+                        <MenuItem text="Od najstarije" onAction="#sortIdUzlazno"/>
+                        <MenuItem text="Od najnovije" onAction="#sortIdSilazno"/>
                         <MenuItem text="Bodovi Uzlazno" onAction="#sortBodoviUzlazno"/>
                         <MenuItem text="Bodovi Silazno" onAction="#sortBodoviSilazno"/>
                     </items>
@@ -47,6 +47,7 @@
                     <items>
                         <Menu fx:id="menuFakulteti" text="Fakulteti"/>
                         <Menu fx:id="menuStatusPrijave" text="Status prijave"/>
+                        <Menu fx:id="menuGodineStudija" text="Godina studija"/>
                     </items>
                 </MenuButton>
 
