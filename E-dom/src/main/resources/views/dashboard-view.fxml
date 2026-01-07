@@ -69,8 +69,7 @@
 
         <!-- PIE CHART PANEL -->
         <VBox spacing="14"
-              styleClass="content-panel"
-              maxWidth="Infinity"
+              styleClass="content-panel chart-panel"
               HBox.hgrow="ALWAYS"
               VBox.vgrow="ALWAYS">
 
@@ -90,8 +89,10 @@
         <!-- STATUS PRIJAVA PANEL -->
         <VBox spacing="14"
               styleClass="content-panel status-sidebar-compact"
-              VBox.vgrow="ALWAYS"
-              maxWidth="Infinity">
+              prefWidth="280"
+              minWidth="260"
+              maxWidth="300"
+              VBox.vgrow="ALWAYS">
 
             <HBox alignment="CENTER_LEFT">
                 <Label text="Status prijava" styleClass="section-title"/>

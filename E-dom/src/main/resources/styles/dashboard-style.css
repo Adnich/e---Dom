@@ -225,3 +225,19 @@
 .content-panel:hover {
     -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.12), 30, 0.30, 0, 14);
 }
+
+/* =========================
+   CHART PANEL (left content)
+========================= */
+.chart-panel {
+    -fx-pref-width: 70%;
+}
+
+/* =========================
+   STATUS SIDEBAR (right)
+========================= */
+.status-sidebar-compact {
+    -fx-pref-width: 280px;
+    -fx-min-width: 260px;
+    -fx-max-width: 300px;
+}
