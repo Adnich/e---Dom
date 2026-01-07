@@ -120,28 +120,7 @@ public class ProsjekDokumentController {
             new DokumentDAO().unesiDokument(d, prijavaId);
             new PrijavaDAO().dodajBodoveNaPrijavu(prijavaId, bodovi);
 
-        } else {
-            // ✅ viša godina → uvjerenje / indeks
-            if (rbUvjerenje.isSelected()) {
-                d.setNaziv(vrstaUvjerenje.getNaziv());
-                d.setVrstaDokumenta(vrstaUvjerenje);
-
-            } else if (rbIndeks.isSelected()) {
-                d.setNaziv(vrstaIndeks.getNaziv());
-                d.setVrstaDokumenta(vrstaIndeks);
-
-            } else {
-                showAlert("Greška", "Odaberi dokument: uvjerenje ili indeks.");
-                return;
-            }
-
-            int brojPolozenih = parseIntOrZero(txtBrojPolozenih.getText());
-            double bodovi = kriterij.izracunajBodove(prijavaId, prosjek, brojPolozenih, godinaStudija);
-
-            d.setBrojBodova(bodovi);
-            new DokumentDAO().unesiDokument(d, prijavaId);
         }
-
         showAlert("Uspješno", "Dokument dodat i bodovi obračunati.");
     }
 
