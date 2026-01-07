@@ -364,4 +364,43 @@
     -fx-text-fill: #00B696;
 }
 
+/* ==================================================
+   EXPORT PDF BUTTON
+================================================== */
+#btnExportHtmlPdf {
+    -fx-background-color: white;
+    -fx-text-fill: #004E64;
+    -fx-font-weight: 900;
+    -fx-font-size: 13px;
+
+    -fx-padding: 10 18;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+
+    -fx-border-color: rgba(0,182,150,0.55);
+    -fx-border-width: 1.2;
+
+    -fx-cursor: hand;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 12, 0.25, 0, 4);
+}
+
+/* Hover */
+#btnExportHtmlPdf:hover {
+    -fx-background-color: rgba(0,182,150,0.08);
+    -fx-border-color: rgba(0,182,150,0.85);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 16, 0.25, 0, 6);
+}
+
+/* Pressed */
+#btnExportHtmlPdf:pressed {
+    -fx-background-color: rgba(0,182,150,0.16);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 10, 0.25, 0, 2);
+}
+
+/* Disabled */
+#btnExportHtmlPdf:disabled {
+    -fx-opacity: 0.55;
+    -fx-cursor: default;
+}
 

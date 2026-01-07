@@ -1,55 +1,166 @@
+/* ==========================================================
+   RANG LISTA — PREMIUM UI (FINAL FIX)
+   PALETA: #004E64 / #00B696 / #FFF9A5
+========================================================== */
+
 .root {
     -fx-font-family: "Inter", "Segoe UI", system-ui;
+    -fx-background-color: #f6fbfb;
 }
 
-/* ===== ROOT BACKGROUND ===== */
+/* ROOT WRAPPER */
 .rang-root {
     -fx-background-color: #f6fbfb;
-    -fx-padding: 22;
 }
 
-/* ===== HEADER ===== */
+/* ==========================================================
+   HEADER
+========================================================== */
 .rang-header {
-    -fx-padding: 10 10 18 10;
+    -fx-padding: 26 30 16 30;
 }
 
 .rang-title {
-    -fx-font-size: 28px;
+    -fx-font-size: 30px;
     -fx-font-weight: 900;
     -fx-text-fill: #004E64;
 }
 
-/* ===== MAIN CARD ===== */
+/* ==========================================================
+   MAIN CARD WRAPPER
+========================================================== */
 .rang-card {
     -fx-background-color: white;
     -fx-background-radius: 26px;
-    -fx-padding: 18;
-    -fx-border-color: rgba(0,182,150,0.25);
     -fx-border-radius: 26px;
-    -fx-border-width: 1.4px;
-    -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.13), 30, 0.30, 0, 12);
+
+    -fx-border-color: rgba(0,78,100,0.10);
+    -fx-border-width: 1.2;
+
+    -fx-padding: 24 26 24 26;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.10), 30, 0.28, 0, 14);
 }
 
-/* ===== TABLE WRAPPER ===== */
-.rang-table {
-    -fx-background-radius: 18px;
-    -fx-border-radius: 18px;
-    -fx-border-color: rgba(0,182,150,0.30);
-    -fx-border-width: 1.4px;
+/* ==========================================================
+   MENU BAR — PRIKAŽI KOLONE (NO BOX)
+========================================================== */
+
+/* MenuBar bez “velikog boxa” */
+.menu-bar {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
     -fx-padding: 0;
 }
 
-/* ===== HEADER BACKGROUND ===== */
+.menu-bar .container {
+    -fx-background-color: transparent;
+}
+
+/* Dugme "Prikaži kolone" */
+.menu-bar .menu {
+    -fx-background-color: white;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+
+    -fx-border-color: rgba(0,182,150,0.55);
+    -fx-border-width: 1.4;
+
+    -fx-padding: 6 18;
+    -fx-cursor: hand;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.08), 12, 0.25, 0, 4);
+}
+
+.menu-bar .menu .label {
+    -fx-text-fill: #004E64;
+    -fx-font-weight: 900;
+    -fx-font-size: 13px;
+}
+
+.menu-bar .menu:hover {
+    -fx-background-color: rgba(0,182,150,0.08);
+    -fx-border-color: rgba(0,182,150,0.90);
+}
+
+.menu-bar .menu:showing {
+    -fx-background-color: rgba(0,182,150,0.12);
+    -fx-border-color: rgba(0,182,150,0.95);
+}
+
+.menu-bar .menu .arrow {
+    -fx-background-color: #00B696;
+}
+
+/* ==========================================================
+   DROPDOWN LISTA (KOLONE)
+========================================================== */
+.context-menu {
+    -fx-background-color: white;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+
+    -fx-border-color: rgba(0,182,150,0.30);
+    -fx-border-width: 1;
+
+    -fx-padding: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 22, 0.25, 0, 8);
+}
+
+.menu-item {
+    -fx-padding: 10 16;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-font-weight: 800;
+}
+
+.menu-item .label {
+    -fx-text-fill: #004E64;
+    -fx-font-size: 12.5px;
+}
+
+.menu-item:hover {
+    -fx-background-color: rgba(0,182,150,0.10);
+}
+
+.menu-item:checked .mark {
+    -fx-background-color: #00B696;
+}
+
+.context-menu .separator:horizontal .line {
+    -fx-border-color: rgba(0,182,150,0.20);
+}
+
+/* ==========================================================
+   TABLE VIEW — PREMIUM
+========================================================== */
+
+.rang-table {
+    -fx-background-color: white;
+    -fx-background-radius: 18px;
+    -fx-border-radius: 18px;
+
+    -fx-border-color: rgba(0,182,150,0.25);
+    -fx-border-width: 1.4;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.08), 22, 0.25, 0, 10);
+}
+
+.rang-table:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.12), 28, 0.28, 0, 12);
+}
+
+/* Header */
 .rang-table .column-header-background {
     -fx-background-color: #00B696;
     -fx-background-radius: 18 18 0 0;
 }
 
-/* ===== HEADER CELLS ===== */
 .rang-table .column-header {
     -fx-background-color: transparent;
     -fx-padding: 14 10;
-    -fx-border-color: rgba(255,255,255,0.35);
+
+    -fx-border-color: rgba(255,255,255,0.25);
     -fx-border-width: 0 1 0 0;
 }
 
@@ -60,88 +171,175 @@
     -fx-alignment: center;
 }
 
-/* ===== ROWS ===== */
+/* Rows */
 .rang-table .table-row-cell {
     -fx-background-color: white;
-    -fx-border-color: rgba(0,182,150,0.09);
+    -fx-border-color: rgba(0,182,150,0.08);
     -fx-border-width: 0 0 1 0;
+    -fx-font-size: 13px;
 }
 
 .rang-table .table-row-cell:odd {
-    -fx-background-color: rgba(0,182,150,0.04);
+    -fx-background-color: rgba(0,182,150,0.03);
 }
 
 .rang-table .table-row-cell:hover {
-    -fx-background-color: rgba(0,182,150,0.10);
+    -fx-background-color: rgba(0,182,150,0.09);
+    -fx-border-width: 0 0 1 5;
+    -fx-border-color: rgba(0,182,150,0.45);
 }
 
 .rang-table .table-row-cell:selected {
-    -fx-background-color: rgba(0,182,150,0.20);
+    -fx-background-color: rgba(0,182,150,0.16);
+    -fx-border-width: 0 0 1 5;
+    -fx-border-color: rgba(0,182,150,0.85);
 }
 
-/* ===== CELLS ===== */
+/* Cells */
 .rang-table .table-cell {
-    -fx-padding: 12 12;
-    -fx-font-size: 13px;
-    -fx-text-fill: #0f172a;
-    -fx-alignment: CENTER-LEFT;
-}
-
-/* ===== R.BR - centrirano + bold ===== */
-.rang-table .table-cell.rbr-cell {
-    -fx-font-weight: 900;
-    -fx-alignment: CENTER;
+    -fx-padding: 12 10;
+    -fx-border-color: rgba(0,182,150,0.06);
+    -fx-border-width: 0 1 0 0;
+    -fx-alignment: center-left;
     -fx-text-fill: #004E64;
 }
 
-/* ===== BODOVI - bold + zelena ===== */
-.rang-table .table-cell.bodovi-cell {
+/* ==================================================
+   "DETALJI" BUTTON (u tabeli) - PREMIUM
+================================================== */
+.rang-table .button {
+    -fx-background-color: rgba(0,182,150,0.15);
+    -fx-text-fill: #007d67;
     -fx-font-weight: 900;
-    -fx-text-fill: #00B696;
-    -fx-alignment: CENTER;
-}
+    -fx-font-size: 12.5px;
 
-/* ===== DETALJI BUTTON ===== */
-.det-btn {
-    -fx-background-radius: 14px;
-    -fx-background-color: #00B696;
-    -fx-text-fill: white;
-    -fx-font-weight: 900;
-    -fx-font-size: 12px;
-    -fx-padding: 8 18;
+    -fx-padding: 6 14;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+
+    -fx-border-color: rgba(0,182,150,0.45);
+    -fx-border-width: 1.2;
+
     -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.35), 14, 0.30, 0, 6);
 }
 
-.det-btn:hover {
-    -fx-background-color: #00a88a;
+.rang-table .button:hover {
+    -fx-background-color: rgba(0,182,150,0.22);
+    -fx-border-color: rgba(0,182,150,0.85);
 }
 
-.det-btn:pressed {
-    -fx-background-color: #00997d;
+.rang-table .button:pressed {
+    -fx-background-color: rgba(0,182,150,0.30);
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
 }
 
-/* ===== SCROLLBAR ===== */
-.rang-table .scroll-bar:vertical .thumb {
-    -fx-background-color: rgba(0,182,150,0.45);
+/* ==================================================
+   SCROLL BAR - GREEN (MINT) (FIX VERTICAL + HORIZONTAL)
+================================================== */
+
+/* scrollbar container */
+.rang-table .scroll-bar:vertical,
+.rang-table .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-padding: 2;
+}
+
+/* track */
+.rang-table .scroll-bar:vertical .track,
+.rang-table .scroll-bar:horizontal .track {
+    -fx-background-color: rgba(0,182,150,0.10);
     -fx-background-radius: 10px;
 }
 
-.rang-table .corner {
-    -fx-background-color: #00B696;
-}
-/* ukloni sivi "filler" desno u headeru */
-.table-view .filler,
-.table-view .column-header-background .filler {
-    -fx-background-color: #00B696;
-}
-.table-view .column-header-background {
-    -fx-background-color: #00B696;
-    -fx-background-radius: 16 16 0 0;
+/* thumb */
+.rang-table .scroll-bar:vertical .thumb,
+.rang-table .scroll-bar:horizontal .thumb {
+    -fx-background-color: rgba(0,182,150,0.60);
+    -fx-background-radius: 10px;
+    -fx-min-height: 35px;
 }
 
-.table-view .filler,
-.table-view .column-header-background .filler {
-    -fx-background-color: #00B696;
-    -fx-background-radius: 0 16 0 0;
+/* hover */
+.rang-table .scroll-bar:vertical .thumb:hover,
+.rang-table .scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: rgba(0,182,150,0.85);
+}
+
+/* pressed */
+.rang-table .scroll-bar:vertical .thumb:pressed,
+.rang-table .scroll-bar:horizontal .thumb:pressed {
+    -fx-background-color: rgba(0,182,150,1.0);
+}
+
+/* VAŽNO: širina scrollbar-a */
+.rang-table .scroll-bar:vertical {
+    -fx-pref-width: 13px;
+}
+
+.rang-table .scroll-bar:horizontal {
+    -fx-pref-height: 13px;
+}
+
+/* arrow buttons */
+.rang-table .scroll-bar .increment-button,
+.rang-table .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* remove arrows */
+.rang-table .scroll-bar .increment-arrow,
+.rang-table .scroll-bar .decrement-arrow {
+    -fx-background-color: transparent;
+}
+
+/* corner */
+.rang-table .corner {
+    -fx-background-color: transparent;
+}
+
+/* ==================================================
+   EXPORT PDF BUTTON (PRO)
+================================================== */
+#btnExportHtmlPdf {
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #f7fbfb);
+    -fx-text-fill: #004E64;
+    -fx-font-weight: 900;
+    -fx-font-size: 13px;
+
+    -fx-padding: 10 18;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+
+    -fx-border-color: rgba(0,182,150,0.55);
+    -fx-border-width: 1.2;
+
+    -fx-cursor: hand;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.08), 14, 0.25, 0, 6);
+}
+
+#btnExportHtmlPdf:hover {
+    -fx-background-color: rgba(0,182,150,0.08);
+    -fx-border-color: rgba(0,182,150,0.90);
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.18), 18, 0.30, 0, 6);
+}
+
+#btnExportHtmlPdf:pressed {
+    -fx-background-color: rgba(0,182,150,0.14);
+    -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.05), 10, 0.25, 0, 2);
+    -fx-scale-x: 0.99;
+    -fx-scale-y: 0.98;
+}
+
+#btnExportHtmlPdf:focused {
+    -fx-border-color: #00B696;
+    -fx-border-width: 2;
+}
+
+#btnExportHtmlPdf:disabled {
+    -fx-opacity: 0.55;
+    -fx-cursor: default;
+    -fx-effect: none;
 }
