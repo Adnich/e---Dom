@@ -8,9 +8,7 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.prijaveController"
             stylesheets="@../styles/prijave.css"
-            styleClass="anchor-pane"
-            maxWidth="Infinity"
-            maxHeight="Infinity">
+            styleClass="anchor-pane">
 
     <children>
         <VBox spacing="18"
@@ -22,24 +20,57 @@
               VBox.vgrow="ALWAYS">
 
             <!-- HEADER -->
-            <HBox spacing="16" alignment="CENTER_LEFT">
-                <Label text="Prijave studenata" styleClass="header-title"/>
+            <BorderPane>
 
-                <TextField fx:id="txtSearch"
-                           promptText="Pretraga: ime, prezime, status..."
-                           prefWidth="340"
-                           styleClass="search-input"/>
+                <!-- LEFT: naslov + search -->
+                <left>
+                    <VBox spacing="10">
+                        <Label text="Prijave studenata" styleClass="header-title"/>
 
-                <Region HBox.hgrow="ALWAYS"/>
+                        <TextField fx:id="txtSearch"
+                                   promptText="Pretraga: ime, prezime, status..."
+                                   prefWidth="420"
+                                   styleClass="search-input"/>
+                    </VBox>
+                </left>
+
+                <!-- RIGHT: refresh + nova prijava -->
+                <right>
+                    <HBox spacing="14" alignment="CENTER_RIGHT">
+
+                        <!-- REFRESH ICON -->
+                        <Button onAction="#onRefresh"
+                                styleClass="icon-refresh-btn">
+
+                            <tooltip>
+                                <Tooltip text="Osvježi podatke"/>
+                            </tooltip>
+
+                            <graphic>
+                                <Label text="⟳" styleClass="refresh-icon"/>
+                            </graphic>
+                        </Button>
+
+                        <!-- NOVA PRIJAVA -->
+                        <Button text="Nova prijava"
+                                onAction="#onNovaPrijava"
+                                styleClass="nova-prijava-btn"/>
+                    </HBox>
+                </right>
+
+            </BorderPane>
+
+            <!-- FILTER BAR -->
+            <HBox spacing="14" alignment="CENTER_LEFT">
 
                 <MenuButton text="Sortiraj" fx:id="btnSortiraj" styleClass="menu-btn">
                     <items>
-                        <MenuItem text="Ime A-Z" onAction="#sortImeAZ"/>
-                        <MenuItem text="Ime Z-A" onAction="#sortImeZA"/>
+                        <MenuItem text="Ime A–Z" onAction="#sortImeAZ"/>
+                        <MenuItem text="Ime Z–A" onAction="#sortImeZA"/>
                         <MenuItem text="Od najstarije" onAction="#sortIdUzlazno"/>
                         <MenuItem text="Od najnovije" onAction="#sortIdSilazno"/>
-                        <MenuItem text="Bodovi Uzlazno" onAction="#sortBodoviUzlazno"/>
-                        <MenuItem text="Bodovi Silazno" onAction="#sortBodoviSilazno"/>
+                        <MenuItem text="Bodovi uzlazno" onAction="#sortBodoviUzlazno"/>
+                        <MenuItem text="Bodovi silazno" onAction="#sortBodoviSilazno"/>
                     </items>
                 </MenuButton>
 
@@ -51,19 +82,11 @@
                     </items>
                 </MenuButton>
 
-                <Button text="Refresh" onAction="#onRefresh"/>
-
-
-                <Button text="Nova prijava"
-                        onAction="#onNovaPrijava"
-                        styleClass="nova-prijava-btn"/>
             </HBox>
 
             <!-- TABLE -->
             <TableView fx:id="tblPrijave"
                        VBox.vgrow="ALWAYS"
-                       maxWidth="Infinity"
-                       maxHeight="Infinity"
                        styleClass="table-view">
 
                 <columns>
@@ -79,8 +102,11 @@
 
             </TableView>
 
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <Button fx:id="btnExportHtmlPdf" text="Export PDF (HTML)" onAction="#onExportHtmlPdf"/>
+            <!-- EXPORT -->
+            <HBox>
+                <Button fx:id="btnExportHtmlPdf"
+                        text="Export PDF (HTML)"
+                        onAction="#onExportHtmlPdf"/>
             </HBox>
 
         </VBox>
