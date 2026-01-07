@@ -39,7 +39,13 @@ public class PdfService {
 
         try {
             byte[] pdfBytes = Base64.getDecoder().decode(base64);
-            File tempFile = File.createTempFile(naziv.replaceAll("\\s+", "_"), ".pdf");
+
+            // ✅ Sanitizuj naziv fajla (Windows-safe)
+            String safeNaziv = sanitizeFileName(naziv);
+
+            // ✅ napravi temp fajl
+            File tempFile = File.createTempFile(safeNaziv + "_", ".pdf");
+
             Files.write(tempFile.toPath(), pdfBytes);
             tempFile.deleteOnExit();
 
@@ -51,5 +57,23 @@ public class PdfService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // ✅ uklanja sve nedozvoljene znakove u Windows fajlovima
+    private static String sanitizeFileName(String input) {
+        if (input == null || input.isBlank()) return "dokument";
+
+        // zamijeni sve ilegalne znakove: \ / : * ? " < > |
+        String safe = input.replaceAll("[\\\\/:*?\"<>|]", "_");
+
+        // ukloni višak razmaka
+        safe = safe.replaceAll("\\s+", "_").trim();
+
+        // prevent preduga imena (Windows zna praviti problem)
+        if (safe.length() > 60) {
+            safe = safe.substring(0, 60);
+        }
+
+        return safe;
     }
 }

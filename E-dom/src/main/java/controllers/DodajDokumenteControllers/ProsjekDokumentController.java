@@ -89,7 +89,7 @@ public class ProsjekDokumentController {
 
         if (godinaStudija == 1) {
             // ✅ brucosi → svjedodžba
-            double bodovi = kriterij.izracunajBodoveBrucosi(prijavaId, prosjek);
+            double bodovi = kriterij.izracunajBodoveBrucosi(prosjek);
 
             d.setNaziv(vrstaSvjedodzbe.getNaziv());
             d.setVrstaDokumenta(vrstaSvjedodzbe);

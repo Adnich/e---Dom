@@ -203,22 +203,49 @@ public class DetaljiPrijaveController {
         });
 
         colPregled.setCellFactory(col -> new TableCell<>() {
+
             private final Button btn = new Button("Pregledaj");
+
             {
                 btn.getStyleClass().add("btn-action");
+
                 btn.setOnAction(e -> {
                     Dokument d = getTableView().getItems().get(getIndex());
-                    if (d.getDokumentB64() != null && !d.getDokumentB64().isEmpty()) {
-                        PdfService.prikaziPdf(d.getDokumentB64(), d.getNaziv());
+
+                    // dodatna sigurnost - klik ne radi ako nema dokumenta
+                    if (d == null || d.getDokumentB64() == null || d.getDokumentB64().isEmpty()) {
+                        return;
                     }
+
+                    PdfService.prikaziPdf(d.getDokumentB64(), d.getNaziv());
                 });
             }
+
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                setGraphic(empty ? null : btn);
+
+                if (empty) {
+                    setGraphic(null);
+                    return;
+                }
+
+                Dokument d = getTableView().getItems().get(getIndex());
+
+                boolean imaDokument = d != null && d.getDokumentB64() != null && !d.getDokumentB64().isEmpty();
+
+                btn.setDisable(!imaDokument);
+
+                // Dodaj CSS klasu samo ako je disabled
+                btn.getStyleClass().remove("btn-action-disabled");
+                if (!imaDokument) {
+                    btn.getStyleClass().add("btn-action-disabled");
+                }
+
+                setGraphic(btn);
             }
         });
+
     }
 
     // =========================
