@@ -234,15 +234,26 @@
 }
 
 /* input */
+/* input */
 .field {
     -fx-background-color: white;
     -fx-background-radius: 18px;
     -fx-border-radius: 18px;
     -fx-border-color: rgba(0,182,150,0.30);
     -fx-border-width: 1.4px;
+
     -fx-padding: 10 14;
     -fx-font-size: 13px;
+    -fx-text-fill: #004E64;
     -fx-prompt-text-fill: rgba(0,78,100,0.35);
+
+    /* ✅ OVO POPRAVLJA "KRUG" */
+    -fx-pref-height: 42px;
+    -fx-min-height: 42px;
+
+    -fx-pref-width: 220px;
+    -fx-min-width: 120px;
+    -fx-max-width: Infinity;
 }
 
 .field:focused {
@@ -396,4 +407,30 @@
     -fx-font-weight: 700;
     -fx-font-size: 12px;
     -fx-padding: 2 0 0 8;
+}
+/* ===================================
+   SMALL NUMBER FIELD
+   =================================== */
+
+.field-small {
+    -fx-pref-width: 90px;
+    -fx-max-width: 90px;
+    -fx-min-width: 70px;
+
+    -fx-alignment: CENTER;
+    -fx-font-weight: 800;
+}
+/* ===================================
+   IZBJEGLI / RASELJENI CARD
+   =================================== */
+
+.refugee-card {
+    -fx-background-color: rgba(0, 182, 150, 0.05);
+    -fx-border-color: rgba(0, 182, 150, 0.22);
+}
+
+.refugee-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #004E64;
 }
