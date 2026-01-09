@@ -32,8 +32,8 @@
 
         <TextField fx:id="txtBrojPolozenih"
                    promptText="0"
-                   styleClass="field"
-                   HBox.hgrow="ALWAYS"/>
+                   styleClass="field field-small"
+                   />
     </HBox>
 
     <CheckBox fx:id="chkDostavljen"
