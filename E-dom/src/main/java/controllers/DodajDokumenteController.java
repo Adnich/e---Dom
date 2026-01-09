@@ -6,6 +6,8 @@ import dao.PrijavaDAO;
 import dao.VrstaDokumentaDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -115,15 +117,11 @@ public class DodajDokumenteController {
         }
 
         double bodovi = kucnaControllerRef.zavrsiUnos();
-        System.out.println("Ukupno bodova za domaćinstvo: " + bodovi);
-
         int dokumentId = kucnaDokumentControllerRef.getKucnaListaDokumentId();
 
-        if(isBratSestra) {
+        if (isBratSestra) {
             bodovi += 2;
         }
-
-        System.out.println("ID dokumenta kućna lista: " + dokumentId);
 
         if (dokumentId <= 0) {
             showAlert("Greška", "Dokument kućne liste nije sačuvan.");
@@ -131,6 +129,28 @@ public class DodajDokumenteController {
         }
 
         new DokumentDAO().dodajBodove(dokumentId, bodovi);
+
+        // ✅ PORUKA USPJEHA
+        showAlert("Uspješno", "Prijava je uspješno podnesena.");
+
+        // ✅ POVRATAK NA LISTU PRIJAVA
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/views/admin-main-view.fxml")
+            );
+            Parent root = loader.load();
+
+            AdminController adminController = loader.getController();
+            adminController.loadViewPublic("/views/prijave.fxml");
+
+            Stage stage = (Stage) accordionDokumenti.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setMaximized(true);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Greška", "Ne mogu otvoriti listu prijava.");
+        }
     }
 
 

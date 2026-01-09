@@ -159,7 +159,7 @@
 
                 </GridPane>
 
-                <!-- ✅ FOOTER BUTTONS -->
+                <!--FOOTER BUTTONS -->
                 <HBox alignment="CENTER" spacing="16" styleClass="footer-box">
 
                     <Button text="← Nazad"
