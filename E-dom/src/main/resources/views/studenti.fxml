@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.studentiController"
             stylesheets="@../styles/studenti-style.css"
-            styleClass="anchor-pane"
-            maxWidth="Infinity"
-            maxHeight="Infinity">
+            styleClass="anchor-pane">
 
     <children>
         <VBox spacing="18"
@@ -24,23 +20,54 @@
               VBox.vgrow="ALWAYS">
 
             <!-- HEADER -->
-            <HBox alignment="CENTER_LEFT" spacing="16">
-                <Label text="Studenti" styleClass="header-title"/>
+            <BorderPane>
 
-                <TextField fx:id="txtSearch"
-                           promptText="Pretraga: ime, prezime, indeks, fakultet..."
-                           prefWidth="340"/>
+                <!-- LEFT -->
+                <left>
+                    <VBox spacing="10">
+                        <Label text="Studenti" styleClass="header-title"/>
 
-                <Region HBox.hgrow="ALWAYS"/>
+                        <TextField fx:id="txtSearch"
+                                   promptText="Pretraga: ime, prezime, indeks, fakultet..."
+                                   prefWidth="420"
+                                   styleClass="search-input"/>
+                    </VBox>
+                </left>
+
+                <!-- RIGHT -->
+                <right>
+                    <HBox spacing="14" alignment="CENTER_RIGHT">
+
+                        <!-- REFRESH ICON -->
+                        <Button onAction="#onRefresh"
+                                styleClass="icon-refresh-btn">
+
+                            <tooltip>
+                                <Tooltip text="Osvježi podatke"/>
+                            </tooltip>
+
+                            <graphic>
+                                <Label text="⟳" styleClass="refresh-icon"/>
+                            </graphic>
+                        </Button>
+
+                        <!-- (po potrebi kasnije) -->
+                    </HBox>
+                </right>
+
+            </BorderPane>
+
+            <!-- FILTER BAR -->
+            <HBox spacing="14" alignment="CENTER_LEFT">
 
                 <MenuButton text="Sortiraj" fx:id="btnSortiraj" styleClass="menu-btn">
                     <items>
-                        <MenuItem text="Ime A-Z" onAction="#sortImeAZ"/>
-                        <MenuItem text="Ime Z-A" onAction="#sortImeZA"/>
-                        <MenuItem text="ID Uzlazno" onAction="#sortIdUzlazno"/>
-                        <MenuItem text="ID Silazno" onAction="#sortIdSilazno"/>
-                        <MenuItem text="Prosjek Uzlazno" onAction="#sortProsjekAsc"/>
-                        <MenuItem text="Prosjek Silazno" onAction="#sortProsjekDesc"/>
+                        <MenuItem text="Ime A–Z" onAction="#sortImeAZ"/>
+                        <MenuItem text="Ime Z–A" onAction="#sortImeZA"/>
+                        <MenuItem text="ID uzlazno" onAction="#sortIdUzlazno"/>
+                        <MenuItem text="ID silazno" onAction="#sortIdSilazno"/>
+                        <MenuItem text="Prosjek uzlazno" onAction="#sortProsjekAsc"/>
+                        <MenuItem text="Prosjek silazno" onAction="#sortProsjekDesc"/>
                     </items>
                 </MenuButton>
 
@@ -52,38 +79,33 @@
                     </items>
                 </MenuButton>
 
-                <Button text="Refresh" onAction="#onRefresh"/>
-
             </HBox>
 
             <!-- TABLE -->
             <TableView fx:id="tblStudenti"
-                       styleClass="table-view"
                        VBox.vgrow="ALWAYS"
-                       maxWidth="Infinity"
-                       maxHeight="Infinity">
+                       styleClass="table-view">
 
                 <columns>
                     <TableColumn fx:id="colId" text="ID" prefWidth="70"/>
                     <TableColumn fx:id="colIme" text="Ime" prefWidth="140"/>
                     <TableColumn fx:id="colPrezime" text="Prezime" prefWidth="160"/>
                     <TableColumn fx:id="colIndeks" text="Broj indeksa" prefWidth="170"/>
-                    <TableColumn fx:id="colFakultet" text="Fakultet" prefWidth="220"/>
+                    <TableColumn fx:id="colFakultet" text="Fakultet" prefWidth="260"/>
                     <TableColumn fx:id="colGodina" text="Godina" prefWidth="110"/>
-
-                    <!-- dodat styleClass za badge -->
-                    <TableColumn fx:id="colProsjek" text="Prosjek" prefWidth="120" styleClass="prosjek-col"/>
-                    <TableColumn fx:id="colStatus" text="Soc. status" prefWidth="220" styleClass="status-col"/>
+                    <TableColumn fx:id="colProsjek" text="Prosjek" prefWidth="120"/>
+                    <TableColumn fx:id="colStatus" text="Soc. status" prefWidth="260"/>
                 </columns>
 
             </TableView>
 
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <Button fx:id="btnExportPdf" text="Export PDF (iText)" onAction="#onExportPdf"/>
-                <Button fx:id="btnExportHtmlPdf" text="Export PDF (HTML)" onAction="#onExportHtmlPdf"/>
+            <!-- EXPORT -->
+            <HBox>
+                <Button fx:id="btnExportHtmlPdf"
+                        text="Export PDF (HTML)"
+                        onAction="#onExportHtmlPdf"/>
             </HBox>
 
         </VBox>
     </children>
-
 </AnchorPane>
