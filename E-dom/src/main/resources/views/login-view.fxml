@@ -36,7 +36,6 @@
                 </children>
             </HBox>
 
-
             <!-- HERO TEXT -->
             <Label text="Digitalni sistem studentskog doma"
                    wrapText="true"
@@ -141,8 +140,10 @@
 
                                 <!-- links + remember -->
                                 <HBox alignment="CENTER_LEFT" spacing="12">
-                                    <!-- FIX: checkbox sad koristi check-box stil -->
-                                    <CheckBox text="Zapamti me" styleClass="check-box"/>
+                                    <!-- ✅ samo dodan fx:id -->
+                                    <CheckBox fx:id="chkRememberMe"
+                                              text="Zapamti me"
+                                              styleClass="check-box"/>
                                     <Region HBox.hgrow="ALWAYS"/>
                                     <Hyperlink text="Zaboravili ste lozinku?"
                                                onAction="#onForgotPasswordClicked"

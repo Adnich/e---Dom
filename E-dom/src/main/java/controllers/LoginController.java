@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -20,10 +21,10 @@ import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.prefs.Preferences;
 
 public class LoginController {
 
@@ -45,9 +46,17 @@ public class LoginController {
     @FXML
     private Label lblError;
 
+    // ✅ novo: checkbox iz FXML-a
+    @FXML
+    private CheckBox chkRememberMe;
+
     private final KorisnikDAO korisnikDAO = new KorisnikDAO();
 
     private boolean passwordShown = false;
+
+    // ✅ novo: Preferences (zapamti samo username)
+    private static final String PREF_KEY_USERNAME = "remembered_username";
+    private final Preferences prefs = Preferences.userNodeForPackage(LoginController.class);
 
     @FXML
     private void initialize() {
@@ -62,6 +71,15 @@ public class LoginController {
         txtPassword.setManaged(true);
 
         setEyeIcon(false);
+
+        // ✅ novo: učitaj zapamćeni username
+        String remembered = prefs.get(PREF_KEY_USERNAME, "");
+        if (remembered != null && !remembered.isBlank()) {
+            txtUsername.setText(remembered);
+            if (chkRememberMe != null) {
+                chkRememberMe.setSelected(true);
+            }
+        }
     }
 
     @FXML
@@ -133,7 +151,6 @@ public class LoginController {
         });
     }
 
-
     @FXML
     private void onLoginClicked(ActionEvent event) throws SQLException {
         String user = txtUsername.getText().trim();
@@ -156,6 +173,13 @@ public class LoginController {
 
             lblError.setText("Pristup je dozvoljen samo administratoru.");
             return;
+        }
+
+        // ✅ novo: snimi/obriši username u zavisnosti od checkboxa
+        if (chkRememberMe != null && chkRememberMe.isSelected()) {
+            prefs.put(PREF_KEY_USERNAME, user);
+        } else {
+            prefs.remove(PREF_KEY_USERNAME);
         }
 
         Session.setKorisnik(k);
