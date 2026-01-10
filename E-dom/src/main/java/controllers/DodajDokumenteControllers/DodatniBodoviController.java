@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import model.Dokument;
 import model.VrstaDokumenta;
 import service.PdfService;
+import javafx.util.StringConverter;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -30,6 +31,26 @@ public class DodatniBodoviController {
         this.bodovi = bodovi;
         this.prijavaId = prijavaId;
         cmbDokument.getItems().addAll(dokumenti);
+
+
+        cmbDokument.setConverter(new StringConverter<VrstaDokumenta>() {
+            @Override
+            public String toString(VrstaDokumenta dokument) {
+                if (dokument == null) {
+                    return null;
+                }
+                // Ovdje vratiš ono što želiš da piše (npr. dokument.getNaziv())
+                return dokument.getNaziv();
+            }
+
+            @Override
+            public VrstaDokumenta fromString(String string) {
+                // Ovo ti treba samo ako je ComboBox "editable", inače može vratiti null
+                return cmbDokument.getItems().stream()
+                        .filter(item -> item.getNaziv().equals(string))
+                        .findFirst().orElse(null);
+            }
+        });
 
         // Dinamički postavi tekst labela
         if (nazivDokumenta != null && !nazivDokumenta.isEmpty()) {

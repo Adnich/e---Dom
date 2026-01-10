@@ -19,6 +19,8 @@ public class Prijava {
     private String imeStudenta;
     private String prezimeStudenta;
 
+    private String imeRoditelja;
+
 
     public Prijava() {
     }
@@ -103,6 +105,14 @@ public class Prijava {
 
     public void setImeStudenta(String imeStudenta) {
         this.imeStudenta = imeStudenta;
+    }
+
+    public String getImeRoditelja() {
+        return imeRoditelja;
+    }
+
+    public void setImeRoditelja(String imeRoditelja) {
+        this.imeRoditelja = imeRoditelja;
     }
 
     public String getPrezimeStudenta() {

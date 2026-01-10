@@ -144,7 +144,7 @@ public class RangListaController {
         for (Prijava p : prijavaDAO.dohvatiSvePrijave()) {
             if (p.getStatusPrijave() != null && "odobreno".equalsIgnoreCase(p.getStatusPrijave().getNaziv())) {
                 Map<String, Double> bodovi = BodoviUtil.izracunajBodoveZaPrijavu(p);
-                p.setBodoviMap(bodovi); // polje mora postojati u Prijava modelu
+                p.setBodoviMap(bodovi);
                 rangLista.add(p);
             }
         }
@@ -154,14 +154,13 @@ public class RangListaController {
         sorted.comparatorProperty().bind(tblRangLista.comparatorProperty());
         tblRangLista.setItems(sorted);
 
-// Inicijalno sortiranje po ukupnim bodovima silazno
+        // Inicijalno sortiranje po ukupnim bodovima silazno
         colUkupniBodovi.setSortType(TableColumn.SortType.DESCENDING);
         tblRangLista.getSortOrder().clear();
         tblRangLista.getSortOrder().add(colUkupniBodovi);
 
-// Spriječi plavu selekciju
+        // Spriječi plavu selekciju
         tblRangLista.getSelectionModel().setCellSelectionEnabled(false);
-
     }
 
     private void otvoriDetalje(Prijava prijava) {
@@ -189,70 +188,86 @@ public class RangListaController {
         stage.setHeight(bounds.getHeight());
     }
 
+    // =================================================================================
+    // OVDJE SU NAPRAVLJENE IZMJENE ZA EXPORT DVIJE LISTE
+    // =================================================================================
+
     @FXML
     public void onExportHtmlPdf(ActionEvent actionEvent) {
         try {
-            List<RangListaDTO> exportLista = pripremiZaExport();
+            // 1. Inicijalizacija dvije prazne liste
+            List<RangListaDTO> brucosiList = new ArrayList<>();
+            List<RangListaDTO> visiList = new ArrayList<>();
 
+            // 2. Brojači za redne brojeve (svaka lista kreće od 1)
+            int rbBrucosi = 1;
+            int rbVisi = 1;
+
+            // 3. Prolazimo kroz items iz TableView-a
+            // Ovo je bitno: getItems() vraća listu onako kako je sortirana na ekranu!
+            for (Prijava p : tblRangLista.getItems()) {
+
+                // Dohvati godinu studija (sigurno konvertovanje u int)
+                Double godDbl = p.getBodoviMap().getOrDefault("godina", 0.0);
+                int godina = godDbl.intValue();
+
+                // 4. Razvrstavanje i kreiranje DTO-a
+                if (godina == 1) {
+                    // Ako je brucoš, dodaj ga u prvu listu sa brojačem rbBrucosi
+                    brucosiList.add(pripremiDto(p, rbBrucosi++));
+                } else {
+                    // Svi ostali idu u drugu listu sa brojačem rbVisi
+                    visiList.add(pripremiDto(p, rbVisi++));
+                }
+            }
+
+            // 5. Dijalog za spašavanje
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Sačuvaj rang listu kao PDF");
+            fileChooser.setTitle("Sačuvaj konačnu rang listu");
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF fajl", "*.pdf"));
+            fileChooser.setInitialFileName("Konacna_Rang_Lista.pdf");
+
             File file = fileChooser.showSaveDialog(tblRangLista.getScene().getWindow());
 
             if (file != null) {
+                // 6. Poziv servisa
                 RangListaHtmlExportService service = new RangListaHtmlExportService();
-                service.exportData(exportLista, file);
+                // Šaljemo obje liste servisu (koristimo novu metodu exportSplitData)
+                service.exportSplitData(brucosiList, visiList, file);
+
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "PDF uspješno kreiran!", ButtonType.OK);
                 alert.showAndWait();
             }
+
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Greška pri kreiranju PDF-a: " + e.getMessage(), ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Greška: " + e.getMessage(), ButtonType.OK);
             alert.showAndWait();
         }
     }
 
+    // Pomoćna metoda za kreiranje DTO objekta specifično za ovaj izvještaj
+    private RangListaDTO pripremiDto(Prijava p, int redniBroj) {
+        RangListaDTO dto = new RangListaDTO();
 
-    private List<RangListaDTO> pripremiZaExport() {
-        List<RangListaDTO> exportLista = new ArrayList<>();
+        // 1. Kolona: R.br
+        dto.addKolona("#", String.valueOf(redniBroj));
 
-        for (Prijava p : tblRangLista.getItems()) {
-            RangListaDTO dto = new RangListaDTO();
+        // 2. Kolona: Prezime (Ime oca) Ime
+        // Provjeravamo da li imamo ime oca, ako ne, samo ime i prezime
+        String imeOca = (p.getImeRoditelja() != null && !p.getImeRoditelja().isEmpty()) ? " (" + p.getImeRoditelja() + ") " : " ";
+        String prezimeIme = p.getPrezimeStudenta() + imeOca + p.getImeStudenta();
 
-            if (colRedniBroj.isVisible())
-                dto.addKolona("R.br", String.valueOf(tblRangLista.getItems().indexOf(p) + 1));
+        dto.addKolona("Prezime (ime oca) i ime studenta", prezimeIme);
 
-            if (colIdPrijave.isVisible())
-                dto.addKolona("ID prijave", String.valueOf(p.getIdPrijava()));
+        // 3. Kolona: Bodovi
+        double bodovi = p.getBodoviMap().getOrDefault("ukupno", 0.0);
+        dto.addKolona("Bodovi", String.format("%.2f", bodovi));
 
-            if (colImePrezime.isVisible())
-                dto.addKolona("Ime i prezime", p.getImeStudenta() + " " + p.getPrezimeStudenta());
+        // 4. Kolona: Kanton (opcionalno, ako želiš kao u PDF-u)
+        // Ako nemaš polje kanton u prijavi, samo obriši ovu liniju ispod
+        // dto.addKolona("Kanton", p.getKanton() != null ? p.getKanton() : "");
 
-            if (colUkupniBodovi.isVisible())
-                dto.addKolona("Ukupni bodovi", String.valueOf(p.getBodoviMap().getOrDefault("ukupno", 0.0)));
-
-            if (colGodinaStudija.isVisible())
-                dto.addKolona("Godina studija", String.valueOf(p.getBodoviMap().getOrDefault("godina", 0.0)));
-
-            if (colProsjek.isVisible())
-                dto.addKolona("Prosjek", String.valueOf(p.getBodoviMap().getOrDefault("uspjeh", 0.0)));
-
-            if (colOsvojeneNagrade.isVisible())
-                dto.addKolona("Nagrade", String.valueOf(p.getBodoviMap().getOrDefault("nagrade", 0.0)));
-
-            if (colSocijalniStatus.isVisible())
-                dto.addKolona("Socijalni", String.valueOf(p.getBodoviMap().getOrDefault("socijalni", 0.0)));
-
-            if (colUdaljenost.isVisible())
-                dto.addKolona("Udaljenost", String.valueOf(p.getBodoviMap().getOrDefault("udaljenost", 0.0)));
-
-            if (colDodatniBodovi.isVisible())
-                dto.addKolona("Dodatni bodovi", String.valueOf(p.getBodoviMap().getOrDefault("dodatni", 0.0)));
-
-            exportLista.add(dto);
-        }
-
-        return exportLista;
+        return dto;
     }
-
 }
