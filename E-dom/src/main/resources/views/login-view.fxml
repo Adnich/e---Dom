@@ -11,13 +11,11 @@
             stylesheets="@../styles/login-style.css"
             styleClass="root">
 
-    <!-- LIJEVA STRANA – HERO PANEL -->
     <left>
         <VBox spacing="26"
               alignment="TOP_LEFT"
               styleClass="left-pane">
 
-            <!-- LOGO -->
             <HBox alignment="CENTER_LEFT">
                 <children>
 
@@ -36,8 +34,6 @@
                 </children>
             </HBox>
 
-
-            <!-- HERO TEXT -->
             <Label text="Digitalni sistem studentskog doma"
                    wrapText="true"
                    styleClass="app-title"/>
@@ -56,10 +52,8 @@
                    style="-fx-padding: 18 0 0 0;"
                    styleClass="left-tagline"/>
 
-            <!-- SPACER - OVO GURNE SLIKU NA DNO -->
             <Region VBox.vgrow="ALWAYS"/>
 
-            <!-- ILUSTRACIJA NA DNU -->
             <HBox alignment="BOTTOM_LEFT" style="-fx-padding: 20 0 0 0;">
                 <children>
 
@@ -69,33 +63,26 @@
         </VBox>
     </left>
 
-    <!-- DESNA STRANA – LOGIN -->
     <center>
         <StackPane styleClass="right-pane">
             <children>
 
-                <!-- SOFT GLOW BACKGROUND (MINT) -->
                 <Pane styleClass="glow-mint"
                       StackPane.alignment="CENTER"/>
 
-                <!-- SOFT GLOW BACKGROUND (YELLOW ACCENT) -->
                 <Pane styleClass="glow-yellow"
                       StackPane.alignment="CENTER"/>
 
-                <!-- LOGIN CONTAINER -->
                 <StackPane alignment="CENTER" styleClass="login-container">
 
-                    <!-- LOGIN CARD -->
                     <VBox spacing="26"
                           alignment="TOP_LEFT"
                           maxWidth="430"
                           styleClass="login-card">
 
-                        <!-- TITLE -->
                         <Label text="Prijava u E-Dom"
                                styleClass="login-title"/>
 
-                        <!-- FORM -->
                         <VBox spacing="18" maxWidth="360">
                             <children>
 
@@ -139,18 +126,17 @@
                                     </StackPane>
                                 </VBox>
 
-                                <!-- links + remember -->
                                 <HBox alignment="CENTER_LEFT" spacing="12">
-                                    <!-- FIX: checkbox sad koristi check-box stil -->
-                                    <CheckBox text="Zapamti me" styleClass="check-box"/>
+                                    <CheckBox fx:id="chkRememberMe"
+                                              text="Zapamti me"
+                                              styleClass="check-box"/>
                                     <Region HBox.hgrow="ALWAYS"/>
                                     <Hyperlink text="Zaboravili ste lozinku?"
                                                onAction="#onForgotPasswordClicked"
                                                styleClass="forgot-link"/>
                                 </HBox>
 
-                                <!-- LOGIN BUTTON -->
-                                <Button fx:id="btnLogin"
++                                <Button fx:id="btnLogin"
                                         text="Prijava"
                                         onAction="#onLoginClicked"
                                         maxWidth="Infinity"
@@ -160,7 +146,6 @@
                                 <Label fx:id="lblError"
                                        styleClass="error-label"/>
 
-                                <!-- REGISTER -->
                                 <HBox alignment="CENTER" spacing="8" style="-fx-padding: 10 0 0 0;">
                                     <Label text="Nemate nalog?"/>
                                     <Hyperlink fx:id="linkRegister"

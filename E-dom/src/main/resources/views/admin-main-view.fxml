@@ -16,7 +16,6 @@
         <ToggleGroup fx:id="navGroup"/>
     </fx:define>
 
-    <!-- ===== SIDEBAR ===== -->
     <left>
         <VBox spacing="14"
               prefWidth="230"
@@ -24,7 +23,6 @@
               maxWidth="230"
               styleClass="sidebar">
 
-            <!-- Header -->
             <VBox spacing="4" styleClass="sidebar-header">
                 <Label text="E-Dom" styleClass="sidebar-title"/>
                 <Label text="Admin panel" styleClass="sidebar-subtitle"/>
@@ -32,7 +30,6 @@
 
             <Separator styleClass="sidebar-separator"/>
 
-            <!-- Navigation -->
             <ToggleButton text="Pregled sistema"
                           toggleGroup="$navGroup"
                           onAction="#showPregledSistema"
@@ -66,13 +63,11 @@
 
             <Pane VBox.vgrow="ALWAYS"/>
 
-            <!-- Footer -->
             <Label text="© E-Dom" styleClass="sidebar-footer"/>
 
         </VBox>
     </left>
 
-    <!-- ===== CONTENT ===== -->
     <center>
         <StackPane fx:id="contentArea"
                    styleClass="content-area"

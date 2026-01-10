@@ -39,7 +39,6 @@ public class DodajDokumenteController {
     private boolean isIzbjeglica;
     private boolean isBratSestra;
 
-
     private VrstaDokumentaDAO vdDao = new VrstaDokumentaDAO();
     private final List<VrstaDokumenta> vrsteDokumenata = vdDao.dohvatiSveVrste();
 
@@ -133,7 +132,7 @@ public class DodajDokumenteController {
         // ✅ PORUKA USPJEHA
         showAlert("Uspješno", "Prijava je uspješno podnesena.");
 
-        // ✅ POVRATAK NA LISTU PRIJAVA
+        // ✅ POVRATAK NA PRIJAVE STUDENATA + FULL SCREEN
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/views/admin-main-view.fxml")
@@ -141,18 +140,26 @@ public class DodajDokumenteController {
             Parent root = loader.load();
 
             AdminController adminController = loader.getController();
-            adminController.loadViewPublic("/views/prijave.fxml");
 
             Stage stage = (Stage) accordionDokumenti.getScene().getWindow();
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+
+            // ✅ prvo postavi scenu
+            stage.setScene(scene);
+
+            // ✅ pa forsiraj full screen/maximized prikaz
             stage.setMaximized(true);
+            stage.setFullScreen(false); // ostavi false (nije "pravi" fullscreen mod), nego max ekran
+            stage.centerOnScreen();
+
+            // ✅ tek onda učitaj view prijava studenata
+            adminController.loadViewPublic("/views/prijave.fxml");
 
         } catch (Exception e) {
             e.printStackTrace();
             showAlert("Greška", "Ne mogu otvoriti listu prijava.");
         }
     }
-
 
     public void setProsjek(double prosjek) {
         this.prosjek = prosjek;

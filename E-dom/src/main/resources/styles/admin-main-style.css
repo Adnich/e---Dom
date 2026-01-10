@@ -1,18 +1,13 @@
-/* ============================================
-   ADMIN MAIN – E-DOM (NEW COLOR PALETTE)
-   ============================================ */
 
 .root {
     -fx-font-family: "Inter", "Segoe UI", system-ui, sans-serif;
 }
 
-/* ===== SIDEBAR ===== */
 .sidebar {
     -fx-background-color: #004E64;
     -fx-padding: 24 0 20 0;
 }
 
-/* ===== HEADER ===== */
 .sidebar-header {
     -fx-padding: 0 20 20 20;
 }
@@ -29,13 +24,13 @@
     -fx-font-weight: 500;
 }
 
-/* Separator */
+
 .sidebar-separator .line {
     -fx-background-color: rgba(255,255,255,0.15);
     -fx-pref-height: 1;
 }
 
-/* ===== NAV BUTTONS ===== */
+
 .nav-btn {
     -fx-background-color: transparent;
     -fx-text-fill: rgba(255,255,255,0.85);
@@ -51,30 +46,25 @@
     -fx-border-color: transparent;
 }
 
-/* Hover */
 .nav-btn:hover {
     -fx-background-color: rgba(0, 182, 150, 0.15);
     -fx-text-fill: #ffffff;
 }
 
-/* Selected */
 .nav-btn:selected {
     -fx-background-color: rgba(0, 182, 150, 0.25);
     -fx-text-fill: rgba(222,231,237);
     -fx-border-color: #00B696;
 }
 
-/* Selected hover */
 .nav-btn:selected:hover {
     -fx-background-color: rgba(0, 182, 150, 0.35);
 }
 
-/* ===== CONTENT AREA ===== */
 .content-area {
     -fx-background-color: #f5f7fa;
 }
 
-/* ===== FOOTER ===== */
 .sidebar-footer {
     -fx-text-fill: rgba(255,255,255,0.55);
     -fx-font-size: 12px;

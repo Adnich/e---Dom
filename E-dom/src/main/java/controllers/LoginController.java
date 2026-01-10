@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -20,10 +21,10 @@ import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.prefs.Preferences;
 
 public class LoginController {
 
@@ -45,13 +46,18 @@ public class LoginController {
     @FXML
     private Label lblError;
 
+    @FXML
+    private CheckBox chkRememberMe;
+
     private final KorisnikDAO korisnikDAO = new KorisnikDAO();
 
     private boolean passwordShown = false;
 
+    private static final String PREF_KEY_USERNAME = "remembered_username";
+    private final Preferences prefs = Preferences.userNodeForPackage(LoginController.class);
+
     @FXML
     private void initialize() {
-        // da oba polja uvijek imaju isti tekst
         txtPasswordVisible.textProperty().bindBidirectional(txtPassword.textProperty());
 
         // start: sakriveno
@@ -62,20 +68,26 @@ public class LoginController {
         txtPassword.setManaged(true);
 
         setEyeIcon(false);
+
+        String remembered = prefs.get(PREF_KEY_USERNAME, "");
+        if (remembered != null && !remembered.isBlank()) {
+            txtUsername.setText(remembered);
+            if (chkRememberMe != null) {
+                chkRememberMe.setSelected(true);
+            }
+        }
     }
 
     @FXML
     private void onTogglePasswordVisibility() {
         passwordShown = !passwordShown;
 
-        // toggle vidljivost polja
         txtPasswordVisible.setVisible(passwordShown);
         txtPasswordVisible.setManaged(passwordShown);
 
         txtPassword.setVisible(!passwordShown);
         txtPassword.setManaged(!passwordShown);
 
-        // zadrži fokus i caret na kraju
         if (passwordShown) {
             txtPasswordVisible.requestFocus();
             txtPasswordVisible.positionCaret(txtPasswordVisible.getText().length());
@@ -93,8 +105,7 @@ public class LoginController {
             Image img = new Image(getClass().getResourceAsStream(path));
             imgEye.setImage(img);
         } catch (Exception e) {
-            // ako slika nije nađena, bar da app ne crasha
-            System.out.println("⚠ Ne mogu učitati ikonu: " + path);
+            System.out.println(" Ne mogu učitati ikonu: " + path);
         }
     }
 
@@ -114,13 +125,10 @@ public class LoginController {
         stage.setTitle(title);
         stage.setScene(scene);
 
-        // ✅ obavezno da je resizable
         stage.setResizable(true);
 
-        // ✅ prvo pokaži prozor
         stage.show();
 
-        // ✅ zatim tek maximize (najsigurnije)
         Platform.runLater(() -> {
             stage.setMaximized(true);
 
@@ -132,7 +140,6 @@ public class LoginController {
             stage.setHeight(bounds.getHeight());
         });
     }
-
 
     @FXML
     private void onLoginClicked(ActionEvent event) throws SQLException {
@@ -158,6 +165,12 @@ public class LoginController {
             return;
         }
 
+        if (chkRememberMe != null && chkRememberMe.isSelected()) {
+            prefs.put(PREF_KEY_USERNAME, user);
+        } else {
+            prefs.remove(PREF_KEY_USERNAME);
+        }
+
         Session.setKorisnik(k);
         lblError.setText("");
 
@@ -170,7 +183,6 @@ public class LoginController {
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // ✅ otvori preko cijelog ekrana
             openScene(stage, root, "E-Dom - Administratorski panel");
 
         } catch (IOException e) {
@@ -189,7 +201,6 @@ public class LoginController {
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // ✅ otvori preko cijelog ekrana
             openScene(stage, root, "E-Dom - Registracija");
 
         } catch (IOException e) {
@@ -209,7 +220,6 @@ public class LoginController {
 
             Stage stage = new Stage();
 
-            // ✅ otvori preko cijelog ekrana i novi prozor
             openScene(stage, root, "Reset lozinke");
 
         } catch (Exception e) {

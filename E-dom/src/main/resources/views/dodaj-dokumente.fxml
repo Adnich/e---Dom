@@ -15,16 +15,13 @@
 
     <content>
 
-        <!-- ✅ wrapper centriranje -->
         <StackPane styleClass="page-wrapper">
             <padding>
                 <Insets top="30" right="30" bottom="30" left="30"/>
             </padding>
 
-            <!-- ✅ CARD -->
             <VBox styleClass="card" spacing="18">
 
-                <!-- ✅ HEADER -->
                 <HBox alignment="CENTER_LEFT" spacing="16">
                     <VBox spacing="6">
                         <Label text="Dokumenti i domaćinstvo"
@@ -37,7 +34,6 @@
                     <Region HBox.hgrow="ALWAYS"/>
                 </HBox>
 
-                <!-- ✅ PROGRESS + STEPPER -->
                 <VBox spacing="10">
                     <ProgressBar progress="0.75"
                                  styleClass="progress-top"/>
@@ -71,17 +67,14 @@
                     </HBox>
                 </VBox>
 
-                <!-- ✅ SECTION PILL -->
                 <Label text="Dostavljanje dokumenata"
                        styleClass="section-pill"/>
 
                 <Separator styleClass="soft-separator"/>
 
-                <!-- ✅ ACCORDION -->
                 <Accordion fx:id="accordionDokumenti"
                            styleClass="modern-accordion"/>
 
-                <!-- ✅ FOOTER -->
                 <HBox alignment="CENTER" spacing="16" styleClass="footer-box">
                     <Button text="Podnesi prijavu"
                             onAction="#onPodnesiPrijavu"

@@ -12,7 +12,6 @@
     -fx-opacity: 1;
 }
 
-/* Left title */
 .app-title {
     -fx-font-size: 20px;
         -fx-font-weight: 800;
@@ -41,16 +40,12 @@
     -fx-opacity: 0.95;
 }
 
-/* =========================
-   RIGHT PANEL
-========================= */
+
 .right-pane {
     -fx-background-color: linear-gradient(to bottom right, #EAFBF7 0%, #FFFFFF 65%);
 }
 
-/* =========================
-   PREMIUM GLOW (SUBTLE)
-========================= */
+
 .glow-mint {
     -fx-background-radius: 999px;
     -fx-pref-width: 540px;
@@ -71,16 +66,12 @@
     -fx-translate-y: 170px;
 }
 
-/* =========================
-   REGISTER CONTAINER
-========================= */
+
 .register-container {
     -fx-padding: 70 70 70 70;
 }
 
-/* =========================
-   REGISTER CARD
-========================= */
+
 .register-card {
     -fx-background-radius: 26px;
     -fx-background-color: #FFFFFF;
@@ -91,27 +82,21 @@
     -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.18), 45, 0, 0, 12);
 }
 
-/* =========================
-   TITLE
-========================= */
+
 .register-title {
     -fx-text-fill: #004E64;
     -fx-font-size: 30px;
     -fx-font-weight: 800;
 }
 
-/* =========================
-   LABELS
-========================= */
+
 .field-label {
     -fx-font-size: 13px;
     -fx-text-fill: rgba(0,78,100,0.72);
     -fx-font-weight: 700;
 }
 
-/* =========================
-   INPUTS (SAME AS LOGIN)
-========================= */
+
 .text-input {
     -fx-background-color: #F9FFFE;
     -fx-background-radius: 14px;
@@ -134,9 +119,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.22), 14, 0, 0, 0);
 }
 
-/* =========================
-   COMBOBOX (MATCH INPUT)
-========================= */
+
 .combo-input {
     -fx-background-color: #F9FFFE;
     -fx-background-radius: 14px;
@@ -155,7 +138,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.22), 14, 0, 0, 0);
 }
 
-/* ComboBox arrow button styling */
 .combo-input .arrow-button {
     -fx-background-color: transparent;
 }
@@ -164,9 +146,7 @@
     -fx-background-color: rgba(0,78,100,0.55);
 }
 
-/* =========================
-   PRIMARY BUTTON (SAME AS LOGIN)
-========================= */
+
 .primary-btn {
     -fx-background-radius: 16px;
     -fx-background-color: linear-gradient(to right, #00B696, #00C7A2);
@@ -190,9 +170,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.22), 18, 0, 0, 6);
 }
 
-/* =========================
-   SECONDARY BUTTON (OUTLINE)
-========================= */
+
 .secondary-btn {
     -fx-background-color: transparent;
     -fx-border-color: rgba(0, 182, 150, 0.75);
@@ -216,9 +194,7 @@
     -fx-border-color: #009E82;
 }
 
-/* =========================
-   ERROR LABEL
-========================= */
+
 .error-label {
     -fx-font-size: 12px;
     -fx-text-fill: #d11a2a;
@@ -226,9 +202,7 @@
     -fx-wrap-text: true;
 }
 
-/* =========================
-   GENERAL LABELS
-========================= */
+
 Label {
     -fx-text-fill: rgba(0,78,100,0.62);
     -fx-font-size: 13px;

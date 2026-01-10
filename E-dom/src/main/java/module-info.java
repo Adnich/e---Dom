@@ -9,6 +9,7 @@ module org.example.edom {
     // Java
     requires java.sql;
     requires java.desktop;
+    requires java.prefs;
 
     // Third-party
     requires org.controlsfx.controls;

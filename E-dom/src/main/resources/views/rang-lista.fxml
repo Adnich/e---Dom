@@ -9,7 +9,6 @@
             stylesheets="@../styles/rang-lista-style.css"
             styleClass="rang-root">
 
-    <!-- TOP -->
     <top>
         <HBox spacing="12" styleClass="rang-header">
             <Label text="Rang lista studenata" styleClass="rang-title"/>
@@ -17,7 +16,6 @@
         </HBox>
     </top>
 
-    <!-- CENTER -->
     <center>
         <VBox styleClass="rang-card" spacing="14">
 

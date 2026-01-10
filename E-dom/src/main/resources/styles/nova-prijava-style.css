@@ -1,12 +1,8 @@
-/* =====================================================
-   PALETA: #004E64 (tamno), #00B696 (zeleno), #FFF9A5 (žuto)
-   ===================================================== */
 
 .root {
     -fx-font-family: "Segoe UI", "Inter", system-ui;
 }
 
-/* BACKGROUND */
 .scroll-pane {
     -fx-background-color: linear-gradient(to bottom right, #D9F0FF, #f7fbff);
 }
@@ -15,12 +11,10 @@
     -fx-background-color: transparent;
 }
 
-/* ✅ wrapper centriranje */
 .page-wrapper {
     -fx-alignment: center;
 }
 
-/* ✅ CARD */
 .card {
     -fx-background-color: white;
     -fx-background-radius: 28px;
@@ -36,7 +30,6 @@
     -fx-padding: 26 34 26 34;
 }
 
-/* ✅ TITLE */
 .page-title {
     -fx-font-size: 34px;
     -fx-font-weight: 900;
@@ -48,7 +41,6 @@
     -fx-text-fill: rgba(0, 78, 100, 0.55);
 }
 
-/* ✅ PROGRESS */
 .progress-top {
     -fx-accent: #00B696;
     -fx-background-color: rgba(0, 78, 100, 0.12);
@@ -58,7 +50,6 @@
     -fx-max-width: 420px;
 }
 
-/* ✅ STEPPER */
 .stepper {
     -fx-padding: 0 0 2 0;
 }
@@ -93,7 +84,6 @@
     -fx-font-weight: 900;
 }
 
-/* ✅ SECTION PILL */
 .section-pill {
     -fx-background-color: rgba(0, 182, 150, 0.10);
     -fx-text-fill: #00B696;
@@ -106,24 +96,20 @@
     -fx-max-width: 240px;
 }
 
-/* ✅ separator */
 .soft-separator {
     -fx-background-color: rgba(0, 78, 100, 0.10);
 }
 
-/* FORM */
 .form-grid {
     -fx-padding: 6 0 6 0;
 }
 
-/* labels */
 .field-label {
     -fx-font-size: 12px;
     -fx-font-weight: 800;
     -fx-text-fill: #004E64;
 }
 
-/* TextField */
 .field {
     -fx-background-color: white;
     -fx-background-radius: 18px;
@@ -141,8 +127,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.25), 14, 0.28, 0, 3);
 }
 
-/* ✅ CHECKBOX */
-/* ✅ CHECKBOX - univerzalni stil (isti kao zeleni gore) */
+
 .checkbox {
     -fx-text-fill: #004E64;
     -fx-font-size: 13px;
@@ -178,7 +163,6 @@
 }
 
 
-/* ✅ TextArea */
 .area {
     -fx-background-color: white;
     -fx-background-radius: 18px;
@@ -200,13 +184,11 @@
     -fx-background-color: transparent;
 }
 
-/* ✅ FOOTER BUTTONS */
 .footer-box {
     -fx-padding: 18 0 0 0;
     -fx-alignment: center;
 }
 
-/* Back */
 .btn-back {
     -fx-background-color: transparent;
     -fx-border-color: rgba(0,78,100,0.35);
@@ -227,7 +209,7 @@
     -fx-background-color: rgba(0, 78, 100, 0.12);
 }
 
-/* Next */
+
 .btn-next {
     -fx-background-color: #00B696;
     -fx-text-fill: white;
@@ -248,7 +230,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.25), 12, 0.25, 0, 4);
 }
 
-/* ✅ DA INPUTI POPUNE CIJELU KOLONU */
 .form-grid > .vbox {
     -fx-fill-width: true;
     -fx-max-width: Infinity;

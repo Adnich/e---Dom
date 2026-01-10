@@ -1,16 +1,10 @@
-/* ==========================================================
-   MOJ PROFIL — PREMIUM UI
-   PALETA: #004E64 / #00B696 / #FFF9A5
-========================================================== */
 
-/* PAGE */
 .profile-page {
     -fx-background-color: #f6fbfb;
     -fx-padding: 26 28;
     -fx-font-family: "Inter", "Segoe UI", system-ui;
 }
 
-/* HEADER */
 .page-header {
     -fx-padding: 0 0 10 0;
 }
@@ -27,7 +21,6 @@
     -fx-font-weight: 600;
 }
 
-/* ROLE BADGE */
 .role-badge {
     -fx-background-color: rgba(222,231,237);
     -fx-text-fill: #004E64;
@@ -40,7 +33,6 @@
     -fx-border-width: 1;
 }
 
-/* MAIN CARD */
 .profile-card {
     -fx-background-color: white;
     -fx-background-radius: 18;
@@ -60,7 +52,6 @@
     -fx-border-color: rgba(0,182,150,0.22);
 }
 
-/* SECTION TITLES */
 .section-title {
     -fx-font-size: 15px;
     -fx-font-weight: 900;
@@ -74,14 +65,12 @@
     -fx-text-fill: #004E64;
 }
 
-/* GRID LABELS */
 .form-grid Label {
     -fx-font-size: 13px;
     -fx-font-weight: 800;
     -fx-text-fill: rgba(0,78,100,0.90);
 }
 
-/* INPUTS */
 .text-field,
 .password-field {
     -fx-background-color: #f9fcfc;
@@ -102,7 +91,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.20), 10, 0.20, 0, 4);
 }
 
-/* DISABLED FIELD */
 .text-field:disabled {
     -fx-opacity: 1;
     -fx-background-color: rgba(0,78,100,0.04);
@@ -110,12 +98,10 @@
     -fx-border-color: rgba(0,78,100,0.10);
 }
 
-/* SOFT SEPARATOR */
 .soft-separator .line {
     -fx-border-color: rgba(0,78,100,0.10);
 }
 
-/* SECURITY SUB CARD */
 .security-card {
     -fx-background-color: rgba(0,182,150,0.05);
     -fx-border-color: rgba(0,182,150,0.18);
@@ -125,7 +111,6 @@
     -fx-padding: 16 18;
 }
 
-/* BUTTON */
 .btn-save {
     -fx-background-color: linear-gradient(to right, #00B696, #00C7A2);
     -fx-text-fill: white;
@@ -147,7 +132,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.18), 14, 0.30, 0, 6);
 }
 
-/* STATUS MESSAGE */
 .status-message {
     -fx-padding: 10 14;
     -fx-background-radius: 12;
