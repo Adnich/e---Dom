@@ -48,26 +48,27 @@ public class PrijavaDAO {
         List<Prijava> prijave = new ArrayList<>();
 
         String sql = """
-        SELECT
-            p.id_prijava,
-            p.datum_prijave,
-            p.ukupni_bodovi,
-            p.napomena,
-            p.studentid_student2,
-            p.akademska_godina,
+    SELECT
+        p.id_prijava,
+        p.datum_prijave,
+        p.ukupni_bodovi,
+        p.napomena,
+        p.studentid_student2,
+        p.akademska_godina,
 
-            s.id_status,
-            s.naziv AS naziv_statusa,
+        s.id_status,
+        s.naziv AS naziv_statusa,
 
-            st.ime AS ime_studenta,
-            st.prezime AS prezime_studenta
-
-        FROM prijava p
-        JOIN status_prijave s
-            ON p.status_prijaveid_status = s.id_status
-        JOIN student st
-            ON p.studentid_student2 = st.id_student
-        """;
+        st.ime AS ime_studenta,
+        st.prezime AS prezime_studenta,
+        st.ime_roditelja            -- <=== OVO JE NEDOSTAJALO
+        
+    FROM prijava p
+    JOIN status_prijave s
+        ON p.status_prijaveid_status = s.id_status
+    JOIN student st
+        ON p.studentid_student2 = st.id_student
+    """;
 
         try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement();
@@ -223,7 +224,6 @@ public class PrijavaDAO {
             p.setDatumPrijava(sqlDate.toLocalDate());
         }
 
-
         p.setUkupniBodovi(rs.getInt("ukupni_bodovi"));
         p.setNapomena(rs.getString("napomena"));
         p.setIdStudent(rs.getInt("studentid_student2"));
@@ -234,8 +234,21 @@ public class PrijavaDAO {
                 rs.getString("naziv_statusa")
         );
         p.setStatusPrijave(sp);
+
+        // Dohvatanje podataka o studentu
         p.setImeStudenta(rs.getString("ime_studenta"));
         p.setPrezimeStudenta(rs.getString("prezime_studenta"));
+
+        // === OVO DODAJ ===
+        // Provjera da li kolona postoji u ResultSet-u (kako bi metoda radila i za druge upite)
+        try {
+            p.setImeRoditelja(rs.getString("ime_roditelja"));
+        } catch (SQLException e) {
+            // Ignorisi ako kolona ne postoji u nekom drugom upitu koji koristi ovu metodu
+            // Ili jednostavno stavi null
+            p.setImeRoditelja("");
+        }
+
         return p;
     }
 

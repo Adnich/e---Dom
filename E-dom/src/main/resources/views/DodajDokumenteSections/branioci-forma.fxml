@@ -85,7 +85,7 @@
               maxWidth="Infinity"
               styleClass="checkbox"/>
 
-    <CheckBox text="Invalidnost"
+    <CheckBox text="Ostala invalidnost studenta"
               GridPane.rowIndex="5" GridPane.columnIndex="0"
               fx:id="chkInvaliditet"
               wrapText="true"
