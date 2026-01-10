@@ -38,6 +38,10 @@ public class AdminController {
         loadView("/views/moj-profil.fxml");
     }
 
+    public void loadViewPublic(String fxmlPath) {
+        loadView(fxmlPath);
+    }
+
     private void loadView(String fxmlPath) {
         if (contentArea == null) return;
 

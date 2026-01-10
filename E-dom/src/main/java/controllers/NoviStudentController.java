@@ -36,18 +36,18 @@ public class NoviStudentController {
 
     @FXML
     private void onBackClicked() {
-        String view = "/views/admin-main-view.fxml";
-
-        if ("prijave".equals(previousView)) {
-            view = "/views/prijave.fxml";
-        }
-
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(view));
-            Parent root = loader.load();
+            FXMLLoader adminLoader = new FXMLLoader(
+                    getClass().getResource("/views/admin-main-view.fxml")
+            );
+            Parent root = adminLoader.load();
+
+            AdminController adminController = adminLoader.getController();
+            adminController.loadViewPublic("/views/prijave.fxml");
 
             Stage stage = (Stage) txtIme.getScene().getWindow();
             stage.setScene(new Scene(root));
+            stage.setMaximized(true);
 
         } catch (Exception e) {
             e.printStackTrace();

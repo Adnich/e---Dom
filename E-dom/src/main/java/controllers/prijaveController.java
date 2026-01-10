@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Screen;
@@ -393,17 +394,16 @@ public class prijaveController {
     @FXML
     private void onNovaPrijava() {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/views/novi-student.fxml")
+            FXMLLoader adminLoader = new FXMLLoader(
+                    getClass().getResource("/views/admin-main-view.fxml")
             );
-            Scene scene = new Scene(loader.load());
+            Parent root = adminLoader.load();
 
-            NoviStudentController controller = loader.getController();
-            controller.setPreviousView("prijave");
-
+            AdminController adminController = adminLoader.getController();
+            adminController.loadViewPublic("/views/novi-student.fxml");
 
             Stage stage = (Stage) tblPrijave.getScene().getWindow();
-            stage.setScene(scene);
+            stage.setScene(new Scene(root));
             stage.setMaximized(true);
 
         } catch (Exception e) {

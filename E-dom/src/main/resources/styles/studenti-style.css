@@ -1,81 +1,116 @@
-/* =========================
-   GLOBAL
-========================= */
-.root, .anchor-pane {
+/* ==========================================================
+   STUDENTI — IDENTIČAN UI KAO PRIJAVE
+========================================================== */
+
+.root {
     -fx-font-family: "Inter", "Segoe UI", system-ui;
 }
 
-/* BACKGROUND */
 .anchor-pane {
     -fx-background-color: #f6fbfb;
 }
 
-/* =========================
-   MAIN CARD
-========================= */
+/* MAIN CARD */
 .main-vbox {
     -fx-background-color: white;
     -fx-background-radius: 26px;
-    -fx-border-radius: 26px;
-    -fx-border-color: rgba(0,78,100,0.10);
-    -fx-border-width: 1.2;
     -fx-padding: 28 30 30 30;
-
-    -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.12), 32, 0.25, 0, 12);
+    -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.10), 30, 0.28, 0, 14);
+    -fx-border-color: rgba(0,78,100,0.08);
+    -fx-border-width: 1;
+    -fx-border-radius: 26px;
 }
 
-/* =========================
-   TITLE
-========================= */
+/* HEADER TITLE */
 .header-title {
-    -fx-font-size: 30px;
+    -fx-font-size: 28px;
     -fx-font-weight: 900;
-    -fx-text-fill: #00B696;
+    -fx-text-fill: #004E64;
 }
 
-/* =========================
-   SEARCH FIELD
-========================= */
-.text-field {
+/* SEARCH INPUT */
+.search-input {
     -fx-background-color: white;
-    -fx-background-radius: 16px;
-    -fx-border-radius: 16px;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
     -fx-border-color: rgba(0,182,150,0.35);
-    -fx-border-width: 1.6;
+    -fx-border-width: 1.5px;
     -fx-padding: 12 16;
     -fx-font-size: 13px;
     -fx-text-fill: #004E64;
 }
 
-.text-field:focused {
+.search-input:focused {
     -fx-border-color: #00B696;
     -fx-border-width: 2;
-    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.20), 16, 0.25, 0, 6);
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.18), 12, 0.25, 0, 6);
 }
 
-.text-field .prompt-text {
-    -fx-fill: rgba(0,78,100,0.45);
+/* MENU BUTTONS */
+.menu-btn {
+    -fx-background-color: white;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+    -fx-border-color: rgba(0,78,100,0.20);
+    -fx-border-width: 1.4px;
+    -fx-padding: 8 16;
+    -fx-font-weight: 800;
+    -fx-text-fill: #004E64;
+    -fx-cursor: hand;
 }
 
-/* =========================
-   TABLE BASE
-========================= */
+.menu-btn:hover {
+    -fx-background-color: rgba(0,182,150,0.08);
+    -fx-border-color: rgba(0,182,150,0.45);
+}
+
+.menu-btn:showing {
+    -fx-background-color: rgba(0,182,150,0.12);
+    -fx-border-color: rgba(0,182,150,0.60);
+}
+
+.menu-btn .arrow {
+    -fx-background-color: #004E64;
+}
+
+/* REFRESH ICON BUTTON */
+.icon-refresh-btn {
+    -fx-background-color: white;
+    -fx-background-radius: 999px;
+    -fx-border-radius: 999px;
+    -fx-border-color: rgba(0,182,150,0.45);
+    -fx-border-width: 1.5px;
+    -fx-padding: 8;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.18), 14, 0.3, 0, 6);
+}
+
+.icon-refresh-btn:hover {
+    -fx-background-color: rgba(0,182,150,0.08);
+    -fx-border-color: rgba(0,182,150,0.75);
+}
+
+.icon-refresh-btn:pressed {
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
+
+.refresh-icon {
+    -fx-font-size: 18px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #00B696;
+}
+
+/* TABLE */
 .table-view {
-    -fx-background-color: transparent;
+    -fx-background-color: white;
     -fx-background-radius: 18px;
     -fx-border-radius: 18px;
-    -fx-border-color: rgba(0,182,150,0.35);
-    -fx-border-width: 1.6;
+    -fx-border-color: rgba(0,182,150,0.25);
+    -fx-border-width: 1.4px;
+    -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.08), 22, 0.25, 0, 10);
 }
 
-/* remove gray background behind */
-.table-view .virtual-flow {
-    -fx-background-color: transparent;
-}
-
-/* =========================
-   HEADER
-========================= */
 .table-view .column-header-background {
     -fx-background-color: #00B696;
     -fx-background-radius: 18 18 0 0;
@@ -84,24 +119,18 @@
 .table-view .column-header {
     -fx-background-color: transparent;
     -fx-padding: 14 10;
-    -fx-border-color: rgba(255,255,255,0.28);
+    -fx-border-color: rgba(255,255,255,0.25);
     -fx-border-width: 0 1 0 0;
-}
-
-.table-view .column-header:last-visible {
-    -fx-border-width: 0;
 }
 
 .table-view .column-header .label {
     -fx-text-fill: white;
     -fx-font-weight: 900;
     -fx-font-size: 12px;
-    -fx-alignment: CENTER;
+    -fx-alignment: center;
 }
 
-/* =========================
-   ROWS
-========================= */
+/* ROWS */
 .table-row-cell {
     -fx-background-color: white;
     -fx-border-color: rgba(0,182,150,0.08);
@@ -114,96 +143,54 @@
 }
 
 .table-row-cell:hover {
-    -fx-background-color: rgba(0,182,150,0.10);
+    -fx-background-color: rgba(0,182,150,0.09);
 }
 
 .table-row-cell:selected {
-    -fx-background-color: rgba(0,182,150,0.22);
-    -fx-text-fill: #004E64;
-    -fx-font-weight: 700;
+    -fx-background-color: rgba(0,182,150,0.16);
 }
 
-/* =========================
-   CELLS
-========================= */
+/* CELLS */
 .table-cell {
     -fx-padding: 12 10;
     -fx-border-color: rgba(0,182,150,0.06);
     -fx-border-width: 0 1 0 0;
-    -fx-alignment: CENTER_LEFT;
+    -fx-alignment: center-left;
     -fx-text-fill: #004E64;
 }
 
-.table-cell:last-visible {
-    -fx-border-width: 0;
-}
-
-/* =========================
-   PROSJEK BADGE (highlight)
-========================= */
-.table-cell.prosjek-col {
-    -fx-alignment: CENTER;
-    -fx-text-alignment: CENTER;
-    -fx-font-weight: 900;
-    -fx-text-fill: #00B696;
-}
-
-/* =========================
-   SOC STATUS PILL (kao badge)
-========================= */
-.table-cell.status-col {
-    -fx-alignment: CENTER_LEFT;
-    -fx-text-alignment: LEFT;
-}
-
-/* pill look inside status column */
-
-.table-cell.status-col {
-    -fx-background-color: transparent;
-    -fx-background-radius: 0;
-    -fx-padding: 12 10;
-    -fx-font-weight: 600;
-    -fx-text-fill: #004E64;
-    -fx-alignment: CENTER_LEFT;
-}
-
-
-/* =========================
-   SCROLLBAR (modern)
-========================= */
-.table-view .scroll-bar:vertical {
-    -fx-background-color: transparent;
-}
-
-.table-view .scroll-bar:vertical .track {
-    -fx-background-color: transparent;
-}
-
-.table-view .scroll-bar:vertical .thumb {
+/* SCROLLBAR */
+.table-view .scroll-bar:vertical .thumb,
+.table-view .scroll-bar:horizontal .thumb {
     -fx-background-color: rgba(0,182,150,0.45);
     -fx-background-radius: 10px;
 }
 
-.table-view .scroll-bar:vertical .thumb:hover {
+.table-view .scroll-bar:vertical .thumb:hover,
+.table-view .scroll-bar:horizontal .thumb:hover {
     -fx-background-color: rgba(0,182,150,0.65);
 }
 
-/* horizontal */
-.table-view .scroll-bar:horizontal .thumb {
-    -fx-background-color: rgba(0,182,150,0.30);
-    -fx-background-radius: 10px;
-}
-
-/* =========================
-   CORNER
-========================= */
 .table-view .corner {
     -fx-background-color: #00B696;
 }
 
-/* =========================
-   SELECTION FIX (text stays visible)
-========================= */
-.table-row-cell:selected .table-cell {
+/* EXPORT BUTTON */
+#btnExportHtmlPdf {
+    -fx-background-color: white;
     -fx-text-fill: #004E64;
+    -fx-font-weight: 900;
+    -fx-font-size: 13px;
+    -fx-padding: 10 18;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+    -fx-border-color: rgba(0,182,150,0.55);
+    -fx-border-width: 1.2;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 12, 0.25, 0, 4);
+}
+
+#btnExportHtmlPdf:hover {
+    -fx-background-color: rgba(0,182,150,0.08);
+    -fx-border-color: rgba(0,182,150,0.85);
 }
