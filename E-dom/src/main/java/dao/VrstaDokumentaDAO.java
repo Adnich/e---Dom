@@ -9,7 +9,6 @@ import java.util.List;
 
 public class VrstaDokumentaDAO {
 
-    // UNOS NOVE VRSTE
     public void unesiVrstu(VrstaDokumenta vrsta) {
         String sql = "INSERT INTO vrsta_dokumenta (naziv) VALUES (?)";
 
@@ -26,7 +25,6 @@ public class VrstaDokumentaDAO {
         }
     }
 
-    // DOHVATI SVE VRSTE
     public List<VrstaDokumenta> dohvatiSveVrste() {
         List<VrstaDokumenta> vrste = new ArrayList<>();
 
@@ -52,7 +50,6 @@ public class VrstaDokumentaDAO {
         return vrste;
     }
 
-    // AŽURIRANJE VRSTE
     public void azurirajVrstu(VrstaDokumenta vrsta) {
         String sql = "UPDATE vrsta_dokumenta SET naziv = ? WHERE id_vrsta = ?";
 
@@ -74,7 +71,6 @@ public class VrstaDokumentaDAO {
         }
     }
 
-    // BRISANJE VRSTE
     public void obrisiVrstu(int idVrsta) {
         String sql = "DELETE FROM vrsta_dokumenta WHERE id_vrsta = ?";
 
@@ -95,7 +91,6 @@ public class VrstaDokumentaDAO {
         }
     }
 
-    // DOHVATI PO ID
     public VrstaDokumenta dohvatiVrstuPoId(int idVrsta) {
         String sql = "SELECT * FROM vrsta_dokumenta WHERE id_vrsta = ?";
 
@@ -117,6 +112,6 @@ public class VrstaDokumentaDAO {
             throw new RuntimeException(e);
         }
 
-        return null; // nije pronađena
+        return null;
     }
 }

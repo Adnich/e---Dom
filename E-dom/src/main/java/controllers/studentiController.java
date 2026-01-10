@@ -117,8 +117,7 @@ public class studentiController {
         Set<String> fakulteti = masterList.stream()
                 .map(Student::getFakultet)
                 .filter(Objects::nonNull)
-                .collect(Collectors.toCollection(TreeSet::new)); // ✅ sortirano
-
+                .collect(Collectors.toCollection(TreeSet::new));
         menuFakulteti.getItems().clear();
 
         for (String f : fakulteti) {

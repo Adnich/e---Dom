@@ -25,8 +25,8 @@ public class HelloApplication extends Application {
         stage.setTitle("E-Dom - Prijava");
         stage.setScene(scene);
 
-        stage.setResizable(true);     // ✅ bitno
-        stage.setMaximized(true);     // ✅ FULL SCREEN (maximized)
+        stage.setResizable(true);
+        stage.setMaximized(true);
 
         stage.show();
     }

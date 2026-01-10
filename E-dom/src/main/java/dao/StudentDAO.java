@@ -10,7 +10,6 @@ import java.util.List;
 
 public class StudentDAO {
 
-    // UNOS NOVOG STUDENTA ----------------------------------------------------
     public void unesiStudent(Student s) {
         String sql = "INSERT INTO student " +
                 "(ime, prezime, broj_indeksa, fakultet, godina_studija, prosjek, " +
@@ -43,7 +42,6 @@ public class StudentDAO {
         }
     }
 
-    // DOHVATI SVE STUDENTE ---------------------------------------------------
     public List<Student> dohvatiSveStudente() {
         List<Student> studenti = new ArrayList<>();
 
@@ -98,7 +96,6 @@ public class StudentDAO {
         return studenti;
     }
 
-    // DOHVATI STUDENTA PO ID -------------------------------------------------
     public Student dohvatiStudentaPoId(int id) {
         String sql = "SELECT st.id_student, st.ime, st.prezime, st.broj_indeksa, " +
                 "st.fakultet, st.godina_studija, st.prosjek, st.email, st.telefon, " +
@@ -144,10 +141,9 @@ public class StudentDAO {
             throw new RuntimeException(e);
         }
 
-        return null; // ako nije pronađen
+        return null;
     }
 
-    // AŽURIRANJE STUDENTA ----------------------------------------------------
     public void azurirajStudent(Student s) {
         String sql = "UPDATE student SET " +
                 "ime = ?, prezime = ?, broj_indeksa = ?, fakultet = ?, godina_studija = ?, " +
@@ -184,7 +180,6 @@ public class StudentDAO {
         }
     }
 
-    // BRISANJE STUDENTA ------------------------------------------------------
     public void obrisiStudent(int id) {
         String sql = "DELETE FROM student WHERE id_student = ?";
 
@@ -204,7 +199,6 @@ public class StudentDAO {
         }
     }
 
-    //ovdje dodajemo da racuna za statistiku
     public int countStudents() {
         String sql = "SELECT COUNT(*) FROM student";
 
@@ -222,7 +216,6 @@ public class StudentDAO {
         return 0;
     }
 
-    //pretraga strudenta po broju indeksa
     public Student findByBrojIndeksa(String indeks) {
         String sql = "SELECT st.id_student, st.ime, st.prezime, st.broj_indeksa, st.fakultet, st.godina_studija, " +
                 "st.prosjek, st.email, st.telefon, ss.id_status, ss.naziv, st.adresa, st.ime_roditelja, st.jmbg " +

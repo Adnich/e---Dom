@@ -3,7 +3,6 @@ package util;
 public class TextUtil {
 
     private TextUtil() {
-        // sprječava instanciranje
     }
 
     public static String formatirajIme(String tekst) {

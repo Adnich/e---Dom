@@ -47,7 +47,6 @@ public class RangListaController {
     @FXML
     public void initialize() {
 
-        // ==================== PRIPREMA KOLONA I MENIJA ====================
         Map<String, TableColumn<Prijava, ?>> koloneMap = Map.of(
                 "Redni broj", colRedniBroj,
                 "ID prijave", colIdPrijave,
@@ -69,59 +68,47 @@ public class RangListaController {
             menuKolone.getItems().add(item);
         });
 
-        // ==================== SETUP TABLECOLUMNS ====================
 
-        // Redni broj koji prati sortiranu listu
         colRedniBroj.setCellValueFactory(cd ->
                 new ReadOnlyObjectWrapper<>(tblRangLista.getItems().indexOf(cd.getValue()) + 1)
         );
 
-        // ID prijave
         colIdPrijave.setCellValueFactory(cd ->
                 new ReadOnlyObjectWrapper<>(cd.getValue().getIdPrijava())
         );
 
-        // Ime i prezime
         colImePrezime.setCellValueFactory(cd ->
                 new ReadOnlyObjectWrapper<>(cd.getValue().getImeStudenta() + " " + cd.getValue().getPrezimeStudenta())
         );
 
-        // Godina studija
         colGodinaStudija.setCellValueFactory(cd ->
                 new ReadOnlyObjectWrapper<>(cd.getValue().getBodoviMap().getOrDefault("godina", 0.0))
         );
 
-        // Prosjek
         colProsjek.setCellValueFactory(cd ->
                 new ReadOnlyObjectWrapper<>(cd.getValue().getBodoviMap().getOrDefault("uspjeh", 0.0))
         );
 
-        // Osvojene nagrade
         colOsvojeneNagrade.setCellValueFactory(cd ->
                 new ReadOnlyObjectWrapper<>(cd.getValue().getBodoviMap().getOrDefault("nagrade", 0.0))
         );
 
-        // Socijalni status
         colSocijalniStatus.setCellValueFactory(cd ->
                 new ReadOnlyObjectWrapper<>(cd.getValue().getBodoviMap().getOrDefault("socijalni", 0.0))
         );
 
-        // Udaljenost
         colUdaljenost.setCellValueFactory(cd ->
                 new ReadOnlyObjectWrapper<>(cd.getValue().getBodoviMap().getOrDefault("udaljenost", 0.0))
         );
 
-        // Dodatni bodovi
         colDodatniBodovi.setCellValueFactory(cd ->
                 new ReadOnlyObjectWrapper<>(cd.getValue().getBodoviMap().getOrDefault("dodatni", 0.0))
         );
 
-        // Ukupni bodovi
         colUkupniBodovi.setCellValueFactory(cd ->
                 new ReadOnlyObjectWrapper<>(cd.getValue().getBodoviMap().getOrDefault("ukupno", 0.0))
         );
 
-        // Dugme za detalje
         colDetalji.setCellFactory(tc -> new TableCell<>() {
             private final Button btn = new Button("Detalji");
             {
@@ -139,7 +126,6 @@ public class RangListaController {
             }
         });
 
-        // ==================== UCITAVANJE RANGLISTE ====================
         rangLista = FXCollections.observableArrayList();
         for (Prijava p : prijavaDAO.dohvatiSvePrijave()) {
             if (p.getStatusPrijave() != null && "odobreno".equalsIgnoreCase(p.getStatusPrijave().getNaziv())) {
@@ -149,17 +135,14 @@ public class RangListaController {
             }
         }
 
-        // ==================== SORTIRANJE ====================
         SortedList<Prijava> sorted = new SortedList<>(rangLista);
         sorted.comparatorProperty().bind(tblRangLista.comparatorProperty());
         tblRangLista.setItems(sorted);
 
-        // Inicijalno sortiranje po ukupnim bodovima silazno
         colUkupniBodovi.setSortType(TableColumn.SortType.DESCENDING);
         tblRangLista.getSortOrder().clear();
         tblRangLista.getSortOrder().add(colUkupniBodovi);
 
-        // Spriječi plavu selekciju
         tblRangLista.getSelectionModel().setCellSelectionEnabled(false);
     }
 
@@ -188,9 +171,6 @@ public class RangListaController {
         stage.setHeight(bounds.getHeight());
     }
 
-    // =================================================================================
-    // OVDJE SU NAPRAVLJENE IZMJENE ZA EXPORT DVIJE LISTE
-    // =================================================================================
 
     @FXML
     public void onExportHtmlPdf(ActionEvent actionEvent) {
@@ -199,29 +179,22 @@ public class RangListaController {
             List<RangListaDTO> brucosiList = new ArrayList<>();
             List<RangListaDTO> visiList = new ArrayList<>();
 
-            // 2. Brojači za redne brojeve (svaka lista kreće od 1)
             int rbBrucosi = 1;
             int rbVisi = 1;
 
-            // 3. Prolazimo kroz items iz TableView-a
-            // Ovo je bitno: getItems() vraća listu onako kako je sortirana na ekranu!
+
             for (Prijava p : tblRangLista.getItems()) {
 
-                // Dohvati godinu studija (sigurno konvertovanje u int)
                 Double godDbl = p.getBodoviMap().getOrDefault("godina", 0.0);
                 int godina = godDbl.intValue();
 
-                // 4. Razvrstavanje i kreiranje DTO-a
                 if (godina == 1) {
-                    // Ako je brucoš, dodaj ga u prvu listu sa brojačem rbBrucosi
                     brucosiList.add(pripremiDto(p, rbBrucosi++));
                 } else {
-                    // Svi ostali idu u drugu listu sa brojačem rbVisi
                     visiList.add(pripremiDto(p, rbVisi++));
                 }
             }
 
-            // 5. Dijalog za spašavanje
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Sačuvaj konačnu rang listu");
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF fajl", "*.pdf"));
@@ -230,9 +203,7 @@ public class RangListaController {
             File file = fileChooser.showSaveDialog(tblRangLista.getScene().getWindow());
 
             if (file != null) {
-                // 6. Poziv servisa
                 RangListaHtmlExportService service = new RangListaHtmlExportService();
-                // Šaljemo obje liste servisu (koristimo novu metodu exportSplitData)
                 service.exportSplitData(brucosiList, visiList, file);
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "PDF uspješno kreiran!", ButtonType.OK);
@@ -246,28 +217,21 @@ public class RangListaController {
         }
     }
 
-    // Pomoćna metoda za kreiranje DTO objekta specifično za ovaj izvještaj
     private RangListaDTO pripremiDto(Prijava p, int redniBroj) {
         RangListaDTO dto = new RangListaDTO();
 
-        // 1. Kolona: R.br
         dto.addKolona("#", String.valueOf(redniBroj));
 
-        // 2. Kolona: Prezime (Ime oca) Ime
-        // Provjeravamo da li imamo ime oca, ako ne, samo ime i prezime
+
         String imeOca = (p.getImeRoditelja() != null && !p.getImeRoditelja().isEmpty()) ? " (" + p.getImeRoditelja() + ") " : " ";
         String prezimeIme = p.getPrezimeStudenta() + imeOca + p.getImeStudenta();
 
         dto.addKolona("Prezime (ime oca) i ime studenta", prezimeIme);
 
-        // 3. Kolona: Bodovi
         double bodovi = p.getBodoviMap().getOrDefault("ukupno", 0.0);
         dto.addKolona("Bodovi", String.format("%.2f", bodovi));
 
-        // 4. Kolona: Kanton (opcionalno, ako želiš kao u PDF-u)
-        // Ako nemaš polje kanton u prijavi, samo obriši ovu liniju ispod
-        // dto.addKolona("Kanton", p.getKanton() != null ? p.getKanton() : "");
-
+ 
         return dto;
     }
 }

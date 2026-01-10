@@ -9,7 +9,6 @@ import java.util.List;
 
 public class SocijalniStatusDAO {
 
-    // UNOS NOVOG STATUSA
     public void unesiStatus(SocijalniStatus status) {
         String sql = "INSERT INTO socijalni_status (naziv) VALUES (?)";
 
@@ -19,7 +18,6 @@ public class SocijalniStatusDAO {
             stmt.setString(1, status.getNaziv());
             stmt.executeUpdate();
 
-            // Dohvati generisani ID i postavi ga u objekat
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
                     status.setIdStatus(rs.getInt(1)); // sada objekat zna svoj ID
@@ -34,7 +32,6 @@ public class SocijalniStatusDAO {
     }
 
 
-    // DOHVATI SVE
     public List<SocijalniStatus> dohvatiSveStatuse() {
         List<SocijalniStatus> lista = new ArrayList<>();
 
@@ -60,7 +57,6 @@ public class SocijalniStatusDAO {
         return lista;
     }
 
-    // AŽURIRANJE
     public void azurirajStatus(SocijalniStatus status) {
         String sql = "UPDATE socijalni_status SET naziv = ? WHERE id_status = ?";
 
@@ -82,7 +78,6 @@ public class SocijalniStatusDAO {
         }
     }
 
-    // BRISANJE
     public void obrisiStatus(int idStatus) {
         String sql = "DELETE FROM socijalni_status WHERE id_status = ?";
 
@@ -103,7 +98,6 @@ public class SocijalniStatusDAO {
         }
     }
 
-    // DOHVATI PO ID
     public SocijalniStatus dohvatiStatusPoId(int id) {
         String sql = "SELECT * FROM socijalni_status WHERE id_status = ?";
 
@@ -125,6 +119,6 @@ public class SocijalniStatusDAO {
             throw new RuntimeException(e);
         }
 
-        return null; // nije pronađen
+        return null;
     }
 }

@@ -9,7 +9,6 @@ import java.util.List;
 
 public class UlogaDAO {
 
-    // UNOS NOVE ULOGE
     public void unesiUlogu(Uloga uloga) {
         String sql = "INSERT INTO uloga (naziv) VALUES (?)";
 
@@ -19,10 +18,9 @@ public class UlogaDAO {
             stmt.setString(1, uloga.getNaziv());
             stmt.executeUpdate();
 
-            // Dohvati generisani ID i postavi ga u objekat
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
-                    uloga.setIdUloga(rs.getInt(1)); // sada objekat zna svoj ID iz baze
+                    uloga.setIdUloga(rs.getInt(1));
                 }
             }
 
@@ -34,7 +32,6 @@ public class UlogaDAO {
 
     }
 
-    // DOHVATI SVE UL0GE
     public List<Uloga> dohvatiSveUloge() {
         List<Uloga> uloge = new ArrayList<>();
 
@@ -59,7 +56,6 @@ public class UlogaDAO {
         return uloge;
     }
 
-    // AŽURIRAJ ULOGU
     public void azurirajUlogu(Uloga uloga) {
         String sql = "UPDATE uloga SET naziv = ? WHERE id_uloga = ?";
 
@@ -81,7 +77,6 @@ public class UlogaDAO {
         }
     }
 
-    // BRISANJE ULOGE
     public void obrisiUlogu(int idUloga) {
         String sql = "DELETE FROM uloga WHERE id_uloga = ?";
 
@@ -102,7 +97,6 @@ public class UlogaDAO {
         }
     }
 
-    // DOHVATI ULOGU PREMA ID
     public Uloga dohvatiUloguPoId(int id) {
         String sql = "SELECT * FROM uloga WHERE id_uloga = ?";
 
@@ -124,6 +118,6 @@ public class UlogaDAO {
             throw new RuntimeException(e);
         }
 
-        return null; // nije pronađena
+        return null;
     }
 }

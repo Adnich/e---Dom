@@ -19,10 +19,8 @@
               styleClass="main-vbox"
               VBox.vgrow="ALWAYS">
 
-            <!-- HEADER -->
             <BorderPane>
 
-                <!-- LEFT -->
                 <left>
                     <VBox spacing="10">
                         <Label text="Studenti" styleClass="header-title"/>
@@ -34,11 +32,9 @@
                     </VBox>
                 </left>
 
-                <!-- RIGHT -->
                 <right>
                     <HBox spacing="14" alignment="CENTER_RIGHT">
 
-                        <!-- REFRESH ICON -->
                         <Button onAction="#onRefresh"
                                 styleClass="icon-refresh-btn">
 
@@ -51,13 +47,11 @@
                             </graphic>
                         </Button>
 
-                        <!-- (po potrebi kasnije) -->
                     </HBox>
                 </right>
 
             </BorderPane>
 
-            <!-- FILTER BAR -->
             <HBox spacing="14" alignment="CENTER_LEFT">
 
                 <MenuButton text="Sortiraj" fx:id="btnSortiraj" styleClass="menu-btn">
@@ -81,7 +75,6 @@
 
             </HBox>
 
-            <!-- TABLE -->
             <TableView fx:id="tblStudenti"
                        VBox.vgrow="ALWAYS"
                        styleClass="table-view">
@@ -99,7 +92,6 @@
 
             </TableView>
 
-            <!-- EXPORT -->
             <HBox>
                 <Button fx:id="btnExportHtmlPdf"
                         text="Export PDF (HTML)"
