@@ -1,7 +1,3 @@
-/* ==========================================================
-   PRIJAVE — PREMIUM TABLE UI
-   PALETA: #004E64 / #00B696 / #FFF9A5
-========================================================== */
 
 .root {
     -fx-font-family: "Inter", "Segoe UI", system-ui;
@@ -11,7 +7,6 @@
     -fx-background-color: #f6fbfb;
 }
 
-/* MAIN CARD */
 .main-vbox {
     -fx-background-color: white;
     -fx-background-radius: 26px;
@@ -22,14 +17,12 @@
     -fx-border-radius: 26px;
 }
 
-/* HEADER TITLE */
 .header-title {
     -fx-font-size: 28px;
     -fx-font-weight: 900;
     -fx-text-fill: #004E64;
 }
 
-/* SEARCH INPUT */
 .search-input {
     -fx-background-color: white;
     -fx-background-radius: 14px;
@@ -47,7 +40,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.18), 12, 0.25, 0, 6);
 }
 
-/* MENU BUTTONS */
+
 .menu-btn {
     -fx-background-color: white;
     -fx-background-radius: 14px;
@@ -74,7 +67,6 @@
     -fx-background-color: #004E64;
 }
 
-/* MENU POPUP */
 .context-menu {
     -fx-background-color: white;
     -fx-background-radius: 14px;
@@ -95,7 +87,6 @@
     -fx-background-color: rgba(0,182,150,0.10);
 }
 
-/* NOVA PRIJAVA BUTTON */
 .button.nova-prijava-btn {
     -fx-background-radius: 16px;
     -fx-background-color: linear-gradient(to right, #00B696, #00C7A2);
@@ -117,9 +108,6 @@
     -fx-scale-y: 0.97;
 }
 
-/* ==========================================================
-   TABLE VIEW — CARD STYLE
-========================================================== */
 
 .table-view {
     -fx-background-color: white;
@@ -135,7 +123,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.12), 28, 0.28, 0, 12);
 }
 
-/* HEADER BG */
 .table-view .column-header-background {
     -fx-background-color: #00B696;
     -fx-background-radius: 18 18 0 0;
@@ -155,7 +142,6 @@
     -fx-alignment: center;
 }
 
-/* ROWS */
 .table-row-cell {
     -fx-background-color: white;
     -fx-border-color: rgba(0,182,150,0.08);
@@ -167,21 +153,18 @@
     -fx-background-color: rgba(0,182,150,0.03);
 }
 
-/* ROW HOVER */
 .table-row-cell:hover {
     -fx-background-color: rgba(0,182,150,0.09);
     -fx-border-width: 0 0 1 5;
     -fx-border-color: rgba(0,182,150,0.45);
 }
 
-/* ROW SELECT */
 .table-row-cell:selected {
     -fx-background-color: rgba(0,182,150,0.16);
     -fx-border-width: 0 0 1 5;
     -fx-border-color: rgba(0,182,150,0.85);
 }
 
-/* CELLS */
 .table-cell {
     -fx-padding: 12 10;
     -fx-border-color: rgba(0,182,150,0.06);
@@ -194,9 +177,7 @@
     -fx-border-width: 0;
 }
 
-/* ==========================================================
-   STATUS BADGES (TableCellFactory required!)
-========================================================== */
+
 
 .table-cell.status-approved {
     -fx-background-color: rgba(0,182,150,0.14);
@@ -234,7 +215,6 @@
     -fx-alignment: center;
 }
 
-/* SCROLLBAR */
 .table-view .scroll-bar:vertical .thumb {
     -fx-background-color: rgba(0,182,150,0.45);
     -fx-background-radius: 10px;
@@ -247,9 +227,6 @@
 .table-view .corner {
     -fx-background-color: #00B696;
 }
-/* ===============================
-   STATUS BADGE (KOMPAKTNO + FIX WIDTH BUG)
-================================ */
 
 .table-cell.status-approved,
 .table-cell.status-rejected,
@@ -260,36 +237,30 @@
     -fx-font-weight: 800;
     -fx-font-size: 12px;
 
-    /* manji padding */
     -fx-padding: 4 10;
 
     /* pill */
     -fx-background-radius: 14px;
     -fx-border-radius: 14px;
 
-    /* ✅ OVO JE BITNO: cell ne smije forsirati širinu */
     -fx-background-insets: 2;
 }
 
-/* ODOBRENO */
 .table-cell.status-approved {
     -fx-background-color: rgba(0,182,150,0.14);
     -fx-text-fill: #007d67;
 }
 
-/* ODBIJENO */
 .table-cell.status-rejected {
     -fx-background-color: rgba(230, 57, 70, 0.12);
     -fx-text-fill: #d62828;
 }
 
-/* NA PREGLEDU */
 .table-cell.status-review {
     -fx-background-color: rgba(255,249,165,0.65);
     -fx-text-fill: #8a6a00;
 }
 
-/* ZAKLJUČENO */
 .table-cell.status-closed {
     -fx-background-color: rgba(0,78,100,0.10);
     -fx-text-fill: #004E64;
@@ -297,7 +268,6 @@
 .table-view .table-column {
     -fx-alignment: CENTER_LEFT;
 }
-/* STATUS BADGE - tekst u sredini */
 .table-cell.status-approved,
 .table-cell.status-rejected,
 .table-cell.status-review,
@@ -306,9 +276,7 @@
     -fx-text-alignment: CENTER;
 }
 
-/*scroll barovi*/
 
-/* VERTIKALNI */
 .table-view .scroll-bar:vertical .thumb {
     -fx-background-color: rgba(0,182,150,0.45);
     -fx-background-radius: 10px;
@@ -318,7 +286,6 @@
     -fx-background-color: rgba(0,182,150,0.65);
 }
 
-/* HORIZONTALNI */
 .table-view .scroll-bar:horizontal .thumb {
     -fx-background-color: rgba(0,182,150,0.45);
     -fx-background-radius: 10px;
@@ -328,14 +295,12 @@
     -fx-background-color: rgba(0,182,150,0.65);
 }
 
-/* TRACK (pozadina) */
 .table-view .scroll-bar:vertical .track,
 .table-view .scroll-bar:horizontal .track {
     -fx-background-color: rgba(0,182,150,0.08);
     -fx-background-radius: 10px;
 }
 
-/* refresh icon */
 .icon-refresh-btn {
     -fx-background-color: white;
     -fx-background-radius: 999px;
@@ -357,16 +322,13 @@
     -fx-scale-y: 0.95;
 }
 
-/* REFRESH ICON */
 .refresh-icon {
     -fx-font-size: 18px;
     -fx-font-weight: 900;
     -fx-text-fill: #00B696;
 }
 
-/* ==================================================
-   EXPORT PDF BUTTON
-================================================== */
+
 #btnExportHtmlPdf {
     -fx-background-color: white;
     -fx-text-fill: #004E64;
@@ -385,20 +347,17 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 12, 0.25, 0, 4);
 }
 
-/* Hover */
 #btnExportHtmlPdf:hover {
     -fx-background-color: rgba(0,182,150,0.08);
     -fx-border-color: rgba(0,182,150,0.85);
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 16, 0.25, 0, 6);
 }
 
-/* Pressed */
 #btnExportHtmlPdf:pressed {
     -fx-background-color: rgba(0,182,150,0.16);
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 10, 0.25, 0, 2);
 }
 
-/* Disabled */
 #btnExportHtmlPdf:disabled {
     -fx-opacity: 0.55;
     -fx-cursor: default;

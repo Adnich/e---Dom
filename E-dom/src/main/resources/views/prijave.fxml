@@ -19,10 +19,8 @@
               styleClass="main-vbox"
               VBox.vgrow="ALWAYS">
 
-            <!-- HEADER -->
             <BorderPane>
 
-                <!-- LEFT: naslov + search -->
                 <left>
                     <VBox spacing="10">
                         <Label text="Prijave studenata" styleClass="header-title"/>
@@ -34,11 +32,9 @@
                     </VBox>
                 </left>
 
-                <!-- RIGHT: refresh + nova prijava -->
                 <right>
                     <HBox spacing="14" alignment="CENTER_RIGHT">
 
-                        <!-- REFRESH ICON -->
                         <Button onAction="#onRefresh"
                                 styleClass="icon-refresh-btn">
 
@@ -51,7 +47,6 @@
                             </graphic>
                         </Button>
 
-                        <!-- NOVA PRIJAVA -->
                         <Button text="Nova prijava"
                                 onAction="#onNovaPrijava"
                                 styleClass="nova-prijava-btn"/>
@@ -60,7 +55,6 @@
 
             </BorderPane>
 
-            <!-- FILTER BAR -->
             <HBox spacing="14" alignment="CENTER_LEFT">
 
                 <MenuButton text="Sortiraj" fx:id="btnSortiraj" styleClass="menu-btn">
@@ -84,7 +78,6 @@
 
             </HBox>
 
-            <!-- TABLE -->
             <TableView fx:id="tblPrijave"
                        VBox.vgrow="ALWAYS"
                        styleClass="table-view">
@@ -102,7 +95,6 @@
 
             </TableView>
 
-            <!-- EXPORT -->
             <HBox>
                 <Button fx:id="btnExportHtmlPdf"
                         text="Export PDF (HTML)"

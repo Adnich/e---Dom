@@ -10,7 +10,6 @@
       styleClass="profile-page"
       stylesheets="@../styles/moj-profil-style.css">
 
-    <!-- PAGE TITLE -->
     <HBox alignment="CENTER_LEFT" spacing="12" styleClass="page-header">
         <VBox spacing="2">
             <Label text="Moj profil" styleClass="page-title"/>
@@ -20,10 +19,8 @@
         <Label fx:id="lblBadgeUloga" text="ADMIN" styleClass="role-badge"/>
     </HBox>
 
-    <!-- MAIN CARD -->
     <VBox spacing="18" styleClass="profile-card">
 
-        <!-- SECTION 1 -->
         <Label text="Podaci korisnika" styleClass="section-title"/>
 
         <GridPane hgap="14" vgap="12" styleClass="form-grid">
@@ -45,13 +42,10 @@
             <TextField fx:id="txtUloga" disable="true" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
         </GridPane>
 
-        <!-- DIVIDER -->
         <Separator styleClass="soft-separator"/>
 
-        <!-- SECTION 2 -->
         <Label text="Sigurnost" styleClass="section-title"/>
 
-        <!-- SUB CARD -->
         <VBox spacing="14" styleClass="security-card">
 
             <Label text="Promjena lozinke" styleClass="sub-title"/>
@@ -74,7 +68,6 @@
 
         </VBox>
 
-        <!-- ACTIONS -->
         <HBox spacing="12" alignment="CENTER_LEFT">
             <Button text="Sačuvaj promjene" onAction="#sacuvajPromjene" styleClass="btn-save"/>
             <Region HBox.hgrow="ALWAYS"/>

@@ -1,10 +1,8 @@
-/* ================================================== GLOBAL ================================================== */
 .root {
     -fx-font-family: "Inter", "Segoe UI", system-ui;
     -fx-background-color: #f5fbfb;
 }
 
-/* ================================================== HEADER ================================================== */
 .header {
     -fx-background-color: rgba(255, 255, 255, 0.65);
     -fx-padding: 24 30 18 30;
@@ -26,7 +24,6 @@
     -fx-text-fill: #607d8b;
 }
 
-/* Pills */
 .header-pill {
     -fx-background-color: rgba(222,231,237);
     -fx-text-fill: #023047;
@@ -53,12 +50,10 @@
     -fx-font-weight: 700;
 }
 
-/* ================================================== MAIN GRID ================================================== */
 .main-grid {
     -fx-padding: 22;
 }
 
-/* ================================================== CARDS (shared look) ================================================== */
 .card, .stat-card {
     -fx-background-color: white;
     -fx-background-radius: 20px;
@@ -74,21 +69,19 @@
     -fx-translate-y: -2;
 }
 
-/* card title */
 .card-title {
     -fx-font-size: 15px;
     -fx-font-weight: 900;
     -fx-text-fill: #023047;
 }
 
-/* muted text */
 .muted {
     -fx-font-size: 13px;
     -fx-font-weight: 600;
     -fx-text-fill: #78909c;
 }
 
-/* ================================================== PROGRESS ================================================== */
+
 .progress {
     -fx-accent: #00B696;
     -fx-pref-height: 10px;
@@ -103,7 +96,6 @@
     -fx-background-radius: 999px;
 }
 
-/* ================================================== TABLE ================================================== */
 .table-modern {
     -fx-background-radius: 16px;
     -fx-border-radius: 16px;
@@ -112,7 +104,6 @@
     -fx-padding: 2;
 }
 
-/* Table header */
 .table-view .column-header-background {
     -fx-background-color: linear-gradient(to bottom, #00B696 0%, #008C73 100%);
     -fx-background-radius: 16px 16px 0 0;
@@ -129,7 +120,7 @@
     -fx-padding: 14 8;
 }
 
-/* Rows */
+
 .table-row-cell {
     -fx-background-color: white;
     -fx-border-color: rgba(2, 48, 71, 0.05);
@@ -154,7 +145,7 @@
     -fx-padding: 12 10;
 }
 
-/* Scrollbar modern */
+
 .table-view .scroll-bar:vertical,
 .table-view .scroll-bar:horizontal {
     -fx-background-color: transparent;
@@ -169,7 +160,6 @@
     -fx-background-color: rgba(0, 182, 150, 0.35);
 }
 
-/* ================================================== EMPTY STATE ================================================== */
 .empty-card {
     -fx-background-color: rgba(0,182,150,0.04);
     -fx-background-radius: 16px;
@@ -190,12 +180,10 @@
     -fx-text-fill: #78909c;
 }
 
-/* ================================================== SIDE PANEL ================================================== */
 .side-panel {
     -fx-spacing: 16;
 }
 
-/* Stat card */
 .stat-title {
     -fx-font-size: 13px;
     -fx-font-weight: 800;
@@ -215,7 +203,6 @@
     -fx-text-fill: #023047;
 }
 
-/* ================================================== COMBO + BUTTONS ================================================== */
 .combo-modern {
     -fx-background-radius: 14px;
     -fx-border-radius: 14px;
@@ -267,7 +254,6 @@
     -fx-border-width: 2;
 }
 
-/* ================================================== ACTION BUTTON (Pregledaj) ================================================== */
 .btn-action {
     -fx-background-color: rgba(0,182,150,0.12);
     -fx-text-fill: #008C73;
@@ -298,7 +284,6 @@
     -fx-cursor: default;
 }
 
-/* ================================================== FOOTER ================================================== */
 .footer {
     -fx-background-color: rgba(255,255,255,0.85);
     -fx-padding: 14 20;

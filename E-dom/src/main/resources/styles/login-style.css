@@ -1,14 +1,10 @@
-/* =========================
-   ROOT
-========================= */
+
 .root {
     -fx-font-family: "Segoe UI", "Arial", sans-serif;
     -fx-background-color: #EAFBF7;
 }
 
-/* =========================
-   LEFT PANEL
-========================= */
+
 .left-pane {
     -fx-background-color: linear-gradient(to bottom, #004E64 0%, #003847 100%);
     -fx-padding: 50 45 50 45;
@@ -46,23 +42,17 @@
     -fx-opacity: 0.95;
 }
 
-/* =========================
-   RIGHT PANEL (clean premium gradient)
-========================= */
+
 .right-pane {
     -fx-background-color: linear-gradient(to bottom right, #EAFBF7 0%, #FFFFFF 65%);
 }
 
-/* =========================
-   LOGIN CONTAINER
-========================= */
+
 .login-container {
     -fx-padding: 80 80 80 80;
 }
 
-/* =========================
-   GLOW BLOBS (premium, subtle)
-========================= */
+
 .glow-mint {
     -fx-background-radius: 999px;
     -fx-pref-width: 520px;
@@ -83,9 +73,7 @@
     -fx-translate-y: 160px;
 }
 
-/* =========================
-   LOGIN CARD (final touch: less bottom empty space)
-========================= */
+
 .login-card {
     -fx-background-radius: 26px;
     -fx-background-color: #FFFFFF;
@@ -96,27 +84,21 @@
     -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.18), 45, 0, 0, 12);
 }
 
-/* =========================
-   TITLE
-========================= */
+
 .login-title {
     -fx-text-fill: #004E64;
     -fx-font-size: 32px;
     -fx-font-weight: 800;
 }
 
-/* =========================
-   FORM LABELS
-========================= */
+
 .field-label {
     -fx-font-size: 13px;
     -fx-text-fill: rgba(0,78,100,0.72);
     -fx-font-weight: 700;
 }
 
-/* =========================
-   INPUTS (final touch: inner depth)
-========================= */
+
 .text-input {
     -fx-background-color: #F9FFFE;
     -fx-background-radius: 14px;
@@ -129,7 +111,6 @@
     -fx-pref-height: 50px;
     -fx-prompt-text-fill: rgba(0,78,100,0.35);
 
-    /* FINAL TOUCH: subtle depth inside */
     -fx-effect: innershadow(gaussian, rgba(0,78,100,0.06), 10, 0, 0, 1);
 }
 
@@ -140,12 +121,10 @@
     -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.22), 14, 0, 0, 0);
 }
 
-/* PASSWORD WRAPPER */
 .password-wrapper {
     -fx-alignment: center-left;
 }
 
-/* EYE BUTTON */
 .eye-btn {
     -fx-background-color: transparent;
     -fx-padding: 10;
@@ -168,9 +147,7 @@
     -fx-border-width: 0;
 }
 
-/* =========================
-   CHECKBOX (final touch: hover + nicer border)
-========================= */
+
 .check-box {
     -fx-text-fill: rgba(0,78,100,0.65);
     -fx-font-size: 13px;
@@ -187,7 +164,6 @@
     -fx-pref-height: 18px;
 }
 
-/* FINAL TOUCH: hover border */
 .check-box:hover .box {
     -fx-border-color: rgba(0,182,150,0.55);
 }
@@ -206,9 +182,7 @@
     -fx-fill: rgba(0,78,100,0.65);
 }
 
-/* =========================
-   LINKS
-========================= */
+
 Hyperlink {
     -fx-cursor: hand;
     -fx-border-width: 0;
@@ -221,7 +195,6 @@ Hyperlink:focused {
     -fx-background-color: transparent;
 }
 
-/* FORGOT PASSWORD */
 .forgot-link {
     -fx-text-fill: #00B696;
     -fx-font-size: 13px;
@@ -234,9 +207,7 @@ Hyperlink:focused {
     -fx-text-fill: #009E82;
 }
 
-/* =========================
-   PRIMARY BUTTON (final touch: softer & deeper shadow)
-========================= */
+
 .primary-btn {
     -fx-background-radius: 16px;
     -fx-background-color: linear-gradient(to right, #00B696, #00C7A2);
@@ -248,7 +219,6 @@ Hyperlink:focused {
     -fx-border-width: 0;
     -fx-pref-height: 52px;
 
-    /* FINAL TOUCH shadow */
     -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.30), 30, 0.35, 0, 12);
 }
 
@@ -262,9 +232,7 @@ Hyperlink:focused {
     -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.22), 18, 0, 0, 6);
 }
 
-/* =========================
-   ERROR LABEL
-========================= */
+
 .error-label {
     -fx-font-size: 12px;
     -fx-text-fill: #E53E3E;
@@ -273,9 +241,7 @@ Hyperlink:focused {
     -fx-wrap-text: true;
 }
 
-/* =========================
-   REGISTER LINK (pill style)
-========================= */
+
 .register-link {
     -fx-text-fill: #004E64;
     -fx-font-weight: 800;
@@ -298,17 +264,12 @@ Hyperlink:focused {
     -fx-text-fill: #004E64;
 }
 
-/* =========================
-   GENERAL LABELS (final touch: more consistent)
-========================= */
+
 Label {
     -fx-text-fill: rgba(0,78,100,0.62);
     -fx-font-size: 13px;
 }
 
-/* =========================
-   SPACING
-========================= */
 VBox {
     -fx-alignment: top-left;
 }

@@ -1,21 +1,15 @@
-/* ==========================================================
-   RANG LISTA — PREMIUM UI (FINAL FIX)
-   PALETA: #004E64 / #00B696 / #FFF9A5
-========================================================== */
 
 .root {
     -fx-font-family: "Inter", "Segoe UI", system-ui;
     -fx-background-color: #f6fbfb;
 }
 
-/* ROOT WRAPPER */
+
 .rang-root {
     -fx-background-color: #f6fbfb;
 }
 
-/* ==========================================================
-   HEADER
-========================================================== */
+
 .rang-header {
     -fx-padding: 26 30 16 30;
 }
@@ -26,9 +20,7 @@
     -fx-text-fill: #004E64;
 }
 
-/* ==========================================================
-   MAIN CARD WRAPPER
-========================================================== */
+
 .rang-card {
     -fx-background-color: white;
     -fx-background-radius: 26px;
@@ -42,11 +34,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.10), 30, 0.28, 0, 14);
 }
 
-/* ==========================================================
-   MENU BAR — PRIKAŽI KOLONE (NO BOX)
-========================================================== */
-
-/* MenuBar bez “velikog boxa” */
 .menu-bar {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
@@ -57,7 +44,6 @@
     -fx-background-color: transparent;
 }
 
-/* Dugme "Prikaži kolone" */
 .menu-bar .menu {
     -fx-background-color: white;
     -fx-background-radius: 14px;
@@ -92,9 +78,7 @@
     -fx-background-color: #00B696;
 }
 
-/* ==========================================================
-   DROPDOWN LISTA (KOLONE)
-========================================================== */
+
 .context-menu {
     -fx-background-color: white;
     -fx-background-radius: 14px;
@@ -131,9 +115,6 @@
     -fx-border-color: rgba(0,182,150,0.20);
 }
 
-/* ==========================================================
-   TABLE VIEW — PREMIUM
-========================================================== */
 
 .rang-table {
     -fx-background-color: white;
@@ -150,7 +131,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.12), 28, 0.28, 0, 12);
 }
 
-/* Header */
 .rang-table .column-header-background {
     -fx-background-color: #00B696;
     -fx-background-radius: 18 18 0 0;
@@ -171,7 +151,6 @@
     -fx-alignment: center;
 }
 
-/* Rows */
 .rang-table .table-row-cell {
     -fx-background-color: white;
     -fx-border-color: rgba(0,182,150,0.08);
@@ -195,7 +174,6 @@
     -fx-border-color: rgba(0,182,150,0.85);
 }
 
-/* Cells */
 .rang-table .table-cell {
     -fx-padding: 12 10;
     -fx-border-color: rgba(0,182,150,0.06);
@@ -204,9 +182,7 @@
     -fx-text-fill: #004E64;
 }
 
-/* ==================================================
-   "DETALJI" BUTTON (u tabeli) - PREMIUM
-================================================== */
+
 .rang-table .button {
     -fx-background-color: rgba(0,182,150,0.15);
     -fx-text-fill: #007d67;
@@ -234,25 +210,19 @@
     -fx-scale-y: 0.98;
 }
 
-/* ==================================================
-   SCROLL BAR - GREEN (MINT) (FIX VERTICAL + HORIZONTAL)
-================================================== */
 
-/* scrollbar container */
 .rang-table .scroll-bar:vertical,
 .rang-table .scroll-bar:horizontal {
     -fx-background-color: transparent;
     -fx-padding: 2;
 }
 
-/* track */
 .rang-table .scroll-bar:vertical .track,
 .rang-table .scroll-bar:horizontal .track {
     -fx-background-color: rgba(0,182,150,0.10);
     -fx-background-radius: 10px;
 }
 
-/* thumb */
 .rang-table .scroll-bar:vertical .thumb,
 .rang-table .scroll-bar:horizontal .thumb {
     -fx-background-color: rgba(0,182,150,0.60);
@@ -260,19 +230,16 @@
     -fx-min-height: 35px;
 }
 
-/* hover */
 .rang-table .scroll-bar:vertical .thumb:hover,
 .rang-table .scroll-bar:horizontal .thumb:hover {
     -fx-background-color: rgba(0,182,150,0.85);
 }
 
-/* pressed */
 .rang-table .scroll-bar:vertical .thumb:pressed,
 .rang-table .scroll-bar:horizontal .thumb:pressed {
     -fx-background-color: rgba(0,182,150,1.0);
 }
 
-/* VAŽNO: širina scrollbar-a */
 .rang-table .scroll-bar:vertical {
     -fx-pref-width: 13px;
 }
@@ -281,27 +248,21 @@
     -fx-pref-height: 13px;
 }
 
-/* arrow buttons */
 .rang-table .scroll-bar .increment-button,
 .rang-table .scroll-bar .decrement-button {
     -fx-background-color: transparent;
     -fx-padding: 0;
 }
 
-/* remove arrows */
 .rang-table .scroll-bar .increment-arrow,
 .rang-table .scroll-bar .decrement-arrow {
     -fx-background-color: transparent;
 }
 
-/* corner */
 .rang-table .corner {
     -fx-background-color: transparent;
 }
 
-/* ==================================================
-   EXPORT PDF BUTTON (PRO)
-================================================== */
 #btnExportHtmlPdf {
     -fx-background-color: linear-gradient(to bottom, #ffffff, #f7fbfb);
     -fx-text-fill: #004E64;

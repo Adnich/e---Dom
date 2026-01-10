@@ -46,7 +46,6 @@ public class LoginController {
     @FXML
     private Label lblError;
 
-    // ✅ novo: checkbox iz FXML-a
     @FXML
     private CheckBox chkRememberMe;
 
@@ -54,13 +53,11 @@ public class LoginController {
 
     private boolean passwordShown = false;
 
-    // ✅ novo: Preferences (zapamti samo username)
     private static final String PREF_KEY_USERNAME = "remembered_username";
     private final Preferences prefs = Preferences.userNodeForPackage(LoginController.class);
 
     @FXML
     private void initialize() {
-        // da oba polja uvijek imaju isti tekst
         txtPasswordVisible.textProperty().bindBidirectional(txtPassword.textProperty());
 
         // start: sakriveno
@@ -72,7 +69,6 @@ public class LoginController {
 
         setEyeIcon(false);
 
-        // ✅ novo: učitaj zapamćeni username
         String remembered = prefs.get(PREF_KEY_USERNAME, "");
         if (remembered != null && !remembered.isBlank()) {
             txtUsername.setText(remembered);
@@ -86,14 +82,12 @@ public class LoginController {
     private void onTogglePasswordVisibility() {
         passwordShown = !passwordShown;
 
-        // toggle vidljivost polja
         txtPasswordVisible.setVisible(passwordShown);
         txtPasswordVisible.setManaged(passwordShown);
 
         txtPassword.setVisible(!passwordShown);
         txtPassword.setManaged(!passwordShown);
 
-        // zadrži fokus i caret na kraju
         if (passwordShown) {
             txtPasswordVisible.requestFocus();
             txtPasswordVisible.positionCaret(txtPasswordVisible.getText().length());
@@ -111,8 +105,7 @@ public class LoginController {
             Image img = new Image(getClass().getResourceAsStream(path));
             imgEye.setImage(img);
         } catch (Exception e) {
-            // ako slika nije nađena, bar da app ne crasha
-            System.out.println("⚠ Ne mogu učitati ikonu: " + path);
+            System.out.println(" Ne mogu učitati ikonu: " + path);
         }
     }
 
@@ -132,13 +125,10 @@ public class LoginController {
         stage.setTitle(title);
         stage.setScene(scene);
 
-        // ✅ obavezno da je resizable
         stage.setResizable(true);
 
-        // ✅ prvo pokaži prozor
         stage.show();
 
-        // ✅ zatim tek maximize (najsigurnije)
         Platform.runLater(() -> {
             stage.setMaximized(true);
 
@@ -175,7 +165,6 @@ public class LoginController {
             return;
         }
 
-        // ✅ novo: snimi/obriši username u zavisnosti od checkboxa
         if (chkRememberMe != null && chkRememberMe.isSelected()) {
             prefs.put(PREF_KEY_USERNAME, user);
         } else {
@@ -194,7 +183,6 @@ public class LoginController {
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // ✅ otvori preko cijelog ekrana
             openScene(stage, root, "E-Dom - Administratorski panel");
 
         } catch (IOException e) {
@@ -213,7 +201,6 @@ public class LoginController {
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // ✅ otvori preko cijelog ekrana
             openScene(stage, root, "E-Dom - Registracija");
 
         } catch (IOException e) {
@@ -233,7 +220,6 @@ public class LoginController {
 
             Stage stage = new Stage();
 
-            // ✅ otvori preko cijelog ekrana i novi prozor
             openScene(stage, root, "Reset lozinke");
 
         } catch (Exception e) {

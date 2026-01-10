@@ -1,15 +1,11 @@
-/* =========================
-   ROOT
-========================= */
+
 .dash-root {
     -fx-background-color: #f6fbfb;
     -fx-padding: 24 28;
     -fx-font-family: "Inter", "Segoe UI", system-ui;
 }
 
-/* =========================
-   HEADER
-========================= */
+
 .dash-title {
     -fx-font-size: 26px;
     -fx-font-weight: 800;
@@ -32,9 +28,7 @@
     -fx-border-radius: 8;
 }
 
-/* =========================
-   STAT CARDS (shadow + hover)
-========================= */
+
 .stat-card-modern {
     -fx-background-color: white;
     -fx-padding: 20;
@@ -43,7 +37,7 @@
     -fx-border-color: rgba(0,78,100,0.10);
     -fx-border-width: 1;
 
-    /* premium shadow */
+
     -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.08), 22, 0.25, 0, 10);
 }
 
@@ -74,9 +68,7 @@
     -fx-text-fill: #94a3b8;
 }
 
-/* =========================
-   CONTENT PANELS (shadow + hover)
-========================= */
+
 .content-panel {
     -fx-background-color: white;
     -fx-background-radius: 12;
@@ -85,7 +77,7 @@
     -fx-border-radius: 12;
     -fx-border-width: 1;
 
-    /* premium shadow */
+
     -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.07), 22, 0.25, 0, 10);
 }
 
@@ -109,18 +101,14 @@
     -fx-font-weight: 800;
 }
 
-/* =========================
-   PIE CHART
-========================= */
+
 .chart-pie-label {
     -fx-fill: #004E64;
     -fx-font-size: 11px;
     -fx-font-weight: 700;
 }
 
-/* =========================
-   STATUS PANEL (desno)
-========================= */
+
 .status-sidebar-compact {
     -fx-pref-width: 260;
 }
@@ -131,7 +119,7 @@
     -fx-font-weight: 600;
 }
 
-/* brojke kao badge */
+
 .status-count {
     -fx-background-color: rgba(0, 78, 100, 0.06);
     -fx-text-fill: #004E64;
@@ -141,18 +129,14 @@
     -fx-alignment: center;
 }
 
-/* =========================
-   ACTION BAR
-========================= */
+
 .action-bar {
     -fx-padding: 10 0 0 0;
     -fx-border-color: rgba(0,78,100,0.08);
     -fx-border-width: 1 0 0 0;
 }
 
-/* =========================
-   BUTTONS
-========================= */
+
 .btn-primary {
     -fx-background-color: #004E64;
     -fx-text-fill: white;
@@ -200,15 +184,13 @@
     -fx-background-color: linear-gradient(to right, #00A98B, #00B696);
 }
 
-/* =========================
-   FOOTER
-========================= */
+
 .footer-text {
     -fx-text-fill: rgba(0,78,100,0.35);
     -fx-font-size: 12px;
     -fx-font-weight: 600;
 }
-/* Hover sjena za stat kartice */
+
 .stat-card-modern {
     -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.08), 22, 0.25, 0, 10);
 }
@@ -217,7 +199,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.14), 30, 0.30, 0, 14);
 }
 
-/* Hover sjena za content panel */
 .content-panel {
     -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.07), 22, 0.25, 0, 10);
 }
@@ -226,16 +207,12 @@
     -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.12), 30, 0.30, 0, 14);
 }
 
-/* =========================
-   CHART PANEL (left content)
-========================= */
+
 .chart-panel {
     -fx-pref-width: 70%;
 }
 
-/* =========================
-   STATUS SIDEBAR (right)
-========================= */
+
 .status-sidebar-compact {
     -fx-pref-width: 280px;
     -fx-min-width: 260px;

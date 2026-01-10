@@ -25,7 +25,6 @@
 
                 <Region HBox.hgrow="ALWAYS"/>
 
-                <!-- opcionalno: badge ili quick info -->
                 <Label text="Pregled u toku" styleClass="header-right-info"/>
 
             </HBox>
@@ -42,7 +41,6 @@
                 <ColumnConstraints percentWidth="35" />
             </columnConstraints>
 
-            <!-- LEFT: DOCUMENTS CARD -->
             <VBox spacing="12" styleClass="card" GridPane.columnIndex="0">
 
                 <HBox alignment="CENTER_LEFT" spacing="12">
@@ -78,7 +76,6 @@
             </VBox>
 
 
-            <!-- RIGHT: SIDE PANEL -->
             <VBox spacing="14" styleClass="side-panel" GridPane.columnIndex="1">
 
                 <VBox styleClass="stat-card">
@@ -113,7 +110,6 @@
     </center>
 
 
-    <!-- FOOTER -->
     <bottom>
         <HBox alignment="CENTER_RIGHT" spacing="10" styleClass="footer">
             <Button text="Zatvori" onAction="#onZatvori" defaultButton="true"/>

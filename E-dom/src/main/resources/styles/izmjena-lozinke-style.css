@@ -1,10 +1,8 @@
-/* ROOT */
 .root {
     -fx-font-family: "Segoe UI", "Arial", sans-serif;
     -fx-background-color: #EAFBF7;
 }
 
-/* LEFT PANEL */
 .left-pane {
     -fx-background-color: linear-gradient(to bottom, #004E64 0%, #003847 100%);
     -fx-padding: 50 45 50 45;
@@ -34,12 +32,10 @@
     -fx-text-fill: rgba(222,231,237);
 }
 
-/* RIGHT PANEL */
 .right-pane {
     -fx-background-color: linear-gradient(to bottom right, #EAFBF7 0%, #FFFFFF 65%);
 }
 
-/* GLOW */
 .glow-mint {
     -fx-background-radius: 999px;
     -fx-pref-width: 520px;
@@ -56,12 +52,10 @@
     -fx-effect: dropshadow(gaussian, rgba(255,249,165,0.25), 260, 0.55, 0, 0);
 }
 
-/* CONTAINER */
 .login-container {
     -fx-padding: 80;
 }
 
-/* CARD */
 .login-card {
     -fx-background-radius: 26px;
     -fx-background-color: white;
@@ -72,21 +66,18 @@
     -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.18), 45, 0, 0, 12);
 }
 
-/* TITLE */
 .login-title {
     -fx-font-size: 32px;
     -fx-font-weight: 800;
     -fx-text-fill: #004E64;
 }
 
-/* LABELS */
 .field-label {
     -fx-font-size: 13px;
     -fx-font-weight: 700;
     -fx-text-fill: rgba(0,78,100,0.72);
 }
 
-/* INPUTS */
 .text-input {
     -fx-background-color: #F9FFFE;
     -fx-background-radius: 14px;
@@ -127,7 +118,6 @@
     );
 }
 
-/* ERROR */
 .error-label {
     -fx-font-size: 12px;
     -fx-font-weight: 700;

@@ -1,13 +1,8 @@
-/* =====================================================
-   DODAJ DOKUMENTE - MODERNI UI
-   PALETA: #004E64 (tamno), #00B696 (zeleno)
-   ===================================================== */
 
 .root {
     -fx-font-family: "Segoe UI", "Inter", system-ui;
 }
 
-/* BACKGROUND */
 .scroll-pane {
     -fx-background-color: linear-gradient(to bottom right, #D9F0FF, #f7fbff);
 }
@@ -16,12 +11,11 @@
     -fx-background-color: transparent;
 }
 
-/* wrapper centriranje */
 .page-wrapper {
     -fx-alignment: center;
 }
 
-/* CARD */
+
 .card {
     -fx-background-color: white;
     -fx-background-radius: 28px;
@@ -37,7 +31,6 @@
     -fx-padding: 26 34 26 34;
 }
 
-/* TITLE */
 .page-title {
     -fx-font-size: 34px;
     -fx-font-weight: 900;
@@ -49,7 +42,6 @@
     -fx-text-fill: rgba(0, 78, 100, 0.55);
 }
 
-/* PROGRESS */
 .progress-top {
     -fx-accent: #00B696;
     -fx-background-color: rgba(0, 78, 100, 0.12);
@@ -59,7 +51,6 @@
     -fx-max-width: 420px;
 }
 
-/* STEPPER */
 .stepper {
     -fx-padding: 0 0 2 0;
 }
@@ -94,7 +85,6 @@
     -fx-font-weight: 900;
 }
 
-/* SECTION PILL */
 .section-pill {
     -fx-background-color: rgba(0, 182, 150, 0.10);
     -fx-text-fill: #00B696;
@@ -107,18 +97,15 @@
     -fx-max-width: 240px;
 }
 
-/* separator */
 .soft-separator {
     -fx-background-color: rgba(0, 78, 100, 0.10);
 }
 
-/* FOOTER */
 .footer-box {
     -fx-padding: 18 0 0 0;
     -fx-alignment: center;
 }
 
-/* PRIMARY BUTTON */
 .btn-next {
     -fx-background-color: #00B696;
     -fx-text-fill: white;
@@ -139,9 +126,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.25), 12, 0.25, 0, 4);
 }
 
-/* ===================================
-   MODERN ACCORDION
-   =================================== */
+
 
 .modern-accordion {
     -fx-background-color: transparent;
@@ -182,9 +167,7 @@
     -fx-padding: 14 14 14 14;
 }
 
-/* ===================================
-   DOC CARD DESIGN
-   =================================== */
+
 
 .doc-card {
     -fx-background-color: white;
@@ -208,7 +191,6 @@
     -fx-font-weight: 700;
 }
 
-/* checkbox */
 .checkbox {
     -fx-text-fill: #004E64;
     -fx-font-size: 13px;
@@ -233,8 +215,7 @@
     -fx-background-color: white;
 }
 
-/* input */
-/* input */
+
 .field {
     -fx-background-color: white;
     -fx-background-radius: 18px;
@@ -247,7 +228,6 @@
     -fx-text-fill: #004E64;
     -fx-prompt-text-fill: rgba(0,78,100,0.35);
 
-    /* ✅ OVO POPRAVLJA "KRUG" */
     -fx-pref-height: 42px;
     -fx-min-height: 42px;
 
@@ -261,7 +241,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0,182,150,0.25), 14, 0.28, 0, 3);
 }
 
-/* ComboBox */
 .combo {
     -fx-background-color: white;
     -fx-background-radius: 18px;
@@ -289,7 +268,6 @@
     -fx-background-color: #00B696;
 }
 
-/* buttons */
 .btn-primary {
     -fx-background-color: #00B696;
     -fx-text-fill: white;
@@ -317,7 +295,7 @@
     -fx-font-size: 13px;
 
     -fx-padding: 10 18;
-    -fx-pref-height: 40px; /* ✅ da bude isti kao primary */
+    -fx-pref-height: 40px;
     -fx-min-height: 40px;
 
     -fx-cursor: hand;
@@ -337,9 +315,7 @@
     -fx-background-color: rgba(0, 78, 100, 0.06);
 }
 
-/* ===================================
-   KUĆNA LISTA - član kartice
-   =================================== */
+
 
 .household-member-card {
     -fx-background-color: rgba(0, 182, 150, 0.04);
@@ -369,9 +345,7 @@
     -fx-background-color: #00a88a;
 }
 
-/* ===================================
-   MODERN RADIO BUTTON
-   =================================== */
+
 
 .radio-button.modern-radio {
     -fx-text-fill: #004E64;
@@ -408,9 +382,7 @@
     -fx-font-size: 12px;
     -fx-padding: 2 0 0 8;
 }
-/* ===================================
-   SMALL NUMBER FIELD
-   =================================== */
+
 
 .field-small {
     -fx-pref-width: 90px;
@@ -420,9 +392,7 @@
     -fx-alignment: CENTER;
     -fx-font-weight: 800;
 }
-/* ===================================
-   IZBJEGLI / RASELJENI CARD
-   =================================== */
+
 
 .refugee-card {
     -fx-background-color: rgba(0, 182, 150, 0.05);

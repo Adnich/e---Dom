@@ -9,18 +9,15 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 3);
 }
 
-/* Naslov */
 .title-label {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
 }
 
-/* Error poruka */
 .error-label {
     -fx-text-fill: red;
 }
 
-/* Dugmad */
 .button {
     -fx-background-color: #2b7cff;
     -fx-text-fill: white;
