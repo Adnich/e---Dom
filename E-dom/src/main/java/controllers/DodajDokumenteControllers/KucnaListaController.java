@@ -56,7 +56,6 @@ public class KucnaListaController {
             txtIme.getStyleClass().add("field");
             txtIme.setMaxWidth(Double.MAX_VALUE);
 
-            // ✅ Primanja (uvijek vidljivo)
             TextField txtPrimanja = new TextField();
             txtPrimanja.setPromptText("Mjesečna primanja (KM)");
             txtPrimanja.getStyleClass().add("field");
@@ -65,7 +64,6 @@ public class KucnaListaController {
 
             primanjaFieldovi.put(index, txtPrimanja);
 
-            // ✅ ComboBox
             ComboBox<VrstaDokumenta> cmbVrsta = new ComboBox<>(
                     FXCollections.observableArrayList(vrsteDokumenata)
             );
@@ -82,12 +80,10 @@ public class KucnaListaController {
             });
             cmbVrsta.setButtonCell(cmbVrsta.getCellFactory().call(null));
 
-            // ✅ Checkbox ispod
             CheckBox chk = new CheckBox("Dokument dostavljen");
             chk.getStyleClass().add("checkbox");
             chk.setWrapText(true);
 
-            // ✅ Button
             Button btn = new Button("Dodaj dokument");
             btn.getStyleClass().add("btn-upload");
             btn.setMinWidth(170);
@@ -122,7 +118,6 @@ public class KucnaListaController {
                 alert("Uspjeh", "Dokument dodat za člana " + index);
             });
 
-            // ✅ GRID ROW (3 kolone)
             GridPane row1 = new GridPane();
             row1.setHgap(14);
             row1.setVgap(0);
@@ -149,7 +144,6 @@ public class KucnaListaController {
             row1.add(cmbVrsta, 1, 0);
             row1.add(btn, 2, 0);
 
-            // ✅ Checkbox row
             HBox row2 = new HBox(10, chk);
             row2.setAlignment(Pos.CENTER_LEFT);
 

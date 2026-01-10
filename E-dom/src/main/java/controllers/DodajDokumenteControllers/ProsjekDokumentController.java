@@ -32,11 +32,8 @@ public class ProsjekDokumentController {
 
     @FXML
     public void initialize() {
-        // ✅ ToggleGroup popravlja izgled i ponašanje RadioButton-a
         rbUvjerenje.setToggleGroup(toggleDokument);
         rbIndeks.setToggleGroup(toggleDokument);
-
-        // default stanje
         rbUvjerenje.setSelected(true);
     }
 
@@ -53,7 +50,6 @@ public class ProsjekDokumentController {
         this.vrstaIndeks = vrstaIndeks;
 
         if (godinaStudija == 1) {
-            // ✅ prikazuje samo svjedodžbu
             lblOpis.setText("Svjedodžba o završetku srednje škole:");
 
             setNodeVisible(lblIspiti, false);
@@ -62,7 +58,6 @@ public class ProsjekDokumentController {
             setNodeVisible(rbIndeks, false);
 
         } else {
-            // ✅ viša godina → uvjerenje / indeks
             lblOpis.setText("Odaberi i unesi dokument sa fakulteta:");
 
             setNodeVisible(lblIspiti, true);
@@ -70,7 +65,6 @@ public class ProsjekDokumentController {
             setNodeVisible(rbUvjerenje, true);
             setNodeVisible(rbIndeks, true);
 
-            // default
             rbUvjerenje.setSelected(true);
         }
     }
@@ -88,7 +82,6 @@ public class ProsjekDokumentController {
         d.setDokumentB64(null);
 
         if (godinaStudija == 1) {
-            // ✅ brucosi → svjedodžba
             double bodovi = kriterij.izracunajBodoveBrucosi(prosjek);
 
             d.setNaziv(vrstaSvjedodzbe.getNaziv());
@@ -101,7 +94,6 @@ public class ProsjekDokumentController {
         showAlert("Uspješno", "Dokument dodat i bodovi obračunati.");
     }
 
-    // ✅ ključna metoda za UI: visible + managed
     private void setNodeVisible(Control node, boolean visible) {
         node.setVisible(visible);
         node.setManaged(visible);

@@ -38,11 +38,8 @@ public class GarancijaDokumentController {
                 "Vlasnik kompanije"
         ));
 
-        // ✅ Puni ComboBox sa dokumentima koje si proslijedio (ta tri)
         cmbDokumentGarancija.setItems(FXCollections.observableArrayList(this.vrsteDokumenata));
         cmbDokumentGarancija.setDisable(false);
-
-        // ✅ Prikaz u ComboBox (da se ne desi da je prazno ako toString nije definisan)
         cmbDokumentGarancija.setConverter(new StringConverter<>() {
             @Override
             public String toString(VrstaDokumenta objekt) {
@@ -71,7 +68,6 @@ public class GarancijaDokumentController {
             }
         });
 
-        // ✅ Automatski selektuj prvi dokument (opcionalno)
         if (!this.vrsteDokumenata.isEmpty()) {
             cmbDokumentGarancija.getSelectionModel().selectFirst();
         }
@@ -112,7 +108,6 @@ public class GarancijaDokumentController {
         d.setDostavljen(true);
         d.setVrstaDokumenta(cmbDokumentGarancija.getValue());
 
-        // PDF je opcionalan
         if (pdfBase64 != null && !pdfBase64.isBlank()) {
             d.setDokumentB64(pdfBase64);
         }
@@ -131,7 +126,6 @@ public class GarancijaDokumentController {
         cmbTipGaranta.setValue(null);
         chkGarancijaPotpisana.setSelected(false);
 
-        // ✅ vrati listu dokumenata (ta tri) opet u combo
         cmbDokumentGarancija.setItems(FXCollections.observableArrayList(vrsteDokumenata));
         if (!vrsteDokumenata.isEmpty()) {
             cmbDokumentGarancija.getSelectionModel().selectFirst();

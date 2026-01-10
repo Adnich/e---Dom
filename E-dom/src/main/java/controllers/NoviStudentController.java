@@ -95,7 +95,6 @@ public class NoviStudentController {
             }
         });
 
-        // ✅ TELEFON – dozvoljeni samo validni karakteri
         txtTelefon.setTextFormatter(new TextFormatter<>(change -> {
             if (change.getText().matches("[0-9+()\\-\\s]*")) {
                 return change;
@@ -164,7 +163,6 @@ public class NoviStudentController {
             return;
         }
 
-        // TELEFON – validacija
         String telefon = txtTelefon.getText().replaceAll("\\D", "");
         if (telefon.length() < 6 || telefon.length() > 15) {
             showAlert("Greška", "Neispravan broj telefona.");

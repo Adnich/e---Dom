@@ -27,7 +27,6 @@ public class ObrazacPrijaveController {
         this.vrsta = vrsta;
     }
 
-    // dugme: Dodaj PDF (nije obavezno)
     @FXML
     private void onDodajPdf() {
         pdfBase64 = PdfService.uploadPdf(lblPdf.getScene().getWindow());
@@ -39,7 +38,6 @@ public class ObrazacPrijaveController {
         }
     }
 
-    // dugme: Sačuvaj dokument
     @FXML
     private void dodaj() {
 
@@ -53,7 +51,6 @@ public class ObrazacPrijaveController {
         d.setDostavljen(true);
         d.setVrstaDokumenta(vrsta);
 
-        // PDF je OPCIONALAN
         if (pdfBase64 != null) {
             d.setDokumentB64(pdfBase64);
         }

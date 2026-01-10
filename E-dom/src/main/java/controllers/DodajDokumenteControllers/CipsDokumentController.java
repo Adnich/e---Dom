@@ -31,7 +31,6 @@ public class CipsDokumentController {
         this.bodoviUdaljenost = bodoviUdaljenost;
     }
 
-    // dugme: Dodaj PDF (nije obavezno)
     @FXML
     private void onDodajPdf() {
         pdfBase64 = PdfService.uploadPdf(lblPdf.getScene().getWindow());
@@ -42,13 +41,11 @@ public class CipsDokumentController {
             lblPdf.setText("PDF nije dodat");
         }
     }
-
-    // dugme: Sačuvaj dokument
     @FXML
     private void dodaj() {
 
         if (!chkDostavljen.isSelected()) {
-            return; // admin nije označio → ne snimamo
+            return;
         }
 
         Dokument d = new Dokument();
@@ -58,7 +55,6 @@ public class CipsDokumentController {
         d.setBrojBodova(bodoviUdaljenost);
         d.setVrstaDokumenta(vrsta);
 
-        // PDF je OPCIONALAN
         if (pdfBase64 != null) {
             d.setDokumentB64(pdfBase64);
         }

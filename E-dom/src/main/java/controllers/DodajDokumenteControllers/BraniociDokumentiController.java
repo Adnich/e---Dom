@@ -40,27 +40,21 @@ public class BraniociDokumentiController {
     private String pdfBase64;
     private final KriterijPoOsnovuDjeceBranilaca kriterij = new KriterijPoOsnovuDjeceBranilaca();
 
-    // ===============================
-    // INIT: prikaz polja samo kad je čekirano
-    // ===============================
+
     @FXML
     public void initialize() {
 
-        // ✅ Student RVI -> postotak invaliditeta
         txtPostotakInvaliditeta.visibleProperty().bind(chkStudentRVI.selectedProperty());
         txtPostotakInvaliditeta.managedProperty().bind(chkStudentRVI.selectedProperty());
         chkStudentRVI.selectedProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal) txtPostotakInvaliditeta.clear();
         });
-
-        // ✅ Invalidnost roditelja -> postotak invalidnosti roditelja
         txtPostInvalidnostiRoditelja.visibleProperty().bind(chkInvalidnostRoditelja.selectedProperty());
         txtPostInvalidnostiRoditelja.managedProperty().bind(chkInvalidnostRoditelja.selectedProperty());
         chkInvalidnostRoditelja.selectedProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal) txtPostInvalidnostiRoditelja.clear();
         });
 
-        // ✅ Dijete OSRBiH -> broj mjeseci
         txtBrojMjeseci.visibleProperty().bind(chkDjecaOSRBiH.selectedProperty());
         txtBrojMjeseci.managedProperty().bind(chkDjecaOSRBiH.selectedProperty());
         chkDjecaOSRBiH.selectedProperty().addListener((obs, oldVal, newVal) -> {
@@ -68,9 +62,7 @@ public class BraniociDokumentiController {
         });
     }
 
-    // ===============================
-    // IZRAČUN BODOVA
-    // ===============================
+
     public BraniociRezultat izracunajBodove() {
 
         Map<String, Boolean> stanja = new HashMap<>();
@@ -97,9 +89,7 @@ public class BraniociDokumentiController {
         );
     }
 
-    // ===============================
-    // PDF UPLOAD
-    // ===============================
+
     @FXML
     private void onDodajPdf() {
 

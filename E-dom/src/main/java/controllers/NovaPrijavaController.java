@@ -34,7 +34,6 @@ public class NovaPrijavaController {
 
     private final PrijavaDAO prijavaDAO = new PrijavaDAO();
 
-    /* ================= INIT ================= */
 
     @FXML
     public void initialize() {
@@ -45,13 +44,11 @@ public class NovaPrijavaController {
         });
     }
 
-    /* ================= SETTERS ================= */
 
     public void setStudentId(int id) { this.studentId = id; }
     public void setProsjek(double prosjek) { this.prosjek = prosjek; }
     public void setGodinaStudija(int godinaStudija) { this.godinaStudija = godinaStudija; }
 
-    /* ================= SAVE ================= */
 
     @FXML
     private void onSaveClicked() {
@@ -80,7 +77,6 @@ public class NovaPrijavaController {
             return;
         }
 
-        // 1️⃣ Spremi prijavu
         Prijava p = new Prijava();
         p.setIdStudent(studentId);
         p.setDatumPrijava(LocalDate.now());
@@ -92,7 +88,6 @@ public class NovaPrijavaController {
         prijavaDAO.unesiPrijavu(p);
         int prijavaId = p.getIdPrijava();
 
-        // 2️⃣ Dodatni bodovi
         int dodatniBodovi = 0;
         if (chkIzbjeglica.isSelected()) dodatniBodovi += 3;
         if (chkBratSestra.isSelected()) dodatniBodovi += 2;
@@ -101,13 +96,11 @@ public class NovaPrijavaController {
             prijavaDAO.dodajBodoveNaPrijavu(prijavaId, dodatniBodovi);
         }
 
-        // 3️⃣ Branioci
         BraniociRezultat rezultat = null;
         if (braniociController != null) {
             rezultat = braniociController.izracunajBodove();
         }
 
-        // 4️⃣ OTVORI DOKUMENTE – STARA, ISPRAVNA LOGIKA ✅
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/views/dodaj-dokumente.fxml")
@@ -134,7 +127,6 @@ public class NovaPrijavaController {
         }
     }
 
-    /* ================= BACK ================= */
 
     @FXML
     private void onBackClicked() {
@@ -153,7 +145,6 @@ public class NovaPrijavaController {
         }
     }
 
-    /* ================= BRANIOCI ================= */
 
     private void ucitajBraniociFormu() {
         try {
@@ -169,7 +160,6 @@ public class NovaPrijavaController {
         }
     }
 
-    /* ================= ALERT ================= */
 
     private void showAlert(String title, String msg) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);

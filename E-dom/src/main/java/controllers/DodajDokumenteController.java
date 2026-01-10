@@ -90,7 +90,6 @@ public class DodajDokumenteController {
 
         accordionDokumenti.getPanes().addAll(paneOsnovni, paneDomacinstvo, paneFaks);
 
-        // Prikaži sekciju za dodatne bodove samo ako postoje bodovi branilaca
         if ((braniociRezultat != null && braniociRezultat.getBodovi() > 0) || isIzbjeglica) {
             TitledPane paneDodatni = new TitledPane();
             paneDodatni.setText("Dodatni bodovi");
@@ -129,10 +128,8 @@ public class DodajDokumenteController {
 
         new DokumentDAO().dodajBodove(dokumentId, bodovi);
 
-        // ✅ PORUKA USPJEHA
         showAlert("Uspješno", "Prijava je uspješno podnesena.");
 
-        // ✅ POVRATAK NA PRIJAVE STUDENATA + FULL SCREEN
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/views/admin-main-view.fxml")
@@ -144,15 +141,12 @@ public class DodajDokumenteController {
             Stage stage = (Stage) accordionDokumenti.getScene().getWindow();
             Scene scene = new Scene(root);
 
-            // ✅ prvo postavi scenu
             stage.setScene(scene);
 
-            // ✅ pa forsiraj full screen/maximized prikaz
             stage.setMaximized(true);
             stage.setFullScreen(false); // ostavi false (nije "pravi" fullscreen mod), nego max ekran
             stage.centerOnScreen();
 
-            // ✅ tek onda učitaj view prijava studenata
             adminController.loadViewPublic("/views/prijave.fxml");
 
         } catch (Exception e) {
@@ -279,7 +273,6 @@ public class DodajDokumenteController {
             VBox box = loader.load();
             DodatniBodoviController controller = loader.getController();
 
-            // Prosljeđivanje naziva dokumenta i bodova
             String nazivDokumenta = (braniociRezultat != null)
                     ? braniociRezultat.getNaziv()
                     : "";

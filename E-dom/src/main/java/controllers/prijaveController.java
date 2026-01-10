@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 
 public class prijaveController {
 
-    /* ===================== TABLE ===================== */
 
     @FXML private TableView<Prijava> tblPrijave;
 
@@ -42,14 +41,12 @@ public class prijaveController {
     @FXML private TableColumn<Prijava, String> colStatus;
     @FXML private TableColumn<Prijava, String> colNapomena;
 
-    /* ===================== UI ===================== */
 
     @FXML private TextField txtSearch;
     @FXML private Menu menuFakulteti;
     @FXML private Menu menuStatusPrijave;
     @FXML private Menu menuGodineStudija;
 
-    /* ===================== DATA ===================== */
 
     private final PrijavaDAO prijavaDAO = new PrijavaDAO();
     private final StudentDAO studentDAO = new StudentDAO();
@@ -64,7 +61,6 @@ public class prijaveController {
     private final Set<Integer> selectedGodineStudija = new HashSet<>();
 
 
-    /* ===================== INITIALIZE ===================== */
 
     @FXML
     public void initialize() {
@@ -85,7 +81,6 @@ public class prijaveController {
         setupRowDoubleClick();
     }
 
-    /* ===================== TABLE SETUP ===================== */
 
     private void initTableColumns() {
 
@@ -122,7 +117,6 @@ public class prijaveController {
                 new SimpleStringProperty(nullSafe(cd.getValue().getNapomena())));
     }
 
-    /* ===================== STATUS BADGES ===================== */
 
     private void initStatusBadges() {
 
@@ -159,7 +153,6 @@ public class prijaveController {
         });
     }
 
-    /* ===================== SORT METHODS ===================== */
 
     @FXML
     private void sortImeAZ() {
@@ -199,7 +192,6 @@ public class prijaveController {
 
     @FXML
     private void onExportHtmlPdf() {
-        // 1️⃣ File chooser
         javafx.stage.FileChooser fileChooser = new javafx.stage.FileChooser();
         fileChooser.setTitle("Spremi PDF (HTML)");
         fileChooser.getExtensionFilters().add(
@@ -209,10 +201,8 @@ public class prijaveController {
         java.io.File file = fileChooser.showSaveDialog(tblPrijave.getScene().getWindow());
         if (file == null) return;
 
-        // 2️⃣ Mapiramo trenutno vidljive podatke u DTO (koristi studentMap, bez DAO)
         List<PrijavaExportDTo> dataZaExport = pripremiPrijaveZaExport();
 
-        // 3️⃣ Pokrenemo export u background thread-u (ne blokira UI)
         Task<Void> exportTask = new Task<>() {
             @Override
             protected Void call() {
@@ -247,7 +237,6 @@ public class prijaveController {
 
 
 
-    /* ===================== FILTER + SORT CORE ===================== */
 
     private void setupFilteringAndSorting() {
 
@@ -267,15 +256,12 @@ public class prijaveController {
 
             String q = txtSearch.getText() == null ? "" : txtSearch.getText().toLowerCase().trim();
 
-            // STUDENT info
             Student s = studentMap.get(p.getIdStudent());
             String fakultet = s != null ? nullSafe(s.getFakultet()) : "";
             Integer godinaStudija = s != null ? s.getGodinaStudija() : null;
 
-            // status
             String status = (p.getStatusPrijave() != null) ? nullSafe(p.getStatusPrijave().getNaziv()) : "";
 
-            // SEARCH
             boolean searchOk = q.isEmpty()
                     || nullSafe(p.getImeStudenta()).toLowerCase().contains(q)
                     || nullSafe(p.getPrezimeStudenta()).toLowerCase().contains(q)
@@ -284,11 +270,9 @@ public class prijaveController {
                     || String.valueOf(p.getIdPrijava()).contains(q)
                     || nullSafe(p.getNapomena()).toLowerCase().contains(q);
 
-            // FAKULTET FILTER
             boolean fakultetOk = selectedFakulteti.isEmpty()
                     || selectedFakulteti.contains(fakultet);
 
-            // STATUS FILTER
             boolean statusOk = selectedStatusiPrijave.isEmpty()
                     || selectedStatusiPrijave.contains(status);
 
@@ -300,14 +284,13 @@ public class prijaveController {
         });
     }
 
-    /* ===================== FILTER MENUS ===================== */
 
     private void initFakultetiFilter() {
 
         Set<String> fakulteti = studentMap.values().stream()
                 .map(Student::getFakultet)
                 .filter(Objects::nonNull)
-                .collect(Collectors.toCollection(TreeSet::new)); // ✅ sortirano
+                .collect(Collectors.toCollection(TreeSet::new));
 
         menuFakulteti.getItems().clear();
 
@@ -352,7 +335,7 @@ public class prijaveController {
         Set<String> statusi = masterList.stream()
                 .map(p -> p.getStatusPrijave() != null ? p.getStatusPrijave().getNaziv() : null)
                 .filter(Objects::nonNull)
-                .collect(Collectors.toCollection(TreeSet::new)); // ✅ sortirano
+                .collect(Collectors.toCollection(TreeSet::new));
 
         menuStatusPrijave.getItems().clear();
 
@@ -367,7 +350,6 @@ public class prijaveController {
         }
     }
 
-    /* ===================== STUDENT MAP ===================== */
 
     private void initStudentMap() {
         studentMap = studentDAO.dohvatiSveStudente()
@@ -375,7 +357,6 @@ public class prijaveController {
                 .collect(Collectors.toMap(Student::getIdStudent, s -> s));
     }
 
-    /* ===================== ROW DOUBLE CLICK ===================== */
 
     private void setupRowDoubleClick() {
         tblPrijave.setRowFactory(tv -> {
@@ -389,7 +370,6 @@ public class prijaveController {
         });
     }
 
-    /* ===================== NAVIGATION ===================== */
 
     @FXML
     private void onNovaPrijava() {
@@ -416,7 +396,6 @@ public class prijaveController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/detalji-prijave.fxml"));
             Scene scene = new Scene(loader.load());
 
-            // Dobavi controller i pozovi setPrijava
             DetaljiPrijaveController controller = loader.getController();
             controller.setPrijava(prijava);
 
@@ -442,16 +421,13 @@ public class prijaveController {
         stage.setHeight(bounds.getHeight());
     }
 
-    /* ===================== UTIL ===================== */
 
     private String nullSafe(String s) {
         return s == null ? "" : s;
     }
 
     public void onRefresh() {
-        // Dohvati nove prijave iz baze i zamijeni trenutni masterList
         masterList.setAll(prijavaDAO.dohvatiSvePrijave());
-        // Ponovno primijeni filtere da se lista odmah ažurira
         applyAllFilters();
     }
 }

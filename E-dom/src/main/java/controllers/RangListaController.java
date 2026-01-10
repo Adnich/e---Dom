@@ -231,7 +231,7 @@ public class RangListaController {
         double bodovi = p.getBodoviMap().getOrDefault("ukupno", 0.0);
         dto.addKolona("Bodovi", String.format("%.2f", bodovi));
 
- 
+
         return dto;
     }
 }
