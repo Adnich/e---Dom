@@ -53,7 +53,6 @@ public class DodajDokumenteController {
             if (newScene != null) {
                 Stage stage = (Stage) newScene.getWindow();
 
-                // ✅ Umjesto fiksnog 900x700 -> uvijek maximized
                 Platform.runLater(() -> {
                     stage.setMaximized(true);
                     stage.setFullScreen(false);
