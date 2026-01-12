@@ -2,6 +2,7 @@ package controllers;
 
 import controllers.DodajDokumenteControllers.BraniociDokumentiController;
 import dao.PrijavaDAO;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -34,7 +35,6 @@ public class NovaPrijavaController {
 
     private final PrijavaDAO prijavaDAO = new PrijavaDAO();
 
-
     @FXML
     public void initialize() {
         txtAkGod.sceneProperty().addListener((obs, o, scene) -> {
@@ -44,11 +44,9 @@ public class NovaPrijavaController {
         });
     }
 
-
     public void setStudentId(int id) { this.studentId = id; }
     public void setProsjek(double prosjek) { this.prosjek = prosjek; }
     public void setGodinaStudija(int godinaStudija) { this.godinaStudija = godinaStudija; }
-
 
     @FXML
     private void onSaveClicked() {
@@ -119,14 +117,18 @@ public class NovaPrijavaController {
 
             Stage stage = (Stage) txtAkGod.getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setMaximized(true);
+
+            // BITNO: maximize tek nakon što se scena postavi
+            Platform.runLater(() -> {
+                stage.setMaximized(true);
+                stage.centerOnScreen();
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
             showAlert("Greška", "Ne mogu otvoriti dokumente.");
         }
     }
-
 
     @FXML
     private void onBackClicked() {
@@ -138,13 +140,16 @@ public class NovaPrijavaController {
 
             Stage stage = (Stage) txtAkGod.getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setMaximized(true);
+
+            Platform.runLater(() -> {
+                stage.setMaximized(true);
+                stage.centerOnScreen();
+            });
 
         } catch (Exception e) {
             showAlert("Greška", "Ne mogu se vratiti nazad.");
         }
     }
-
 
     private void ucitajBraniociFormu() {
         try {
@@ -159,7 +164,6 @@ public class NovaPrijavaController {
             showAlert("Greška", "Ne mogu učitati formu za branioce.");
         }
     }
-
 
     private void showAlert(String title, String msg) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
