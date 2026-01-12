@@ -10,7 +10,6 @@ import java.util.List;
 
 public class KorisnikDAO {
 
-    // UNOS NOVOG KORISNIKA
     public void unesiKorisnika(Korisnik k) {
         String sql = "INSERT INTO korisnik (ime, prezime, username, password_hash, ulogaid_uloga, email) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
@@ -32,8 +31,6 @@ public class KorisnikDAO {
             throw new RuntimeException(e);
         }
     }
-
-    // DOHVATANJE SVIH KORISNIKA
     public List<Korisnik> dohvatiSveKorisnike() {
         List<Korisnik> lista = new ArrayList<>();
 
@@ -71,7 +68,6 @@ public class KorisnikDAO {
         return lista;
     }
 
-    // AŽURIRANJE KORISNIKA
     public void azurirajKorisnika(Korisnik k) {
         String sql = "UPDATE korisnik SET ime=?, prezime=?, username=?, password_hash=?, email=?, " +
                 "ulogaid_uloga=? WHERE id_korisnik=?";
@@ -98,7 +94,6 @@ public class KorisnikDAO {
         }
     }
 
-    // BRISANJE KORISNIKA
     public void obrisiKorisnika(int id) {
         String sql = "DELETE FROM korisnik WHERE id_korisnik=?";
 
@@ -118,7 +113,6 @@ public class KorisnikDAO {
         }
     }
 
-    // LOGIN METODA
     public Korisnik nadjiPoUsernameIPassword(String username, String passwordHash) {
         String sql = "SELECT k.*, u.id_uloga, u.naziv AS naziv_uloge " +
                 "FROM korisnik k " +
@@ -197,7 +191,6 @@ public class KorisnikDAO {
         return null;
     }
 
-    // RESET LOZINKE
     public boolean promijeniLozinku(String username, String newPasswordHash) {
         String sql = "UPDATE korisnik SET password_hash = ? WHERE username = ?";
 
@@ -230,7 +223,6 @@ public class KorisnikDAO {
         }
     }
 
-    // AŽURIRAJ PROFIL – ISPRAVLJENO REDOSLIJED PARAMETARA
     public void azurirajProfil(Korisnik k) {
         String sql = "UPDATE korisnik SET ime=?, prezime=?, password_hash=?, email=? WHERE id_korisnik=?";
 
@@ -250,9 +242,7 @@ public class KorisnikDAO {
         }
     }
 
-    // ======================
-    // METODE ZA RESET LOZINKE
-    // ======================
+
 
     public boolean emailPostoji(String email) {
         String sql = "SELECT 1 FROM korisnik WHERE email=?";

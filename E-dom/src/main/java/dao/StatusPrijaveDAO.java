@@ -9,7 +9,6 @@ import java.util.List;
 
 public class StatusPrijaveDAO {
 
-    // UNOS NOVOG STATUSA PRIJAVE --------------------------------------------
     public void unesiStatus(StatusPrijave status) {
         String sql = "INSERT INTO status_prijave (naziv) VALUES (?)";
 
@@ -26,7 +25,6 @@ public class StatusPrijaveDAO {
         }
     }
 
-    // DOHVATI SVE STATUSE PRIJAVE -------------------------------------------
     public List<StatusPrijave> dohvatiSveStatuse() {
         List<StatusPrijave> lista = new ArrayList<>();
 
@@ -51,7 +49,6 @@ public class StatusPrijaveDAO {
         return lista;
     }
 
-    // AŽURIRANJE STATUSA PRIJAVE --------------------------------------------
     public void azurirajStatus(StatusPrijave status) {
         String sql = "UPDATE status_prijave SET naziv = ? WHERE id_status = ?";
 
@@ -73,7 +70,6 @@ public class StatusPrijaveDAO {
         }
     }
 
-    // BRISANJE STATUSA PRIJAVE ----------------------------------------------
     public void obrisiStatus(int idStatus) {
         String sql = "DELETE FROM status_prijave WHERE id_status = ?";
 
@@ -94,7 +90,6 @@ public class StatusPrijaveDAO {
         }
     }
 
-    // DOHVATI STATUS PRIJAVE PO ID ------------------------------------------
     public StatusPrijave dohvatiStatusPoId(int id) {
         String sql = "SELECT * FROM status_prijave WHERE id_status = ?";
 
@@ -116,6 +111,6 @@ public class StatusPrijaveDAO {
             throw new RuntimeException(e);
         }
 
-        return null; // nije pronađen
+        return null;
     }
 }

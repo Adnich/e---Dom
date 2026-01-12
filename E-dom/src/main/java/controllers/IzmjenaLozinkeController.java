@@ -26,7 +26,6 @@ public class IzmjenaLozinkeController {
 
     private final KorisnikDAO korisnikDAO = new KorisnikDAO();
 
-    // ✅ DODANO – fiksiranje veličine prozora
     @FXML
     public void initialize() {
         txtUsername.sceneProperty().addListener((obs, oldScene, newScene) -> {
@@ -57,11 +56,9 @@ public class IzmjenaLozinkeController {
             return;
         }
 
-        // Generiši token
         generatedToken = TokenGenerator.generate();
         ResetTokenManager.dodajToken(k.getEmail(), generatedToken);
 
-        // Pošalji email
         EmailService.sendResetCode(k.getEmail(), generatedToken);
 
         lblInfo.setText("Kod poslan na email.");

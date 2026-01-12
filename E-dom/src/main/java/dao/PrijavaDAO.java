@@ -11,7 +11,6 @@ import java.util.List;
 
 public class PrijavaDAO {
 
-    // UNOS NOVE PRIJAVE
     public void unesiPrijavu(Prijava prijava) {
         String sql = "INSERT INTO prijava " +
                 "(datum_prijave, ukupni_bodovi, napomena, studentid_student2, " +
@@ -30,7 +29,6 @@ public class PrijavaDAO {
 
             stmt.executeUpdate();
 
-            // upišemo generisani ID nazad u objekat
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
                     prijava.setIdPrijava(rs.getInt(1));
@@ -87,7 +85,6 @@ public class PrijavaDAO {
 
 
 
-    // DOHVATI PRIJAVE ZA KONKRETNOG STUDENTA
     public List<Prijava> dohvatiPrijaveZaStudenta(int idStudent) {
         List<Prijava> prijave = new ArrayList<>();
 
@@ -116,7 +113,6 @@ public class PrijavaDAO {
         return prijave;
     }
 
-    // DOHVATI PO ID
     public Prijava dohvatiPrijavuPoId(int idPrijava) {
         String sql = "SELECT p.id_prijava, p.datum_prijave, p.ukupni_bodovi, p.napomena, " +
                 "p.studentid_student2, p.status_prijaveid_status, p.akademska_godina, " +
@@ -143,7 +139,6 @@ public class PrijavaDAO {
         return null;
     }
 
-    // AŽURIRANJE PRIJAVE
     public void azurirajPrijavu(Prijava prijava) {
         String sql = "UPDATE prijava SET " +
                 "datum_prijave = ?, ukupni_bodovi = ?, napomena = ?, " +
@@ -172,7 +167,6 @@ public class PrijavaDAO {
         }
     }
 
-    // BRISANJE PRIJAVE
     public void obrisiPrijavu(int idPrijava) {
         String sql = "DELETE FROM prijava WHERE id_prijava = ?";
 
@@ -192,7 +186,6 @@ public class PrijavaDAO {
         }
     }
 
-    // PROMJENA SAMO STATUSA PRIJAVE
     public void promijeniStatusPrijave(int idPrijava, StatusPrijave noviStatus) {
         String sql = "UPDATE prijava SET status_prijaveid_status = ? WHERE id_prijava = ?";
 
@@ -213,7 +206,6 @@ public class PrijavaDAO {
         }
     }
 
-    // HELPER: mapiranje ResultSet -> Prijava
     private Prijava mapToPrijava(ResultSet rs) throws SQLException {
         Prijava p = new Prijava();
 
@@ -235,24 +227,20 @@ public class PrijavaDAO {
         );
         p.setStatusPrijave(sp);
 
-        // Dohvatanje podataka o studentu
         p.setImeStudenta(rs.getString("ime_studenta"));
         p.setPrezimeStudenta(rs.getString("prezime_studenta"));
 
-        // === OVO DODAJ ===
-        // Provjera da li kolona postoji u ResultSet-u (kako bi metoda radila i za druge upite)
+
         try {
             p.setImeRoditelja(rs.getString("ime_roditelja"));
         } catch (SQLException e) {
-            // Ignorisi ako kolona ne postoji u nekom drugom upitu koji koristi ovu metodu
-            // Ili jednostavno stavi null
+
             p.setImeRoditelja("");
         }
 
         return p;
     }
 
-    //ovdje dodajemo count samo da racuna za statistiku na admin panelu
     public int countPrijave() {
         String sql = "SELECT COUNT(*) FROM prijava";
 
@@ -270,7 +258,6 @@ public class PrijavaDAO {
         return 0;
     }
 
-    // AUTOMATSKI AŽURIRA UKUPNE BODOVE PRIJAVE
     public void azurirajUkupneBodove(int prijavaId) {
         String sql = """
         UPDATE prijava

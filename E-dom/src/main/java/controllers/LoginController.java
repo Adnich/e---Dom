@@ -60,7 +60,6 @@ public class LoginController {
     private void initialize() {
         txtPasswordVisible.textProperty().bindBidirectional(txtPassword.textProperty());
 
-        // start: sakriveno
         txtPasswordVisible.setVisible(false);
         txtPasswordVisible.setManaged(false);
 
@@ -132,7 +131,6 @@ public class LoginController {
         Platform.runLater(() -> {
             stage.setMaximized(true);
 
-            // BONUS: ako maximize i dalje ne radi na nekim Windows konfiguracijama
             Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
             stage.setX(bounds.getMinX());
             stage.setY(bounds.getMinY());

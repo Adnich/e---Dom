@@ -57,7 +57,6 @@ public class RegisterController {
             return;
         }
 
-        // VALIDACIJA LOZINKE
         if (pass1.length() < 8
                 || !pass1.matches(".*[A-Z].*")
                 || !pass1.matches(".*[a-z].*")
@@ -71,7 +70,6 @@ public class RegisterController {
         ime = TextUtil.formatirajIme(ime);
         prezime = TextUtil.formatirajIme(prezime);
 
-        // 🔐 AUTOMATSKA DODJELA ULOGE
         Uloga adminUloga = ulogaDAO.dohvatiUloguPoId(1); // pretpostavka: ADMIN = ID 1
         if (adminUloga == null) {
             lblError.setText("Greška: ADMIN uloga ne postoji u bazi.");

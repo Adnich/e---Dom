@@ -68,7 +68,9 @@ public class NoviStudentController {
                 "Ekonomski fakultet UNZE",
                 "Filozofski fakultet UNZE",
                 "Medicinski fakultet UNZE",
-                "Mašinski fakultet UNZE"
+                "Mašinski fakultet UNZE",
+                "Islamsko pedagoški fakultet UNZE",
+                "Fakultet inženjerstva i prirodnih nauka UNZE"
         ));
 
         cmbGodina.setItems(FXCollections.observableArrayList(
@@ -95,7 +97,6 @@ public class NoviStudentController {
             }
         });
 
-        // ✅ TELEFON – dozvoljeni samo validni karakteri
         txtTelefon.setTextFormatter(new TextFormatter<>(change -> {
             if (change.getText().matches("[0-9+()\\-\\s]*")) {
                 return change;
@@ -164,7 +165,6 @@ public class NoviStudentController {
             return;
         }
 
-        // TELEFON – validacija
         String telefon = txtTelefon.getText().replaceAll("\\D", "");
         if (telefon.length() < 6 || telefon.length() > 15) {
             showAlert("Greška", "Neispravan broj telefona.");

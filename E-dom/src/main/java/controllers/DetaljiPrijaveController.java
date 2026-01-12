@@ -22,23 +22,19 @@ import java.util.List;
 
 public class DetaljiPrijaveController {
 
-    // ===== HEADER =====
     @FXML private Label lblNaslov;
     @FXML private Label lblInfo;
     @FXML private Label lblPrijavaId;
     @FXML private Label lblStatus;
 
-    // ===== PROGRESS =====
     @FXML private Label lblKompletiranostText;
     @FXML private ProgressBar pbKompletiranost;
 
-    // ===== SUMMARY =====
     @FXML private Label lblUkupniBodoviValue;
     @FXML private Label lblDostavljeniCount;
     @FXML private Label lblStatusObrade;
     @FXML private Label lblNedostajuCount;
 
-    // ===== TABLE =====
     @FXML private TableView<Dokument> tblDokumenti;
     @FXML private TableColumn<Dokument, String> colNaziv;
     @FXML private TableColumn<Dokument, String> colVrsta;
@@ -47,34 +43,28 @@ public class DetaljiPrijaveController {
     @FXML private TableColumn<Dokument, String> colDostavljen;
     @FXML private TableColumn<Dokument, Void> colPregled;
 
-    // ===== STATUS CONTROL =====
     @FXML private ComboBox<StatusPrijave> cmbStatusPrijave;
     @FXML private Button btnSacuvajStatus;
 
     @FXML private VBox emptyState;
 
-    // ===== DAO =====
+
     private final DokumentDAO dokumentDAO = new DokumentDAO();
     private final StudentDAO studentDAO = new StudentDAO();
     private final PrijavaDAO prijavaDAO = new PrijavaDAO();
 
     private Prijava trenutnaPrijava;
 
-    // =========================
-    // ZATVARANJE
-    // =========================
+
     @FXML
     private void onZatvori() {
         ((Stage) lblNaslov.getScene().getWindow()).close();
     }
 
-    // =========================
-    // SET PRIJAVA
-    // =========================
+
     public void setPrijava(Prijava prijava) {
         this.trenutnaPrijava = prijava;
 
-        // ===== STUDENT =====
         Student student = studentDAO.dohvatiStudentaPoId(prijava.getIdStudent());
         lblNaslov.setText(student != null
                 ? "Detalji prijave – " + student.getIme() + " " + student.getPrezime()
@@ -83,7 +73,6 @@ public class DetaljiPrijaveController {
         lblInfo.setText("Akademska godina: " + prijava.getAkademskaGodina());
         lblPrijavaId.setText("Prijava #" + prijava.getIdPrijava());
 
-        // ===== STATUS =====
         String statusNaziv = prijava.getStatusPrijave() != null
                 ? prijava.getStatusPrijave().getNaziv()
                 : "na pregledu";
@@ -92,13 +81,10 @@ public class DetaljiPrijaveController {
         lblStatusObrade.setText(statusNaziv);
         setStatusPillStyle(statusNaziv);
 
-        // ===== STATUS COMBO =====
         inicijalizujStatusCombo(prijava.getStatusPrijave());
 
-        // ===== BODOVI =====
         lblUkupniBodoviValue.setText(String.valueOf(prijava.getUkupniBodovi()));
 
-        // ===== TABLE =====
         inicijalizujTabelu();
 
         List<Dokument> docs = dokumentDAO.dohvatiDokumenteZaPrijavu(prijava.getIdPrijava());
@@ -108,16 +94,13 @@ public class DetaljiPrijaveController {
         updateEmptyState(docs);
     }
 
-    // =========================
-    // STATUS COMBO
-    // =========================
+
     private void inicijalizujStatusCombo(StatusPrijave trenutni) {
 
         StatusPrijaveDAO spDao = new StatusPrijaveDAO();
         List<StatusPrijave> statusi = spDao.dohvatiSveStatuse();
         cmbStatusPrijave.setItems(FXCollections.observableArrayList(statusi));
 
-        // postavi CellFactory da prikazuje samo naziv statusa
         cmbStatusPrijave.setCellFactory(cb -> new ListCell<>() {
             @Override
             protected void updateItem(StatusPrijave item, boolean empty) {
@@ -126,7 +109,6 @@ public class DetaljiPrijaveController {
             }
         });
 
-        // postavi ButtonCell isto tako
         cmbStatusPrijave.setButtonCell(new ListCell<>() {
             @Override
             protected void updateItem(StatusPrijave item, boolean empty) {
@@ -135,7 +117,6 @@ public class DetaljiPrijaveController {
             }
         });
 
-        // postavi trenutni status ako postoji
         if (trenutni != null) {
             cmbStatusPrijave.getItems().stream()
                     .filter(s -> s.getIdStatus() == trenutni.getIdStatus())
@@ -145,9 +126,6 @@ public class DetaljiPrijaveController {
     }
 
 
-    // =========================
-    // SAVE STATUS
-    // =========================
     @FXML
     private void onSacuvajStatus() {
         StatusPrijave noviStatus = cmbStatusPrijave.getValue();
@@ -168,9 +146,6 @@ public class DetaljiPrijaveController {
         a.showAndWait();
     }
 
-    // =========================
-    // TABLE SETUP
-    // =========================
     private void inicijalizujTabelu() {
 
         colNaziv.setCellValueFactory(d -> new SimpleStringProperty(d.getValue().getNaziv()));
@@ -212,7 +187,6 @@ public class DetaljiPrijaveController {
                 btn.setOnAction(e -> {
                     Dokument d = getTableView().getItems().get(getIndex());
 
-                    // dodatna sigurnost - klik ne radi ako nema dokumenta
                     if (d == null || d.getDokumentB64() == null || d.getDokumentB64().isEmpty()) {
                         return;
                     }
@@ -236,7 +210,6 @@ public class DetaljiPrijaveController {
 
                 btn.setDisable(!imaDokument);
 
-                // Dodaj CSS klasu samo ako je disabled
                 btn.getStyleClass().remove("btn-action-disabled");
                 if (!imaDokument) {
                     btn.getStyleClass().add("btn-action-disabled");
@@ -248,9 +221,6 @@ public class DetaljiPrijaveController {
 
     }
 
-    // =========================
-    // STATS
-    // =========================
     private void updateStatsAndProgress(List<Dokument> docs) {
         int total = docs.size();
         long dostavljeno = docs.stream().filter(Dokument::isDostavljen).count();
@@ -273,9 +243,6 @@ public class DetaljiPrijaveController {
         emptyState.setManaged(empty);
     }
 
-    // =========================
-    // STATUS STYLE
-    // =========================
     private void setStatusPillStyle(String status) {
         lblStatus.getStyleClass().removeAll(
                 "status-info", "status-success", "status-warning", "status-danger"

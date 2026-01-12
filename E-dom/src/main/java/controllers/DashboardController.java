@@ -16,13 +16,12 @@ public class DashboardController {
 
     private AdminController adminController;
 
-    // ====== TOP STAT ======
+
     @FXML private Label lblStudenti;
     @FXML private Label lblPrijave;
     @FXML private PieChart pieStatusChart;
     @FXML private Label lblAdminIme;
 
-    // ====== STATUSI ======
     @FXML private Label lblNaPregledu;
     @FXML private Label lblOdobrene;
     @FXML private Label lblOdbijene;
@@ -32,11 +31,9 @@ public class DashboardController {
     private final StudentDAO studentDAO = new StudentDAO();
     private final PrijavaDAO prijavaDAO = new PrijavaDAO();
 
-    // ================= INIT =================
     @FXML
     public void initialize() {
 
-        // STUDENTI
         try {
             lblStudenti.setText(String.valueOf(studentDAO.countStudents()));
         } catch (Exception e) {
@@ -44,7 +41,7 @@ public class DashboardController {
             e.printStackTrace();
         }
 
-        // PRIJAVE
+
         try {
             lblPrijave.setText(String.valueOf(prijavaDAO.countPrijave()));
         } catch (Exception e) {
@@ -56,7 +53,6 @@ public class DashboardController {
         initPieChartStatusa();
     }
 
-    // ================= PIE CHART =================
     private void initPieChartStatusa() {
         try {
             ObservableList<PieChart.Data> data = FXCollections.observableArrayList(
@@ -74,7 +70,6 @@ public class DashboardController {
         }
     }
 
-    // ================= STATUSI =================
     private void initStatusStatistiku() {
         try {
             lblNaPregledu.setText(String.valueOf(prijavaDAO.countPrijaveByStatusId(1)));
@@ -93,7 +88,6 @@ public class DashboardController {
         }
     }
 
-    // ================= NAVIGACIJA =================
     public void setAdminController(AdminController adminController) {
         this.adminController = adminController;
     }

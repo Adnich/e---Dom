@@ -39,7 +39,7 @@ public class DodatniBodoviController {
                 if (dokument == null) {
                     return null;
                 }
-                // Ovdje vratiš ono što želiš da piše (npr. dokument.getNaziv())
+
                 return dokument.getNaziv();
             }
 
@@ -52,7 +52,6 @@ public class DodatniBodoviController {
             }
         });
 
-        // Dinamički postavi tekst labela
         if (nazivDokumenta != null && !nazivDokumenta.isEmpty()) {
             lblInfoDokument.setText("Dodajte dokument za: " + nazivDokumenta);
         } else {

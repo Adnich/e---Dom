@@ -12,7 +12,6 @@ import java.util.List;
 
 public class DokumentDAO {
 
-    // UNOS NOVOG DOKUMENTA ----------------------------------------
     public int unesiDokument(Dokument dokument, int prijavaId) {
         String sqlUpit = "INSERT INTO dokument " +
                 "(naziv, datum_upload, broj_bodova, dokumentb64, isdostavljen, " +
@@ -35,7 +34,7 @@ public class DokumentDAO {
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
                     int id = rs.getInt(1);
-                    dokument.setIdDokument(id); // 🔥 VAŽNO
+                    dokument.setIdDokument(id);
                     return id;
                 }
             }
@@ -47,7 +46,6 @@ public class DokumentDAO {
         }
     }
 
-    // DOHVATI SVE DOKUMENTE ---------------------------------------
     public List<Dokument> dohvatiSveDokumente() {
         List<Dokument> dokumenti = new ArrayList<>();
 
@@ -92,7 +90,6 @@ public class DokumentDAO {
         return dokumenti;
     }
 
-    // AŽURIRANJE DOKUMENTA ----------------------------------------
     public void azurirajDokument(Dokument dokument, int prijavaId) {
         String sqlUpit = "UPDATE dokument SET " +
                 "naziv = ?, datum_upload = ?, broj_bodova = ?, dokumentb64 = ?, " +
@@ -122,7 +119,6 @@ public class DokumentDAO {
         }
     }
 
-    // BRISANJE DOKUMENTA ------------------------------------------
     public void obrisiDokument(int id) {
         String sqlUpit = "DELETE FROM dokument WHERE id_dokument = ?";
 
@@ -142,7 +138,6 @@ public class DokumentDAO {
         }
     }
 
-    // dodaj bodove na dokument
     public void dodajBodove(int dokumentId, double bodovi){
         String sqlUpit = "UPDATE dokument SET broj_bodova = broj_bodova + ? WHERE id_dokument = ?";
 

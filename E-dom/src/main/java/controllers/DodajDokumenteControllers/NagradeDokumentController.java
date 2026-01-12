@@ -25,7 +25,7 @@ public class NagradeDokumentController {
 
     private int prijavaId;
     private VrstaDokumenta vrstaDokumenta;
-    private double udaljenost; // opcionalno ako trebaš bodove za udaljenost
+    private double udaljenost;
 
     public void init(int prijavaId, VrstaDokumenta vrstaDokumenta) {
         this.prijavaId = prijavaId;
@@ -54,7 +54,6 @@ public class NagradeDokumentController {
 
         new DokumentDAO().unesiDokument(d, prijavaId);
 
-        // dodavanje bodova na prijavu
         PrijavaDAO prijavaDAO = new PrijavaDAO();
         prijavaDAO.dodajBodoveNaPrijavu(prijavaId, 3);
 

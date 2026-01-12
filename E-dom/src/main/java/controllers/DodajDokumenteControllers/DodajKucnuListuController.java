@@ -28,7 +28,6 @@ public class DodajKucnuListuController {
         this.vrsta = vrsta;
     }
 
-    // dugme: Dodaj PDF (nije obavezno)
     @FXML
     private void onDodajPdf() {
         pdfBase64 = PdfService.uploadPdf(lblPdf.getScene().getWindow());
@@ -40,7 +39,6 @@ public class DodajKucnuListuController {
         }
     }
 
-    // dugme: Sačuvaj dokument
     @FXML
     private void dodaj() {
 
@@ -54,7 +52,6 @@ public class DodajKucnuListuController {
         d.setDostavljen(true);
         d.setVrstaDokumenta(vrsta);
 
-        // PDF je OPCIONALAN
         if (pdfBase64 != null) {
             d.setDokumentB64(pdfBase64);
         }
