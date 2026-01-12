@@ -374,17 +374,17 @@ public class prijaveController {
     @FXML
     private void onNovaPrijava() {
         try {
-            FXMLLoader adminLoader = new FXMLLoader(
-                    getClass().getResource("/views/admin-main-view.fxml")
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/views/novi-student.fxml")
             );
-            Parent root = adminLoader.load();
+            Parent root = loader.load();
 
-            AdminController adminController = adminLoader.getController();
-            adminController.loadViewPublic("/views/novi-student.fxml");
+            Stage wizardStage = new Stage();
+            wizardStage.setTitle("Nova prijava – E-Dom");
+            wizardStage.setScene(new Scene(root));
+            wizardStage.setMaximized(true);
 
-            Stage stage = (Stage) tblPrijave.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setMaximized(true);
+            wizardStage.show();
 
         } catch (Exception e) {
             e.printStackTrace();
