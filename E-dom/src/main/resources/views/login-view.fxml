@@ -136,7 +136,7 @@
                                                styleClass="forgot-link"/>
                                 </HBox>
 
-+                                <Button fx:id="btnLogin"
+                               <Button fx:id="btnLogin"
                                         text="Prijava"
                                         onAction="#onLoginClicked"
                                         maxWidth="Infinity"
