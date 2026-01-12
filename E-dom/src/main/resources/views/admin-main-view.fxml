@@ -63,6 +63,11 @@
 
             <Pane VBox.vgrow="ALWAYS"/>
 
+            <Button text="Odjavi se"
+                    onAction="#onLogout"
+                    maxWidth="Infinity"
+                    styleClass="logout-btn"/>
+
             <Label text="© E-Dom" styleClass="sidebar-footer"/>
 
         </VBox>
