@@ -4,6 +4,7 @@ import controllers.DodajDokumenteControllers.*;
 import dao.DokumentDAO;
 import dao.PrijavaDAO;
 import dao.VrstaDokumentaDAO;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -51,9 +52,13 @@ public class DodajDokumenteController {
         accordionDokumenti.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 Stage stage = (Stage) newScene.getWindow();
-                stage.setWidth(900);
-                stage.setHeight(700);
-                stage.centerOnScreen();
+
+                // ✅ Umjesto fiksnog 900x700 -> uvijek maximized
+                Platform.runLater(() -> {
+                    stage.setMaximized(true);
+                    stage.setFullScreen(false);
+                    stage.centerOnScreen();
+                });
             }
         });
     }
@@ -62,7 +67,7 @@ public class DodajDokumenteController {
         accordionDokumenti.getPanes().clear();
 
         if (clanovi <= 0) {
-            System.out.println("⚠️ clanovi još nisu postavljeni");
+            System.out.println("Članovi još nisu postavljeni");
             return;
         }
 
@@ -143,9 +148,11 @@ public class DodajDokumenteController {
 
             stage.setScene(scene);
 
-            stage.setMaximized(true);
-            stage.setFullScreen(false); // ostavi false (nije "pravi" fullscreen mod), nego max ekran
-            stage.centerOnScreen();
+            Platform.runLater(() -> {
+                stage.setMaximized(true);
+                stage.setFullScreen(false);
+                stage.centerOnScreen();
+            });
 
             adminController.loadViewPublic("/views/prijave.fxml");
 
@@ -348,5 +355,4 @@ public class DodajDokumenteController {
             throw new RuntimeException(e);
         }
     }
-
 }

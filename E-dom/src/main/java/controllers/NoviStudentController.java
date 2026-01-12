@@ -68,9 +68,7 @@ public class NoviStudentController {
                 "Ekonomski fakultet UNZE",
                 "Filozofski fakultet UNZE",
                 "Medicinski fakultet UNZE",
-                "Mašinski fakultet UNZE",
-                "Islamsko pedagoški fakultet UNZE",
-                "Fakultet inženjerstva i prirodnih nauka UNZE"
+                "Mašinski fakultet UNZE"
         ));
 
         cmbGodina.setItems(FXCollections.observableArrayList(
