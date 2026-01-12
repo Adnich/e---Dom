@@ -101,6 +101,7 @@ public class NovaPrijavaController {
             rezultat = braniociController.izracunajBodove();
         }
 
+
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/views/dodaj-dokumente.fxml")
@@ -108,14 +109,21 @@ public class NovaPrijavaController {
             Parent root = loader.load();
 
             DodajDokumenteController controller = loader.getController();
+
             controller.setPrijavaId(prijavaId);
-            controller.setClanovi(clanovi);
-            controller.setProsjek(prosjek);
-            controller.setGodinaStudija(godinaStudija);
-            controller.setUdaljenost(udaljenost);
+
+
             controller.setIzbjeglica(chkIzbjeglica.isSelected());
             controller.setBratSestra(chkBratSestra.isSelected());
             controller.setBraniociRezultat(rezultat);
+
+
+            controller.setProsjek(prosjek);
+            controller.setGodinaStudija(godinaStudija);
+            controller.setUdaljenost(udaljenost);
+
+
+            controller.setClanovi(clanovi);
 
             Stage stage = (Stage) txtAkGod.getScene().getWindow();
             stage.setScene(new Scene(root));

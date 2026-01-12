@@ -1,6 +1,7 @@
 package controllers.DodajDokumenteControllers;
 
 import dao.DokumentDAO;
+import dao.PrijavaDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import model.Dokument;
@@ -32,6 +33,7 @@ public class ProsjekDokumentController {
 
     @FXML
     public void initialize() {
+        // Povezivanje radio buttona u grupu da se može odabrati samo jedan
         rbUvjerenje.setToggleGroup(toggleDokument);
         rbIndeks.setToggleGroup(toggleDokument);
         rbUvjerenje.setSelected(true);
@@ -49,22 +51,19 @@ public class ProsjekDokumentController {
         this.vrstaUvjerenje = vrstaUvjerenje;
         this.vrstaIndeks = vrstaIndeks;
 
+        // Prikaz interfejsa zavisno od godine studija
         if (godinaStudija == 1) {
             lblOpis.setText("Svjedodžba o završetku srednje škole:");
-
             setNodeVisible(lblIspiti, false);
             setNodeVisible(txtBrojPolozenih, false);
             setNodeVisible(rbUvjerenje, false);
             setNodeVisible(rbIndeks, false);
-
         } else {
             lblOpis.setText("Odaberi i unesi dokument sa fakulteta:");
-
             setNodeVisible(lblIspiti, true);
             setNodeVisible(txtBrojPolozenih, true);
             setNodeVisible(rbUvjerenje, true);
             setNodeVisible(rbIndeks, true);
-
             rbUvjerenje.setSelected(true);
         }
     }
@@ -81,17 +80,52 @@ public class ProsjekDokumentController {
         d.setDostavljen(true);
         d.setDokumentB64(null);
 
+        double bodovi = 0;
+
+        // --- LOGIKA ---
         if (godinaStudija == 1) {
-            double bodovi = kriterij.izracunajBodoveBrucosi(prosjek);
+            // 1. GODINA (Brucoši)
+            bodovi = kriterij.izracunajBodoveBrucosi(prosjek);
 
             d.setNaziv(vrstaSvjedodzbe.getNaziv());
             d.setVrstaDokumenta(vrstaSvjedodzbe);
-            d.setBrojBodova(bodovi);
 
-            new DokumentDAO().unesiDokument(d, prijavaId);
+        } else {
+            // VIŠE GODINE (Stariji studenti)
 
+            // Provjera šta je selektovano (Indeks ili Uvjerenje)
+            if (rbUvjerenje.isSelected()) {
+                d.setNaziv(vrstaUvjerenje.getNaziv());
+                d.setVrstaDokumenta(vrstaUvjerenje);
+            } else if (rbIndeks.isSelected()) {
+                d.setNaziv(vrstaIndeks.getNaziv());
+                d.setVrstaDokumenta(vrstaIndeks);
+            } else {
+                showAlert("Greška", "Morate odabrati vrstu dokumenta.");
+                return;
+            }
+
+            int brojPolozenih = parseIntOrZero(txtBrojPolozenih.getText());
+            if (brojPolozenih <= 0) {
+                showAlert("Greška", "Unesite validan broj položenih ispita.");
+                return;
+            }
+
+            // Računanje bodova za starije godine
+            // Ovdje koristim metodu koja prima (godina, prosjek, brojPolozenih)
+            bodovi = kriterij.izracunajBodove(godinaStudija, prosjek, brojPolozenih);
         }
-        showAlert("Uspješno", "Dokument dodat i bodovi obračunati.");
+
+        // --- ZAJEDNIČKO SNIMANJE ---
+        d.setBrojBodova(bodovi);
+
+        // 1. Spasi dokument u bazu
+        new DokumentDAO().unesiDokument(d, prijavaId);
+
+        // 2. Ažuriraj ukupne bodove na prijavi (ovo je falilo u nekim verzijama)
+        new PrijavaDAO().dodajBodoveNaPrijavu(prijavaId, bodovi);
+
+        showAlert("Uspješno", "Dokument dodat i bodovi (" + String.format("%.2f", bodovi) + ") obračunati.");
     }
 
     private void setNodeVisible(Control node, boolean visible) {
