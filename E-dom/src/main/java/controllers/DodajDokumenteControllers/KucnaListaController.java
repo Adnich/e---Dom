@@ -20,7 +20,7 @@ public class KucnaListaController {
     private VBox vboxClanovi;
 
     private int prijavaId;
-    private int brojClanova;
+    private int brojClanova; // Ovo je UKUPAN broj (npr. 4)
 
     private final Map<Integer, Double> primanjaPoClanu = new HashMap<>();
     private final Map<Integer, TextField> primanjaFieldovi = new HashMap<>();
@@ -42,7 +42,10 @@ public class KucnaListaController {
         primanjaFieldovi.clear();
         dokumentiPoClanu.clear();
 
-        for (int i = 1; i <= brojClanova; i++) {
+        // ✅ OVDJE JE TVOJA PROMJENA - OK JE
+        // Ako je broj članova 4, petlja ide 1, 2, 3. (3 polja se prave)
+        // Student se ne prikazuje.
+        for (int i = 1; i < brojClanova; i++) {
             final int index = i;
 
             VBox clanBox = new VBox(12);
@@ -71,6 +74,7 @@ public class KucnaListaController {
             cmbVrsta.getStyleClass().add("combo");
             cmbVrsta.setMaxWidth(Double.MAX_VALUE);
 
+            // ... (ostatak UI koda ostaje isti) ...
             cmbVrsta.setCellFactory(c -> new ListCell<>() {
                 @Override
                 protected void updateItem(VrstaDokumenta v, boolean empty) {
@@ -124,20 +128,9 @@ public class KucnaListaController {
             row1.setAlignment(Pos.CENTER_LEFT);
             row1.setMaxWidth(Double.MAX_VALUE);
 
-            ColumnConstraints col1 = new ColumnConstraints();
-            col1.setMinWidth(220);
-            col1.setPrefWidth(230);
-            col1.setHgrow(Priority.NEVER);
-
-            ColumnConstraints col2 = new ColumnConstraints();
-            col2.setHgrow(Priority.ALWAYS);
-            col2.setFillWidth(true);
-
-            ColumnConstraints col3 = new ColumnConstraints();
-            col3.setMinWidth(170);
-            col3.setPrefWidth(170);
-            col3.setHgrow(Priority.NEVER);
-
+            ColumnConstraints col1 = new ColumnConstraints(); col1.setMinWidth(220); col1.setPrefWidth(230); col1.setHgrow(Priority.NEVER);
+            ColumnConstraints col2 = new ColumnConstraints(); col2.setHgrow(Priority.ALWAYS); col2.setFillWidth(true);
+            ColumnConstraints col3 = new ColumnConstraints(); col3.setMinWidth(170); col3.setPrefWidth(170); col3.setHgrow(Priority.NEVER);
             row1.getColumnConstraints().addAll(col1, col2, col3);
 
             row1.add(txtPrimanja, 0, 0);
@@ -156,17 +149,29 @@ public class KucnaListaController {
     public double zavrsiUnos() {
         primanjaPoClanu.clear();
 
-        for (int i = 1; i <= brojClanova; i++) {
+        // ⚠️ ISPRAVKA OVDJE:
+        // Petlja mora ići samo do (brojClanova - 1) jer toliko TextFields imamo!
+        // Ako staviš <= brojClanova, tražit će polje za studenta koje ne postoji i puknuti.
+        for (int i = 1; i < brojClanova; i++) {
             TextField tf = primanjaFieldovi.get(i);
-            double iznos = parse(tf.getText());
-            primanjaPoClanu.put(i, iznos);
+
+            // Dodatna sigurnost
+            if (tf != null) {
+                double iznos = parse(tf.getText());
+                primanjaPoClanu.put(i, iznos);
+            }
         }
 
+        // Sabiramo primanja svih unesenih članova (npr. otac + majka)
         double ukupno = primanjaPoClanu.values()
                 .stream()
                 .mapToDouble(Double::doubleValue)
                 .sum();
 
+        // ⚠️ KLJUČNI DIO:
+        // Ovdje dijelimo sa UKUPNIM brojem (student + porodica).
+        // Npr. (Otac 1000 + Majka 1000) / 3 člana = 666.66 KM po članu.
+        // Ovo je ispravno po tvojoj logici.
         double poClanu = brojClanova == 0 ? 0 : ukupno / brojClanova;
 
         double bodovi = KriterijPoOsnovuSocijalnogStatusa
@@ -175,8 +180,9 @@ public class KucnaListaController {
         new PrijavaDAO().dodajBodoveNaPrijavu(prijavaId, bodovi);
 
         alert("Gotovo",
-                "Ukupna primanja: " + ukupno +
-                        "\nPo članu: " + poClanu +
+                "Ukupna primanja (ostali članovi): " + ukupno +
+                        "\nUkupno članova (sa studentom): " + brojClanova +
+                        "\nProsjek po članu: " + String.format("%.2f", poClanu) +
                         "\nBodovi: " + bodovi);
 
         return bodovi;
