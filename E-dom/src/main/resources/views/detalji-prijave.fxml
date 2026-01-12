@@ -102,6 +102,10 @@
                             fx:id="btnSacuvajStatus"
                             onAction="#onSacuvajStatus"
                             styleClass="btn-primary"/>
+                    <Button text="Pošalji email studentu"
+                            fx:id="btnPosaljiEmail"
+                            onAction="#onPosaljiEmail"
+                            styleClass="btn-secondary"/>
                 </VBox>
 
             </VBox>

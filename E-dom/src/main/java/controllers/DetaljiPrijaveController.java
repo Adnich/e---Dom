@@ -17,6 +17,7 @@ import model.Prijava;
 import model.StatusPrijave;
 import model.Student;
 import service.PdfService;
+import service.EmailService;
 
 import java.util.List;
 
@@ -132,6 +133,7 @@ public class DetaljiPrijaveController {
 
         if (noviStatus == null || trenutnaPrijava == null) return;
 
+        // Update status u bazi
         prijavaDAO.promijeniStatusPrijave(trenutnaPrijava.getIdPrijava(), noviStatus);
 
         trenutnaPrijava.setStatusPrijave(noviStatus);
@@ -259,5 +261,42 @@ public class DetaljiPrijaveController {
         } else {
             lblStatus.getStyleClass().add("status-info");
         }
+    }
+
+        //dugme posalji email studentu za odobrenje prijave
+    @FXML
+    private void onPosaljiEmail() {
+
+        if (trenutnaPrijava == null) return;
+
+        StatusPrijave status = trenutnaPrijava.getStatusPrijave();
+
+        // Email se smije poslati samo ako je prijava odobrena
+        if (status == null || !status.getNaziv().toLowerCase().contains("odob")) {
+            new Alert(Alert.AlertType.WARNING,
+                    "Email se može poslati samo za odobrenu prijavu."
+            ).showAndWait();
+            return;
+        }
+
+        Student student = studentDAO.dohvatiStudentaPoId(trenutnaPrijava.getIdStudent());
+
+        if (student == null || student.getEmail() == null || student.getEmail().isBlank()) {
+            new Alert(Alert.AlertType.ERROR,
+                    "Student nema validnu email adresu."
+            ).showAndWait();
+            return;
+        }
+
+        EmailService.sendPrijavaOdobrenaEmail(
+                student.getEmail(),
+                student.getIme(),
+                student.getPrezime(),
+                trenutnaPrijava.getAkademskaGodina()
+        );
+
+        new Alert(Alert.AlertType.INFORMATION,
+                "Email je uspješno poslan studentu."
+        ).showAndWait();
     }
 }
