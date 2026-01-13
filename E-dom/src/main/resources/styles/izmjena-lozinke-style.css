@@ -118,6 +118,24 @@
     );
 }
 
+.secondary-btn {
+    -fx-background-color: transparent;
+    -fx-border-color: rgba(0, 182, 150, 0.75);
+    -fx-border-width: 2px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-text-fill: #00B696;
+    -fx-font-weight: 800;
+    -fx-font-size: 14px;
+    -fx-padding: 16 24;
+    -fx-cursor: hand;
+    -fx-pref-height: 50px;
+}
+
+.secondary-btn:hover {
+    -fx-background-color: rgba(0, 182, 150, 0.08);
+}
+
 .error-label {
     -fx-font-size: 12px;
     -fx-font-weight: 700;

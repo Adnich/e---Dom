@@ -208,7 +208,7 @@ public class LoginController {
     }
 
     @FXML
-    private void onForgotPasswordClicked() {
+    private void onForgotPasswordClicked(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(
                     HelloApplication.class.getResource("/views/izmjena-lozinke.fxml")
@@ -216,12 +216,15 @@ public class LoginController {
 
             Parent root = loader.load();
 
-            Stage stage = new Stage();
+            // Ovdje sada uzimamo TRENUTNI stage (prozor), umjesto "new Stage()"
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             openScene(stage, root, "Reset lozinke");
 
         } catch (Exception e) {
             e.printStackTrace();
+            // Možeš dodati i ispis greške na labelu ako želiš
+            lblError.setText("Greška pri otvaranju prozora za reset lozinke.");
         }
     }
 }
