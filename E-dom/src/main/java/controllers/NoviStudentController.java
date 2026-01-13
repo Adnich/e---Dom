@@ -33,7 +33,6 @@ public class NoviStudentController {
         this.previousView = previousView;
     }
 
-
     @FXML
     private void onBackClicked() {
         try {
@@ -54,7 +53,6 @@ public class NoviStudentController {
             showAlert("Greška", "Ne mogu se vratiti nazad.");
         }
     }
-
 
     private final StudentDAO studentDAO = new StudentDAO();
     private final SocijalniStatusDAO socijalniStatusDAO = new SocijalniStatusDAO();
@@ -203,6 +201,7 @@ public class NoviStudentController {
 
             Stage stage = (Stage) txtIme.getScene().getWindow();
             stage.setScene(new Scene(root));
+            stage.setMaximized(true); // <-- dodano: nova-prijava se otvara fullscreen (maximized)
 
         } catch (Exception e) {
             e.printStackTrace();
