@@ -41,40 +41,49 @@ public class RangListaHtmlExportService {
                     color: #000;
                     line-height: 1.5;
                 }
-            
+
                 .header {
                     font-weight: bold;
                     margin-bottom: 30px;
                 }
-            
+
                 .center {
                     text-align: center;
                 }
-            
+
                 .italic {
                     font-style: italic;
                 }
-            
+
                 table {
                     width: 100%;
                     border-collapse: collapse;
                     margin-top: 10px;
                     margin-bottom: 20px;
                 }
-            
+
                 th, td {
                     border: 1px solid #000;
                     padding: 6px;
                     font-size: 11px;
                 }
-            
+
                 th {
-                    background-color: #d9d9d9;
                     font-weight: bold;
                     text-align: center;
+                    background-color: #d9d9d9;
                 }
-                
-                /* Stil za naslov iznad svake tabele (Brucoši / Više godine) */
+
+                /* BRUCOŠI – ZELENO */
+                .brucosi-table th {
+                    background-color: #7cb342;
+                }
+
+                /* VIŠE GODINE – PLAVO */
+                .vise-godine-table th {
+                    background-color: #03a9f4;
+                }
+
                 .tabela-naslov {
                     font-weight: bold;
                     margin-top: 20px;
@@ -82,19 +91,16 @@ public class RangListaHtmlExportService {
                     text-decoration: underline;
                     font-size: 13px;
                 }
-            
+
                 .footer {
                     margin-top: 40px;
-                    page-break-inside: avoid; /* Pokušaj da footer ne puca na pola */
+                    page-break-inside: avoid;
                 }
             </style>
             </head>
             <body>
             """);
 
-            /* =======================
-               ZAGLAVLJE (Tvoj originalni tekst)
-            ======================= */
             html.append("""
             <div class="header">
                 JU UNIVERZITET U ZENICI<br/>
@@ -104,23 +110,20 @@ public class RangListaHtmlExportService {
             </div>
             """.formatted(today));
 
-            /* =======================
-               UVOD / ODLUKA (Tvoj originalni tekst)
-            ======================= */
             html.append("""
             <p class="center">
             Na osnovu člana 161. stav (2) Statuta Univerziteta u Zenici,
             direktorica Studentskog centra Univerziteta u Zenici, donosim
             </p>
-            
+
             <p class="center"><b>O D L U K U</b></p>
-            
+
             <p class="center italic">
             DONOŠENJU PRELIMINARNE LISTE PRIMLJENIH STUDENATA NA SMJEŠTAJ I ISHRANU
             U STUDENTSKOM CENTRU UNIVERZITETA U ZENICI ZA AKADEMSKU
             2025/26. GODINU
             </p>
-            
+
             <p>
             Na osnovu Odluke o raspisanom Konkursu Upravnog odbora
             "JU Univerziteta u Zenici" broj: 01-01-1-1495/17 od 28.04.2017. godine,
@@ -136,26 +139,23 @@ public class RangListaHtmlExportService {
             </p>
             """);
 
-            /* =======================
-               TABELA 1: BRUCOŠI
-            ======================= */
-            html.append("<div class='tabela-naslov'>I RANG LISTA - STUDENTI PRVE GODINE (BRUCOŠI)</div>");
+            /* BRUCOŠI */
+            html.append("<div class='tabela-naslov'>BRUCOŠI</div>");
+            html.append("<div class='brucosi-table'>");
             html.append(generisiTabeluHtml(brucosi));
+            html.append("</div>");
 
-            /* =======================
-               TABELA 2: VIŠE GODINE
-            ======================= */
-            // Ubacujemo mali razmak između tabela
+            /* VIŠE GODINE */
             html.append("<br/>");
-            html.append("<div class='tabela-naslov'>II RANG LISTA - STUDENTI VIŠIH GODINA</div>");
+            html.append("<div class='tabela-naslov'>STUDENTI VIŠIH GODINA</div>");
+            html.append("<div class='vise-godine-table'>");
             html.append(generisiTabeluHtml(viseGodine));
+            html.append("</div>");
 
-            /* =======================
-               ZAVRŠNI DIO / FOOTER (Tvoj originalni tekst)
-            ======================= */
+            /* footer */
             html.append("""
             <div class="footer">
-            
+
             <p>
             Studentski centar Zenica prima 220 studenata, od toga 79 brucoša i 114
             studenata viših godina, te je slobodnih mjesta ostalo još 30.
@@ -163,46 +163,46 @@ public class RangListaHtmlExportService {
             nakon priloženog dokaza o ispunjavanju uslova za akademsku 2025/2026.
             Neblagovremene i nepotpune prijave nisu uzete u razmatranje.
             </p>
-            
+
             <p><b>
             Useljenje u Studentski centar sa ove rang liste vršit će se od
             <span style="color:red;">%s – %s</span>,
             svaki radni dan u periodu od 8:30 do 14:00 sati.
             </b></p>
-            
+
             <p>
             Isteklom ovog roka student gubi pravo na smještaj u tekućoj akademskoj
             godini ukoliko nije odgodio useljenje. Opravdana odgoda useljenja
             vrši se u upravi Studentskog centra.
             </p>
-            
+
             <p>
             Žalbe na rang listu podnose se pismeno Komisiji za žalbe najkasnije
             7 dana od dana objave. Žalbe slati na adresu:
             Studentski centar Zenica, Crkvice 50, 72000 Zenica.
             Poslije ovog roka žalbe se neće razmatrati.
             </p>
-            
+
             <p>
             Informacije vezano za useljenje možete dobiti na broj telefona
             032 226 604 ili putem e-maila:
             <u>tehnickisekretar.sc@unze.ba</u>
             </p>
-            
+
             <p>
             Student u Studentski centar se može useliti samo lično, a prilikom
             useljenja dužan je priložiti:
             </p>
-            
+
             <p>
             <b>Ljekarsko uvjerenje</b> (ne starije od 6 mjeseci) sa naznakom
             <i>sposoban za kolektivni smještaj</i>.<br/>
             <b>Dokaz o uplati</b> troškova smještaja i ishrane za oktobar
             u iznosu od <b>150,00 KM</b>.
             </p>
-            
+
             <p>Odluka stupa na snagu danom donošenja.</p>
-            
+
             <div style="margin-top:50px; display:flex; justify-content:space-between;">
                 <div>
                     Dostavljeno:<br/>
@@ -210,21 +210,18 @@ public class RangListaHtmlExportService {
                     1x oglasna tabla<br/>
                     1x a/a
                 </div>
-            
+
                 <div style="text-align:right;">
                     <b>DIREKTORICA</b><br/>
                     mr.sc. Niždžara Halilović-Čustović
                 </div>
             </div>
-            
+
             </div>
             """.formatted(pocetakStr, krajStr));
 
             html.append("</body></html>");
 
-            /* =======================
-               PDF GENERACIJA (Standardni dio)
-            ======================= */
             try (OutputStream os = new FileOutputStream(file)) {
                 PdfRendererBuilder builder = new PdfRendererBuilder();
                 builder.useFastMode();
@@ -248,9 +245,7 @@ public class RangListaHtmlExportService {
         }
     }
 
-    // =======================
-    // POMOĆNA METODA ZA CRTANJE TABELE
-    // =======================
+
     private String generisiTabeluHtml(List<RangListaDTO> data) {
         if (data == null || data.isEmpty()) {
             return "<p class='center'><i>Nema studenata u ovoj kategoriji.</i></p>";
@@ -259,24 +254,21 @@ public class RangListaHtmlExportService {
         StringBuilder sb = new StringBuilder();
         sb.append("<table>");
 
-        // Header tabele
         sb.append("<tr>");
-        // Pretpostavljamo da su ključevi u mapi u ispravnom redoslijedu
         for (String kolona : data.get(0).getKolone().keySet()) {
             sb.append("<th>").append(escapeHtml(kolona)).append("</th>");
         }
         sb.append("</tr>");
 
-        // Redovi
         for (RangListaDTO dto : data) {
             sb.append("<tr>");
             for (String value : dto.getKolone().values()) {
-                // Provjera da li je broj da ga centriramo, tekst lijevo
-                // Jednostavna provjera, možeš ukloniti style ako želiš sve lijevo
                 boolean isNumber = value.matches("-?\\d+([.,]\\d+)?");
                 String align = isNumber ? "center" : "left";
 
-                sb.append("<td style='text-align:").append(align).append(";'>")
+                sb.append("<td style='text-align:")
+                        .append(align)
+                        .append(";'>")
                         .append(escapeHtml(value))
                         .append("</td>");
             }

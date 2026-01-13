@@ -6,6 +6,9 @@ import javafx.scene.control.*;
 import model.Korisnik;
 import service.Session;
 import util.TextUtil;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.sql.Timestamp;
 
 public class MojProfilController {
 
@@ -19,6 +22,7 @@ public class MojProfilController {
     @FXML private PasswordField txtPotvrdaLozinke;
 
     @FXML private Label lblPoruka;
+    @FXML private Label lblZadnjaPrijava;
 
     private final KorisnikDAO korisnikDAO = new KorisnikDAO();
     private Korisnik korisnik;
@@ -39,6 +43,9 @@ public class MojProfilController {
 
         txtUsername.setDisable(true);
         txtUloga.setDisable(true);
+        lblZadnjaPrijava.setText(
+                formatZadnjaPrijava(korisnik.getZadnjaPrijava())
+        );
     }
 
     @FXML
@@ -97,4 +104,30 @@ public class MojProfilController {
         lblPoruka.setText("Profil i lozinka uspješno ažurirani.");
     }
 
+    private String formatZadnjaPrijava(Timestamp ts) {
+        if (ts == null) {
+            return "Prva prijava";
+        }
+
+        LocalDateTime last = ts.toLocalDateTime();
+        LocalDateTime now = LocalDateTime.now();
+
+        long minutes = java.time.Duration.between(last, now).toMinutes();
+        long hours   = java.time.Duration.between(last, now).toHours();
+        long days    = java.time.Duration.between(last, now).toDays();
+
+        if (minutes < 1) {
+            return "Upravo sada";
+        } else if (minutes < 60) {
+            return "Prije " + minutes + " min";
+        } else if (hours < 24) {
+            return "Prije " + hours + " h";
+        } else if (days == 1) {
+            return "Jučer u " + last.format(DateTimeFormatter.ofPattern("HH:mm"));
+        } else if (days < 7) {
+            return "Prije " + days + " dana";
+        } else {
+            return last.format(DateTimeFormatter.ofPattern("dd.MM.yyyy 'u' HH:mm"));
+        }
+    }
 }

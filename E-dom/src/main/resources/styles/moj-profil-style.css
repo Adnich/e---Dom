@@ -143,3 +143,8 @@
     -fx-border-radius: 12;
     -fx-border-width: 1.2;
 }
+
+.readonly-info {
+    -fx-text-fill: #374151;
+    -fx-font-style: italic;
+}
