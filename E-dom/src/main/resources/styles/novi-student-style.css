@@ -145,7 +145,7 @@
     -fx-border-radius: 18px;
     -fx-border-color: rgba(0,182,150,0.30);
     -fx-border-width: 1.4px;
-    -fx-padding: 8 10;
+    -fx-padding: 10 10;
 }
 
 .combo:focused {
@@ -211,5 +211,75 @@
 .field, .combo {
     -fx-pref-width: Infinity;
     -fx-max-width: Infinity;
+}
+
+
+/* Tekst unutar zatvorenog box-a */
+.combo .list-cell {
+    -fx-text-fill: #004E64;
+    -fx-background-color: transparent;
+    -fx-padding: 4 0 4 0;
+}
+
+/* Strelica */
+.combo .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.combo .arrow {
+    -fx-background-color: #00B696;
+    -fx-scale-x: 0.85;
+    -fx-scale-y: 0.85;
+}
+
+
+/* --- 2. IZGLED PADAJUĆE LISTE (Ono što se otvori) --- */
+
+/* Okvir liste (prozorčić) */
+.combo-box-popup .list-view {
+    -fx-background-color: white;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+    -fx-border-color: rgba(0,182,150,0.30);
+    -fx-border-width: 1px;
+
+    /* Sjena da "lebdi" kao tvoj meni sa slike */
+    -fx-effect: dropshadow(gaussian, rgba(0,78,100,0.15), 20, 0.25, 0, 8);
+
+    -fx-padding: 6px; /* Razmak unutar liste */
+}
+
+/* Pojedinačni redovi u listi */
+.combo-box-popup .list-cell {
+    -fx-text-fill: #004E64;
+    -fx-font-weight: 700;
+    -fx-font-size: 13px;
+    -fx-padding: 10 14;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER_LEFT;
+}
+
+/* HOVER EFEKT - Mint boja kad pređeš mišem preko opcije */
+.combo-box-popup .list-cell:filled:hover {
+    -fx-background-color: rgba(0,182,150,0.10); /* Nježna mint boja */
+    -fx-background-radius: 8px; /* Zaobljene ivice itema */
+    -fx-text-fill: #004E64;
+}
+
+/* Kada je opcija odabrana */
+.combo-box-popup .list-cell:filled:selected {
+    -fx-background-color: rgba(0,182,150,0.18);
+    -fx-background-radius: 8px;
+    -fx-text-fill: #004E64;
+}
+
+/* Scrollbar u listi (da i on bude mint) */
+.combo-box-popup .scroll-bar:vertical .thumb {
+    -fx-background-color: rgba(0,182,150,0.45);
+    -fx-background-radius: 10px;
+}
+.combo-box-popup .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
 }
 

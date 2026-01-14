@@ -24,6 +24,7 @@ module org.example.edom {
     requires openhtmltopdf.core;
     requires openhtmltopdf.pdfbox;
 
+
     // JavaFX mora moći instancirati Application
     exports org.example.edom;
     opens org.example.edom to javafx.graphics;
