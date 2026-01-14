@@ -51,6 +51,7 @@ public class KorisnikDAO {
                 k.setUsername(rs.getString("username"));
                 k.setPasswordHash(rs.getString("password_hash"));
                 k.setEmail(rs.getString("email"));
+                k.setZadnjaPrijava(rs.getTimestamp("zadnja_prijava"));
 
                 Uloga u = new Uloga(
                         rs.getInt("id_uloga"),
@@ -135,6 +136,7 @@ public class KorisnikDAO {
                     k.setUsername(rs.getString("username"));
                     k.setPasswordHash(rs.getString("password_hash"));
                     k.setEmail(rs.getString("email"));
+                    k.setZadnjaPrijava(rs.getTimestamp("zadnja_prijava"));
 
                     Uloga u = new Uloga(
                             rs.getInt("id_uloga"),
@@ -174,6 +176,7 @@ public class KorisnikDAO {
                     k.setUsername(rd.getString("username"));
                     k.setPasswordHash(rd.getString("password_hash"));
                     k.setEmail(rd.getString("email"));
+                    k.setZadnjaPrijava(rd.getTimestamp("zadnja_prijava"));
 
                     Uloga u = new Uloga(
                             rd.getInt("id_uloga"),
@@ -296,6 +299,20 @@ public class KorisnikDAO {
 
             stmt.setString(1, noviPasswordHash);
             stmt.setString(2, email);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateZadnjaPrijava(int idKorisnik) {
+        String sql = "UPDATE korisnik SET zadnja_prijava = NOW() WHERE id_korisnik = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idKorisnik);
             stmt.executeUpdate();
 
         } catch (SQLException e) {

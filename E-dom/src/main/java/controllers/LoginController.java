@@ -1,5 +1,5 @@
 package controllers;
-
+import javafx.concurrent.Task;
 import dao.KorisnikDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,6 +45,12 @@ public class LoginController {
 
     @FXML
     private Label lblError;
+
+    @FXML
+    private javafx.scene.layout.StackPane loadingOverlay;
+
+    @FXML
+    private javafx.scene.control.ProgressIndicator loadingIndicator;
 
     @FXML
     private CheckBox chkRememberMe;
@@ -140,55 +146,83 @@ public class LoginController {
     }
 
     @FXML
-    private void onLoginClicked(ActionEvent event) throws SQLException {
+    private void onLoginClicked(ActionEvent event) {
+
         String user = txtUsername.getText().trim();
-        String pass = txtPassword.getText().trim(); // dovoljno je ovo, jer je bind na oba
+        String pass = txtPassword.getText().trim();
 
         if (user.isEmpty() || pass.isEmpty()) {
             lblError.setText("Unesite korisničko ime i lozinku.");
             return;
         }
 
-        Korisnik k = korisnikDAO.nadjiUsername(user);
-        if (k == null || !k.ProvjeriPassword(pass)) {
-            lblError.setText("Neispravni podaci za prijavu.");
-            return;
-        }
+        //PRIKAŽI LOADING
+        loadingOverlay.setVisible(true);
+        loadingOverlay.toFront();
+        btnTogglePassword.setDisable(true);
 
-        if (k.getUloga() == null
-                || k.getUloga().getNaziv() == null
-                || !k.getUloga().getNaziv().equalsIgnoreCase("Admin")) {
+        Task<Korisnik> loginTask = new Task<>() {
+            @Override
+            protected Korisnik call() throws Exception {
+                return korisnikDAO.nadjiUsername(user);
+            }
+        };
 
-            lblError.setText("Pristup je dozvoljen samo administratoru.");
-            return;
-        }
+        loginTask.setOnSucceeded(e -> {
+            Korisnik k = loginTask.getValue();
 
-        if (chkRememberMe != null && chkRememberMe.isSelected()) {
-            prefs.put(PREF_KEY_USERNAME, user);
-        } else {
-            prefs.remove(PREF_KEY_USERNAME);
-        }
+            if (k == null || !k.ProvjeriPassword(pass)) {
+                lblError.setText("Neispravni podaci za prijavu.");
+                loadingOverlay.setVisible(false);
+                return;
+            }
 
-        Session.setKorisnik(k);
-        lblError.setText("");
+            if (k.getUloga() == null
+                    || k.getUloga().getNaziv() == null
+                    || !k.getUloga().getNaziv().equalsIgnoreCase("Admin")) {
 
-        try {
-            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("/views/admin-main-view.fxml"));
-            URL fxmlUrl = HelloApplication.class.getResource("/views/admin-main-view.fxml");
-            System.out.println("ADMIN FXML URL = " + fxmlUrl);
+                lblError.setText("Pristup je dozvoljen samo administratoru.");
+                loadingOverlay.setVisible(false);
+                return;
+            }
 
-            Parent root = loader.load();
+            if (chkRememberMe != null && chkRememberMe.isSelected()) {
+                prefs.put(PREF_KEY_USERNAME, user);
+            } else {
+                prefs.remove(PREF_KEY_USERNAME);
+            }
 
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            korisnikDAO.updateZadnjaPrijava(k.getIdKorisnik());
 
-            openScene(stage, root, "E-Dom - Administratorski panel");
+            k.setZadnjaPrijava(new java.sql.Timestamp(System.currentTimeMillis()));
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            lblError.setText("Greška pri otvaranju administratorskog ekrana.");
-        }
+            Session.setKorisnik(k);
+            lblError.setText("");
+            
+            try {
+                FXMLLoader loader = new FXMLLoader(
+                        HelloApplication.class.getResource("/views/admin-main-view.fxml")
+                );
+                Parent root = loader.load();
 
-        System.out.println("Uspješna prijava: " + k);
+                Stage stage = (Stage) txtUsername.getScene().getWindow();
+                openScene(stage, root, "E-Dom - Administratorski panel");
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                lblError.setText("Greška pri otvaranju administratorskog ekrana.");
+            }
+
+            loadingOverlay.setVisible(false);
+        });
+
+        loginTask.setOnFailed(e -> {
+            lblError.setText("Greška pri prijavi.");
+            loadingOverlay.setVisible(false);
+            loginTask.getException().printStackTrace();
+        });
+
+        new Thread(loginTask).start();
     }
 
     @FXML

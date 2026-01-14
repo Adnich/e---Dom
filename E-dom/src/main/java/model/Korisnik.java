@@ -1,5 +1,6 @@
 package model;
 import org.mindrot.jbcrypt.BCrypt;
+import java.sql.Timestamp;
 
 public class Korisnik {
     private int IdKorisnik;
@@ -9,6 +10,7 @@ public class Korisnik {
     private String PasswordHash;
     private Uloga Uloga;
     private String Email;
+    private Timestamp zadnjaPrijava;
 
     public Korisnik(int idKorisnik, String ime, String prezime, String username, String passwordHash, Uloga uloga, String email) {
         IdKorisnik = idKorisnik;
@@ -93,6 +95,13 @@ public class Korisnik {
 
     public boolean ProvjeriPassword(String password) {
         return BCrypt.checkpw(password, this.PasswordHash);
+    }
+    public Timestamp getZadnjaPrijava() {
+        return zadnjaPrijava;
+    }
+
+    public void setZadnjaPrijava(Timestamp zadnjaPrijava) {
+        this.zadnjaPrijava = zadnjaPrijava;
     }
 }
 

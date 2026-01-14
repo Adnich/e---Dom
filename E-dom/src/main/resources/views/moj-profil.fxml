@@ -40,6 +40,15 @@
 
             <Label text="Uloga:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
             <TextField fx:id="txtUloga" disable="true" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            <Label text="Zadnja prijava:"
+                   GridPane.rowIndex="4"
+                   GridPane.columnIndex="0"/>
+
+            <Label fx:id="lblZadnjaPrijava"
+                   text="—"
+                   GridPane.rowIndex="4"
+                   GridPane.columnIndex="1"
+                   styleClass="readonly-info"/>
         </GridPane>
 
         <Separator styleClass="soft-separator"/>
