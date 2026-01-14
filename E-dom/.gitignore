@@ -39,6 +39,9 @@ build/
 .DS_Store
 
 
-##Baza##
+
+# Ignorisi ovaj fajl gdje god da je
 DBConnection.java
-E-dom\src\main\java\util\DBConnection.java
+
+# ILI ako zelite preciznu putanju (koristite obicne kose crte / )
+E-dom/src/main/java/util/DBConnection.java
