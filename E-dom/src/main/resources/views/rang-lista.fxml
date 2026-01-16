@@ -19,10 +19,12 @@
     <center>
         <VBox styleClass="rang-card" spacing="14">
 
-            <MenuBar >
+            <HBox alignment="CENTER_RIGHT">
+            <MenuBar>
 
                 <Menu fx:id="menuKolone" text="Prikaži kolone"/>
             </MenuBar>
+            </HBox>
 
             <TableView fx:id="tblRangLista"
                        VBox.vgrow="ALWAYS"
@@ -45,7 +47,7 @@
 
             </TableView>
 
-            <HBox spacing="10" alignment="CENTER_LEFT">
+            <HBox spacing="10" alignment="CENTER_RIGHT">
                 <Button fx:id="btnExportHtmlPdf" text="Export PDF (HTML)" onAction="#onExportHtmlPdf"/>
             </HBox>
 
