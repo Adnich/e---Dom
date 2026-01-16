@@ -198,7 +198,7 @@ public class LoginController {
 
             Session.setKorisnik(k);
             lblError.setText("");
-            
+
             try {
                 FXMLLoader loader = new FXMLLoader(
                         HelloApplication.class.getResource("/views/admin-main-view.fxml")
