@@ -325,6 +325,27 @@
     -fx-cursor: hand;
 }
 
-.btn-secondary:hover {
-    -fx-background-color: rgba(0,182,150,0.12);
+.button.btn-danger {
+    -fx-background-color: #e53935;
+    -fx-background-insets: 0;
+    -fx-background-radius: 8;
+
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+
+    -fx-text-fill: white;
+    -fx-font-weight: 800;
+    -fx-font-size: 12.5px;
+    -fx-padding: 6 14;
+
+    -fx-effect: none;
 }
+
+.button.btn-danger:hover {
+    -fx-background-color: #d32f2f;
+}
+
+.button.btn-danger:pressed {
+    -fx-background-color: #b71c1c;
+}
+

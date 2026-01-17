@@ -299,4 +299,48 @@ public class DetaljiPrijaveController {
                 "Email je uspješno poslan studentu."
         ).showAndWait();
     }
+
+    //brisanje prijave
+    @FXML
+    private void onObrisiPrijavu() {
+
+        if (trenutnaPrijava == null) return;
+
+        Alert potvrda = new Alert(Alert.AlertType.CONFIRMATION);
+        potvrda.setTitle("Potvrda brisanja");
+        potvrda.setHeaderText("Brisanje prijave");
+        potvrda.setContentText(
+                "Da li ste sigurni da želite obrisati ovu prijavu?\n\n" +
+                        "Svi dokumenti vezani za prijavu će biti trajno obrisani."
+        );
+
+        if (potvrda.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) {
+            return;
+        }
+
+        try {
+            int prijavaId = trenutnaPrijava.getIdPrijava();
+
+            // obriši dokumente
+            dokumentDAO.obrisiDokumenteZaPrijavu(prijavaId);
+
+            // obriši prijavu
+            prijavaDAO.obrisiPrijavu(prijavaId);
+
+            Alert info = new Alert(Alert.AlertType.INFORMATION);
+            info.setTitle("Uspjeh");
+            info.setHeaderText(null);
+            info.setContentText("Prijava je uspješno obrisana.");
+            info.showAndWait();
+
+            // zatvori prozor detalja
+            ((Stage) lblNaslov.getScene().getWindow()).close();
+
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR,
+                    "Došlo je do greške prilikom brisanja prijave."
+            ).showAndWait();
+            e.printStackTrace();
+        }
+    }
 }
