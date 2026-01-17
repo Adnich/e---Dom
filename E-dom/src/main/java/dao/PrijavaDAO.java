@@ -216,7 +216,7 @@ public class PrijavaDAO {
             p.setDatumPrijava(sqlDate.toLocalDate());
         }
 
-        p.setUkupniBodovi(rs.getInt("ukupni_bodovi"));
+        p.setUkupniBodovi(rs.getDouble("ukupni_bodovi"));
         p.setNapomena(rs.getString("napomena"));
         p.setIdStudent(rs.getInt("studentid_student2"));
         p.setAkademskaGodina(rs.getInt("akademska_godina"));
@@ -256,31 +256,6 @@ public class PrijavaDAO {
         }
 
         return 0;
-    }
-
-    public void azurirajUkupneBodove(int prijavaId) {
-        String sql = """
-        UPDATE prijava
-        SET ukupni_bodovi = (
-            SELECT IFNULL(SUM(broj_bodova), 0)
-            FROM dokument
-            WHERE prijavaid_prijava = ?
-        )
-        WHERE id_prijava = ?
-    """;
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, prijavaId);
-            stmt.setInt(2, prijavaId);
-            stmt.executeUpdate();
-
-            System.out.println("Ukupni bodovi ažurirani za prijavu ID = " + prijavaId);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public void dodajBodoveNaPrijavu(int prijavaId, double bodoviZaDodati) {

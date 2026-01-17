@@ -33,12 +33,12 @@ public class ProsjekDokumentController {
 
     @FXML
     public void initialize() {
-        // Povezivanje radio buttona u grupu da se može odabrati samo jedan
         rbUvjerenje.setToggleGroup(toggleDokument);
         rbIndeks.setToggleGroup(toggleDokument);
         rbUvjerenje.setSelected(true);
     }
 
+    // Poziva se iz DodajDokumenteController
     public void init(int prijavaId, int godinaStudija, double prosjek,
                      VrstaDokumenta vrstaSvjedodzbe,
                      VrstaDokumenta vrstaUvjerenje,
@@ -51,7 +51,7 @@ public class ProsjekDokumentController {
         this.vrstaUvjerenje = vrstaUvjerenje;
         this.vrstaIndeks = vrstaIndeks;
 
-        // Prikaz interfejsa zavisno od godine studija
+        // UI logika
         if (godinaStudija == 1) {
             lblOpis.setText("Svjedodžba o završetku srednje škole:");
             setNodeVisible(lblIspiti, false);
@@ -71,29 +71,26 @@ public class ProsjekDokumentController {
     @FXML
     private void dodaj() {
         if (!chkDostavljen.isSelected()) {
-            showAlert("Greška", "Dokument mora biti dostavljen.");
+            showAlert("Greška", "Morate označiti da je dokument dostavljen.");
             return;
         }
 
         Dokument d = new Dokument();
         d.setDatumUpload(LocalDate.now());
         d.setDostavljen(true);
-        d.setDokumentB64(null);
+        d.setDokumentB64(null); // Ili dodaj logiku za upload fajla ako imaš
 
-        double bodovi = 0;
+        double bodovi;
 
-        // --- LOGIKA ---
+        // --- LOGIKA RAČUNANJA BODOVA ---
         if (godinaStudija == 1) {
-            // 1. GODINA (Brucoši)
+            // Brucoši
             bodovi = kriterij.izracunajBodoveBrucosi(prosjek);
-
             d.setNaziv(vrstaSvjedodzbe.getNaziv());
             d.setVrstaDokumenta(vrstaSvjedodzbe);
 
         } else {
-            // VIŠE GODINE (Stariji studenti)
-
-            // Provjera šta je selektovano (Indeks ili Uvjerenje)
+            // Stariji studenti
             if (rbUvjerenje.isSelected()) {
                 d.setNaziv(vrstaUvjerenje.getNaziv());
                 d.setVrstaDokumenta(vrstaUvjerenje);
@@ -106,26 +103,23 @@ public class ProsjekDokumentController {
             }
 
             int brojPolozenih = parseIntOrZero(txtBrojPolozenih.getText());
-            if (brojPolozenih <= 0) {
-                showAlert("Greška", "Unesite validan broj položenih ispita.");
-                return;
-            }
-
-            // Računanje bodova za starije godine
-            // Ovdje koristim metodu koja prima (godina, prosjek, brojPolozenih)
+            // Ako je unio 0 ili prazno, bodovi ce biti manji, ali validno
             bodovi = kriterij.izracunajBodove(godinaStudija, prosjek, brojPolozenih);
         }
 
-        // --- ZAJEDNIČKO SNIMANJE ---
         d.setBrojBodova(bodovi);
 
-        // 1. Spasi dokument u bazu
-        new DokumentDAO().unesiDokument(d, prijavaId);
+        // --- UPIS U BAZU (Dokument + Ukupni bodovi) ---
+        DokumentDAO docDao = new DokumentDAO();
+        docDao.unesiDokument(d, prijavaId); // Pretpostavljam da ova metoda radi INSERT dokumenta
 
-        // 2. Ažuriraj ukupne bodove na prijavi (ovo je falilo u nekim verzijama)
-        new PrijavaDAO().dodajBodoveNaPrijavu(prijavaId, bodovi);
+        PrijavaDAO prijavaDao = new PrijavaDAO();
+        prijavaDao.dodajBodoveNaPrijavu(prijavaId, bodovi); // KLJUČNO: Ažurira ukupnu sumu!
 
-        showAlert("Uspješno", "Dokument dodat i bodovi (" + String.format("%.2f", bodovi) + ") obračunati.");
+        showAlert("Uspješno", "Dokument je evidentiran. Osvojeni bodovi po osnovu uspjeha: " + String.format("%.2f", bodovi));
+
+        // Opcionalno: onemogući dugme da ne klikću dvaput
+        // btnDodaj.setDisable(true);
     }
 
     private void setNodeVisible(Control node, boolean visible) {
@@ -135,8 +129,9 @@ public class ProsjekDokumentController {
 
     private int parseIntOrZero(String text) {
         try {
+            if(text == null || text.trim().isEmpty()) return 0;
             return Integer.parseInt(text.trim());
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             return 0;
         }
     }
