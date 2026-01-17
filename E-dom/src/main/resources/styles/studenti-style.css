@@ -180,3 +180,8 @@
     -fx-background-color: rgba(0,182,150,0.08);
     -fx-border-color: rgba(0,182,150,0.85);
 }
+
+
+.centered-cell {
+    -fx-alignment: CENTER;
+}

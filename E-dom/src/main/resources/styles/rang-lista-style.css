@@ -178,7 +178,6 @@
     -fx-padding: 12 10;
     -fx-border-color: rgba(0,182,150,0.06);
     -fx-border-width: 0 1 0 0;
-    -fx-alignment: center-left;
     -fx-text-fill: #004E64;
 }
 
@@ -303,4 +302,8 @@
     -fx-opacity: 0.55;
     -fx-cursor: default;
     -fx-effect: none;
+}
+
+.centered-cell {
+    -fx-alignment: CENTER;
 }

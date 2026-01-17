@@ -169,14 +169,8 @@
     -fx-padding: 12 10;
     -fx-border-color: rgba(0,182,150,0.06);
     -fx-border-width: 0 1 0 0;
-    -fx-alignment: center-left;
     -fx-text-fill: #004E64;
 }
-
-.table-cell:last {
-    -fx-border-width: 0;
-}
-
 
 
 .table-cell.status-approved {
@@ -265,9 +259,7 @@
     -fx-background-color: rgba(0,78,100,0.10);
     -fx-text-fill: #004E64;
 }
-.table-view .table-column {
-    -fx-alignment: CENTER_LEFT;
-}
+
 .table-cell.status-approved,
 .table-cell.status-rejected,
 .table-cell.status-review,
@@ -360,5 +352,10 @@
 #btnExportHtmlPdf:disabled {
     -fx-opacity: 0.55;
     -fx-cursor: default;
+}
+
+
+.table-view .centered-cell .table-cell {
+    -fx-alignment: CENTER;
 }
 

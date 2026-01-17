@@ -61,12 +61,12 @@
             <TableView fx:id="tblPrijave" styleClass="table-view" VBox.vgrow="ALWAYS">
 
                 <columns>
-                    <TableColumn fx:id="colId" prefWidth="70" text="ID" />
+                    <TableColumn fx:id="colId" prefWidth="70" text="ID" styleClass="centered-cell" />
                     <TableColumn fx:id="colIme" prefWidth="140" text="Ime" />
                     <TableColumn fx:id="colPrezime" prefWidth="160" text="Prezime" />
-                    <TableColumn fx:id="colDatum" prefWidth="140" text="Datum" />
-                    <TableColumn fx:id="colAkGod" prefWidth="140" text="Akad. godina" />
-                    <TableColumn fx:id="colUkupniBodovi" prefWidth="140" text="Ukupni bodovi" />
+                    <TableColumn fx:id="colDatum" prefWidth="140" text="Datum" styleClass="centered-cell" />
+                    <TableColumn fx:id="colAkGod" prefWidth="140" text="Akad. godina" styleClass="centered-cell" />
+                    <TableColumn fx:id="colUkupniBodovi" prefWidth="140" text="Ukupni bodovi" styleClass="centered-cell" />
                     <TableColumn fx:id="colStatus" prefWidth="180" text="Status" />
                     <TableColumn fx:id="colNapomena" prefWidth="320" text="Napomena" />
                 </columns>
