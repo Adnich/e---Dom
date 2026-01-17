@@ -198,4 +198,22 @@ public class DokumentDAO {
         return dokumenti;
     }
 
+    //metoda za brisanje dokumenata za prijavu
+    public void obrisiDokumenteZaPrijavu(int prijavaId) {
+        String sql = "DELETE FROM dokument WHERE prijavaid_prijava = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, prijavaId);
+            stmt.executeUpdate();
+
+            System.out.println("Svi dokumenti obrisani za prijavu ID = " + prijavaId);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }

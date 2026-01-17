@@ -73,6 +73,14 @@
                            styleClass="empty-subtitle"/>
                 </VBox>
 
+                <HBox alignment="CENTER_LEFT" styleClass="delete-zone">
+                    <Button
+                            text="Obriši prijavu"
+                            onAction="#onObrisiPrijavu"
+                            styleClass="btn-danger"
+                            prefWidth="120"
+                    />
+                </HBox>
             </VBox>
 
 
