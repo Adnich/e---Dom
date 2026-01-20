@@ -66,6 +66,28 @@
     -fx-background-color: #004E64;
 }
 
+
+.context-menu {
+    -fx-background-color: white;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+    -fx-border-color: rgba(0,182,150,0.30);
+    -fx-border-width: 1;
+    -fx-padding: 6;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 20, 0.25, 0, 8);
+}
+
+.menu-item {
+    -fx-padding: 10 18;
+    -fx-font-weight: 700;
+    -fx-text-fill: #004E64;
+}
+
+.menu-item:hover {
+    -fx-background-color: rgba(0,182,150,0.10);
+}
+
+
 .icon-refresh-btn {
     -fx-background-color: white;
     -fx-background-radius: 999px;
@@ -179,4 +201,9 @@
 #btnExportHtmlPdf:hover {
     -fx-background-color: rgba(0,182,150,0.08);
     -fx-border-color: rgba(0,182,150,0.85);
+}
+
+
+.centered-cell {
+    -fx-alignment: CENTER;
 }

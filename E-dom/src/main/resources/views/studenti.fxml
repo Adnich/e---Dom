@@ -67,13 +67,13 @@
             <TableView fx:id="tblStudenti" styleClass="table-view" VBox.vgrow="ALWAYS">
 
                 <columns>
-                    <TableColumn fx:id="colId" prefWidth="70" text="ID" />
+                    <TableColumn fx:id="colId" prefWidth="70" text="ID" styleClass="centered-cell"/>
                     <TableColumn fx:id="colIme" prefWidth="140" text="Ime" />
                     <TableColumn fx:id="colPrezime" prefWidth="160" text="Prezime" />
-                    <TableColumn fx:id="colIndeks" prefWidth="170" text="Broj indeksa" />
+                    <TableColumn fx:id="colIndeks" prefWidth="170" text="Broj indeksa" styleClass="centered-cell"/>
                     <TableColumn fx:id="colFakultet" prefWidth="260" text="Fakultet" />
-                    <TableColumn fx:id="colGodina" prefWidth="110" text="Godina" />
-                    <TableColumn fx:id="colProsjek" prefWidth="120" text="Prosjek" />
+                    <TableColumn fx:id="colGodina" prefWidth="110" text="Godina" styleClass="centered-cell"/>
+                    <TableColumn fx:id="colProsjek" prefWidth="120" text="Prosjek" styleClass="centered-cell"/>
                     <TableColumn fx:id="colStatus" prefWidth="260" text="Soc. status" />
                 </columns>
 
