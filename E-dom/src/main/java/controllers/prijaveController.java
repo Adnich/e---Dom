@@ -9,7 +9,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -21,14 +20,12 @@ import javafx.stage.Stage;
 import model.Prijava;
 import model.Student;
 import service.export.PrijavaHtmlExportService;
-import service.export.StudentHtmlExportService;
 import dto.PrijavaExportDTo;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class prijaveController {
-
 
     @FXML private TableView<Prijava> tblPrijave;
 
@@ -41,12 +38,10 @@ public class prijaveController {
     @FXML private TableColumn<Prijava, String> colStatus;
     @FXML private TableColumn<Prijava, String> colNapomena;
 
-
     @FXML private TextField txtSearch;
     @FXML private Menu menuFakulteti;
     @FXML private Menu menuStatusPrijave;
     @FXML private Menu menuGodineStudija;
-
 
     private final PrijavaDAO prijavaDAO = new PrijavaDAO();
     private final StudentDAO studentDAO = new StudentDAO();
@@ -60,18 +55,13 @@ public class prijaveController {
     private final Set<String> selectedStatusiPrijave = new HashSet<>();
     private final Set<Integer> selectedGodineStudija = new HashSet<>();
 
-
-
     @FXML
     public void initialize() {
-
         initStudentMap();
         initTableColumns();
         initStatusBadges();
 
-
         masterList = FXCollections.observableArrayList(prijavaDAO.dohvatiSvePrijave());
-
 
         initFakultetiFilter();
         initStatusPrijaveFilter();
@@ -81,9 +71,7 @@ public class prijaveController {
         setupRowDoubleClick();
     }
 
-
     private void initTableColumns() {
-
         colId.setCellValueFactory(cd ->
                 new SimpleIntegerProperty(cd.getValue().getIdPrijava()).asObject());
 
@@ -117,9 +105,7 @@ public class prijaveController {
                 new SimpleStringProperty(nullSafe(cd.getValue().getNapomena())));
     }
 
-
     private void initStatusBadges() {
-
         colStatus.setCellFactory(column -> new TableCell<Prijava, String>() {
             @Override
             protected void updateItem(String status, boolean empty) {
@@ -135,7 +121,6 @@ public class prijaveController {
                 setText(status);
                 setGraphic(null);
 
-                // reset
                 getStyleClass().removeAll("status-approved", "status-rejected", "status-review", "status-closed");
 
                 String s = status.toLowerCase();
@@ -152,7 +137,6 @@ public class prijaveController {
             }
         });
     }
-
 
     @FXML
     private void sortImeAZ() {
@@ -214,11 +198,8 @@ public class prijaveController {
         new Thread(exportTask).start();
     }
 
-
     private List<PrijavaExportDTo> pripremiPrijaveZaExport() {
-
         return tblPrijave.getItems().stream().map(p -> {
-
             Student s = studentMap.get(p.getIdStudent());
 
             return new PrijavaExportDTo(
@@ -228,18 +209,12 @@ public class prijaveController {
                     s != null ? nullSafe(s.getFakultet()) : "",
                     p.getDatumPrijava() != null ? p.getDatumPrijava().toString() : "",
                     p.getUkupniBodovi(),
-                    p.getStatusPrijave() != null
-                            ? p.getStatusPrijave().getNaziv()
-                            : ""
+                    p.getStatusPrijave() != null ? p.getStatusPrijave().getNaziv() : ""
             );
         }).toList();
     }
 
-
-
-
     private void setupFilteringAndSorting() {
-
         filteredList = new FilteredList<>(masterList, p -> true);
 
         txtSearch.textProperty().addListener((obs, o, n) -> applyAllFilters());
@@ -251,7 +226,6 @@ public class prijaveController {
     }
 
     private void applyAllFilters() {
-
         filteredList.setPredicate(p -> {
 
             String q = txtSearch.getText() == null ? "" : txtSearch.getText().toLowerCase().trim();
@@ -279,14 +253,11 @@ public class prijaveController {
             boolean godinaOk = selectedGodineStudija.isEmpty()
                     || (godinaStudija != null && selectedGodineStudija.contains(godinaStudija));
 
-
             return searchOk && fakultetOk && statusOk && godinaOk;
         });
     }
 
-
     private void initFakultetiFilter() {
-
         Set<String> fakulteti = studentMap.values().stream()
                 .map(Student::getFakultet)
                 .filter(Objects::nonNull)
@@ -306,32 +277,25 @@ public class prijaveController {
     }
 
     private void initGodinaStudijaFilter() {
-
         Set<Integer> godine = studentMap.values().stream()
                 .map(Student::getGodinaStudija)
                 .filter(Objects::nonNull)
-                .collect(Collectors.toCollection(TreeSet::new)); // sortirano
+                .collect(Collectors.toCollection(TreeSet::new));
 
         menuGodineStudija.getItems().clear();
 
         for (Integer g : godine) {
             CheckMenuItem item = new CheckMenuItem(String.valueOf(g));
             item.setOnAction(e -> {
-                if (item.isSelected()) {
-                    selectedGodineStudija.add(g);
-                } else {
-                    selectedGodineStudija.remove(g);
-                }
+                if (item.isSelected()) selectedGodineStudija.add(g);
+                else selectedGodineStudija.remove(g);
                 applyAllFilters();
             });
             menuGodineStudija.getItems().add(item);
         }
     }
 
-
-
     private void initStatusPrijaveFilter() {
-
         Set<String> statusi = masterList.stream()
                 .map(p -> p.getStatusPrijave() != null ? p.getStatusPrijave().getNaziv() : null)
                 .filter(Objects::nonNull)
@@ -350,13 +314,11 @@ public class prijaveController {
         }
     }
 
-
     private void initStudentMap() {
         studentMap = studentDAO.dohvatiSveStudente()
                 .stream()
                 .collect(Collectors.toMap(Student::getIdStudent, s -> s));
     }
-
 
     private void setupRowDoubleClick() {
         tblPrijave.setRowFactory(tv -> {
@@ -370,7 +332,7 @@ public class prijaveController {
         });
     }
 
-
+    // ✅ ISPRAVKA: više nema new Stage() ovdje
     @FXML
     private void onNovaPrijava() {
         try {
@@ -379,12 +341,13 @@ public class prijaveController {
             );
             Parent root = loader.load();
 
-            Stage wizardStage = new Stage();
-            wizardStage.setTitle("Nova prijava – E-Dom");
-            wizardStage.setScene(new Scene(root));
-            wizardStage.setMaximized(true);
+            NoviStudentController controller = loader.getController();
+            controller.setPreviousView("prijave"); // (nije obavezno, ali korisno)
 
-            wizardStage.show();
+            Stage currentStage = (Stage) tblPrijave.getScene().getWindow();
+            currentStage.setScene(new Scene(root));
+            currentStage.setMaximized(true);
+            currentStage.setResizable(true);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -399,7 +362,7 @@ public class prijaveController {
             DetaljiPrijaveController controller = loader.getController();
             controller.setPrijava(prijava);
 
-            Stage stage = new Stage();
+            Stage stage = new Stage(); // ovo može ostati (popup)
             stage.setTitle("Detalji prijave");
             stage.setScene(scene);
             stage.setResizable(true);
@@ -412,7 +375,6 @@ public class prijaveController {
         }
     }
 
-
     private void maximize(Stage stage) {
         Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
         stage.setX(bounds.getMinX());
@@ -420,7 +382,6 @@ public class prijaveController {
         stage.setWidth(bounds.getWidth());
         stage.setHeight(bounds.getHeight());
     }
-
 
     private String nullSafe(String s) {
         return s == null ? "" : s;

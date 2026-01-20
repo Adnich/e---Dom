@@ -27,31 +27,11 @@ public class NoviStudentController {
     @FXML private TextField txtJMBG;
     @FXML private TextField txtAdresa;
     @FXML private TextField txtRoditelj;
+
     private String previousView;
 
     public void setPreviousView(String previousView) {
         this.previousView = previousView;
-    }
-
-    @FXML
-    private void onBackClicked() {
-        try {
-            FXMLLoader adminLoader = new FXMLLoader(
-                    getClass().getResource("/views/admin-main-view.fxml")
-            );
-            Parent root = adminLoader.load();
-
-            AdminController adminController = adminLoader.getController();
-            adminController.loadViewPublic("/views/prijave.fxml");
-
-            Stage stage = (Stage) txtIme.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setMaximized(true);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            showAlert("Greška", "Ne mogu se vratiti nazad.");
-        }
     }
 
     private final StudentDAO studentDAO = new StudentDAO();
@@ -101,6 +81,31 @@ public class NoviStudentController {
             }
             return null;
         }));
+    }
+
+    // ✅ ISPRAVKA: nazad vraća na admin panel + dashboard (u istom stage-u)
+    @FXML
+    private void onBackClicked() {
+        try {
+            FXMLLoader adminLoader = new FXMLLoader(
+                    getClass().getResource("/views/admin-main-view.fxml")
+            );
+            Parent root = adminLoader.load();
+
+            AdminController adminController = adminLoader.getController();
+
+            // Ti želiš uvijek dashboard:
+            adminController.loadViewPublic("/views/dashboard-view.fxml");
+
+            Stage stage = (Stage) txtIme.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setMaximized(true);
+            stage.setResizable(true);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Greška", "Ne mogu se vratiti nazad.");
+        }
     }
 
     @FXML
@@ -201,7 +206,8 @@ public class NoviStudentController {
 
             Stage stage = (Stage) txtIme.getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setMaximized(true); // <-- dodano: nova-prijava se otvara fullscreen (maximized)
+            stage.setMaximized(true);
+            stage.setResizable(true);
 
         } catch (Exception e) {
             e.printStackTrace();
