@@ -110,8 +110,8 @@
 
                                         <graphic>
                                             <ImageView fx:id="imgEye"
-                                                       fitWidth="22"
-                                                       fitHeight="22"
+                                                       fitWidth="38"
+                                                       fitHeight="38"
                                                        preserveRatio="true"/>
                                         </graphic>
                                     </Button>
