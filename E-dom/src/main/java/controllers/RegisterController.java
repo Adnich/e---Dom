@@ -70,7 +70,7 @@ public class RegisterController {
         ime = TextUtil.formatirajIme(ime);
         prezime = TextUtil.formatirajIme(prezime);
 
-        Uloga adminUloga = ulogaDAO.dohvatiUloguPoId(1); // pretpostavka: ADMIN = ID 1
+        Uloga adminUloga = ulogaDAO.dohvatiUloguPoId(2); // pretpostavka: ADMIN = ID 1
         if (adminUloga == null) {
             lblError.setText("Greška: ADMIN uloga ne postoji u bazi.");
             return;

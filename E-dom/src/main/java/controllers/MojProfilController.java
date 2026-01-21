@@ -9,6 +9,7 @@ import util.TextUtil;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.sql.Timestamp;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class MojProfilController {
 
@@ -50,58 +51,75 @@ public class MojProfilController {
 
     @FXML
     private void sacuvajPromjene() {
-
+        // 1. Ažuriranje osnovnih podataka
         korisnik.setIme(TextUtil.formatirajIme(txtIme.getText().trim()));
         korisnik.setPrezime(TextUtil.formatirajIme(txtPrezime.getText().trim()));
 
-        if (txtNovaLozinka.getText().isEmpty() &&
-                txtStaraLozinka.getText().isEmpty() &&
-                txtPotvrdaLozinke.getText().isEmpty()) {
+        // Provjeri da li korisnik uopće želi mijenjati lozinku
+        boolean zeliMijenjatiLozinku = !txtStaraLozinka.getText().isEmpty()
+                || !txtNovaLozinka.getText().isEmpty()
+                || !txtPotvrdaLozinke.getText().isEmpty();
 
-            korisnikDAO.azurirajKorisnika(korisnik);
-            lblPoruka.setText("Profil uspješno ažuriran.");
+        // Ako su sva polja za lozinku prazna, samo spremi ime/prezime i izađi
+        if (!zeliMijenjatiLozinku) {
+            korisnikDAO.azurirajKorisnika(korisnik); // Metoda koja update-uje samo ime/prezime
+            lblPoruka.setText("Podaci profila uspješno ažurirani.");
+            lblPoruka.setStyle("-fx-text-fill: green;"); // Da budemo sigurni da se vidi
             return;
         }
 
-        Korisnik provjera = korisnikDAO.nadjiPoUsernameIPassword(
-                korisnik.getUsername(),
-                txtStaraLozinka.getText()
-        );
+        // --- OVDJE POČINJE LOGIKA ZA LOZINKU ---
 
-        if (provjera == null) {
+        // 2. Provjera: Jesu li sva polja popunjena?
+        if (txtStaraLozinka.getText().isEmpty() || txtNovaLozinka.getText().isEmpty() || txtPotvrdaLozinke.getText().isEmpty()) {
+            lblPoruka.setText("Za promjenu lozinke morate ispuniti sva tri polja.");
+            lblPoruka.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        // 3. Provjera STARE lozinke (ključni ispravak!)
+        // Ne zovi bazu, usporedi unos sa trenutnim hashom u objektu
+        if (!BCrypt.checkpw(txtStaraLozinka.getText(), korisnik.getPasswordHash())) {
             lblPoruka.setText("Pogrešna trenutna lozinka.");
+            lblPoruka.setStyle("-fx-text-fill: red;");
             return;
         }
 
+        // 4. Provjera podudaranja nove i potvrde
         if (!txtNovaLozinka.getText().equals(txtPotvrdaLozinke.getText())) {
             lblPoruka.setText("Nova lozinka i potvrda se ne podudaraju.");
+            lblPoruka.setStyle("-fx-text-fill: red;");
             return;
         }
 
-        if (txtNovaLozinka.getText().length() < 4) {
-            lblPoruka.setText("Lozinka mora imati barem 4 znaka.");
+        // 5. Provjera da nova nije ista kao stara
+        if (txtStaraLozinka.getText().equals(txtNovaLozinka.getText())) {
+            lblPoruka.setText("Nova lozinka mora biti različita od stare.");
+            lblPoruka.setStyle("-fx-text-fill: red;");
             return;
         }
 
-        if(txtStaraLozinka.getText().equals(txtNovaLozinka.getText())){
-            lblPoruka.setText("Nova lozinka mora biti različita od stare lozinke.");
+        // 6. Validacija kompleksnosti (tvoj regex)
+        if (!txtNovaLozinka.getText().matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{4,}$")) {
+            lblPoruka.setText("Lozinka preslaba (Min 4 znaka, 1 velika, 1 broj, 1 znak).");
+            lblPoruka.setStyle("-fx-text-fill: red;");
             return;
         }
 
+        // 7. Hashiranje i spremanje (ključni ispravak!)
+        String hashedNewPass = BCrypt.hashpw(txtNovaLozinka.getText(), BCrypt.gensalt());
+        korisnik.setPasswordHash(hashedNewPass);
 
-        if (!txtNovaLozinka.getText().matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^A-Za-z0-9]).+$")) {
-            lblPoruka.setText("Lozinka mora sadržavati barem jedno veliko slovo, jedno malo slovo, jedan broj i jedan specijalni znak.");
-            return;
-        }
+        // Spremi sve u bazu
+        korisnikDAO.azurirajProfil(korisnik); // Očekujemo da ova metoda radi UPDATE passworda
 
-        korisnik.setPasswordHash(txtNovaLozinka.getText());
-        korisnikDAO.azurirajProfil(korisnik);
-
+        // Očisti polja
         txtStaraLozinka.clear();
         txtNovaLozinka.clear();
         txtPotvrdaLozinke.clear();
 
-        lblPoruka.setText("Profil i lozinka uspješno ažurirani.");
+        lblPoruka.setText("Profil i lozinka uspješno promijenjeni.");
+        lblPoruka.setStyle("-fx-text-fill: green;");
     }
 
     private String formatZadnjaPrijava(Timestamp ts) {
