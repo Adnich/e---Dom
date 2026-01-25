@@ -1,9 +1,8 @@
 package org.example.edom;
 
-import javafx.application.Application;
-
 public class Launcher {
     public static void main(String[] args) {
-        Application.launch(HelloApplication.class, args);
+        // Ovo poziva main metodu u tvojoj HelloApplication klasi
+        HelloApplication.main(args);
     }
 }
