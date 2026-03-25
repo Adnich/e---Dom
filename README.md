@@ -1,75 +1,54 @@
-🏠 e---Dom
-🇧🇦 Opis
+# E-Dom
 
-e---Dom je desktop aplikacija razvijena u Javi koristeći JavaFX za upravljanje procesom prijave studenata za smještaj u studentskom domu. Aplikacija je namijenjena administrativnom i stručnom osoblju doma i omogućava:
+E-Dom je desktop aplikacija za digitalizaciju administrativnih procesa studentskog doma. Omogućava centralizovano upravljanje prijavama studenata, dokumentacijom, bodovanjem i statusima prijava.
 
-unos i praćenje prijava studenata,
+## Opis aplikacije
 
-pregled statusa smještaja,
+Aplikacija je namijenjena administrativnom osoblju i omogućava:
 
-upravljanje sobama i dostupnim kapacitetima,
+- upravljanje prijavama studenata  
+- evidenciju i pregled dokumentacije  
+- automatsko bodovanje prijava  
+- praćenje i izmjenu statusa prijava  
+- generisanje rang liste (PDF export)  
+- autentifikaciju korisnika i email verifikaciju  
+- dashboard sa pregledom ključnih podataka  
 
-uređivanje i brisanje podataka o studentima i prijavama,
+Cilj aplikacije je povećati efikasnost rada i smanjiti manuelne procese.
 
-jednostavan pregled statistika i zauzetosti smještaja.
+## Tehnologije
 
-Baza podataka je smještena u cloudu (Aiven MySQL), što omogućava centralizovanu pohranu podataka i pristup sa različitih lokacija, dok JavaFX pruža interaktivno i intuitivno GUI iskustvo.
+Java, JavaFX, FXML, CSS, Aiven (Cloud Database), Maven, Git, GitHub
 
-Ova aplikacija je razvijena kao projekat i služi za praktično upravljanje administracijom studentskog doma, umjesto ručnog vođenja evidencije.
+## Arhitektura
 
-🇬🇧 Description
+Aplikacija je razvijena koristeći slojnu arhitekturu (MVC pristup):
 
-e---Dom is a desktop application developed in Java using JavaFX for managing student housing applications. The app is designed for administrative and professional dormitory staff, allowing:
+- Presentation Layer (JavaFX)  
+- Business Logic Layer  
+- Data Access Layer (DAO)  
+- Model Layer  
 
-entry and tracking of student applications,
+## Autor
 
-viewing accommodation status,
+Student projekt razvijen u okviru predmeta *Metode razvoja softvera*.
+Radile: Nedžma Imamović, Adna Kargić, Imana Purić.
 
-managing rooms and available capacities,
+## Slike aplikacije
 
-editing and deleting student and application data,
+<img width="1999" height="1194" alt="image1" src="https://github.com/user-attachments/assets/729a7d0c-1aa1-4622-ade0-ae1281d8c046" />
 
-simple overview of occupancy statistics.
 
-The database is hosted in the cloud (Aiven MySQL), providing centralized data storage and access from different locations, while JavaFX offers an interactive and intuitive GUI experience.
+<img width="1999" height="1194" alt="image3" src="https://github.com/user-attachments/assets/45e7c663-75f2-4118-9302-9c19bbcf83a8" />
 
-This application was developed as a project to provide a practical solution for managing student dormitory administration.
 
-🛠️ Tehničke informacije / Technical Details
+<img width="1999" height="1194" alt="image5" src="https://github.com/user-attachments/assets/946d515b-fcf0-4fd2-ac71-ef7f05743c6a" />
 
-Jezik / Language: Java
 
-GUI framework: JavaFX
+<img width="1999" height="1250" alt="image7" src="https://github.com/user-attachments/assets/00384480-b45a-43c8-aeb6-b23d9fa29aa5" />
 
-Baza podataka / Database: MySQL (Aiven Cloud)
 
-Tip aplikacije / Type: Desktop
+<img width="1999" height="1194" alt="image11" src="https://github.com/user-attachments/assets/da486be6-112a-47d0-8ef8-f68dc5de4e48" />
 
-Arhitektura / Architecture: MVC (Model-View-Controller)
 
-Funkcionalnosti: CRUD za studente i prijave, pregled smještajnih kapaciteta, statistike
 
-📦 Funkcionalnosti / Features
-🇧🇦
-
-Registracija i unos prijava studenata
-
-Uređivanje i brisanje prijava
-
-Prikaz liste svih prijavljenih studenata
-
-Pretraga po imenu, indeksu ili statusu prijave
-
-Pregled zauzetosti soba i statistike smještaja
-
-🇬🇧
-
-Student application entry and tracking
-
-Edit and delete application records
-
-List view of all applicants
-
-Search by name, index, or application status
-
-Overview of room occupancy and housing statistics
