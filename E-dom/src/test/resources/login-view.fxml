@@ -8,7 +8,7 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.LoginController"
-            stylesheets="@../styles/login-style.css"
+            stylesheets="@styles/login-style.css"
             styleClass="root">
 
     <left>
@@ -25,7 +25,7 @@
                                preserveRatio="true"
                                styleClass="left-logo">
                         <image>
-                            <Image url="@../images/e-domLOGO.png"/>
+                            <Image url="@images/e-domLOGO.png"/>
                         </image>
                     </ImageView>
 

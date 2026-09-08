@@ -90,7 +90,7 @@ public class AdminController {
 
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/views/login-view.fxml")
+                    getClass().getResource("/login-view.fxml")
             );
             Parent root = loader.load();
 

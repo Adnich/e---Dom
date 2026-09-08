@@ -109,7 +109,7 @@ public class RegisterController {
     private void otvoriLoginEkran(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    HelloApplication.class.getResource("/views/login-view.fxml")
+                    HelloApplication.class.getResource("/login-view.fxml")
             );
 
             Scene scene = new Scene(loader.load());

@@ -17,7 +17,6 @@ import util.ResetTokenManager;
 import model.Korisnik;
 import util.TokenGenerator;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -117,7 +116,7 @@ public class IzmjenaLozinkeController {
     public void nazadNaPrijavu(javafx.event.ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    HelloApplication.class.getResource("/views/login-view.fxml")
+                    HelloApplication.class.getResource("/login-view.fxml")
             );
 
             // Učitaj login scenu
